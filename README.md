@@ -23,8 +23,8 @@ A beautiful deep dive showing a swirly seahorse image in black-and-white color r
 is shown below. The square image has features following features/parameters.
 
   - Has <img src="https://render.githubusercontent.com/render/math?math=2048\,\times\,2048"> pixels.
-  - The point <img src="https://render.githubusercontent.com/render/math?math=(-0.7453983606667815,\,0.1125046349959942)">.
-  - Uses a half-width <img src="https://render.githubusercontent.com/render/math?math=1.76E-12">.
+  - Centered at the point <img src="https://render.githubusercontent.com/render/math?math=(-0.7453983606667815,\,0.1125046349959942)">.
+  - Uses a half-width of <img src="https://render.githubusercontent.com/render/math?math=1.76E-12">.
   - Iterated with Boost's `cpp_dec_float` multiple-precision type instantiated with 37 decimal digits of precision.
 
 ![](./images/mandelbrot_MANDELBROT_05_SEAHORSES.jpg)
