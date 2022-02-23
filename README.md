@@ -1,4 +1,4 @@
-ckormanyos/mandelbrot\
+ckormanyos/mandelbrot
 ==================
 
 ckormanyos/mandelbrot implements a header-only C++ template library for
@@ -34,5 +34,8 @@ TBD.
 
 ## Adaptions of and Notes on JPEG-6b
 
-See the non-modified _README_ located here for information
-and original licensing issues.
+We use a modified version of jpeg-6b located [here](./jpeg-6b-2022).
+
+See the original _README_ located [here](./jpeg-6b-2022)
+for more information, with explicit jpeg-software licensing terms
+[here](https://github.com/ckormanyos/mandelbrot/blob/78114ab4bc2ba14e9abe8f113f2e0cf4d422cb9f/jpeg-6b-2022/README#L111).
