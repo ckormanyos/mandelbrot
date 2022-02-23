@@ -1,0 +1,11 @@
+
+Change Log for 2010, 2015, 2022
+
+- In this change log, we test only the small subset of functions needed for using JPG with Boost.Gil.
+- Adapt to VS compiler and VS solution workspace.
+- Handle Level-3 warnings found in MSVC.
+- Run *.c/*.h files through AStyle (Artistic Code Style), using a version of AStyle from somewhere in 2015.
+- Remove several unused preprocessor options such as short names for linkers.
+- Eliminate all uses of NEED_FAR_POINTERS.
+- Eliminate all uses of NEED_SHORT_EXTERNAL_NAMES.
+- Handle GCC warnings -Wconversoin/-Wsign-conversion (this is an ongoing process).
