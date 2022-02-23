@@ -6,9 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mandelbrot", "mandelbrot.vcxproj", "{F6A4D5AD-89B2-419A-9AEF-87391A4E6D1B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{CABF0657-7175-47D3-B614-47D9BED63273}"
-	ProjectSection(SolutionItems) = preProject
-		make_libjpeg-6b.gmk = make_libjpeg-6b.gmk
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{054377E5-7DA0-4101-8BA3-1BE0C0DE51B0}"
 	ProjectSection(SolutionItems) = preProject

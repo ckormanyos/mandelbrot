@@ -139,7 +139,7 @@
     <ClCompile Include="jpeg-6b-2022\jutils.c">
       <Filter>Source Files\jpeg-6b-2022</Filter>
     </ClCompile>
-    <ClCompile Include="test\mandelbrot.cpp">
+    <ClCompile Include="test\test_mandelbrot.cpp">
       <Filter>Source Files\test</Filter>
     </ClCompile>
   </ItemGroup>

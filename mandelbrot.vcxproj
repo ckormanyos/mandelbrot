@@ -205,7 +205,7 @@
     <ClCompile Include="jpeg-6b-2022\jquant1.c" />
     <ClCompile Include="jpeg-6b-2022\jquant2.c" />
     <ClCompile Include="jpeg-6b-2022\jutils.c" />
-    <ClCompile Include="test\mandelbrot.cpp" />
+    <ClCompile Include="test\test_mandelbrot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="concurrency\parallel_for.h" />

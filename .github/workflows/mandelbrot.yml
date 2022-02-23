@@ -1,0 +1,49 @@
+﻿# ------------------------------------------------------------------------------
+#  Copyright Christopher Kormanyos 2020 - 2022.
+#  Distributed under the Boost Software License,
+#  Version 1.0. (See accompanying file LICENSE_1_0.txt
+#  or copy at http://www.boost.org/LICENSE_1_0.txt)
+# ------------------------------------------------------------------------------
+
+name: wide_decimal
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+jobs:
+  gcc-native:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [ g++ ]
+        standard: [ c++11, c++14, c++17, c++2a ]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
+      - name: install Boost
+        run: |
+          apt-get update --quiet
+          apt-get install --no-install-recommends --quiet --yes libboost-dev
+      - name: install gmp
+        run: |
+          apt-get update --quiet
+          apt-get install --no-install-recommends --quiet --yes libgmp-dev
+      - name: gcc-native
+        run: |
+          echo "build lobjpeg-6b.a"
+          cd jpeg-6b-2022
+          make all
+          cd ..
+          echo '${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=${{ matrix.standard }} -DMANDELBROT_USE_GMP_FLOAT -I. -I./jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
+          ${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=${{ matrix.standard }} -DMANDELBROT_USE_GMP_FLOAT -I. -I./jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          echo '${{ matrix.compiler }}  test_mandelbrot.o -lpthread -lgmp -ljpeg-6b -Ljpeg-6b-2022/obj -o test_mandelbrot.exe'
+          ${{ matrix.compiler }}  test_mandelbrot.o -lpthread -lgmp -ljpeg-6b -Ljpeg-6b-2022/obj -o test_mandelbrot.exe
+          ls -la ./test_mandelbrot.exe
+          ./test_mandelbrot.exe
+          ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
