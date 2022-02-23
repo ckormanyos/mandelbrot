@@ -37,7 +37,7 @@ My personal best deep dive has a scale of approximately
 <img src="https://render.githubusercontent.com/render/math?math=10^{-311}">,
 i.e., having a magnification of approximately
 <img src="https://render.githubusercontent.com/render/math?math=10^{311}">.
-This magnification scale is a
+This magnification scale is
 <img src="https://render.githubusercontent.com/render/math?math=1">
 followed by
 <img src="https://render.githubusercontent.com/render/math?math=311">

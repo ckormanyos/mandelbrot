@@ -205,9 +205,10 @@
     <ClCompile Include="jpeg-6b-2022\jquant1.c" />
     <ClCompile Include="jpeg-6b-2022\jquant2.c" />
     <ClCompile Include="jpeg-6b-2022\jutils.c" />
-    <ClCompile Include="mandelbrot.cpp" />
+    <ClCompile Include="test\mandelbrot.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="concurrency\parallel_for.h" />
     <ClInclude Include="jpeg-6b-2022\jchuff.h" />
     <ClInclude Include="jpeg-6b-2022\jconfig.h" />
     <ClInclude Include="jpeg-6b-2022\jdct.h" />
@@ -219,9 +220,8 @@
     <ClInclude Include="jpeg-6b-2022\jpegint.h" />
     <ClInclude Include="jpeg-6b-2022\jpeglib.h" />
     <ClInclude Include="jpeg-6b-2022\jversion.h" />
-    <ClInclude Include="mandelbrot.h" />
-    <ClInclude Include="mandelbrot_color.h" />
-    <ClInclude Include="parallel_for.h" />
+    <ClInclude Include="mandelbrot\mandelbrot.h" />
+    <ClInclude Include="mandelbrot\mandelbrot_color.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="jpeg-6b-2022\libjpeg.doc">

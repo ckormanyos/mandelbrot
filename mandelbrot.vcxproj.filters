@@ -8,11 +8,17 @@
     <Filter Include="Source Files\jpeg-6b-2022">
       <UniqueIdentifier>{efed483f-a695-4e0b-b3a9-9b221c47590d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\concurrency">
+      <UniqueIdentifier>{c470728a-5e7f-4d0f-afe4-3b0cac951b90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\test">
+      <UniqueIdentifier>{eb2ee6f2-8dd1-4683-baa4-9a2494eb2944}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\mandelbrot">
+      <UniqueIdentifier>{f29f7527-7b98-42df-9a6a-37d5140ede75}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="mandelbrot.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="jpeg-6b-2022\jcapimin.c">
       <Filter>Source Files\jpeg-6b-2022</Filter>
     </ClCompile>
@@ -133,17 +139,11 @@
     <ClCompile Include="jpeg-6b-2022\jutils.c">
       <Filter>Source Files\jpeg-6b-2022</Filter>
     </ClCompile>
+    <ClCompile Include="test\mandelbrot.cpp">
+      <Filter>Source Files\test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="mandelbrot.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="parallel_for.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mandelbrot_color.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="jpeg-6b-2022\jchuff.h">
       <Filter>Source Files\jpeg-6b-2022</Filter>
     </ClInclude>
@@ -176,6 +176,15 @@
     </ClInclude>
     <ClInclude Include="jpeg-6b-2022\jversion.h">
       <Filter>Source Files\jpeg-6b-2022</Filter>
+    </ClInclude>
+    <ClInclude Include="mandelbrot\mandelbrot.h">
+      <Filter>Source Files\mandelbrot</Filter>
+    </ClInclude>
+    <ClInclude Include="mandelbrot\mandelbrot_color.h">
+      <Filter>Source Files\mandelbrot</Filter>
+    </ClInclude>
+    <ClInclude Include="concurrency\parallel_for.h">
+      <Filter>Source Files\concurrency</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

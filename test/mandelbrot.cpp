@@ -65,7 +65,7 @@
 #include <chrono>
 #include <iostream>
 
-#include <mandelbrot.h>
+#include <mandelbrot/mandelbrot.h>
 
 // Provide instructions for simple build on WSL.
 // cd /mnt/c/Users/User/Documents/Ks/PC_Software/NumericalPrograms/mandelbrot/jpeg-6b-2022

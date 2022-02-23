@@ -19,8 +19,8 @@
   #include <boost/gil/typedefs.hpp>
   #include <boost/lexical_cast.hpp>
 
-  #include <mandelbrot_color.h>
-  #include <parallel_for.h>
+  #include <mandelbrot/mandelbrot_color.h>
+  #include <concurrency/parallel_for.h>
 
   #if(__cplusplus >= 201703L)
   namespace ckormanyos::mandelbrot {
