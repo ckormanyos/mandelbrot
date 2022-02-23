@@ -19,7 +19,9 @@ The following design goals have been incorporated.
 
 ## Sample Images
 
-A beautiful deep dive showing a swirly seahorse image in black-and-white color representation
+### A Swirly Seahorse
+
+A beautiful iteration showing a swirly seahorse image in black-and-white color representation
 is shown below. The square image has features following features/parameters.
 
   - Has <img src="https://render.githubusercontent.com/render/math?math=2048\,\times\,2048"> pixels.
@@ -28,6 +30,8 @@ is shown below. The square image has features following features/parameters.
   - Iterated with <img src="https://render.githubusercontent.com/render/math?math=2,000"> iteratons using Boost's `cpp_dec_float` multiple-precision type instantiated with <img src="https://render.githubusercontent.com/render/math?math=37"> decimal digits of precision.
 
 ![](./images/mandelbrot_MANDELBROT_05_SEAHORSES.jpg)
+
+### A Really Deep Dive
 
 My personal best deep dive has a scale of approximately
 <img src="https://render.githubusercontent.com/render/math?math=10^{-311}">,
