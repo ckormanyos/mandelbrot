@@ -100,7 +100,7 @@ int main()
 
   // This is a swirly seahorse image.
   using local_numeric_type      = MANDELBROT_NUMBER_TYPE_NAME(37);
-  using mandelbrot_config_type  = ckormanyos::mandelbrot::mandelbrot_config<local_numeric_type, 2000, 2048U>;
+  using mandelbrot_config_type  = ckormanyos::mandelbrot::mandelbrot_config<local_numeric_type, 1600, 1024U>;
   using mandelbrot_numeric_type = typename mandelbrot_config_type::mandelbrot_config_numeric_type;
 
   const mandelbrot_numeric_type dx_half("1.76E-12");

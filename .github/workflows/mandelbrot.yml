@@ -1,4 +1,4 @@
-﻿# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #  Copyright Christopher Kormanyos 2020 - 2022.
 #  Distributed under the Boost Software License,
 #  Version 1.0. (See accompanying file LICENSE_1_0.txt
@@ -45,5 +45,6 @@ jobs:
           echo '${{ matrix.compiler }}  test_mandelbrot.o -lpthread -lgmp -ljpeg-6b -Ljpeg-6b-2022/obj -o test_mandelbrot.exe'
           ${{ matrix.compiler }}  test_mandelbrot.o -lpthread -lgmp -ljpeg-6b -Ljpeg-6b-2022/obj -o test_mandelbrot.exe
           ls -la ./test_mandelbrot.exe
+          mkdir images/tmp
           ./test_mandelbrot.exe
           ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg

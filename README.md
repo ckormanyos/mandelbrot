@@ -26,7 +26,7 @@ is shown below. The square image has the following features/parameters.
 
   - Has <img src="https://render.githubusercontent.com/render/math?math=2048\,\times\,2048"> pixels.
   - Centered at the point <img src="https://render.githubusercontent.com/render/math?math=(-0.7453983606667815,\,0.1125046349959942)">.
-  - Uses a half-width of <img src="https://render.githubusercontent.com/render/math?math=1.76E-12">.
+  - Uses a half-width of <img src="https://render.githubusercontent.com/render/math?math=1.76\,\times\,10^{-12}">.
   - Iterated with <img src="https://render.githubusercontent.com/render/math?math=2,000"> iteratons using Boost's `cpp_dec_float` multiple-precision type instantiated with <img src="https://render.githubusercontent.com/render/math?math=37"> decimal digits of precision.
 
 ![](./images/mandelbrot_MANDELBROT_05_SEAHORSES.jpg)
@@ -47,7 +47,7 @@ The image has the following features/parameters and is shown below.
 
   - Has <img src="https://render.githubusercontent.com/render/math?math=1536\,\times\,1536"> pixels.
   - Centered at the point <img src="https://render.githubusercontent.com/render/math?math=(0.3602404434376143632361252444495453084826\ldots,\,-0.6413130610648031748603750151793020665794\ldots"> (see the code for the full precision).
-  - Uses a half-width of <img src="https://render.githubusercontent.com/render/math?math=4.4^{-311}">.
+  - Uses a half-width of <img src="https://render.githubusercontent.com/render/math?math=4.4\,\times\,10^{-311}">.
   - Iterated with <img src="https://render.githubusercontent.com/render/math?math=60,000"> iteratons using Boost's `gmp_float` multiple-precision type instantiated with <img src="https://render.githubusercontent.com/render/math?math=365"> decimal digits of precision.
 
 ![](./images/mandelbrot_MANDELBROT_20_ZOOM_VERY_DEEP_00.jpg)
