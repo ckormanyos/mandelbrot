@@ -28,12 +28,12 @@ jobs:
           fetch-depth: '0'
       - name: install Boost
         run: |
-          apt-get update --quiet
-          apt-get install --no-install-recommends --quiet --yes libboost-dev
+          sudo apt-get update --quiet
+          sudo apt-get install --no-install-recommends --quiet --yes libboost-dev
       - name: install gmp
         run: |
-          apt-get update --quiet
-          apt-get install --no-install-recommends --quiet --yes libgmp-dev
+          sudo apt-get update --quiet
+          sudo apt-get install --no-install-recommends --quiet --yes libgmp-dev
       - name: gcc-native
         run: |
           echo "build lobjpeg-6b.a"
