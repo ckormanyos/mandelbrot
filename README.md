@@ -15,14 +15,15 @@ The following design goals have been incorporated.
   - C++ template design allows flexible use of any appropriate kind of big-number type.
   - Visualization of the result uses color-stretching techniques with the histogram method.
   - Graphical representation uses Boost.Gil in combination with the JPEG-6b library.
-  - Color scheming can be easily adapted via straightforward creation/adaption of a skinny derived class.
+  - Color schemes can be easily adapted via straightforward creation (or modification) of a skinny derived class.
 
 ## Sample Images
 
-### A Swirly Seahorse
+### Swirly Seahorses and Mini Mandelbrot
 
-A beautiful iteration showing a swirly seahorse image in black-and-white color representation
-is shown below. The square image has the following features/parameters.
+A beautiful iteration result showing swirly seahorses and a mini Mandelbrot image
+in black-and-white color representation is shown below. The square image
+has the following features/parameters.
 
   - Has <img src="https://render.githubusercontent.com/render/math?math=2048\,\times\,2048"> pixels.
   - Centered at the point <img src="https://render.githubusercontent.com/render/math?math=(-0.7453983606667815,\,0.1125046349959942)">.
@@ -43,7 +44,7 @@ followed by
 <img src="https://render.githubusercontent.com/render/math?math=311">
 zeros.
 
-The image has the following features/parameters and is shown below.
+The image showing this deep dive has the following features/parameters and is shown below.
 
   - Has <img src="https://render.githubusercontent.com/render/math?math=1536\,\times\,1536"> pixels.
   - Centered at the point <img src="https://render.githubusercontent.com/render/math?math=(0.3602404434376143632361252444495453084826\ldots,\,-0.6413130610648031748603750151793020665794\ldots"> (see the code for the full precision).
@@ -54,7 +55,10 @@ The image has the following features/parameters and is shown below.
 
 ## Using ckormanyos/mandelbrot
 
-TBD.
+TBD. Show how to make/use various configurations and also create and show
+a few stock configuration examples.
+
+TBD: How much of a _gallery_ should be shown?
 
 ## Adaptions of and Notes on JPEG-6b
 
