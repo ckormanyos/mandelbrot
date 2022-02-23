@@ -22,7 +22,7 @@ The following design goals have been incorporated.
 ### A Swirly Seahorse
 
 A beautiful iteration showing a swirly seahorse image in black-and-white color representation
-is shown below. The square image has features following features/parameters.
+is shown below. The square image has the following features/parameters.
 
   - Has <img src="https://render.githubusercontent.com/render/math?math=2048\,\times\,2048"> pixels.
   - Centered at the point <img src="https://render.githubusercontent.com/render/math?math=(-0.7453983606667815,\,0.1125046349959942)">.
@@ -36,8 +36,8 @@ is shown below. The square image has features following features/parameters.
 My personal best deep dive has a scale of approximately
 <img src="https://render.githubusercontent.com/render/math?math=10^{-311}">,
 i.e., having a magnification of approximately
-<img src="https://render.githubusercontent.com/render/math?math=10^{311}">,
-which is a
+<img src="https://render.githubusercontent.com/render/math?math=10^{311}">.
+This magnification scale is a
 <img src="https://render.githubusercontent.com/render/math?math=1">
 followed by
 <img src="https://render.githubusercontent.com/render/math?math=311">
