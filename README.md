@@ -18,13 +18,12 @@ ckormanyos/mandelbrot is written in header-only C++11, and compatible through C+
 ## Sample Image
 
 A beautiful deep dive showing a swirly seahorse image in blach-and-white color representation
-is shown below. The square image has
-<img src="https://render.githubusercontent.com/render/math?math=2048\,\times\,2048">
-pixels. It been taken at the point
-<img src="https://render.githubusercontent.com/render/math?math=(-0.7453983606667815,\,0.1125046349959942)">
-with a half-width of
-<img src="https://render.githubusercontent.com/render/math?math=1.76E-12">.
-A multiple-precision type (Boost's `cpp_dec_float`) has been used with 37 decimal digits of precision.
+is shown below. The square image has features the following parameters.
+
+  - The image has <img src="https://render.githubusercontent.com/render/math?math=2048\,\times\,2048"> pixels.
+  - Taken at the point <img src="https://render.githubusercontent.com/render/math?math=(-0.7453983606667815,\,0.1125046349959942)">.
+  - Using a half-width of <img src="https://render.githubusercontent.com/render/math?math=1.76E-12">.
+  - Using Boost's `cpp_dec_float` multiple-precision type with 37 decimal digits of precision.
 
 ![](./images/mandelbrot_MANDELBROT_05_SEAHORSES.jpg)
 
