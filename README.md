@@ -6,8 +6,9 @@ ckormanyos/mandelbrot implements a header-only C++ template library for
 extended precision Mandelbrot fractal iterations.
 
 It is intended to be used for so-called _deep_ _dives_ in the fractal iteration
-world. These potentially involve high-precision, multiple-precision floating-point
-or fixed-point types.
+world. These potentially involve high-precision floating-point
+(or fixed-point types) such as those found in
+[Boost.Multiprecison](https://www.boost.org/doc/libs/1_78_0/libs/multiprecision/doc/html/index.html).
 
 ## Design Goals
 
@@ -23,7 +24,7 @@ The following design goals have been incorporated.
 
 In this particular use of ckormanyos/mandelbrot, we have
 concentrated on various beautiful iteration results
-represented in pure black-and-white gray-scale tones.
+represented in pure black-and-white/gray-scale tones.
 
 Several images are highlighted in the paragraphs below.
 Please see the [gallery](./images/gallery)
@@ -71,7 +72,7 @@ It has the the following features and parameters.
 
   - The square image has <img src="https://render.githubusercontent.com/render/math?math=1536\,\times\,1536"> pixels.
   - Centered at the point <img src="https://render.githubusercontent.com/render/math?math=(0.3602404434376143632361252444495453084826\ldots,\,-0.6413130610648031748603750151793020665794\ldots">.
-  - Please see the configuration code [mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h] for the full precision of the center point given to over <img src="https://render.githubusercontent.com/render/math?math=1,000"> decimal places.
+  - Please see the configuration code [mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h) for the full precision of the center point provided with slightly more than <img src="https://render.githubusercontent.com/render/math?math=1,000"> decimal places.
   - Uses a half-width of <img src="https://render.githubusercontent.com/render/math?math=4.4\,\times\,10^{-311}">.
   - Computed with <img src="https://render.githubusercontent.com/render/math?math=60,000"> iteratons using the `gmp_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_78_0/libs/multiprecision/doc/html/index.html) instantiated with <img src="https://render.githubusercontent.com/render/math?math=365"> decimal digits of precision.
 
@@ -93,7 +94,7 @@ a header-configuration-file with content similar to that shown below.
 Include the configuration file in
 [test_mandelbrot.cpp](./test/test_mandelbrot.cpp) and run the calculation.
 
-Consider, for instance, (as a sample) the configuration file
+Consider as a sample, for instance, the relevant content of the configuration file
 [mandelbrot_cfg_MANDELBROT_01_FULL.h](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_01_FULL.h).
 
 ```cpp
@@ -112,10 +113,12 @@ Consider, for instance, (as a sample) the configuration file
   #include <mandelbrot/cfg/mandelbrot_cfg.h>
 ```
 
-Clearly named definitions are used to specify the output file name,
-the number of decimal digits of precision needed in the number type of the iteration,
-the numbers of pixels and iterations, and the geometric center and half-width
-of the magnification region.
+Clearly named definitions are used to specify:
+
+  - the output file name,
+  - the number of decimal digits of precision (in the big-number type used in the iteration),
+  - the numbers of pixels and iterations,
+  - and the coordinate center and half-width of the magnification region.
 
 ## Adaptions of and Notes on jpeg-6b
 
