@@ -80,7 +80,7 @@ is written in a generic, configurable way.
 
 To characterize a new Mandelbrot fractal iteration, simply write
 a similar header-configuration-file. Include it in
-[test_mandelbrot.cpp](./mandelbrot/test_mandelbrot.cpp) and run the calculation.
+[test_mandelbrot.cpp](./test/test_mandelbrot.cpp) and run the calculation.
 
 Clearly named definitions are used to specify the output file name,
 the number of decimal digits of precision needed in the number type of the iteration,
@@ -90,7 +90,7 @@ of the magnification region.
 Consider, for instance, (as a sample) the configuration file
 [mandelbrot_cfg_MANDELBROT_01_FULL.h](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_01_FULL.h).
 
-```
+```cpp
   // This is the classic full immage.
 
   #define MANDELBROT_FILENAME_STRING            "MANDELBROT_01_FULL"
