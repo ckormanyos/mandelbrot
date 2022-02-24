@@ -26,7 +26,7 @@ concentrated on various beautiful iteration results
 represented in pure black-and-white gray-scale tones.
 
 Several images are highlighted in the paragraphs below.
-Please see the [gallery](./mandelbrot/images/gallery)
+Please see the [gallery](./images/gallery)
 for a more comprehensive collection of images.
 
 ### Classic Full Mandelbrot Image
@@ -91,7 +91,7 @@ is written in a generic and configurable way.
 To characterize a new Mandelbrot fractal iteration, simply write
 a header-configuration-file with content similar to that shown below.
 Include the configuration file in
-[test_mandelbrot.cpp](./mandelbrot/test_mandelbrot.cpp) and run the calculation.
+[test_mandelbrot.cpp](./test/test_mandelbrot.cpp) and run the calculation.
 
 Consider, for instance, (as a sample) the configuration file
 [mandelbrot_cfg_MANDELBROT_01_FULL.h](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_01_FULL.h).
