@@ -5,20 +5,29 @@
 ckormanyos/mandelbrot implements a header-only C++ template library for
 extended precision Mandelbrot fractal iterations.
 
-It is intended to be used for so-called _deep_ _dives_ involving multiple-precision
-floating-point or fixed-point types.
+It is intended to be used for so-called _deep_ _dives_ in the fractal iteration
+world. These potentially involve high-precision, multiple-precision floating-point
+or fixed-point types.
 
 ## Design Goals
 
 The following design goals have been incorporated.
   - ckormanyos/mandelbrot is written in header-only C++11, and compatible through C++11, 14, 17, 20.
-  - The inner loop performing the work of fractal iterations uses multiple, parallel CPU cores.
+  - The inner loop performing the work of fractal iteration uses multiple, parallel CPU cores.
   - C++ template design allows for flexible use of any appropriate kind of big-number type.
   - Visualization of the result uses color-stretching techniques combined with the histogram method.
   - Graphical representation uses [Boost.Gil](https://www.boost.org/doc/libs/1_78_0/libs/gil/doc/html/index.html) in combination with the JPEG-6b library (see below).
   - Color schemes can be easily adapted via straightforward creation (or modification) of a skinny derived class.
 
 ## Sample Images
+
+In this particular use of ckormanyos/mandelbrot, we have
+concentrated on various beautiful iteration results
+represented in pure black-and-white gray-scale tones.
+
+Several images are highlighted in the paragraphs below.
+Please see the [gallery](./images/gallery)
+for a more comprehensive collection of images.
 
 ### Classic Full Mandelbrot Image
 
@@ -30,7 +39,7 @@ The image has the following features and parameters.
   - Uses a half-width of <img src="https://render.githubusercontent.com/render/math?math=1.25">.
   - Computed with <img src="https://render.githubusercontent.com/render/math?math=2,000"> iteratons using the `cpp_dec_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_78_0/libs/multiprecision/doc/html/index.html) instantiated with <img src="https://render.githubusercontent.com/render/math?math=37"> decimal digits of precision.
 
-![](./images/mandelbrot_MANDELBROT_01_FULL.jpg)
+![](./images/gallery/mandelbrot_MANDELBROT_01_FULL.jpg)
 
 ### Swirly Seahorses and Mini Mandelbrot
 
@@ -43,7 +52,7 @@ has the following features and parameters.
   - Uses a half-width of <img src="https://render.githubusercontent.com/render/math?math=1.76\,\times\,10^{-12}">.
   - Computed with <img src="https://render.githubusercontent.com/render/math?math=2,000"> iteratons using the `cpp_dec_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_78_0/libs/multiprecision/doc/html/index.html) instantiated with <img src="https://render.githubusercontent.com/render/math?math=37"> decimal digits of precision.
 
-![](./images/mandelbrot_MANDELBROT_05_SEAHORSES.jpg)
+![](./images/gallery/mandelbrot_MANDELBROT_05_SEAHORSES.jpg)
 
 ### A Really Deep Dive
 
@@ -61,11 +70,12 @@ The result of this deep dive iteration is represented by the image below.
 It has the the following features and parameters.
 
   - The square image has <img src="https://render.githubusercontent.com/render/math?math=1536\,\times\,1536"> pixels.
-  - Centered at the point <img src="https://render.githubusercontent.com/render/math?math=(0.3602404434376143632361252444495453084826\ldots,\,-0.6413130610648031748603750151793020665794\ldots"> (see the code for the full precision).
+  - Centered at the point <img src="https://render.githubusercontent.com/render/math?math=(0.3602404434376143632361252444495453084826\ldots,\,-0.6413130610648031748603750151793020665794\ldots">.
+  - Please see the configuration code [mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h] for the full precision of the center point given to over <img src="https://render.githubusercontent.com/render/math?math=1,000"> decimal places.
   - Uses a half-width of <img src="https://render.githubusercontent.com/render/math?math=4.4\,\times\,10^{-311}">.
   - Computed with <img src="https://render.githubusercontent.com/render/math?math=60,000"> iteratons using the `gmp_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_78_0/libs/multiprecision/doc/html/index.html) instantiated with <img src="https://render.githubusercontent.com/render/math?math=365"> decimal digits of precision.
 
-![](./images/mandelbrot_MANDELBROT_20_ZOOM_VERY_DEEP_00.jpg)
+![](./images/gallery/mandelbrot_MANDELBROT_20_ZOOM_VERY_DEEP_00.jpg)
 
 ## Using ckormanyos/mandelbrot
 
@@ -76,16 +86,12 @@ directory.
 
 The code responsible for controlling the iterative calculation,
 performing color-stretching and writing the output file
-is written in a generic, configurable way.
+is written in a generic and configurable way.
 
 To characterize a new Mandelbrot fractal iteration, simply write
-a similar header-configuration-file. Include it in
+a header-configuration-file with content similar to that shown below.
+Include the configuration file in
 [test_mandelbrot.cpp](./test/test_mandelbrot.cpp) and run the calculation.
-
-Clearly named definitions are used to specify the output file name,
-the number of decimal digits of precision needed in the number type of the iteration,
-the numbers of pixels and iterations, and the geometric center and half-width
-of the magnification region.
 
 Consider, for instance, (as a sample) the configuration file
 [mandelbrot_cfg_MANDELBROT_01_FULL.h](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_01_FULL.h).
@@ -106,12 +112,18 @@ Consider, for instance, (as a sample) the configuration file
   #include <mandelbrot/cfg/mandelbrot_cfg.h>
 ```
 
+Clearly named definitions are used to specify the output file name,
+the number of decimal digits of precision needed in the number type of the iteration,
+the numbers of pixels and iterations, and the geometric center and half-width
+of the magnification region.
+
 ## Adaptions of and Notes on jpeg-6b
 
 We use a modified version of jpeg-6b.
 It is located [here](./jpeg-6b-2022).
 According to license agreement, this work is referred to as
 _the_ _Independent_ _JPEG_ _Group's_ _software_.
-Please see their [original _README_](./jpeg-6b-2022)
-for more information about and licensing terms
+Please see their
+[original _README_](https://github.com/ckormanyos/mandelbrot/tree/main/jpeg-6b-2022#readme)
+in its entirety for more information about and licensing terms
 of _the_ _Independent_ _JPEG_ _Group's_ _software_.

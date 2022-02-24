@@ -223,6 +223,7 @@
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg.h" />
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_01_FULL.h" />
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_05_SEAHORSES.h" />
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h" />
     <ClInclude Include="mandelbrot\mandelbrot.h" />
     <ClInclude Include="mandelbrot\mandelbrot_color.h" />
   </ItemGroup>
