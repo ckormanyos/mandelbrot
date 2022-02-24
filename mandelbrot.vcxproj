@@ -220,6 +220,9 @@
     <ClInclude Include="jpeg-6b-2022\jpegint.h" />
     <ClInclude Include="jpeg-6b-2022\jpeglib.h" />
     <ClInclude Include="jpeg-6b-2022\jversion.h" />
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg.h" />
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_01_FULL.h" />
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_05_SEAHORSES.h" />
     <ClInclude Include="mandelbrot\mandelbrot.h" />
     <ClInclude Include="mandelbrot\mandelbrot_color.h" />
   </ItemGroup>

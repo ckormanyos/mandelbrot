@@ -20,6 +20,18 @@ The following design goals have been incorporated.
 
 ## Sample Images
 
+### Classic Full Mandelbrot Image
+
+A black-and-white rendition of the well-known, classic full Mandelbrot iteration is shown below.
+The image has the following features and parameters.
+
+  - The square image has <img src="https://render.githubusercontent.com/render/math?math=2048\,\times\,2048"> pixels.
+  - Centered at the point <img src="https://render.githubusercontent.com/render/math?math=(-0.75,\,0.0)">.
+  - Uses a half-width of <img src="https://render.githubusercontent.com/render/math?math=1.25">.
+  - Computed with <img src="https://render.githubusercontent.com/render/math?math=2,000"> iteratons using the `cpp_dec_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_78_0/libs/multiprecision/doc/html/index.html) instantiated with <img src="https://render.githubusercontent.com/render/math?math=37"> decimal digits of precision.
+
+![](./images/mandelbrot_MANDELBROT_01_FULL.jpg)
+
 ### Swirly Seahorses and Mini Mandelbrot
 
 A beautiful iteration result showing swirly seahorses and a mini Mandelbrot image
@@ -57,18 +69,49 @@ It has the the following features and parameters.
 
 ## Using ckormanyos/mandelbrot
 
-TBD. Show how to make, create and use various configurations.
-Also show a few stock configuration examples.
+ckormanyos/mandelbrot uses configuration files to specify the point,
+size and depth of the iterative fractal calculation.
+The configuration files are stored in the [mandelbrot/cfg](./mandelbrot/cfg)
+directory.
 
-TBD: How much of a _gallery_ should be shown?
+The code responsible for controlling the iterative calculation,
+performing color-stretching and writing the output file
+is written in a generic, configurable way.
 
-## Adaptions of and Notes on JPEG-6b
+To characterize a new Mandelbrot fractal iteration, simply write
+a similar header-configuration-file. Include it in
+[test_mandelbrot.cpp](./mandelbrot/test_mandelbrot.cpp) and run the calculation.
+
+Clearly named definitions are used to specify the output file name,
+the number of decimal digits of precision needed in the number type of the iteration,
+the numbers of pixels and iterations, and the geometric center and half-width
+of the magnification region.
+
+Consider, for instance, (as a sample) the configuration file
+[mandelbrot_cfg_MANDELBROT_01_FULL.h](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_01_FULL.h).
+
+```
+  // This is the classic full immage.
+
+  #define MANDELBROT_FILENAME_STRING            "MANDELBROT_01_FULL"
+
+  #define MANDELBROT_CALCULATION_DIGITS10       37
+  #define MANDELBROT_CALCULATION_PIXELS_1D      2048UL
+  #define MANDELBROT_CALCULATION_ITERATIONS     2000UL
+
+  #define MANDELBROT_POINT_DX_HALF              +1.25L
+  #define MANDELBROT_POINT_CENTER_X             -0.75L
+  #define MANDELBROT_POINT_CENTER_Y             +0.0L
+
+  #include <mandelbrot/cfg/mandelbrot_cfg.h>
+```
+
+## Adaptions of and Notes on jpeg-6b
 
 We use a modified version of jpeg-6b.
 It is located [here](./jpeg-6b-2022).
 According to license agreement, this work is referred to as
 _the_ _Independent_ _JPEG_ _Group's_ _software_.
-
-See the original _README_ located [here](./jpeg-6b-2022)
+Please see their [original _README_](./jpeg-6b-2022)
 for more information about and licensing terms
 of _the_ _Independent_ _JPEG_ _Group's_ _software_.

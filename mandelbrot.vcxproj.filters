@@ -17,6 +17,9 @@
     <Filter Include="Source Files\mandelbrot">
       <UniqueIdentifier>{f29f7527-7b98-42df-9a6a-37d5140ede75}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\mandelbrot\cfg">
+      <UniqueIdentifier>{fe44dc92-8a7f-4487-9132-a809cc6db078}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="jpeg-6b-2022\jcapimin.c">
@@ -185,6 +188,15 @@
     </ClInclude>
     <ClInclude Include="concurrency\parallel_for.h">
       <Filter>Source Files\concurrency</Filter>
+    </ClInclude>
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_01_FULL.h">
+      <Filter>Source Files\mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_05_SEAHORSES.h">
+      <Filter>Source Files\mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg.h">
+      <Filter>Source Files\mandelbrot\cfg</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
