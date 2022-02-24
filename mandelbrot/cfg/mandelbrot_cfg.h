@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////////////////////////////
+﻿///////////////////////////////////////////////////////////////////////////////
 //      Copyright Christopher Kormanyos 2022.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
@@ -28,7 +28,11 @@
 
   #endif
 
+  #if(__cplusplus >= 201703L)
   namespace ckormanyos::mandelbrot::cfg {
+  #else
+  namespace ckormanyos { namespace mandelbrot { namespace cfg { // NOLINT(modernize-concat-nested-namespaces)
+  #endif
 
   namespace detail {
 
@@ -45,6 +49,12 @@
   inline auto center_x() -> mandelbrot_numeric_type { return mandelbrot_numeric_type(MANDELBROT_POINT_CENTER_X); }
   inline auto center_y() -> mandelbrot_numeric_type { return mandelbrot_numeric_type(MANDELBROT_POINT_CENTER_Y); }
 
+  #if(__cplusplus >= 201703L)
   } // namespace ckormanyos::mandelbrot::cfg
+  #else
+  } // namespace cfg
+  } // namespace mandelbrot
+  } // namespace ckormanyos
+  #endif
 
 #endif // MANDELBROT_CFG_2022_02_24_H

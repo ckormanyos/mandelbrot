@@ -7,8 +7,10 @@ extended precision Mandelbrot fractal iterations.
 
 It is intended to be used for so-called _deep_ _dives_ in the fractal iteration
 world. These potentially involve high-precision floating-point
-(or fixed-point types) such as those found in
+such as those found in
 [Boost.Multiprecison](https://www.boost.org/doc/libs/1_78_0/libs/multiprecision/doc/html/index.html).
+Also fixed-point types having sufficient precision (although these have not yet been used or tested
+extensively in this project) should work well.
 
 ## Design Goals
 
