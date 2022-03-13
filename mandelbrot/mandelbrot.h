@@ -262,8 +262,8 @@
 
     auto generate_mandelbrot_image(const std::string&                  str_filename,
                                    const color::color_functions_base& color_functions = color::color_functions_bw(),
-                                         color::color_stretch_base&   color_stretches = color::color_stretch_histogram_method(),
-                                         std::ostream&                 output_stream   = std::cout) -> void
+                                   const color::color_stretch_base&   color_stretches = color::color_stretch_histogram_method(),
+                                         std::ostream&                output_stream   = std::cout) -> void
     {
       // Setup the x-axis and y-axis coordinates.
 
@@ -386,7 +386,7 @@
 
     auto apply_color_stretches(const std::vector<numeric_type>& x_values,
                                const std::vector<numeric_type>& y_values,
-                               color::color_stretch_base& color_stretches) -> void
+                               const color::color_stretch_base& color_stretches) -> void
     {
       color_stretches.init(static_cast<std::uint_fast32_t>(x_values.size() * y_values.size()));
 
