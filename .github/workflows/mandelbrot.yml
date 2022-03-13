@@ -1,4 +1,4 @@
-# ------------------------------------------------------------------------------
+﻿# ------------------------------------------------------------------------------
 #  Copyright Christopher Kormanyos 2022.
 #  Distributed under the Boost Software License,
 #  Version 1.0. (See accompanying file LICENSE_1_0.txt
@@ -36,6 +36,8 @@ jobs:
           sudo apt-get install --no-install-recommends --quiet --yes libgmp-dev
       - name: gcc-native
         run: |
+          echo "query GCC version"
+          g++ -v
           echo "build lobjpeg-6b.a"
           cd jpeg-6b-2022
           make all
@@ -68,6 +70,8 @@ jobs:
           sudo apt-get install --no-install-recommends --quiet --yes libboost-dev
       - name: gcc-native-cpp_dec_float
         run: |
+          echo "query GCC version"
+          g++ -v
           echo "build lobjpeg-6b.a"
           cd jpeg-6b-2022
           make all
