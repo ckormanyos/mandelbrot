@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////////////////////////////
+﻿///////////////////////////////////////////////////////////////////////////////
 //      Copyright Christopher Kormanyos 2015 - 2022.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
@@ -232,7 +232,7 @@
   public:
     using mandelbrot_config_type = mandelbrot_config_base<numeric_type, max_iterations>;
 
-    mandelbrot_generator(const mandelbrot_config_type& config)
+    explicit mandelbrot_generator(const mandelbrot_config_type& config)
       : mandelbrot_config_object   (config),
         mandelbrot_image           (config.integral_width(), config.integral_height()),
         mandelbrot_view            (boost::gil::rgb8_view_t()),
@@ -243,19 +243,27 @@
       mandelbrot_view = boost::gil::view(mandelbrot_image);
     }
 
+    mandelbrot_generator() = delete;
+
+    mandelbrot_generator(const mandelbrot_generator&) = delete;
+    mandelbrot_generator(mandelbrot_generator&&) noexcept = delete;
+
+    auto operator=(const mandelbrot_generator&) -> mandelbrot_generator& = delete;
+    auto operator=(mandelbrot_generator&&) noexcept -> mandelbrot_generator& = delete;
+
     ~mandelbrot_generator() = default;
 
-    static const numeric_type& four()
+    static auto four() -> const numeric_type&
     {
       static const numeric_type my_value_four(4U);
 
       return my_value_four;
     }
 
-    void generate_mandelbrot_image(const std::string&                  str_filename,
+    auto generate_mandelbrot_image(const std::string&                  str_filename,
                                    const color::color_functions_base& color_functions = color::color_functions_bw(),
                                          color::color_stretch_base&   color_stretches = color::color_stretch_histogram_method(),
-                                         std::ostream&                 output_stream   = std::cout)
+                                         std::ostream&                 output_stream   = std::cout) -> void
     {
       // Setup the x-axis and y-axis coordinates.
 
@@ -376,9 +384,9 @@
           std::vector<std::vector<std::uint_fast32_t>> mandelbrot_iteration_matrix;
           std::vector<std::uint_fast32_t>              mandelbrot_color_histogram;
 
-    void apply_color_stretches(const std::vector<numeric_type>& x_values,
+    auto apply_color_stretches(const std::vector<numeric_type>& x_values,
                                const std::vector<numeric_type>& y_values,
-                               color::color_stretch_base& color_stretches)
+                               color::color_stretch_base& color_stretches) -> void
     {
       color_stretches.init(static_cast<std::uint_fast32_t>(x_values.size() * y_values.size()));
 
@@ -388,9 +396,9 @@
       }
     }
 
-    void apply_color_functions(const std::vector<numeric_type>& x_values,
+    auto apply_color_functions(const std::vector<numeric_type>& x_values,
                                const std::vector<numeric_type>& y_values,
-                               const color::color_functions_base& color_functions)
+                               const color::color_functions_base& color_functions) -> void
     {
       for(auto j_row = static_cast<std::uint_fast32_t>(UINT32_C(0)); j_row < y_values.size(); ++j_row)
       {
