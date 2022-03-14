@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////////////////////////////
+﻿///////////////////////////////////////////////////////////////////////////////
 //  Copyright Christopher Kormanyos 2017 - 2022.
 //  Distributed under the Boost Software License,
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt
@@ -21,10 +21,19 @@
                       callable_function_type parallel_function)
     {
       // Estimate the number of threads available.
-      static const unsigned number_of_threads_hint = std::thread::hardware_concurrency();
+      static const auto number_of_threads_hint =
+        static_cast<unsigned>
+        (
+          std::thread::hardware_concurrency()
+        );
 
-      static const unsigned number_of_threads =
-        ((number_of_threads_hint == 0U) ? 4U : number_of_threads_hint);
+      static const auto number_of_threads =
+        static_cast<unsigned>
+        (
+          ((number_of_threads_hint > static_cast<unsigned>(1U))
+            ? static_cast<unsigned>(number_of_threads_hint - 1U)
+            : static_cast<unsigned>(1U))
+        );
 
       // Set the size of a slice for the range functions.
       const auto n =

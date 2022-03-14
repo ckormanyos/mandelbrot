@@ -57,6 +57,22 @@ has the following features and parameters.
 
 ![](./images/gallery/mandelbrot_MANDELBROT_05_SEAHORSES.jpg)
 
+### A Deep Dive
+
+The following deep dive has a scale of approximately
+<img src="https://render.githubusercontent.com/render/math?math=10^{-55}">.
+
+The result of this deep dive iteration is represented by the image below.
+It has the the following features and parameters.
+
+  - The square image has <img src="https://render.githubusercontent.com/render/math?math=2048\,\times\,2048"> pixels.
+  - Centered at the point <img src="https://render.githubusercontent.com/render/math?math=(-1.2951890821477774570170641771856819267\ldots,\,0.44093698267832013888090367835626261211\ldots">.
+  - Please see the configuration code [mandelbrot_MANDELBROT_09_DEEP_DIVE_02.h](./mandelbrot/cfg/mandelbrot_MANDELBROT_09_DEEP_DIVE_02.h) for the full precision of the center point.
+  - Uses a half-width of <img src="https://render.githubusercontent.com/render/math?math=2.55\,\times\,10^{-55}">.
+  - Computed with <img src="https://render.githubusercontent.com/render/math?math=60,000"> iteratons using the `gmp_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_78_0/libs/multiprecision/doc/html/index.html) instantiated with <img src="https://render.githubusercontent.com/render/math?math=365"> decimal digits of precision.
+
+![](./images/gallery/mandelbrot_MANDELBROT_09_DEEP_DIVE_02.jpg)
+
 ### A Really Deep Dive
 
 My personal best deep dive has a scale of approximately
