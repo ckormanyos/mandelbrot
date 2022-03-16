@@ -4,9 +4,9 @@
 
 The Mandelbrot set consists of those points c in the
 complex plane for which the iteration
-<img src="https://render.githubusercontent.com/render/math?math=z_{n+1}\,=\,z_{n}^2\,+\,c">
+$$z_{n+1}=z_{n}^2+c$$
 with
-<img src="https://render.githubusercontent.com/render/math?math=z_{0}\,=\,0"> stays bounded.
+$$z_{0}=0$$ stays bounded.
 
 ckormanyos/mandelbrot implements a header-only C++ template library for
 extended precision Mandelbrot fractal iterations.
@@ -27,7 +27,7 @@ scheme uses stretched, amplified and modulated black
 and white coloring. The Mandelbrot iteration is carried
 out with hardware concurrency with multiple threads.
 The multithreading dispatcher uses
-<img src="https://render.githubusercontent.com/render/math?math=(n\,-\,1)">
+$$(n-1)$$
 of the available CPU cores that can be found using hardware concurrency.
 
 ## Design Goals
@@ -55,7 +55,7 @@ for a more comprehensive collection of images.
 A black-and-white rendition of the well-known, classic full Mandelbrot iteration is shown below.
 The image has the following features and parameters.
 
-  - The square image has <img src="https://render.githubusercontent.com/render/math?math=2048\,\times\,2048"> pixels.
+  - The square image has $$2048 \times 2048 pixels.
   - Centered at the point <img src="https://render.githubusercontent.com/render/math?math=(-0.75,\,0.0)">.
   - Uses a half-width of <img src="https://render.githubusercontent.com/render/math?math=1.25">.
   - Computed with <img src="https://render.githubusercontent.com/render/math?math=2,000"> iteratons using the `cpp_dec_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_78_0/libs/multiprecision/doc/html/index.html) instantiated with <img src="https://render.githubusercontent.com/render/math?math=37"> decimal digits of precision.
