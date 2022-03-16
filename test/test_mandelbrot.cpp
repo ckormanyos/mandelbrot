@@ -19,7 +19,7 @@
 // scheme uses stretched, amplified and modulated black
 // and white coloring. The Mandelbrot iteration is carried
 // out with hardware concurrency with multiple threads.
-// The multithreading dispatcher used 3/4 of the available
+// The multithreading dispatcher uses (n - 1) of the available
 // CPU cores that can be found using hardware concurrency.
 
 // The Mandelbrot set consists of those points c in the
@@ -76,6 +76,7 @@
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_10_ZOOM_WIKI_00.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_11_ZOOM_WIKI_01.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_12_ZOOM_WIKI_02.h>
+//#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_13_ZOOM_WIKI_03.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_30_ZOOM_ANOTHER_00.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_31_ZOOM_ANOTHER_01.h>
@@ -109,7 +110,7 @@ int main()
 
         color::color_stretch_histogram_method local_color_stretches;
   const color::color_functions_bw             local_color_functions;
-  //const ckormanyos::mandelbrot::color::color_functions_pretty  local_color_functions;
+  //const color::color_functions_pretty  local_color_functions;
 
   mandelbrot_generator_type mandelbrot_generator(mandelbrot_config_object);
 
