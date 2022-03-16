@@ -5,63 +5,6 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-// A well-known example of fractal is the Mandelbrot set,
-// which is based upon the function z_{n+1} = z_{n}^2 + c.
-// A common way of coloring Mandelbrot images is by taking
-// the number of iterations required to reach non-bounded
-// divergence from c and then assigning that value a color.
-
-// This example uses Boost.Multiprecision to implement
-// a high-precision Mandelbrot iteration and visualization.
-// Graphic file creation uses Boost.Gil (old) to wrap JPEG.
-// Color-strething in combination with the histogram method
-// is used for creating vivid images. The default color
-// scheme uses stretched, amplified and modulated black
-// and white coloring. The Mandelbrot iteration is carried
-// out with hardware concurrency with multiple threads.
-// The multithreading dispatcher uses (n - 1) of the available
-// CPU cores that can be found using hardware concurrency.
-
-// The Mandelbrot set consists of those points c in the
-// complex plane for which the iteration
-//   z_{n+1} = z_{n}^2 + c,
-// with z_{0} = 0 stays bounded.
-
-// Interesting iteration points could be points having an orbit.
-// An orbit of length n is a sequence of z_{n} with
-//   z_{1} = c, z_{2}, ..., z{n},
-// such that z_{n} = z_{1} and z_{n} != z_{k} with (1 < k < n).
-// In order to find these, numerical methods are needed.
-// The equation z_{n} = z_{1} can only be solved in closed form
-// by hand for small n. A point c of order n will also show up
-// as a point of order n_{m}, for some m > 1. Mark these points
-// in your set.
-
-// Any point that is inside the Mandelbrot set and close to the
-// boundary between the set and its complement as well as any point
-// outside the Mandelbrot set that is close to this boundary is an
-// interesting point. The closer you are to the boundary, the more
-// you need to zoom in to see the interesting parts. In particular,
-// all points on the x-axis between -2 and 1/4 are in the Mandelbrot set.
-// Especially close to x = -2 (from the right), the point (x, 0)
-// is arbitrarily close to the boundary. So try the point (eps - 2, 0)
-// for a small (eps > 0). Some Mandelbrot softwares use a strategy that
-// zooms in, continually trying to find a point close to the boundary
-// while zooming, and uses that as the zoom point.
-
-// Points on the boundary of the Mandelbrot set can potentially
-// have the most interesting orbits.  The easiest boundary points
-// to compute are:
-//   * The spike along the negative real axis
-//   * The boundary of the main cardioid:
-//       r = (1 - cos(theta))/2,
-//       x = r*cos(theta)+0.25,
-//       y = r*sin(theta)
-//   * The boundary of the period 2 disk:
-//       r = 0.25,
-//       x = r*cos(theta)-1,
-//       y = r*sin(theta)
-
 #include <chrono>
 #include <iostream>
 
