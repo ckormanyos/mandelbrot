@@ -59,7 +59,7 @@ The image has the following features and parameters.
   - The square image has ![2048{\times}2048](https://latex.codecogs.com/svg.image?2048{\times}2048) pixels.
   - Centered at the point ![(-0.75,0.0)](https://latex.codecogs.com/svg.image?(-0.75,0.0)).
   - Uses a half-width of ![1.25](https://latex.codecogs.com/svg.image?1.25).
-  - Computed with ![2,000](https://latex.codecogs.com/svg.image?2,000) iteratons using the `cpp_dec_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_78_0/libs/multiprecision/doc/html/index.html) instantiated with <img src="https://render.githubusercontent.com/render/math?math=37"> decimal digits of precision.
+  - Computed with ![2,000](https://latex.codecogs.com/svg.image?2,000) iteratons using the `cpp_dec_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_78_0/libs/multiprecision/doc/html/index.html) instantiated with ![37](https://latex.codecogs.com/svg.image?37) decimal digits of precision.
 
 ![](./images/gallery/mandelbrot_MANDELBROT_01_FULL.jpg)
 
@@ -70,48 +70,46 @@ in black-and-white color representation is shown below. The image
 has the following features and parameters.
 
   - The square image has ![2048{\times}2048](https://latex.codecogs.com/svg.image?2048{\times}2048) pixels.
-  - Centered at the point <img src="https://render.githubusercontent.com/render/math?math=(-0.7453983606667815,\,0.1125046349959942)">.
-  - Uses a half-width of <img src="https://render.githubusercontent.com/render/math?math=1.76\,\times\,10^{-12}">.
-  - Computed with <img src="https://render.githubusercontent.com/render/math?math=2,000"> iteratons using the `cpp_dec_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_78_0/libs/multiprecision/doc/html/index.html) instantiated with <img src="https://render.githubusercontent.com/render/math?math=37"> decimal digits of precision.
+  - Centered at the point ![(-0.7453983606667815,0.1125046349959942](https://latex.codecogs.com/svg.image?(-0.7453983606667815,0.1125046349959942)).
+  - Uses a half-width of ![1.76{\times}10^{-12}](https://latex.codecogs.com/svg.image?1.76{\times}10^{-12}).
+  - Computed with ![2,000](https://latex.codecogs.com/svg.image?2,000) iteratons using the `cpp_dec_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_78_0/libs/multiprecision/doc/html/index.html) instantiated with ![37](https://latex.codecogs.com/svg.image?37) decimal digits of precision.
 
 ![](./images/gallery/mandelbrot_MANDELBROT_05_SEAHORSES.jpg)
 
 ### A Deep Dive
 
 The following deep dive has a scale of approximately
-<img src="https://render.githubusercontent.com/render/math?math=10^{-55}">.
+![2.55{\times}10^{-55}](https://latex.codecogs.com/svg.image?2.55{\times}10^{-55}).
 
 The result of this deep dive iteration is represented by the image below.
 It has the the following features and parameters.
 
   - The square image has ![2048{\times}2048](https://latex.codecogs.com/svg.image?2048{\times}2048) pixels.
-  - Centered at the point <img src="https://render.githubusercontent.com/render/math?math=(-1.2951890821477774570170641771856819267\ldots,\,0.44093698267832013888090367835626261211\ldots">.
+  - Centered at the point ![(-1.2951890821477774570170641771856819267{\ldots},0.44093698267832013888090367835626261211{\ldots})](https://latex.codecogs.com/svg.image?(-1.2951890821477774570170641771856819267{\ldots},0.44093698267832013888090367835626261211{\ldots})).
   - Please see the configuration code [mandelbrot_cfg_MANDELBROT_09_DEEP_DIVE_02.h](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_09_DEEP_DIVE_02.h) for the full precision of the center point.
-  - Uses a half-width of <img src="https://render.githubusercontent.com/render/math?math=2.55\,\times\,10^{-55}">.
-  - Computed with <img src="https://render.githubusercontent.com/render/math?math=15,000"> iteratons using the `cpp_dec_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_78_0/libs/multiprecision/doc/html/index.html) instantiated with <img src="https://render.githubusercontent.com/render/math?math=95"> decimal digits of precision.
+  - Uses a half-width of ![2.55{\times}10^{-55}](https://latex.codecogs.com/svg.image?2.55{\times}10^{-55}).
+  - Computed with ![15,000](https://latex.codecogs.com/svg.image?15,000) iteratons using the `cpp_dec_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_78_0/libs/multiprecision/doc/html/index.html) instantiated with ![95](https://latex.codecogs.com/svg.image?95) decimal digits of precision.
 
 ![](./images/gallery/mandelbrot_MANDELBROT_09_DEEP_DIVE_02.jpg)
 
 ### A Really Deep Dive
 
 My personal best deep dive has a scale of approximately
-<img src="https://render.githubusercontent.com/render/math?math=10^{-311}">.
-This is a huge magnification factor having a value of approximately
-<img src="https://render.githubusercontent.com/render/math?math=10^{311}">,
-(i.e.,
-<img src="https://render.githubusercontent.com/render/math?math=1">
+![10^{-311}](https://latex.codecogs.com/svg.image?10^{-311}).
+This is a huge magnification factor having a scale of approximately
+![1](https://latex.codecogs.com/svg.image?1)
 followed by
-<img src="https://render.githubusercontent.com/render/math?math=311">
-zeros).
+![311](https://latex.codecogs.com/svg.image?311)
+zeros.
 
 The result of this very deep dive iteration is represented by the image below.
 It has the the following features and parameters.
 
   - The square image has ![1536{\times}1536](https://latex.codecogs.com/svg.image?1536{\times}1536) pixels.
-  - Centered at the point <img src="https://render.githubusercontent.com/render/math?math=(0.3602404434376143632361252444495453084826\ldots,\,-0.6413130610648031748603750151793020665794\ldots">.
-  - Please see the configuration code [mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h) for the full precision of the center point provided with slightly more than <img src="https://render.githubusercontent.com/render/math?math=1,000"> decimal places.
-  - Uses a half-width of <img src="https://render.githubusercontent.com/render/math?math=4.4\,\times\,10^{-311}">.
-  - Computed with <img src="https://render.githubusercontent.com/render/math?math=60,000"> iteratons using the `gmp_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_78_0/libs/multiprecision/doc/html/index.html) instantiated with <img src="https://render.githubusercontent.com/render/math?math=365"> decimal digits of precision.
+  - Centered at the point ![(0.3602404434376143632361252444495453084826{\ldots},-0.6413130610648031748603750151793020665794{\ldots})](https://latex.codecogs.com/svg.image?(0.3602404434376143632361252444495453084826{\ldots},-0.6413130610648031748603750151793020665794{\ldots})).
+  - Please see the configuration code [mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h) for the full precision of the center point provided with slightly more than ![1,000](https://latex.codecogs.com/svg.image?1,000) decimal places.
+  - Uses a half-width of ![4.4{\times}10^{-311}](https://latex.codecogs.com/svg.image?4.4{\times}10^{-311}).
+  - Computed with ![60,000](https://latex.codecogs.com/svg.image?60,000) iteratons using the `gmp_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_78_0/libs/multiprecision/doc/html/index.html) instantiated with ![365](https://latex.codecogs.com/svg.image?365) decimal digits of precision.
 
 ![](./images/gallery/mandelbrot_MANDELBROT_20_ZOOM_VERY_DEEP_00.jpg)
 
