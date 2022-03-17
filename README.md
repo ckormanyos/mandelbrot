@@ -48,6 +48,12 @@ The following design goals have been incorporated.
   - Graphical representation uses [Boost.Gil](https://www.boost.org/doc/libs/1_78_0/libs/gil/doc/html/index.html) in combination with the JPEG-6b library (see below).
   - Color schemes can be easily adapted via straightforward creation (or modification) of a skinny derived class.
 
+## TODOs
+
+Improvements on the TODO list include (among others) the following.
+  - Experiment with (and implement) massive inner loop parallelization via GPU programming.
+  - Find/use an acceleration technique (intended to reduce required precision of deep dives) such as orbit perturbation, series expansion, etc.
+
 ## Sample Images
 
 In these particular images from ckormanyos/mandelbrot, we have
