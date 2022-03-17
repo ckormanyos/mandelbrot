@@ -9,10 +9,9 @@ in the complex plane for which the iteration
 ![z_{n+1}=z_{n}^2+c](https://latex.codecogs.com/svg.image?z_{n&plus;1}=z_{n}^2&plus;c)
 
 with
-
-![z_{0}=0](https://latex.codecogs.com/svg.image?z_{0}=0),
+![z_{0}=0](https://latex.codecogs.com/svg.image?z_{0}=0)
+and
 ![z {\in} {\mathbb{C}}](https://latex.codecogs.com/svg.image?z%7B%5C,%7D%7B%5Cin%7D%7B%5C,%7D%7B%5Cmathbb%7BC%7D%7D)
-
 stays bounded.
 
 ckormanyos/mandelbrot implements a header-only C++ template library for
