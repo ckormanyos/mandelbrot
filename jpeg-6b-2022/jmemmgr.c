@@ -460,8 +460,8 @@ alloc_sarray(j_common_ptr cinfo, int pool_id,
   long ltemp;
 
   /* Calculate max # of rows allowed in one allocation chunk */
-  ltemp = (MAX_ALLOC_CHUNK - SIZEOF(large_pool_hdr)) /
-          ((long) samplesperrow * SIZEOF(JSAMPLE));
+  ltemp = (long) (((long) MAX_ALLOC_CHUNK - (long) SIZEOF(large_pool_hdr)) /
+                  ((long) samplesperrow   * (long) SIZEOF(JSAMPLE)));
 
   if(ltemp <= 0)
   {
@@ -521,8 +521,8 @@ alloc_barray(j_common_ptr cinfo, int pool_id,
   long ltemp;
 
   /* Calculate max # of rows allowed in one allocation chunk */
-  ltemp = (MAX_ALLOC_CHUNK - SIZEOF(large_pool_hdr)) /
-          ((long) blocksperrow * SIZEOF(JBLOCK));
+  ltemp = (long) (((long) MAX_ALLOC_CHUNK - (long) SIZEOF(large_pool_hdr)) /
+                  ((long) blocksperrow    * (long) SIZEOF(JBLOCK)));
 
   if(ltemp <= 0)
   {
@@ -688,9 +688,9 @@ realize_virt_arrays(j_common_ptr cinfo)
     if(sptr->mem_buffer == NULL)    /* if not realized yet */
     {
       space_per_minheight += (long) sptr->maxaccess *
-                             (long) sptr->samplesperrow * SIZEOF(JSAMPLE);
+                             (long) sptr->samplesperrow * (long) SIZEOF(JSAMPLE);
       maximum_space += (long) sptr->rows_in_array *
-                       (long) sptr->samplesperrow * SIZEOF(JSAMPLE);
+                       (long) sptr->samplesperrow * (long) SIZEOF(JSAMPLE);
     }
   }
 
@@ -699,9 +699,9 @@ realize_virt_arrays(j_common_ptr cinfo)
     if(bptr->mem_buffer == NULL)    /* if not realized yet */
     {
       space_per_minheight += (long) bptr->maxaccess *
-                             (long) bptr->blocksperrow * SIZEOF(JBLOCK);
+                             (long) bptr->blocksperrow * (long) SIZEOF(JBLOCK);
       maximum_space += (long) bptr->rows_in_array *
-                       (long) bptr->blocksperrow * SIZEOF(JBLOCK);
+                       (long) bptr->blocksperrow * (long) SIZEOF(JBLOCK);
     }
   }
 
@@ -848,7 +848,7 @@ do_barray_io(j_common_ptr cinfo, jvirt_barray_ptr ptr, boolean writing)
 {
   long bytesperrow, file_offset, byte_count, rows, thisrow, i;
 
-  bytesperrow = (long) ptr->blocksperrow * SIZEOF(JBLOCK);
+  bytesperrow = (long) ((long) ptr->blocksperrow * (long) SIZEOF(JBLOCK));
   file_offset = ptr->cur_start_row * bytesperrow;
 
   /* Loop to read or write each allocation chunk in mem_buffer */
