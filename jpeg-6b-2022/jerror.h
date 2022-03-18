@@ -245,8 +245,8 @@ typedef enum
    (*(cinfo)->err->emit_message) ((j_common_ptr) (cinfo), -1))
 #define WARNMS2(cinfo,code,p1,p2)  \
   ((cinfo)->err->msg_code = (code), \
-   (cinfo)->err->msg_parm.i[0] = (p1), \
-   (cinfo)->err->msg_parm.i[1] = (p2), \
+   (cinfo)->err->msg_parm.i[0] = ((int) (p1)), \
+   (cinfo)->err->msg_parm.i[1] = ((int) (p2)), \
    (*(cinfo)->err->emit_message) ((j_common_ptr) (cinfo), -1))
 
 /* Informational/debugging messages */
@@ -255,7 +255,7 @@ typedef enum
    (*(cinfo)->err->emit_message) ((j_common_ptr) (cinfo), (lvl)))
 #define TRACEMS1(cinfo,lvl,code,p1)  \
   ((cinfo)->err->msg_code = (code), \
-   (cinfo)->err->msg_parm.i[0] = (p1), \
+   (cinfo)->err->msg_parm.i[0] = ((int) (p1)), \
    (*(cinfo)->err->emit_message) ((j_common_ptr) (cinfo), (lvl)))
 #define TRACEMS2(cinfo,lvl,code,p1,p2)  \
   ((cinfo)->err->msg_code = (code), \
@@ -269,7 +269,7 @@ typedef enum
      (*(cinfo)->err->emit_message) ((j_common_ptr) (cinfo), (lvl)); )
 #define TRACEMS4(cinfo,lvl,code,p1,p2,p3,p4)  \
   MAKESTMT(int * _mp = (cinfo)->err->msg_parm.i; \
-     _mp[0] = (p1); _mp[1] = (p2); _mp[2] = (p3); _mp[3] = (p4); \
+     _mp[0] = ((int) (p1)); _mp[1] = ((int) (p2)); _mp[2] = ((int) (p3)); _mp[3] = ((int) (p4)); \
      (cinfo)->err->msg_code = (code); \
      (*(cinfo)->err->emit_message) ((j_common_ptr) (cinfo), (lvl)); )
 #define TRACEMS5(cinfo,lvl,code,p1,p2,p3,p4,p5)  \

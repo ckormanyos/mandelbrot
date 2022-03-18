@@ -225,6 +225,8 @@ METHODDEF(void)
 prescan_quantize(j_decompress_ptr cinfo, JSAMPARRAY input_buf,
                  JSAMPARRAY output_buf, int num_rows)
 {
+  (void) output_buf;
+
   my_cquantize_ptr cquantize = (my_cquantize_ptr) cinfo->cquantize;
   JSAMPROW ptr;
   histptr histp;
@@ -644,7 +646,7 @@ select_colors(j_decompress_ptr cinfo, int desired_colors)
 
   /* Allocate workspace for box list */
   boxlist = (boxptr)(*cinfo->mem->alloc_small)
-            ((j_common_ptr) cinfo, JPOOL_IMAGE, desired_colors * SIZEOF(box));
+            ((j_common_ptr) cinfo, JPOOL_IMAGE, (size_t) desired_colors * SIZEOF(box));
   /* Initialize one box containing whole space */
   numboxes = 1;
   boxlist[0].c0min = 0;
@@ -1345,6 +1347,8 @@ finish_pass1(j_decompress_ptr cinfo)
 METHODDEF(void)
 finish_pass2(j_decompress_ptr cinfo)
 {
+  (void) cinfo;
+
   /* no work */
 }
 

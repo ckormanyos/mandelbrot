@@ -171,7 +171,7 @@ alloc_funny_pointers(j_decompress_ptr cinfo)
    */
   main->xbuffer[0] = (JSAMPIMAGE)
                      (*cinfo->mem->alloc_small)((j_common_ptr) cinfo, JPOOL_IMAGE,
-                         cinfo->num_components * 2 * SIZEOF(JSAMPARRAY));
+                         (size_t) (cinfo->num_components * 2) * SIZEOF(JSAMPARRAY));
   main->xbuffer[1] = main->xbuffer[0] + cinfo->num_components;
 
   for(ci = 0, compptr = cinfo->comp_info; ci < cinfo->num_components;
@@ -184,7 +184,7 @@ alloc_funny_pointers(j_decompress_ptr cinfo)
      */
     xbuf = (JSAMPARRAY)
            (*cinfo->mem->alloc_small)((j_common_ptr) cinfo, JPOOL_IMAGE,
-                                      2 * (rgroup * (M + 4)) * SIZEOF(JSAMPROW));
+                                      (size_t) (2 * (rgroup * (M + 4))) * SIZEOF(JSAMPROW));
     xbuf += rgroup;    /* want one row group at negative offsets */
     main->xbuffer[0][ci] = xbuf;
     xbuf += rgroup * (M + 4);
@@ -574,7 +574,7 @@ jinit_d_main_controller(j_decompress_ptr cinfo, boolean need_full_buffer)
              cinfo->min_DCT_scaled_size; /* height of a row group of component */
     main->buffer[ci] = (*cinfo->mem->alloc_sarray)
                        ((j_common_ptr) cinfo, JPOOL_IMAGE,
-                        compptr->width_in_blocks * compptr->DCT_scaled_size,
+                        compptr->width_in_blocks * (JDIMENSION) compptr->DCT_scaled_size,
                         (JDIMENSION)(rgroup * ngroups));
   }
 }

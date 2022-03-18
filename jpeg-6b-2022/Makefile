@@ -23,13 +23,11 @@ CFLAGS     = -x c                              \
              -std=c11                          \
              -march=native                     \
              -Wall                             \
-             -Wno-implicit-fallthrough         \
+             -Wextra                           \
+             -pedantic                         \
+             -Wconversion                      \
+             -Wsign-conversion                 \
              -I.
-
-#             -Wextra                           \
-#             -Wconversion                      \
-#             -Wsign-conversion                 \
-
 
 all : clean $(OBJ_DIR)/libjpeg-6b.a
 

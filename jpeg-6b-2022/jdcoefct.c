@@ -179,7 +179,7 @@ decompress_onepass(j_decompress_ptr cinfo, JSAMPIMAGE output_buf)
     {
       /* Try to fetch an MCU.  Entropy decoder expects buffer to be zeroed. */
       jzero_far((void*) coef->MCU_buffer[0],
-                (size_t)(cinfo->blocks_in_MCU * SIZEOF(JBLOCK)));
+                (size_t)((size_t) cinfo->blocks_in_MCU * SIZEOF(JBLOCK)));
 
       if(!(*cinfo->entropy->decode_mcu)(cinfo, coef->MCU_buffer))
       {
@@ -211,8 +211,8 @@ decompress_onepass(j_decompress_ptr cinfo, JSAMPIMAGE output_buf)
         useful_width = (MCU_col_num < last_MCU_col) ? compptr->MCU_width
                        : compptr->last_col_width;
         output_ptr = output_buf[compptr->component_index] +
-                     yoffset * compptr->DCT_scaled_size;
-        start_col = MCU_col_num * compptr->MCU_sample_width;
+                     (JDIMENSION) ((JDIMENSION) yoffset * (JDIMENSION) compptr->DCT_scaled_size);
+        start_col = MCU_col_num * (JDIMENSION) compptr->MCU_sample_width;
 
         for(yindex = 0; yindex < compptr->MCU_height; yindex++)
         {
@@ -226,7 +226,7 @@ decompress_onepass(j_decompress_ptr cinfo, JSAMPIMAGE output_buf)
               (*inverse_DCT)(cinfo, compptr,
                              (JCOEFPTR) coef->MCU_buffer[blkn + xindex],
                              output_ptr, output_col);
-              output_col += compptr->DCT_scaled_size;
+              output_col += (JDIMENSION) compptr->DCT_scaled_size;
             }
           }
 
@@ -262,6 +262,8 @@ decompress_onepass(j_decompress_ptr cinfo, JSAMPIMAGE output_buf)
 METHODDEF(int)
 dummy_consume_data(j_decompress_ptr cinfo)
 {
+  (void) cinfo;
+
   return JPEG_SUSPENDED;  /* Always indicate nothing was done */
 }
 
@@ -292,7 +294,7 @@ consume_data(j_decompress_ptr cinfo)
     compptr = cinfo->cur_comp_info[ci];
     buffer[ci] = (*cinfo->mem->access_virt_barray)
                  ((j_common_ptr) cinfo, coef->whole_image[compptr->component_index],
-                  cinfo->input_iMCU_row * compptr->v_samp_factor,
+                  cinfo->input_iMCU_row * (JDIMENSION) compptr->v_samp_factor,
                   (JDIMENSION) compptr->v_samp_factor, TRUE);
     /* Note: entropy decoder expects buffer to be zeroed,
      * but this is handled automatically by the memory manager
@@ -313,7 +315,7 @@ consume_data(j_decompress_ptr cinfo)
       for(ci = 0; ci < cinfo->comps_in_scan; ci++)
       {
         compptr = cinfo->cur_comp_info[ci];
-        start_col = MCU_col_num * compptr->MCU_width;
+        start_col = MCU_col_num * (JDIMENSION) compptr->MCU_width;
 
         for(yindex = 0; yindex < compptr->MCU_height; yindex++)
         {
@@ -399,7 +401,7 @@ decompress_data(j_decompress_ptr cinfo, JSAMPIMAGE output_buf)
     /* Align the virtual buffer for this component. */
     buffer = (*cinfo->mem->access_virt_barray)
              ((j_common_ptr) cinfo, coef->whole_image[ci],
-              cinfo->output_iMCU_row * compptr->v_samp_factor,
+              cinfo->output_iMCU_row * (JDIMENSION) compptr->v_samp_factor,
               (JDIMENSION) compptr->v_samp_factor, FALSE);
 
     /* Count non-dummy DCT block rows in this iMCU row. */
@@ -410,7 +412,7 @@ decompress_data(j_decompress_ptr cinfo, JSAMPIMAGE output_buf)
     else
     {
       /* NB: can't use last_row_height here; it is input-side-dependent! */
-      block_rows = (int)(compptr->height_in_blocks % compptr->v_samp_factor);
+      block_rows = (int)(compptr->height_in_blocks % (JDIMENSION) compptr->v_samp_factor);
 
       if(block_rows == 0)
       {
@@ -432,7 +434,7 @@ decompress_data(j_decompress_ptr cinfo, JSAMPIMAGE output_buf)
         (*inverse_DCT)(cinfo, compptr, (JCOEFPTR) buffer_ptr,
                        output_ptr, output_col);
         buffer_ptr++;
-        output_col += compptr->DCT_scaled_size;
+        output_col += (JDIMENSION) compptr->DCT_scaled_size;
       }
 
       output_ptr += compptr->DCT_scaled_size;
@@ -495,8 +497,8 @@ smoothing_ok(j_decompress_ptr cinfo)
   if(coef->coef_bits_latch == NULL)
     coef->coef_bits_latch = (int*)
                             (*cinfo->mem->alloc_small)((j_common_ptr) cinfo, JPOOL_IMAGE,
-                                cinfo->num_components *
-                                (SAVED_COEFS * SIZEOF(int)));
+                                (size_t) cinfo->num_components *
+                                ((size_t) SAVED_COEFS * SIZEOF(int)));
 
   coef_bits_latch = coef->coef_bits_latch;
 
@@ -616,7 +618,7 @@ decompress_smooth_data(j_decompress_ptr cinfo, JSAMPIMAGE output_buf)
     else
     {
       /* NB: can't use last_row_height here; it is input-side-dependent! */
-      block_rows = (int)(compptr->height_in_blocks % compptr->v_samp_factor);
+      block_rows = (int)(compptr->height_in_blocks % (JDIMENSION) compptr->v_samp_factor);
 
       if(block_rows == 0)
       {
@@ -633,7 +635,7 @@ decompress_smooth_data(j_decompress_ptr cinfo, JSAMPIMAGE output_buf)
       access_rows += compptr->v_samp_factor; /* prior iMCU row too */
       buffer = (*cinfo->mem->access_virt_barray)
                ((j_common_ptr) cinfo, coef->whole_image[ci],
-                (cinfo->output_iMCU_row - 1) * compptr->v_samp_factor,
+                (JDIMENSION) (cinfo->output_iMCU_row - 1) * (JDIMENSION) compptr->v_samp_factor,
                 (JDIMENSION) access_rows, FALSE);
       buffer += compptr->v_samp_factor;  /* point to current iMCU row */
       first_row = FALSE;
@@ -863,7 +865,7 @@ decompress_smooth_data(j_decompress_ptr cinfo, JSAMPIMAGE output_buf)
         DC7 = DC8;
         DC8 = DC9;
         buffer_ptr++, prev_block_row++, next_block_row++;
-        output_col += compptr->DCT_scaled_size;
+        output_col += (JDIMENSION) compptr->DCT_scaled_size;
       }
 
       output_ptr += compptr->DCT_scaled_size;

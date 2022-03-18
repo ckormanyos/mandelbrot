@@ -76,6 +76,7 @@ METHODDEF(void)
 start_pass_downsample(j_compress_ptr cinfo)
 {
   /* no work for now */
+  (void) cinfo;
 }
 
 
@@ -130,7 +131,7 @@ sep_downsample(j_compress_ptr cinfo,
       ci++, compptr++)
   {
     in_ptr = input_buf[ci] + in_row_index;
-    out_ptr = output_buf[ci] + (out_row_group_index * compptr->v_samp_factor);
+    out_ptr = output_buf[ci] + (out_row_group_index * (JDIMENSION) compptr->v_samp_factor);
     (*downsample->methods[ci])(cinfo, compptr, in_ptr, out_ptr);
   }
 }
@@ -163,7 +164,7 @@ int_downsample(j_compress_ptr cinfo, jpeg_component_info* compptr,
    * efficient.
    */
   expand_right_edge(input_data, cinfo->max_v_samp_factor,
-                    cinfo->image_width, output_cols * h_expand);
+                    cinfo->image_width, output_cols * (JDIMENSION) h_expand);
 
   inrow = 0;
 
@@ -172,7 +173,7 @@ int_downsample(j_compress_ptr cinfo, jpeg_component_info* compptr,
     outptr = output_data[outrow];
 
     for(outcol = 0, outcol_h = 0; outcol < output_cols;
-        outcol++, outcol_h += h_expand)
+        outcol++, outcol_h += (JDIMENSION) h_expand)
     {
       outvalue = 0;
 

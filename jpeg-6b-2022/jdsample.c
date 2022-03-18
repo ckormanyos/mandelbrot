@@ -93,6 +93,8 @@ sep_upsample(j_decompress_ptr cinfo,
              JSAMPARRAY output_buf, JDIMENSION* out_row_ctr,
              JDIMENSION out_rows_avail)
 {
+  (void) in_row_groups_avail;
+
   my_upsample_ptr upsample = (my_upsample_ptr) cinfo->upsample;
   int ci;
   jpeg_component_info* compptr;
@@ -108,7 +110,7 @@ sep_upsample(j_decompress_ptr cinfo,
        * to color_buf[ci], so that fullsize_upsample can change it.
        */
       (*upsample->methods[ci])(cinfo, compptr,
-                               input_buf[ci] + (*in_row_group_ctr * upsample->rowgroup_height[ci]),
+                               input_buf[ci] + (*in_row_group_ctr * (JDIMENSION) upsample->rowgroup_height[ci]),
                                upsample->color_buf + ci);
     }
 
@@ -143,8 +145,8 @@ sep_upsample(j_decompress_ptr cinfo,
 
   /* Adjust counts */
   *out_row_ctr += num_rows;
-  upsample->rows_to_go -= num_rows;
-  upsample->next_row_out += num_rows;
+  upsample->rows_to_go   =       ((JDIMENSION) upsample->rows_to_go   - (JDIMENSION) num_rows);
+  upsample->next_row_out = (int) ((JDIMENSION) upsample->next_row_out + (JDIMENSION) num_rows);
 
   /* When the buffer is emptied, declare this input row group consumed */
   if(upsample->next_row_out >= cinfo->max_v_samp_factor)
@@ -171,6 +173,10 @@ METHODDEF(void)
 fullsize_upsample(j_decompress_ptr cinfo, jpeg_component_info* compptr,
                   JSAMPARRAY input_data, JSAMPARRAY* output_data_ptr)
 {
+  (void) cinfo;
+  (void) compptr;
+  (void) input_data;
+
   *output_data_ptr = input_data;
 }
 
@@ -184,6 +190,10 @@ METHODDEF(void)
 noop_upsample(j_decompress_ptr cinfo, jpeg_component_info* compptr,
               JSAMPARRAY input_data, JSAMPARRAY* output_data_ptr)
 {
+  (void) cinfo;
+  (void) compptr;
+  (void) input_data;
+
   *output_data_ptr = NULL;  /* safety check */
 }
 
@@ -256,6 +266,8 @@ METHODDEF(void)
 h2v1_upsample(j_decompress_ptr cinfo, jpeg_component_info* compptr,
               JSAMPARRAY input_data, JSAMPARRAY* output_data_ptr)
 {
+  (void) compptr;
+
   JSAMPARRAY output_data = *output_data_ptr;
   JSAMPROW inptr, outptr;
   JSAMPLE invalue;
@@ -287,6 +299,8 @@ METHODDEF(void)
 h2v2_upsample(j_decompress_ptr cinfo, jpeg_component_info* compptr,
               JSAMPARRAY input_data, JSAMPARRAY* output_data_ptr)
 {
+  (void) compptr;
+
   JSAMPARRAY output_data = *output_data_ptr;
   JSAMPROW inptr, outptr;
   JSAMPLE invalue;

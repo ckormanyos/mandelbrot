@@ -47,7 +47,7 @@ jobs:
           echo '${{ matrix.compiler }} test_mandelbrot.o -lpthread -lgmp -ljpeg-6b -Ljpeg-6b-2022/obj -o test_mandelbrot.exe'
           ${{ matrix.compiler }} test_mandelbrot.o -lpthread -lgmp -ljpeg-6b -Ljpeg-6b-2022/obj -o test_mandelbrot.exe
           ls -la ./test_mandelbrot.exe
-          mkdir images/tmp
+          mkdir -p images/tmp
           ./test_mandelbrot.exe
           ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
   gcc-native-cpp_dec_float:
@@ -81,9 +81,12 @@ jobs:
           echo '${{ matrix.compiler }} test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg-6b-2022/obj -o test_mandelbrot.exe'
           ${{ matrix.compiler }} test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg-6b-2022/obj -o test_mandelbrot.exe
           ls -la ./test_mandelbrot.exe
-          mkdir images/tmp
+          mkdir -p images/tmp
           ./test_mandelbrot.exe
           ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
+          cd images/tmp
+          sha1sum mandelbrot_MANDELBROT_05_SEAHORSES.jpg
+          sha1sum -c mandelbrot_MANDELBROT_05_SEAHORSES.jpg.sha1 | grep OK
   gcc-native-cpp_dec_float-asan:
     runs-on: ubuntu-latest
     defaults:
@@ -115,7 +118,7 @@ jobs:
           echo '${{ matrix.compiler }} -finline-functions -fsanitize=address -fsanitize=leak -march=native -mtune=native -O3 test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg-6b-2022/obj -o test_mandelbrot.exe'
           ${{ matrix.compiler }} -finline-functions -fsanitize=address -fsanitize=leak -march=native -mtune=native -O3 test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg-6b-2022/obj -o test_mandelbrot.exe
           ls -la ./test_mandelbrot.exe
-          mkdir images/tmp
+          mkdir -p images/tmp
           ./test_mandelbrot.exe
           ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
   gcc-native-cpp_dec_float-ubsan:
@@ -149,7 +152,7 @@ jobs:
           echo '${{ matrix.compiler }} -finline-functions -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -march=native -mtune=native -O3 test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg-6b-2022/obj -o test_mandelbrot.exe'
           ${{ matrix.compiler }} -finline-functions -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -march=native -mtune=native -O3 test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg-6b-2022/obj -o test_mandelbrot.exe
           ls -la ./test_mandelbrot.exe
-          mkdir images/tmp
+          mkdir -p images/tmp
           ./test_mandelbrot.exe
           ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
   gcc-native-cpp_dec_float-tsan:
@@ -183,6 +186,6 @@ jobs:
           echo '${{ matrix.compiler }} -finline-functions -fsanitize=thread test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg-6b-2022/obj -o test_mandelbrot.exe'
           ${{ matrix.compiler }} -finline-functions -fsanitize=thread test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg-6b-2022/obj -o test_mandelbrot.exe
           ls -la ./test_mandelbrot.exe
-          mkdir images/tmp
+          mkdir -p images/tmp
           ./test_mandelbrot.exe
           ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg

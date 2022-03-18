@@ -32,8 +32,8 @@
 
 // cd ..
 
-// g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++11 -DMANDELBROT_USE_GMP_FLOAT -I. -I/mnt/c/boost/boost_1_78_0 -I./jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
-// g++ test_mandelbrot.o -lpthread -lgmp -ljpeg-6b -Ljpeg-6b-2022/obj -o test_mandelbrot.exe
+// g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++11 -I. -I/mnt/c/boost/boost_1_78_0 -I./jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+// g++ test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg-6b-2022/obj -o test_mandelbrot.exe
 
 int main()
 {

@@ -265,9 +265,13 @@ select_ncolors(j_decompress_ptr cinfo, int Ncolors[])
 
 LOCAL(int)
 output_value(j_decompress_ptr cinfo, int ci, int j, int maxj)
-/* Return j'th output value, where j will range from 0 to maxj */
-/* The output values must fall in 0..MAXJSAMPLE in increasing order */
 {
+  (void) cinfo;
+  (void) ci;
+
+  /* Return j'th output value, where j will range from 0 to maxj */
+  /* The output values must fall in 0..MAXJSAMPLE in increasing order */
+
   /* We always provide values 0 and MAXJSAMPLE for each component;
    * any additional values are equally spaced between these limits.
    * (Forcing the upper and lower values to the limits ensures that
@@ -279,9 +283,12 @@ output_value(j_decompress_ptr cinfo, int ci, int j, int maxj)
 
 LOCAL(int)
 largest_input_value(j_decompress_ptr cinfo, int ci, int j, int maxj)
-/* Return largest input value that should map to j'th output value */
-/* Must have largest(j=0) >= 0, and largest(j=maxj) >= MAXJSAMPLE */
 {
+  /* Return largest input value that should map to j'th output value */
+  /* Must have largest(j=0) >= 0, and largest(j=maxj) >= MAXJSAMPLE */
+  (void) cinfo;
+  (void) ci;
+
   /* Breakpoints are halfway between values returned by output_value */
   return (int)(((INT32)(2 * j + 1) * MAXJSAMPLE + maxj) / (2 * maxj));
 }
@@ -618,7 +625,7 @@ quantize_ord_dither(j_decompress_ptr cinfo, JSAMPARRAY input_buf,
          * inputs.  The maximum dither is +- MAXJSAMPLE; this sets the
          * required amount of padding.
          */
-        *output_ptr += colorindex_ci[GETJSAMPLE(*input_ptr) + dither[col_index]];
+        *output_ptr = (JSAMPLE) (*output_ptr + (JDIMENSION) colorindex_ci[GETJSAMPLE(*input_ptr) + dither[col_index]]);
         input_ptr += nc;
         output_ptr++;
         col_index = (col_index + 1) & ODITHER_MASK;
@@ -721,8 +728,8 @@ quantize_fs_dither(j_decompress_ptr cinfo, JSAMPARRAY input_buf,
       if(cquantize->on_odd_row)
       {
         /* work right to left in this row */
-        input_ptr += (width - 1) * nc; /* so point to rightmost pixel */
-        output_ptr += width - 1;
+        input_ptr  += (JSAMPLE) ((width - 1) * (JDIMENSION) nc); /* so point to rightmost pixel */
+        output_ptr += (JSAMPLE) (width - 1);
         dir = -1;
         dirnc = -nc;
         errorptr = cquantize->fserrors[ci] + (width + 1); /* => entry after last column */
@@ -761,7 +768,7 @@ quantize_fs_dither(j_decompress_ptr cinfo, JSAMPARRAY input_buf,
         cur = GETJSAMPLE(range_limit[cur]);
         /* Select output value, accumulate into output code for this pixel */
         pixcode = GETJSAMPLE(colorindex_ci[cur]);
-        *output_ptr += (JSAMPLE) pixcode;
+        *output_ptr = (JSAMPLE) (*output_ptr + (JSAMPLE) pixcode);
         /* Compute actual representation error at this pixel */
         /* Note: we can do this even though we don't have the final */
         /* pixel code, because the colormap is orthogonal. */
@@ -827,6 +834,8 @@ alloc_fs_workspace(j_decompress_ptr cinfo)
 METHODDEF(void)
 start_pass_1_quant(j_decompress_ptr cinfo, boolean is_pre_scan)
 {
+  (void) is_pre_scan;
+
   my_cquantize_ptr cquantize = (my_cquantize_ptr) cinfo->cquantize;
   size_t arraysize;
   int i;
@@ -913,6 +922,8 @@ start_pass_1_quant(j_decompress_ptr cinfo, boolean is_pre_scan)
 METHODDEF(void)
 finish_pass_1_quant(j_decompress_ptr cinfo)
 {
+  (void) cinfo;
+
   /* no work in 1-pass case */
 }
 
