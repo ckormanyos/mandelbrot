@@ -178,3 +178,15 @@ Please see their
 [original _README_](https://github.com/ckormanyos/mandelbrot/tree/main/jpeg-6b-2022#readme)
 in its entirety for more information about and licensing terms
 of _the_ _Independent_ _JPEG_ _Group's_ _software_.
+
+The following adaptions have been performed.
+
+  - In this change log, test only the subset of functions empirically found to be needed for use with Boost.Gil.
+  - Adapt to VS compiler and VS solution workspace.
+  - Handle Level-3 warnings found in MSVC.
+  - Run `*.c`/`*.h` files through AStyle (Artistic Code Style), using a version of AStyle from somewhere in 2015.
+  - Remove several unused preprocessor options such as short names for linkers.
+  - Eliminate all uses of `NEED_FAR_POINTERS`.
+  - Eliminate all uses of `NEED_SHORT_EXTERNAL_NAMES`.
+  - Handle GCC warnings `-Wall -Wextra -pedantic`.
+  - Handle GCC warnings `-Wconversion -Wsign-conversion`.
