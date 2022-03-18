@@ -47,7 +47,7 @@
 
   } // namespace local
 
-  inline auto filename() -> std::string { return std::string(std::string("mandelbrot_") + MANDELBROT_FILENAME_STRING + std::string(".jpg")); }
+  inline auto filename() -> std::string { return std::string(std::string("images/tmp/mandelbrot_") + MANDELBROT_FILENAME_STRING + std::string(".jpg")); }
 
   using mandelbrot_config_type  = ckormanyos::mandelbrot::mandelbrot_config<detail::numeric_type, MANDELBROT_CALCULATION_ITERATIONS, MANDELBROT_CALCULATION_PIXELS_1D>;
   using mandelbrot_numeric_type = typename mandelbrot_config_type::mandelbrot_config_numeric_type;
