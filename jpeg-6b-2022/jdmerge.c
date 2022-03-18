@@ -150,6 +150,8 @@ merged_2v_upsample(j_decompress_ptr cinfo,
                    JDIMENSION out_rows_avail)
 /* 2:1 vertical sampling case: may need a spare row. */
 {
+  (void) in_row_groups_avail;
+
   my_upsample_ptr upsample = (my_upsample_ptr) cinfo->upsample;
   JSAMPROW work_ptrs[2];
   JDIMENSION num_rows;    /* number of rows returned to caller */
@@ -218,6 +220,9 @@ merged_1v_upsample(j_decompress_ptr cinfo,
                    JDIMENSION out_rows_avail)
 /* 1:1 vertical sampling case: much easier, never need a spare row. */
 {
+  (void) in_row_groups_avail;
+  (void) out_rows_avail;
+
   my_upsample_ptr upsample = (my_upsample_ptr) cinfo->upsample;
 
   /* Just do the upsampling. */
@@ -407,7 +412,7 @@ jinit_merged_upsampler(j_decompress_ptr cinfo)
   upsample->pub.start_pass = start_pass_merged_upsample;
   upsample->pub.need_context_rows = FALSE;
 
-  upsample->out_row_width = cinfo->output_width * cinfo->out_color_components;
+  upsample->out_row_width = cinfo->output_width * (JDIMENSION) cinfo->out_color_components;
 
   if(cinfo->max_v_samp_factor == 2)
   {

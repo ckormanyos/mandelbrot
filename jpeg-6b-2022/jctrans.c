@@ -325,6 +325,8 @@ start_pass_coef(j_compress_ptr cinfo, J_BUF_MODE pass_mode)
 METHODDEF(boolean)
 compress_output(j_compress_ptr cinfo, JSAMPIMAGE input_buf)
 {
+  (void) input_buf;
+
   my_coef_ptr coef = (my_coef_ptr) cinfo->coef;
   JDIMENSION MCU_col_num;  /* index of current MCU within row */
   JDIMENSION last_MCU_col = cinfo->MCUs_per_row - 1;
@@ -342,7 +344,7 @@ compress_output(j_compress_ptr cinfo, JSAMPIMAGE input_buf)
     compptr = cinfo->cur_comp_info[ci];
     buffer[ci] = (*cinfo->mem->access_virt_barray)
                  ((j_common_ptr) cinfo, coef->whole_image[compptr->component_index],
-                  coef->iMCU_row_num * compptr->v_samp_factor,
+                  coef->iMCU_row_num * (JDIMENSION) compptr->v_samp_factor,
                   (JDIMENSION) compptr->v_samp_factor, FALSE);
   }
 
@@ -359,7 +361,7 @@ compress_output(j_compress_ptr cinfo, JSAMPIMAGE input_buf)
       for(ci = 0; ci < cinfo->comps_in_scan; ci++)
       {
         compptr = cinfo->cur_comp_info[ci];
-        start_col = MCU_col_num * compptr->MCU_width;
+        start_col = MCU_col_num * (JDIMENSION) compptr->MCU_width;
         blockcnt = (MCU_col_num < last_MCU_col) ? compptr->MCU_width
                    : compptr->last_col_width;
 

@@ -35,12 +35,17 @@ extern void free JPP((void* ptr));
 GLOBAL(void*)
 jpeg_get_small(j_common_ptr cinfo, size_t sizeofobject)
 {
+  (void) cinfo;
+
   return (void*) malloc(sizeofobject);
 }
 
 GLOBAL(void)
 jpeg_free_small(j_common_ptr cinfo, void* object, size_t sizeofobject)
 {
+  (void) cinfo;
+  (void) sizeofobject;
+
   free(object);
 }
 
@@ -55,12 +60,17 @@ jpeg_free_small(j_common_ptr cinfo, void* object, size_t sizeofobject)
 GLOBAL(void*)
 jpeg_get_large(j_common_ptr cinfo, size_t sizeofobject)
 {
+  (void) cinfo;
+
   return (void*) malloc(sizeofobject);
 }
 
 GLOBAL(void)
 jpeg_free_large(j_common_ptr cinfo, void* object, size_t sizeofobject)
 {
+  (void) cinfo;
+  (void) sizeofobject;
+
   free(object);
 }
 
@@ -81,6 +91,9 @@ GLOBAL(long)
 jpeg_mem_available(j_common_ptr cinfo, long min_bytes_needed,
                    long max_bytes_needed, long already_allocated)
 {
+  (void) min_bytes_needed;
+  (void) max_bytes_needed;
+
   return cinfo->mem->max_memory_to_use - already_allocated;
 }
 
@@ -132,6 +145,8 @@ write_backing_store(j_common_ptr cinfo, backing_store_ptr info,
 METHODDEF(void)
 close_backing_store(j_common_ptr cinfo, backing_store_ptr info)
 {
+  (void) cinfo;
+
   fclose(info->temp_file);
   /* Since this implementation uses tmpfile() to create the file,
    * no explicit file deletion is needed.
@@ -151,6 +166,8 @@ GLOBAL(void)
 jpeg_open_backing_store(j_common_ptr cinfo, backing_store_ptr info,
                         long total_bytes_needed)
 {
+  (void) total_bytes_needed;
+
   if((info->temp_file = tmpfile()) == NULL)
   {
     ERREXITS(cinfo, JERR_TFILE_CREATE, "");
@@ -170,11 +187,15 @@ jpeg_open_backing_store(j_common_ptr cinfo, backing_store_ptr info,
 GLOBAL(long)
 jpeg_mem_init(j_common_ptr cinfo)
 {
+  (void) cinfo;
+
   return DEFAULT_MAX_MEM;  /* default for max_memory_to_use */
 }
 
 GLOBAL(void)
 jpeg_mem_term(j_common_ptr cinfo)
 {
+  (void) cinfo;
+
   /* no work */
 }

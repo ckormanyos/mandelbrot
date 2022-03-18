@@ -566,6 +566,11 @@ prepare_for_pass(j_compress_ptr cinfo)
       break;
 #ifdef ENTROPY_OPT_SUPPORTED
 
+#if defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wimplicit-fallthrough="
+#endif
+
     case huff_opt_pass:
       /* Do Huffman optimization for a scan after the first one. */
       select_scan_parameters(cinfo);
@@ -585,6 +590,11 @@ prepare_for_pass(j_compress_ptr cinfo)
       master->pass_type = output_pass;
       master->pass_number++;
       /*FALLTHROUGH*/
+
+#if defined(__GNUC__)
+#pragma GCC diagnostic pop
+#endif
+
 #endif
 
     case output_pass:

@@ -159,7 +159,7 @@ per_scan_setup(j_decompress_ptr cinfo)
     /* For noninterleaved scans, it is convenient to define last_row_height
      * as the number of block rows present in the last iMCU row.
      */
-    tmp = (int)(compptr->height_in_blocks % compptr->v_samp_factor);
+    tmp = (int)(compptr->height_in_blocks % (JDIMENSION) compptr->v_samp_factor);
 
     if(tmp == 0)
     {
@@ -200,7 +200,7 @@ per_scan_setup(j_decompress_ptr cinfo)
       compptr->MCU_blocks = compptr->MCU_width * compptr->MCU_height;
       compptr->MCU_sample_width = compptr->MCU_width * compptr->DCT_scaled_size;
       /* Figure number of non-dummy blocks in last MCU column & row */
-      tmp = (int)(compptr->width_in_blocks % compptr->MCU_width);
+      tmp = (int)(compptr->width_in_blocks % (JDIMENSION) compptr->MCU_width);
 
       if(tmp == 0)
       {
@@ -208,7 +208,7 @@ per_scan_setup(j_decompress_ptr cinfo)
       }
 
       compptr->last_col_width = tmp;
-      tmp = (int)(compptr->height_in_blocks % compptr->MCU_height);
+      tmp = (int)(compptr->height_in_blocks % (JDIMENSION) compptr->MCU_height);
 
       if(tmp == 0)
       {

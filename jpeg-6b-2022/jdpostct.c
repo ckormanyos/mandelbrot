@@ -185,6 +185,9 @@ post_process_prepass(j_decompress_ptr cinfo,
                      JSAMPARRAY output_buf, JDIMENSION* out_row_ctr,
                      JDIMENSION out_rows_avail)
 {
+  (void) output_buf;
+  (void) out_rows_avail;
+
   my_post_ptr post = (my_post_ptr) cinfo->post;
   JDIMENSION old_next_row, num_rows;
 
@@ -232,6 +235,10 @@ post_process_2pass(j_decompress_ptr cinfo,
                    JSAMPARRAY output_buf, JDIMENSION* out_row_ctr,
                    JDIMENSION out_rows_avail)
 {
+  (void) input_buf;
+  (void) in_row_group_ctr;
+  (void) in_row_groups_avail;
+
   my_post_ptr post = (my_post_ptr) cinfo->post;
   JDIMENSION num_rows, max_rows;
 
@@ -312,7 +319,7 @@ jinit_d_post_controller(j_decompress_ptr cinfo, boolean need_full_buffer)
 #ifdef QUANT_2PASS_SUPPORTED
       post->whole_image = (*cinfo->mem->request_virt_sarray)
                           ((j_common_ptr) cinfo, JPOOL_IMAGE, FALSE,
-                           cinfo->output_width * cinfo->out_color_components,
+                           cinfo->output_width * (JDIMENSION) cinfo->out_color_components,
                            (JDIMENSION) jround_up((long) cinfo->output_height,
                                (long) post->strip_height),
                            post->strip_height);
@@ -325,7 +332,7 @@ jinit_d_post_controller(j_decompress_ptr cinfo, boolean need_full_buffer)
       /* One-pass color quantization: just make a strip buffer. */
       post->buffer = (*cinfo->mem->alloc_sarray)
                      ((j_common_ptr) cinfo, JPOOL_IMAGE,
-                      cinfo->output_width * cinfo->out_color_components,
+                      cinfo->output_width * (JDIMENSION) cinfo->out_color_components,
                       post->strip_height);
     }
   }

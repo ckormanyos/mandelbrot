@@ -8,4 +8,5 @@ Change Log for 2010, 2015, 2022
 - Remove several unused preprocessor options such as short names for linkers.
 - Eliminate all uses of NEED_FAR_POINTERS.
 - Eliminate all uses of NEED_SHORT_EXTERNAL_NAMES.
-- Handle GCC warnings -Wconversoin/-Wsign-conversion (this is an ongoing process).
+- Handle GCC warnings -Wextra -pedantic (this is an ongoing process).
+- Handle GCC warnings -Wconversion -Wsign-conversion (this is an ongoing process).
