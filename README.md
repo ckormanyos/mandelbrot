@@ -95,7 +95,6 @@ This image has the following features and parameters.
 
 The following deep dive has a scale of approximately
 ![2.55{\times}10^{-55}](https://latex.codecogs.com/svg.image?2.55{\times}10^{-55}).
-
 The result of this deep dive iteration is represented by the image below.
 
 ![](./images/gallery/mandelbrot_MANDELBROT_09_DEEP_DIVE_02.jpg)
@@ -117,8 +116,8 @@ This is a huge magnification factor having a scale of approximately
 followed by
 ![311](https://latex.codecogs.com/svg.image?311)
 zeros.
-
-The result of this very deep dive iteration is represented by the image below.
+The result of this very deep dive iteration
+is represented by the image below.
 
 ![](./images/gallery/mandelbrot_MANDELBROT_20_ZOOM_VERY_DEEP_00.jpg)
 

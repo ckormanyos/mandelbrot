@@ -1,11 +1,11 @@
-﻿///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 //      Copyright Christopher Kormanyos 2015 - 2022.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef MANDELBROT_2015_06_15_H
+#ifndef MANDELBROT_2015_06_15_H // NOLINT(llvm-header-guard)
   #define MANDELBROT_2015_06_15_H
 
   #include <atomic>
@@ -19,8 +19,8 @@
   #include <boost/gil/typedefs.hpp>
   #include <boost/lexical_cast.hpp>
 
-  #include <mandelbrot/mandelbrot_color.h>
   #include <concurrency/parallel_for.h>
+  #include <mandelbrot/mandelbrot_color.h>
 
   #if(__cplusplus >= 201703L)
   namespace ckormanyos::mandelbrot {
@@ -49,16 +49,26 @@
         my_width (other.my_width),
         my_height(other.my_height) { }
 
+    mandelbrot_config_base(mandelbrot_config_base&& other) noexcept
+      : my_x_lo  (static_cast<mandelbrot_config_numeric_type&&>(other.my_x_lo)),
+        my_x_hi  (static_cast<mandelbrot_config_numeric_type&&>(other.my_x_hi)),
+        my_y_lo  (static_cast<mandelbrot_config_numeric_type&&>(other.my_y_lo)),
+        my_y_hi  (static_cast<mandelbrot_config_numeric_type&&>(other.my_y_hi)),
+        my_width (static_cast<mandelbrot_config_numeric_type&&>(other.my_width)),
+        my_height(static_cast<mandelbrot_config_numeric_type&&>(other.my_height)) { }
+
     mandelbrot_config_base(const mandelbrot_config_numeric_type& xl,
                            const mandelbrot_config_numeric_type& xh,
                            const mandelbrot_config_numeric_type& yl,
                            const mandelbrot_config_numeric_type& yh)
-      : my_x_lo  (xl),
-        my_x_hi  (xh),
-        my_y_lo  (yl),
-        my_y_hi  (yh),
+      : my_x_lo  (std::move(xl)),
+        my_x_hi  (std::move(xh)),
+        my_y_lo  (std::move(yl)),
+        my_y_hi  (std::move(yh)),
         my_width (my_x_hi - my_x_lo),
         my_height(my_y_hi - my_y_lo) { }
+
+    virtual ~mandelbrot_config_base() = default;
 
     auto operator=(const mandelbrot_config_base& other) -> mandelbrot_config_base&
     {
@@ -77,17 +87,15 @@
 
     auto operator=(mandelbrot_config_base&& other) noexcept -> mandelbrot_config_base&
     {
-      my_x_lo   = other.my_x_lo;
-      my_x_hi   = other.my_x_hi;
-      my_y_lo   = other.my_y_lo;
-      my_y_hi   = other.my_y_hi;
-      my_width  = other.my_width;
-      my_height = other.my_height;
+      my_x_lo   = static_cast<mandelbrot_config_numeric_type&&>(other.my_x_lo);
+      my_x_hi   = static_cast<mandelbrot_config_numeric_type&&>(other.my_x_hi);
+      my_y_lo   = static_cast<mandelbrot_config_numeric_type&&>(other.my_y_lo);
+      my_y_hi   = static_cast<mandelbrot_config_numeric_type&&>(other.my_y_hi);
+      my_width  = static_cast<mandelbrot_config_numeric_type&&>(other.my_width);
+      my_height = static_cast<mandelbrot_config_numeric_type&&>(other.my_height);
 
       return *this;
     }
-
-    virtual ~mandelbrot_config_base() = default;
 
     auto x_lo() const -> const mandelbrot_config_numeric_type& { return my_x_lo; }
     auto x_hi() const -> const mandelbrot_config_numeric_type& { return my_x_hi; }
@@ -213,7 +221,7 @@
     }
 
   private:
-    mandelbrot_config_numeric_type my_step;
+    mandelbrot_config_numeric_type my_step; // NOLINT(readability-identifier-naming)
 
     auto step() const -> const mandelbrot_config_numeric_type& final { return my_step; }
   };
@@ -229,12 +237,16 @@
 
     static constexpr auto max_iterations = static_cast<std::uint_fast32_t>(MaxIterations);
 
+    using boost_gil_x_coord_type = boost::gil::rgb8_image_t::x_coord_t;
+    using boost_gil_y_coord_type = boost::gil::rgb8_image_t::y_coord_t;
+
   public:
     using mandelbrot_config_type = mandelbrot_config_base<numeric_type, max_iterations>;
 
     explicit mandelbrot_generator(const mandelbrot_config_type& config)
       : mandelbrot_config_object   (config),
-        mandelbrot_image           (config.integral_width(), config.integral_height()),
+        mandelbrot_image           (static_cast<boost_gil_x_coord_type>(config.integral_width()),
+                                    static_cast<boost_gil_x_coord_type>(config.integral_height())),
         mandelbrot_view            (boost::gil::rgb8_view_t()),
         mandelbrot_iteration_matrix(config.integral_width(),
                                     std::vector<std::uint_fast32_t>(config.integral_height())),
@@ -376,13 +388,13 @@
     }
 
   private:
-    const mandelbrot_config_type&                      mandelbrot_config_object;
+    const mandelbrot_config_type&                      mandelbrot_config_object;    // NOLINT(readability-identifier-naming)
 
-          boost::gil::rgb8_image_t                     mandelbrot_image;
-          boost::gil::rgb8_view_t                      mandelbrot_view;
+          boost::gil::rgb8_image_t                     mandelbrot_image;            // NOLINT(readability-identifier-naming)
+          boost::gil::rgb8_view_t                      mandelbrot_view;             // NOLINT(readability-identifier-naming)
 
-          std::vector<std::vector<std::uint_fast32_t>> mandelbrot_iteration_matrix;
-          std::vector<std::uint_fast32_t>              mandelbrot_color_histogram;
+          std::vector<std::vector<std::uint_fast32_t>> mandelbrot_iteration_matrix; // NOLINT(readability-identifier-naming)
+          std::vector<std::uint_fast32_t>              mandelbrot_color_histogram;  // NOLINT(readability-identifier-naming)
 
     auto apply_color_stretches(const std::vector<numeric_type>& x_values,
                                const std::vector<numeric_type>& y_values,
@@ -418,7 +430,21 @@
 
           const boost::gil::rgb8_pixel_t the_color  = boost::gil::rgb8_pixel_t(rh, gh, bh);
 
-          mandelbrot_view(i_col, j_row) = boost::gil::rgb8_pixel_t(the_color);
+          {
+            const auto x_col = 
+              static_cast<boost_gil_x_coord_type>
+              (
+                i_col
+              );
+
+            const auto y_row = 
+              static_cast<boost_gil_x_coord_type>
+              (
+                j_row
+              );
+
+            mandelbrot_view(x_col, y_row) = boost::gil::rgb8_pixel_t(the_color);
+          }
         }
       }
     }

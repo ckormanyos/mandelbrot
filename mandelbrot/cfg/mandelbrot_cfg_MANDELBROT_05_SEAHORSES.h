@@ -5,7 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef MANDELBROT_CFG_MANDELBROT_05_SEAHORSES_2022_02_24_H
+#ifndef MANDELBROT_CFG_MANDELBROT_05_SEAHORSES_2022_02_24_H // NOLINT(llvm-header-guard)
   #define MANDELBROT_CFG_MANDELBROT_05_SEAHORSES_2022_02_24_H
 
   #if defined(__clang__)
@@ -20,19 +20,19 @@
 
   // This is a swirly seahorse image.
 
-  #define MANDELBROT_FILENAME_STRING            "MANDELBROT_05_SEAHORSES"
+  #define MANDELBROT_FILENAME_STRING            "MANDELBROT_05_SEAHORSES" // NOLINT(cppcoreguidelines-macro-usage)
 
-  #define MANDELBROT_CALCULATION_DIGITS10       37
+  constexpr int MANDELBROT_CALCULATION_DIGITS10   =      37;
   #if !defined(MANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH)
-  #define MANDELBROT_CALCULATION_PIXELS_1D      2048UL
+  constexpr int MANDELBROT_CALCULATION_PIXELS_1D  =    2048;
   #else
-  #define MANDELBROT_CALCULATION_PIXELS_1D       512UL
+  constexpr int MANDELBROT_CALCULATION_PIXELS_1D  =     512;
   #endif
-  #define MANDELBROT_CALCULATION_ITERATIONS     2000UL
+  constexpr int MANDELBROT_CALCULATION_ITERATIONS =    2000;
 
-  #define MANDELBROT_POINT_DX_HALF              "1.76E-12"
-  #define MANDELBROT_POINT_CENTER_X             "-0.7453983606667815"
-  #define MANDELBROT_POINT_CENTER_Y             "0.1125046349959942"
+  #define MANDELBROT_POINT_DX_HALF              "1.76E-12"                // NOLINT(cppcoreguidelines-macro-usage)
+  #define MANDELBROT_POINT_CENTER_X             "-0.7453983606667815"     // NOLINT(cppcoreguidelines-macro-usage)
+  #define MANDELBROT_POINT_CENTER_Y             "0.1125046349959942"      // NOLINT(cppcoreguidelines-macro-usage)
 
   #include <mandelbrot/cfg/mandelbrot_cfg.h>
 

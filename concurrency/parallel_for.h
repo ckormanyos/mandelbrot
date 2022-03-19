@@ -1,4 +1,4 @@
-﻿///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 //  Copyright Christopher Kormanyos 2017 - 2022.
 //  Distributed under the Boost Software License,
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt
@@ -42,7 +42,7 @@
           static_cast<index_type>(end - start) + static_cast<index_type>(1)
         );
 
-      const auto slice = (std::max)(static_cast<index_type>(std::round(n / static_cast<double> (number_of_threads))),
+      const auto slice = (std::max)(static_cast<index_type>(std::round(static_cast<double>(n) / static_cast<double>(number_of_threads))),
                                     static_cast<index_type>(1));
 
       // Inner loop.

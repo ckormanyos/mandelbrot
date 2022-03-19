@@ -5,7 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef MANDELBROT_CFG_2022_02_24_H
+#ifndef MANDELBROT_CFG_2022_02_24_H // NOLINT(llvm-header-guard)
   #define MANDELBROT_CFG_2022_02_24_H
 
   #include <mandelbrot/mandelbrot.h>
@@ -15,7 +15,7 @@
   #include <boost/multiprecision/gmp.hpp>
 
   #define MANDELBROT_NUMBER_TYPE_NAME(mandelbrot_digits10) \
-  boost::multiprecision::number<boost::multiprecision::gmp_float<(mandelbrot_digits10)>,\
+  boost::multiprecision::number<boost::multiprecision::gmp_float<static_cast<unsigned>(mandelbrot_digits10)>,\
                                 boost::multiprecision::et_off>
 
   #elif defined(MANDELBROT_USE_WIDE_DECIMAL)
@@ -29,8 +29,8 @@
 
   #include <boost/multiprecision/cpp_dec_float.hpp>
 
-  #define MANDELBROT_NUMBER_TYPE_NAME(mandelbrot_digits10) \
-  boost::multiprecision::number<boost::multiprecision::cpp_dec_float<(mandelbrot_digits10)>,\
+  #define MANDELBROT_NUMBER_TYPE_NAME(mandelbrot_digits10) /* NOLINT(cppcoreguidelines-macro-usage) */ \
+  boost::multiprecision::number<boost::multiprecision::cpp_dec_float<static_cast<unsigned>(mandelbrot_digits10)>,\
                                 boost::multiprecision::et_off>
 
   #endif
@@ -43,13 +43,26 @@
 
   namespace detail {
 
-  using numeric_type = MANDELBROT_NUMBER_TYPE_NAME( MANDELBROT_CALCULATION_DIGITS10 );
+  using numeric_type = MANDELBROT_NUMBER_TYPE_NAME( MANDELBROT_CALCULATION_DIGITS10 ); // NOLINT(cppcoreguidelines-macro-usage)
 
-  } // namespace local
+  } // namespace detail
 
-  inline auto filename() -> std::string { return std::string(std::string("images/tmp/mandelbrot_") + MANDELBROT_FILENAME_STRING + std::string(".jpg")); }
+  inline auto filename() -> std::string
+  {
+    return
+      std::string
+      (
+          std::string("images/tmp/mandelbrot_")
+        + MANDELBROT_FILENAME_STRING
+        + std::string(".jpg")
+      );
+  }
 
-  using mandelbrot_config_type  = ckormanyos::mandelbrot::mandelbrot_config<detail::numeric_type, MANDELBROT_CALCULATION_ITERATIONS, MANDELBROT_CALCULATION_PIXELS_1D>;
+  using mandelbrot_config_type  =
+    ckormanyos::mandelbrot::mandelbrot_config<detail::numeric_type,
+                                              static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_ITERATIONS),
+                                              static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_1D)>;
+
   using mandelbrot_numeric_type = typename mandelbrot_config_type::mandelbrot_config_numeric_type;
 
   inline auto dx_half () -> mandelbrot_numeric_type { return mandelbrot_numeric_type(MANDELBROT_POINT_DX_HALF); }

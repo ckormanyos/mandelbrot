@@ -1,11 +1,11 @@
-﻿///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 //      Copyright Christopher Kormanyos 2015 - 2022.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef MANDELBROT_COLOR_2015_06_15_H
+#ifndef MANDELBROT_COLOR_2015_06_15_H // NOLINT(llvm-header-guard)
   #define MANDELBROT_COLOR_2015_06_15_H
 
   #include <cmath>
@@ -54,7 +54,7 @@
             static_cast<double>(sin(color_phase) / 2.0) + 0.5
           );
 
-        return static_cast<std::uint_fast32_t>(my_color * 255.0);
+        return static_cast<std::uint_fast32_t>(my_color * 255.0); // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
       }
     }
   };
@@ -109,7 +109,7 @@
         (
           static_cast<double>
           (
-              static_cast<double>(static_cast<double>(c)  / 255.0)
+              static_cast<double>(static_cast<double>(c)  / 255.0) // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
             * static_cast<double>(static_cast<double>(c)  /   1.0)
           )
         );
@@ -119,12 +119,9 @@
   class color_stretch_base
   {
   public:
-    color_stretch_base() : my_total_pixels(0U),
-                           my_sum         (0U) { }
+    color_stretch_base() = default;
 
-    color_stretch_base(const color_stretch_base& other)
-      : my_total_pixels(other.my_total_pixels),
-        my_sum         (other.my_sum) { }
+    color_stretch_base(const color_stretch_base& other) = default;
 
     color_stretch_base(color_stretch_base&& other) noexcept
       : my_total_pixels(other.my_total_pixels),
@@ -157,11 +154,11 @@
       my_sum          = 0U;
     }
 
-    virtual auto color_stretch(std::uint_fast32_t&) const -> void = 0;
+    virtual auto color_stretch(std::uint_fast32_t&) const -> void = 0; // NOLINT(google-runtime-references)
 
   protected:
-    mutable std::uint_fast32_t my_total_pixels;
-    mutable std::uint_fast32_t my_sum;
+    mutable std::uint_fast32_t my_total_pixels { }; // NOLINT(cppcoreguidelines-non-private-member-variables-in-classes,misc-non-private-member-variables-in-classes,readability-identifier-naming)
+    mutable std::uint_fast32_t my_sum { };          // NOLINT(cppcoreguidelines-non-private-member-variables-in-classes,misc-non-private-member-variables-in-classes,readability-identifier-naming)
   };
 
   class color_stretch_histogram_method final : public color_stretch_base
