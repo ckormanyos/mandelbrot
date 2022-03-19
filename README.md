@@ -67,27 +67,29 @@ for a more comprehensive collection of images.
 ### Classic Full Mandelbrot Image
 
 A black-and-white rendition of the well-known, classic full Mandelbrot iteration is shown below.
-The image has the following features and parameters.
+
+![](./images/gallery/mandelbrot_MANDELBROT_01_FULL.jpg)
+
+This image has the following features and parameters.
 
   - The square image has ![2048{\times}2048](https://latex.codecogs.com/svg.image?2048{\times}2048) pixels.
   - Centered at the point ![(-0.75,0.0)](https://latex.codecogs.com/svg.image?(-0.75,0.0)).
   - Uses a half-width of ![1.25](https://latex.codecogs.com/svg.image?1.25).
   - Computed with ![2,000](https://latex.codecogs.com/svg.image?2,000) iteratons using the `cpp_dec_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_78_0/libs/multiprecision/doc/html/index.html) instantiated with ![37](https://latex.codecogs.com/svg.image?37) decimal digits of precision.
 
-![](./images/gallery/mandelbrot_MANDELBROT_01_FULL.jpg)
-
 ### Swirly Seahorses and Mini Mandelbrot
 
 A beautiful iteration result showing swirly seahorses and a mini Mandelbrot image
-in black-and-white color representation is shown below. The image
-has the following features and parameters.
+in black-and-white color representation is shown below.
+
+![](./images/gallery/mandelbrot_MANDELBROT_05_SEAHORSES.jpg)
+
+This image has the following features and parameters.
 
   - The square image has ![2048{\times}2048](https://latex.codecogs.com/svg.image?2048{\times}2048) pixels.
   - Centered at the point ![(-0.7453983606667815,0.1125046349959942](https://latex.codecogs.com/svg.image?(-0.7453983606667815,0.1125046349959942)).
   - Uses a half-width of ![1.76{\times}10^{-12}](https://latex.codecogs.com/svg.image?1.76{\times}10^{-12}).
   - Computed with ![2,000](https://latex.codecogs.com/svg.image?2,000) iteratons using the `cpp_dec_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_78_0/libs/multiprecision/doc/html/index.html) instantiated with ![37](https://latex.codecogs.com/svg.image?37) decimal digits of precision.
-
-![](./images/gallery/mandelbrot_MANDELBROT_05_SEAHORSES.jpg)
 
 ### A Deep Dive
 
@@ -95,15 +97,16 @@ The following deep dive has a scale of approximately
 ![2.55{\times}10^{-55}](https://latex.codecogs.com/svg.image?2.55{\times}10^{-55}).
 
 The result of this deep dive iteration is represented by the image below.
-It has the the following features and parameters.
+
+![](./images/gallery/mandelbrot_MANDELBROT_09_DEEP_DIVE_02.jpg)
+
+This image has the the following features and parameters.
 
   - The square image has ![2048{\times}2048](https://latex.codecogs.com/svg.image?2048{\times}2048) pixels.
   - Centered at the point ![(-1.2951890821477774570170641771856819267{\ldots},0.44093698267832013888090367835626261211{\ldots})](https://latex.codecogs.com/svg.image?(-1.2951890821477774570170641771856819267{\ldots},0.44093698267832013888090367835626261211{\ldots}))
   - See the configuration code [mandelbrot_cfg_MANDELBROT_09_DEEP_DIVE_02.h](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_09_DEEP_DIVE_02.h) for the full precision of the center point.
   - Uses a half-width of ![2.55{\times}10^{-55}](https://latex.codecogs.com/svg.image?2.55{\times}10^{-55}).
   - Computed with ![15,000](https://latex.codecogs.com/svg.image?15,000) iteratons using the `cpp_dec_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_78_0/libs/multiprecision/doc/html/index.html) instantiated with ![95](https://latex.codecogs.com/svg.image?95) decimal digits of precision.
-
-![](./images/gallery/mandelbrot_MANDELBROT_09_DEEP_DIVE_02.jpg)
 
 ### A Really Deep Dive
 
@@ -116,15 +119,16 @@ followed by
 zeros.
 
 The result of this very deep dive iteration is represented by the image below.
-It has the the following features and parameters.
+
+![](./images/gallery/mandelbrot_MANDELBROT_20_ZOOM_VERY_DEEP_00.jpg)
+
+This image has the the following features and parameters.
 
   - The square image has ![1536{\times}1536](https://latex.codecogs.com/svg.image?1536{\times}1536) pixels.
   - Centered at the point ![(0.3602404434376143632361252444495453084826{\ldots},-0.6413130610648031748603750151793020665794{\ldots})](https://latex.codecogs.com/svg.image?(0.3602404434376143632361252444495453084826{\ldots},-0.6413130610648031748603750151793020665794{\ldots}))
   - See the configuration code [mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h) for the full precision of the center point provided with slightly more than ![1,000](https://latex.codecogs.com/svg.image?1,000) decimal places.
   - Uses a half-width of ![4.4{\times}10^{-311}](https://latex.codecogs.com/svg.image?4.4{\times}10^{-311}).
   - Computed with ![60,000](https://latex.codecogs.com/svg.image?60,000) iteratons using the `gmp_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_78_0/libs/multiprecision/doc/html/index.html) instantiated with ![365](https://latex.codecogs.com/svg.image?365) decimal digits of precision.
-
-![](./images/gallery/mandelbrot_MANDELBROT_20_ZOOM_VERY_DEEP_00.jpg)
 
 ## Using ckormanyos/mandelbrot
 
@@ -184,7 +188,7 @@ The following adaptions have been performed.
   - In this change log, test only the subset of functions empirically found to be needed for use with Boost.Gil.
   - Adapt to VS compiler and VS solution workspace.
   - Handle Level-3 warnings found in MSVC.
-  - Run `*.c`/`*.h` files through AStyle (Artistic Code Style), using a version of AStyle from somewhere in 2015.
+  - Run the `*.c`/`*.h` files through the [Artistic Style](http://astyle.sourceforge.net/astyle.html) automoatic code formatter, using a version of _AStyle_ from somewhere around 2015.
   - Remove several unused preprocessor options such as short names for linkers.
   - Eliminate all uses of `NEED_FAR_POINTERS`.
   - Eliminate all uses of `NEED_SHORT_EXTERNAL_NAMES`.
