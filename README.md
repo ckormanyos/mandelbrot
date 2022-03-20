@@ -70,19 +70,34 @@ with a `-I` switch on the compiler command line.
 
 Use shell commands such as the following.
 
-Make the JPEG library.
+Make the JPEG library. This creates the library file `libjpeg-6b.a` located in the directory `mandelbrot/jpeg-6b-2022/obj`.
 
 ```sh
 cd mandelbrot/jpeg-6b-2022
 make all
 ```
 
-Build, link and run `test_mandelbrot.cpp`
+Go to the mandelbrot root directory.
 
 ```sh
 cd mandelbrot
+```
+
+Compile `test_mandelbrot.cpp` to `test_mandelbrot.o`.
+
+```sh
 g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++11 -I. -I./jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+```
+
+Link `test_mandelbrot.o` to `test_mandelbrot.exe`.
+
+```sh
 g++ test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg-6b-2022/obj -o test_mandelbrot.exe
+```
+
+Make the needed output image directory and run `test_mandelbrot.exe`.
+
+```sh
 mkdir -p images/tmp
 ./test_mandelbrot.exe
 ```
@@ -223,10 +238,10 @@ of _the_ _Independent_ _JPEG_ _Group's_ _software_.
 
 The following adaptions have been performed.
 
-  - In this change log, test only the subset of functions empirically found to be needed for use with Boost.Gil.
+  - Test/compile only the subset of functions empirically found to be needed for use with [Boost.Gil](https://www.boost.org/doc/libs/1_78_0/libs/gil/doc/html/index.html).
   - Adapt to VS compiler and VS solution workspace (when building with MSVC).
   - Use GNUmake to build the JPEG library (when building on `*nix`).
-  - Run the `*.c`/`*.h` files through the [Artistic Style](http://astyle.sourceforge.net/astyle.html) automoatic code formatter, using a version of _AStyle_ from somewhere around 2015.
+  - Run the `*.c`/`*.h` files through the [Artistic Style](http://astyle.sourceforge.net/astyle.html) automatic code formatter, using a version of _AStyle_ from somewhere around 2015.
   - Remove several unused preprocessor options such as short names for linkers.
   - Eliminate all uses of `NEED_FAR_POINTERS` and `NEED_SHORT_EXTERNAL_NAMES`.
   - Handle Level-3 warnings found in MSVC.
