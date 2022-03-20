@@ -48,6 +48,44 @@ The following design goals have been incorporated.
   - Graphical representation uses [Boost.Gil](https://www.boost.org/doc/libs/1_78_0/libs/gil/doc/html/index.html) in combination with the JPEG-6b library (see below).
   - Color schemes can be easily adapted via straightforward creation (or modification) of a skinny derived class.
 
+## Building the Project
+
+### Build on `Win*` with MSVC
+
+  - Locate the solution file `mandelbrot.sln` in the root dierctory.
+  - Open the solution file in Visual Studio.
+  - Build the desired configuration and run in the usual way.
+  - The resulting JPEG image will be placed as a temporary file in the `images\tmp\` folder.
+
+### Build on with `*nix`
+
+  - Build the JPEG library with GNUmake.
+  - Compile, link and run `test_mandelbrot.cpp`.
+  - The resulting JPEG image will be placed as a temporary file in the `images/tmp/` folder.
+
+The second compile step requires an installed Boost-C++ library.
+Otherwise, the location of your Bost C++ library headers needs to be included
+with a `-I` switch on the compiler command line.
+
+Use shell commands such as the following.
+
+Make the JPEG library.
+
+```sh
+cd mandelbrot/jpeg-6b-2022
+make all
+```
+
+Build, link and run `test_mandelbrot.cpp`
+
+```sh
+cd mandelbrot
+g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++11 -I. -I./jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+g++ test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg-6b-2022/obj -o test_mandelbrot.exe
+mkdir -p images/tmp
+./test_mandelbrot.exe
+```
+
 ## TODOs
 
 Improvements on the TODO list include (among others) the following.
