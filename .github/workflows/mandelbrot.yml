@@ -38,7 +38,7 @@ jobs:
         run: |
           echo "query GCC version"
           g++ -v
-          echo "build lobjpeg-6b.a"
+          echo "build libjpeg-6b.a"
           cd jpeg-6b-2022
           make all
           cd ..
@@ -72,7 +72,7 @@ jobs:
         run: |
           echo "query GCC version"
           g++ -v
-          echo "build lobjpeg-6b.a"
+          echo "build libjpeg-6b.a"
           cd jpeg-6b-2022
           make all
           cd ..
@@ -108,7 +108,7 @@ jobs:
         run: |
           echo "query GCC version"
           g++ -v
-          echo "build lobjpeg-6b.a"
+          echo "build libjpeg-6b.a"
           cd jpeg-6b-2022
           make all
           cd ..
@@ -142,7 +142,7 @@ jobs:
         run: |
           echo "query GCC version"
           g++ -v
-          echo "build lobjpeg-6b.a"
+          echo "build libjpeg-6b.a"
           cd jpeg-6b-2022
           make all
           cd ..
@@ -176,7 +176,7 @@ jobs:
         run: |
           echo "query GCC version"
           g++ -v
-          echo "build lobjpeg-6b.a"
+          echo "build libjpeg-6b.a"
           cd jpeg-6b-2022
           make all
           cd ..

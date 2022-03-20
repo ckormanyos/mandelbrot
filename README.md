@@ -64,10 +64,6 @@ The following design goals have been incorporated.
   - The resulting JPEG image will be placed as a temporary file in the `images/tmp/` folder.
   - This build makes and uses its own specialized version of the JPEG-6b library (see [below](#Adaptions-of-and-Notes-on-jpeg-6b)) and does not install or use a standard `*nix` version thereof.
 
-The second compile step requires an installed Boost-C++ library.
-Otherwise, the location of your Boost C++ library headers needs to be included
-with a `-I` switch on the compiler command line.
-
 Use shell commands such as the following.
 
 Go to the `mandelbrot/jpeg-6b-2022` directory and make the JPEG library. This creates the library file `libjpeg-6b.a` located in the directory `mandelbrot/jpeg-6b-2022/obj`.
@@ -84,6 +80,9 @@ cd mandelbrot
 ```
 
 Compile `test_mandelbrot.cpp` to `test_mandelbrot.o`.
+This compile step requires an installed Boost-C++ library.
+Otherwise, the location of your Boost C++ library headers needs to be included
+with a `-I` switch on the compiler command line.
 
 ```sh
 g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++11 -I. -I./jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
@@ -101,6 +100,13 @@ Make the needed output image directory and run `test_mandelbrot.exe`.
 mkdir -p images/tmp
 ./test_mandelbrot.exe
 ```
+
+In `*nix`, it is also possible to optionally make use of GMP
+via Boost.Multiprecision's `gmp_float` backend
+(instead of the default `cpp_dec_float` backend).
+When doing so, define `-DMANDELBROT_USE_GMP_FLOAT`
+on the command line in the compile `test_mandelbrot.cpp` stage.
+In this case, you also need to link with `-lgmp` in the link stage.
 
 ## TODOs
 

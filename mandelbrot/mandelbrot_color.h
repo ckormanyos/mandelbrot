@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////////////////////////////
+﻿///////////////////////////////////////////////////////////////////////////////
 //      Copyright Christopher Kormanyos 2015 - 2022.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
@@ -39,22 +39,22 @@
     static auto color_phaser_01(std::uint_fast32_t c) -> std::uint_fast32_t
     {
       const auto color_phase =
-        static_cast<double>
+        static_cast<float>
         (
-            static_cast<double>(static_cast<double>(c) / 255.0)
-          * static_cast<double>(3.1415926535897932385 * 8.0)
+            static_cast<float>(static_cast<float>(c) / 255.0F)
+          * static_cast<float>(3.1415926535897932385F * 8.0F)
         );
 
       {
         using std::sin;
 
         const auto my_color =
-          static_cast<double>
+          static_cast<float>
           (
-            static_cast<double>(sin(color_phase) / 2.0) + 0.5
+            static_cast<float>(sin(color_phase) / 2.0F) + 0.5F
           );
 
-        return static_cast<std::uint_fast32_t>(my_color * 255.0); // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+        return static_cast<std::uint_fast32_t>(my_color * 255.0F); // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
       }
     }
   };
@@ -107,10 +107,10 @@
       return
         static_cast<std::uint_fast32_t>
         (
-          static_cast<double>
+          static_cast<float>
           (
-              static_cast<double>(static_cast<double>(c)  / 255.0) // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
-            * static_cast<double>(static_cast<double>(c)  /   1.0)
+              static_cast<float>(static_cast<float>(c)  / 255.0F) // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+            * static_cast<float>(static_cast<float>(c)  /   1.0F)
           )
         );
     }
@@ -202,9 +202,9 @@
       my_sum += histogram_entry;
 
       const auto sum_div_total_pixels =
-        static_cast<double>
+        static_cast<float>
         (
-          static_cast<double>(my_sum) / static_cast<double>(my_total_pixels)
+          static_cast<float>(my_sum) / static_cast<float>(my_total_pixels)
         );
 
       {
@@ -215,7 +215,7 @@
         const auto scaled_histogram_value =
           static_cast<std::uint_fast32_t>
           (
-            static_cast<double>(histogram_scale * 255.0)
+            static_cast<float>(histogram_scale * 255.0F)
           );
 
         histogram_entry =
