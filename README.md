@@ -30,7 +30,7 @@ This project uses [Boost.Multiprecison](https://www.boost.org/doc/libs/1_78_0/li
 to implement
 a high-precision Mandelbrot iteration and visualization.
 Graphic file creation uses
-[Boost.Gil](https://www.boost.org/doc/libs/1_78_0/libs/gil/doc/html/index.html) to wrap the JPEG-6b library (see below).
+[Boost.Gil](https://www.boost.org/doc/libs/1_78_0/libs/gil/doc/html/index.html) to wrap the JPEG-6b library (see [below](#Adaptions-of-and-Notes-on-jpeg-6b)).
 Color-strething in combination with the histogram method
 is used for creating vivid images. The default color
 scheme uses stretched, amplified and modulated black
@@ -45,8 +45,62 @@ The following design goals have been incorporated.
   - The inner loop performing the work of fractal iteration uses multiple, parallel CPU cores.
   - C++ template design allows for flexible use of any appropriate kind of big-number type.
   - Visualization of the result uses color-stretching techniques combined with the histogram method.
-  - Graphical representation uses [Boost.Gil](https://www.boost.org/doc/libs/1_78_0/libs/gil/doc/html/index.html) in combination with the JPEG-6b library (see below).
+  - Graphical representation uses [Boost.Gil](https://www.boost.org/doc/libs/1_78_0/libs/gil/doc/html/index.html) in combination with the JPEG-6b library (see [below](#Adaptions-of-and-Notes-on-jpeg-6b)).
   - Color schemes can be easily adapted via straightforward creation (or modification) of a skinny derived class.
+
+## Building the Project
+
+### Build on `Win*` with MSVC
+
+  - Locate the solution file `mandelbrot.sln` in the root dierctory.
+  - Open the solution file in Visual Studio.
+  - Build the desired configuration and run in the usual way.
+  - The resulting JPEG image will be placed as a temporary file in the `images\tmp\` folder.
+
+### Build on with `*nix`
+
+  - Build the JPEG library with GNUmake.
+  - Compile, link and run `test_mandelbrot.cpp`.
+  - The resulting JPEG image will be placed as a temporary file in the `images/tmp/` folder.
+  - This build makes and uses its own specialized version of the JPEG-6b library (see [below](#Adaptions-of-and-Notes-on-jpeg-6b)) and does not install or use a standard `*nix` version thereof.
+
+The second compile step requires an installed Boost-C++ library.
+Otherwise, the location of your Boost C++ library headers needs to be included
+with a `-I` switch on the compiler command line.
+
+Use shell commands such as the following.
+
+Go to the `mandelbrot/jpeg-6b-2022` directory and make the JPEG library. This creates the library file `libjpeg-6b.a` located in the directory `mandelbrot/jpeg-6b-2022/obj`.
+
+```sh
+cd mandelbrot/jpeg-6b-2022
+make all
+```
+
+Go to (or go back to) the mandelbrot root directory.
+
+```sh
+cd mandelbrot
+```
+
+Compile `test_mandelbrot.cpp` to `test_mandelbrot.o`.
+
+```sh
+g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++11 -I. -I./jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+```
+
+Link `test_mandelbrot.o` to `test_mandelbrot.exe`.
+
+```sh
+g++ test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg-6b-2022/obj -o test_mandelbrot.exe
+```
+
+Make the needed output image directory and run `test_mandelbrot.exe`.
+
+```sh
+mkdir -p images/tmp
+./test_mandelbrot.exe
+```
 
 ## TODOs
 
@@ -56,13 +110,14 @@ Improvements on the TODO list include (among others) the following.
 
 ## Sample Images
 
-In these particular images from ckormanyos/mandelbrot, we have
-concentrated on various beautiful iteration results
-represented in pure black-and-white/gray-scale tones.
-
 Several images are highlighted in the paragraphs below.
-Please see the [gallery](./images/gallery)
+Please see the [gallery](./images/gallery) of ckormanyos/mandelbrot
 for a more comprehensive collection of images.
+
+In these particular images presented from the [gallery](./images/gallery)
+of ckormanyos/mandelbrot,
+we have concentrated on various beautiful iteration results
+represented in pure black-and-white/gray-scale tones.
 
 ### Classic Full Mandelbrot Image
 
@@ -184,12 +239,11 @@ of _the_ _Independent_ _JPEG_ _Group's_ _software_.
 
 The following adaptions have been performed.
 
-  - In this change log, test only the subset of functions empirically found to be needed for use with Boost.Gil.
-  - Adapt to VS compiler and VS solution workspace.
-  - Handle Level-3 warnings found in MSVC.
-  - Run the `*.c`/`*.h` files through the [Artistic Style](http://astyle.sourceforge.net/astyle.html) automoatic code formatter, using a version of _AStyle_ from somewhere around 2015.
+  - Test/compile only the subset of functions empirically found to be needed for use with [Boost.Gil](https://www.boost.org/doc/libs/1_78_0/libs/gil/doc/html/index.html).
+  - Adapt to VS compiler and VS solution workspace (when building with MSVC).
+  - Use GNUmake to build the JPEG library (when building on `*nix`).
+  - Run the `*.c`/`*.h` files through the [Artistic Style](http://astyle.sourceforge.net/astyle.html) automatic code formatter, using a version of _AStyle_ from somewhere around 2015.
   - Remove several unused preprocessor options such as short names for linkers.
-  - Eliminate all uses of `NEED_FAR_POINTERS`.
-  - Eliminate all uses of `NEED_SHORT_EXTERNAL_NAMES`.
-  - Handle GCC warnings `-Wall -Wextra -pedantic`.
-  - Handle GCC warnings `-Wconversion -Wsign-conversion`.
+  - Eliminate all uses of `NEED_FAR_POINTERS` and `NEED_SHORT_EXTERNAL_NAMES`.
+  - Handle Level-3 warnings found in MSVC.
+  - Handle GCC warnings from `-Wall`, `-Wextra`, `-pedantic`, `-Wconversion` and `-Wsign-conversion`.

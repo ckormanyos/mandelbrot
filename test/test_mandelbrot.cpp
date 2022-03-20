@@ -7,6 +7,7 @@
 
 #include <chrono>
 #include <iostream>
+#include <string>
 
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_01_FULL.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_03_TOP.h>
@@ -39,14 +40,14 @@ auto main() -> int // NOLINT(bugprone-exception-escape)
 {
   using namespace ckormanyos::mandelbrot; // NOLINT(google-build-using-namespace)
 
-  const std::string str_filename = cfg::filename();
-
-  const cfg::mandelbrot_numeric_type x_lo = cfg::center_x() - cfg::dx_half();
-  const cfg::mandelbrot_numeric_type x_hi = cfg::center_x() + cfg::dx_half();
-  const cfg::mandelbrot_numeric_type y_lo = cfg::center_y() - cfg::dx_half();
-  const cfg::mandelbrot_numeric_type y_hi = cfg::center_y() + cfg::dx_half();
-
-  const cfg::mandelbrot_config_type mandelbrot_config_object(x_lo, x_hi, y_lo, y_hi);
+  const cfg::mandelbrot_config_type
+    mandelbrot_config_object
+    (
+      cfg::center_x() - cfg::dx_half(),
+      cfg::center_x() + cfg::dx_half(),
+      cfg::center_y() - cfg::dx_half(),
+      cfg::center_y() + cfg::dx_half()
+    );
 
   using mandelbrot_generator_type =
     mandelbrot_generator<cfg::mandelbrot_numeric_type,
@@ -54,19 +55,19 @@ auto main() -> int // NOLINT(bugprone-exception-escape)
 
         color::color_stretch_histogram_method local_color_stretches;
   const color::color_functions_bw             local_color_functions;
-  //const color::color_functions_pretty  local_color_functions;
 
   mandelbrot_generator_type mandelbrot_generator(mandelbrot_config_object);
 
   const auto start = std::chrono::high_resolution_clock::now();
 
-  mandelbrot_generator.generate_mandelbrot_image(str_filename,
+  mandelbrot_generator.generate_mandelbrot_image(cfg::filename(),
                                                  local_color_functions,
                                                  local_color_stretches);
 
   const auto stop = std::chrono::high_resolution_clock::now();
 
-  auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(stop - start).count();
+  const auto elapsed =
+    std::chrono::duration_cast<std::chrono::seconds>(stop - start).count();
 
   std::cout << "Time for calculation: "
             << elapsed
