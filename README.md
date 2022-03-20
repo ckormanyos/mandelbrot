@@ -65,19 +65,19 @@ The following design goals have been incorporated.
   - This build makes and uses its own specialized version of the JPEG-6b library (see [below](#Adaptions-of-and-Notes-on-jpeg-6b)) and does not install or use a standard `*nix` version thereof.
 
 The second compile step requires an installed Boost-C++ library.
-Otherwise, the location of your Bost C++ library headers needs to be included
+Otherwise, the location of your Boost C++ library headers needs to be included
 with a `-I` switch on the compiler command line.
 
 Use shell commands such as the following.
 
-Make the JPEG library. This creates the library file `libjpeg-6b.a` located in the directory `mandelbrot/jpeg-6b-2022/obj`.
+Go to the `mandelbrot/jpeg-6b-2022` directory and make the JPEG library. This creates the library file `libjpeg-6b.a` located in the directory `mandelbrot/jpeg-6b-2022/obj`.
 
 ```sh
 cd mandelbrot/jpeg-6b-2022
 make all
 ```
 
-Go to the mandelbrot root directory.
+Go to (or go back to) the mandelbrot root directory.
 
 ```sh
 cd mandelbrot
@@ -110,13 +110,14 @@ Improvements on the TODO list include (among others) the following.
 
 ## Sample Images
 
-In these particular images from ckormanyos/mandelbrot, we have
-concentrated on various beautiful iteration results
-represented in pure black-and-white/gray-scale tones.
-
 Several images are highlighted in the paragraphs below.
-Please see the [gallery](./images/gallery)
+Please see the [gallery](./images/gallery) of ckormanyos/mandelbrot
 for a more comprehensive collection of images.
+
+In these particular images presented from the [gallery](./images/gallery)
+of ckormanyos/mandelbrot,
+we have concentrated on various beautiful iteration results
+represented in pure black-and-white/gray-scale tones.
 
 ### Classic Full Mandelbrot Image
 
