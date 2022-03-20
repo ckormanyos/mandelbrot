@@ -42,7 +42,7 @@
           static_cast<index_type>(end - start) + static_cast<index_type>(1)
         );
 
-      const auto slice = (std::max)(static_cast<index_type>(std::round(static_cast<double>(n) / static_cast<double>(number_of_threads))),
+      const auto slice = (std::max)(static_cast<index_type>(std::round(static_cast<float>(n) / static_cast<float>(number_of_threads))),
                                     static_cast<index_type>(1));
 
       // Inner loop.

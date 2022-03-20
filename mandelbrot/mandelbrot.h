@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////////////////////////////
+﻿///////////////////////////////////////////////////////////////////////////////
 //      Copyright Christopher Kormanyos 2015 - 2022.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
@@ -311,8 +311,8 @@
             const auto percent =
               static_cast<float>
               (
-                  static_cast<double>(100.0 * static_cast<double>(unordered_parallel_row_count))
-                / static_cast<double>(y_values.size())
+                  static_cast<float>(100.0F * static_cast<float>(unordered_parallel_row_count))
+                / static_cast<float>(y_values.size())
               );
 
             output_stream << "Calculating Mandelbrot image at row "
