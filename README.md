@@ -62,6 +62,7 @@ The following design goals have been incorporated.
   - Build the JPEG library with GNUmake.
   - Compile, link and run `test_mandelbrot.cpp`.
   - The resulting JPEG image will be placed as a temporary file in the `images/tmp/` folder.
+  - This build makes and uses its own JPEG library and does not install or use a standard `*nix` version thereof.
 
 The second compile step requires an installed Boost-C++ library.
 Otherwise, the location of your Bost C++ library headers needs to be included
@@ -223,11 +224,10 @@ of _the_ _Independent_ _JPEG_ _Group's_ _software_.
 The following adaptions have been performed.
 
   - In this change log, test only the subset of functions empirically found to be needed for use with Boost.Gil.
-  - Adapt to VS compiler and VS solution workspace.
-  - Handle Level-3 warnings found in MSVC.
+  - Adapt to VS compiler and VS solution workspace (when building with MSVC).
+  - Use GNUmake to build the JPEG library (when building on `*nix`).
   - Run the `*.c`/`*.h` files through the [Artistic Style](http://astyle.sourceforge.net/astyle.html) automoatic code formatter, using a version of _AStyle_ from somewhere around 2015.
   - Remove several unused preprocessor options such as short names for linkers.
-  - Eliminate all uses of `NEED_FAR_POINTERS`.
-  - Eliminate all uses of `NEED_SHORT_EXTERNAL_NAMES`.
-  - Handle GCC warnings `-Wall -Wextra -pedantic`.
-  - Handle GCC warnings `-Wconversion -Wsign-conversion`.
+  - Eliminate all uses of `NEED_FAR_POINTERS` and `NEED_SHORT_EXTERNAL_NAMES`.
+  - Handle Level-3 warnings found in MSVC.
+  - Handle GCC warnings from `-Wall`, `-Wextra`, `-pedantic`, `-Wconversion` and `-Wsign-conversion`.
