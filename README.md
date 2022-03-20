@@ -30,7 +30,7 @@ This project uses [Boost.Multiprecison](https://www.boost.org/doc/libs/1_78_0/li
 to implement
 a high-precision Mandelbrot iteration and visualization.
 Graphic file creation uses
-[Boost.Gil](https://www.boost.org/doc/libs/1_78_0/libs/gil/doc/html/index.html) to wrap the JPEG-6b library (see below).
+[Boost.Gil](https://www.boost.org/doc/libs/1_78_0/libs/gil/doc/html/index.html) to wrap the JPEG-6b library (see [below](#Adaptions-of-and-Notes-on-jpeg-6b)).
 Color-strething in combination with the histogram method
 is used for creating vivid images. The default color
 scheme uses stretched, amplified and modulated black
@@ -45,7 +45,7 @@ The following design goals have been incorporated.
   - The inner loop performing the work of fractal iteration uses multiple, parallel CPU cores.
   - C++ template design allows for flexible use of any appropriate kind of big-number type.
   - Visualization of the result uses color-stretching techniques combined with the histogram method.
-  - Graphical representation uses [Boost.Gil](https://www.boost.org/doc/libs/1_78_0/libs/gil/doc/html/index.html) in combination with the JPEG-6b library (see below).
+  - Graphical representation uses [Boost.Gil](https://www.boost.org/doc/libs/1_78_0/libs/gil/doc/html/index.html) in combination with the JPEG-6b library (see [below](#Adaptions-of-and-Notes-on-jpeg-6b)).
   - Color schemes can be easily adapted via straightforward creation (or modification) of a skinny derived class.
 
 ## Building the Project
@@ -62,7 +62,7 @@ The following design goals have been incorporated.
   - Build the JPEG library with GNUmake.
   - Compile, link and run `test_mandelbrot.cpp`.
   - The resulting JPEG image will be placed as a temporary file in the `images/tmp/` folder.
-  - This build makes and uses its own JPEG library and does not install or use a standard `*nix` version thereof.
+  - This build makes and uses its own specialized version of the JPEG-6b library (see [below](#Adaptions-of-and-Notes-on-jpeg-6b)) and does not install or use a standard `*nix` version thereof.
 
 The second compile step requires an installed Boost-C++ library.
 Otherwise, the location of your Bost C++ library headers needs to be included
