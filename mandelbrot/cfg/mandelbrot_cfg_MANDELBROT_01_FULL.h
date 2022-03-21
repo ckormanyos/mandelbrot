@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////////////////////////////
+﻿///////////////////////////////////////////////////////////////////////////////
 //      Copyright Christopher Kormanyos 2022.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
@@ -10,15 +10,15 @@
 
   // This is the classic full immage.
 
-  #define MANDELBROT_FILENAME_STRING            "MANDELBROT_01_FULL"
+  constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_01_FULL";
 
-  #define MANDELBROT_CALCULATION_DIGITS10       37
-  #define MANDELBROT_CALCULATION_PIXELS_1D      2048UL
-  #define MANDELBROT_CALCULATION_ITERATIONS     2000UL
+  constexpr int  MANDELBROT_CALCULATION_DIGITS10    =      37;
+  constexpr int  MANDELBROT_CALCULATION_PIXELS_1D   =    2048;
+  constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =    2000;
 
-  #define MANDELBROT_POINT_DX_HALF              +1.25L
-  #define MANDELBROT_POINT_CENTER_X             -0.75L
-  #define MANDELBROT_POINT_CENTER_Y             +0.0L
+  constexpr char MANDELBROT_POINT_DX_HALF[]         = "1.25";
+  constexpr char MANDELBROT_POINT_CENTER_X[]        = "0.75";
+  constexpr char MANDELBROT_POINT_CENTER_Y[]        = "0.0";
 
   #include <mandelbrot/cfg/mandelbrot_cfg.h>
 
