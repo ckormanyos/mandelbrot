@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////////////////////////////
+﻿///////////////////////////////////////////////////////////////////////////////
 //      Copyright Christopher Kormanyos 2022.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
@@ -30,7 +30,7 @@
   #if !defined(MANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH)
   constexpr int  MANDELBROT_CALCULATION_PIXELS_1D   =    2048;
   #else
-  constexpr int  MANDELBROT_CALCULATION_PIXELS_1D   =     512;
+  constexpr int  MANDELBROT_CALCULATION_PIXELS_1D   =     256;
   #endif
   constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =    2000;
 

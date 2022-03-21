@@ -231,7 +231,7 @@ Clearly named definitions are used to specify:
   - the number of decimal digits of precision (in the big-number type used in the iteration),
   - the numbers of pixels and iterations,
   - and the coordinate center and half-width of the magnification region,
-  - where the dimensions `MANDELBROT_POINT_DX_HALF`, `MANDELBROT_POINT_CENTER_X`, and `MANDELBROT_POINT_CENTER_Y` are provided as character strings which are exact even if the magnification scale requires multiple precision.
+  - where the dimensions `MANDELBROT_POINT_DX_HALF`, `MANDELBROT_POINT_CENTER_X`, and `MANDELBROT_POINT_CENTER_Y` are provided as character strings, which remain exact even if the magnification scale requires multiple precision.
 
 ## Adaptions of and Notes on jpeg-6b
 
