@@ -212,15 +212,15 @@ Consider as a sample, for instance, the relevant content of the configuration fi
 ```cpp
   // This is the classic full immage.
 
-  #define MANDELBROT_FILENAME_STRING            "MANDELBROT_01_FULL"
+  constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_01_FULL";
 
-  #define MANDELBROT_CALCULATION_DIGITS10       37
-  #define MANDELBROT_CALCULATION_PIXELS_1D      2048UL
-  #define MANDELBROT_CALCULATION_ITERATIONS     2000UL
+  constexpr int  MANDELBROT_CALCULATION_DIGITS10    =      37;
+  constexpr int  MANDELBROT_CALCULATION_PIXELS_1D   =    2048;
+  constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =    2000;
 
-  #define MANDELBROT_POINT_DX_HALF              +1.25L
-  #define MANDELBROT_POINT_CENTER_X             -0.75L
-  #define MANDELBROT_POINT_CENTER_Y             +0.0L
+  constexpr char MANDELBROT_POINT_DX_HALF[]         = "1.25";
+  constexpr char MANDELBROT_POINT_CENTER_X[]        = "0.75";
+  constexpr char MANDELBROT_POINT_CENTER_Y[]        = "0.0";
 
   #include <mandelbrot/cfg/mandelbrot_cfg.h>
 ```
@@ -230,7 +230,8 @@ Clearly named definitions are used to specify:
   - the output file name,
   - the number of decimal digits of precision (in the big-number type used in the iteration),
   - the numbers of pixels and iterations,
-  - and the coordinate center and half-width of the magnification region.
+  - and the coordinate center and half-width of the magnification region,
+  - where the dimensions `MANDELBROT_POINT_DX_HALF`, `MANDELBROT_POINT_CENTER_X`, and `MANDELBROT_POINT_CENTER_Y` are provided as character strings which are exact even if the magnification scale requires multiple precision.
 
 ## Adaptions of and Notes on jpeg-6b
 

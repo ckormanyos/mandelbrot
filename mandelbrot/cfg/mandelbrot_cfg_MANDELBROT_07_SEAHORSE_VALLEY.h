@@ -10,15 +10,15 @@
 
   // This is an image from what is sometimes called the "seahorse valley".
 
-  #define MANDELBROT_FILENAME_STRING            "MANDELBROT_07_SEAHORSE_VALLEY"
+  constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_07_SEAHORSE_VALLEY";
 
-  #define MANDELBROT_CALCULATION_DIGITS10       31
-  #define MANDELBROT_CALCULATION_PIXELS_1D      2048UL
-  #define MANDELBROT_CALCULATION_ITERATIONS     2000UL
+  constexpr int MANDELBROT_CALCULATION_DIGITS10     =     31;
+  constexpr int MANDELBROT_CALCULATION_PIXELS_1D    =   2048;
+  constexpr int MANDELBROT_CALCULATION_ITERATIONS   =   2000;
 
-  #define MANDELBROT_POINT_DX_HALF              "0.024"
-  #define MANDELBROT_POINT_CENTER_X             "-0.748"
-  #define MANDELBROT_POINT_CENTER_Y             "0.222"
+  constexpr char MANDELBROT_POINT_DX_HALF[]         = "0.024";
+  constexpr char MANDELBROT_POINT_CENTER_X[]        = "-0.748";
+  constexpr char MANDELBROT_POINT_CENTER_Y[]        = "0.222";
 
   #include <mandelbrot/cfg/mandelbrot_cfg.h>
 
