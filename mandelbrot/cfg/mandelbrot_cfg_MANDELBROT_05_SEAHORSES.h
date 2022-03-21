@@ -1,4 +1,4 @@
-﻿///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 //      Copyright Christopher Kormanyos 2022.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
@@ -10,29 +10,33 @@
 
   #if defined(__clang__)
     #if defined __has_feature && (__has_feature(thread_sanitizer) || __has_feature(address_sanitizer))
+    #if !defined(MANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH)
     #define MANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH
+    #endif
     #endif
   #elif defined(__GNUC__)
     #if defined(__SANITIZE_THREAD__) || defined(__SANITIZE_ADDRESS__)
+    #if !defined(MANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH)
     #define MANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH
+    #endif
     #endif
   #endif
 
   // This is a swirly seahorse image.
 
-  #define MANDELBROT_FILENAME_STRING            "MANDELBROT_05_SEAHORSES" // NOLINT(cppcoreguidelines-macro-usage)
+  constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_05_SEAHORSES";
 
-  constexpr int MANDELBROT_CALCULATION_DIGITS10   =      37;
+  constexpr int  MANDELBROT_CALCULATION_DIGITS10    =      37;
   #if !defined(MANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH)
-  constexpr int MANDELBROT_CALCULATION_PIXELS_1D  =    2048;
+  constexpr int  MANDELBROT_CALCULATION_PIXELS_1D   =    2048;
   #else
-  constexpr int MANDELBROT_CALCULATION_PIXELS_1D  =     512;
+  constexpr int  MANDELBROT_CALCULATION_PIXELS_1D   =     512;
   #endif
-  constexpr int MANDELBROT_CALCULATION_ITERATIONS =    2000;
+  constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =    2000;
 
-  #define MANDELBROT_POINT_DX_HALF              "1.76E-12"                // NOLINT(cppcoreguidelines-macro-usage)
-  #define MANDELBROT_POINT_CENTER_X             "-0.7453983606667815"     // NOLINT(cppcoreguidelines-macro-usage)
-  #define MANDELBROT_POINT_CENTER_Y             "0.1125046349959942"      // NOLINT(cppcoreguidelines-macro-usage)
+  constexpr char MANDELBROT_POINT_DX_HALF[]         = "1.76E-12";
+  constexpr char MANDELBROT_POINT_CENTER_X[]        = "-0.7453983606667815";
+  constexpr char MANDELBROT_POINT_CENTER_Y[]        = "0.1125046349959942";
 
   #include <mandelbrot/cfg/mandelbrot_cfg.h>
 

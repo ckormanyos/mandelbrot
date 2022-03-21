@@ -1,12 +1,18 @@
 
 Change Log for 2010, 2015, 2022
 
-- In this change log, we test only the small subset of functions needed for using JPG with Boost.Gil.
-- Adapt to VS compiler and VS solution workspace.
-- Handle Level-3 warnings found in MSVC.
-- Run *.c/*.h files through AStyle (Artistic Code Style), using a version of AStyle from somewhere in 2015.
-- Remove several unused preprocessor options such as short names for linkers.
-- Eliminate all uses of NEED_FAR_POINTERS.
-- Eliminate all uses of NEED_SHORT_EXTERNAL_NAMES.
-- Handle GCC warnings -Wextra -pedantic (this is an ongoing process).
-- Handle GCC warnings -Wconversion -Wsign-conversion (this is an ongoing process).
+The following adaptions have been performed.
+
+  - Test/compile only the subset of functions empirically found to be needed
+    for use with [Boost.Gil](https://www.boost.org/doc/libs/1_78_0/libs/gil/doc/html/index.html).
+  - Adapt to VS compiler and VS solution workspace (when building with MSVC).
+  - Use GNUmake to build the JPEG library (when building on `*nix`).
+  - Run the `*.c`/`*.h` files through the
+    [Artistic Style](http://astyle.sourceforge.net/astyle.html)
+    automatic code formatter, using a version of _AStyle_ from somewhere
+    around 2015.
+  - Remove several unused preprocessor options such as short names for linkers.
+  - Eliminate all uses of `NEED_FAR_POINTERS` and `NEED_SHORT_EXTERNAL_NAMES`.
+  - Handle Level-3 warnings found in MSVC.
+  - Handle GCC warnings from `-Wall`, `-Wextra`, `-pedantic`,
+    `-Wconversion` and `-Wsign-conversion`.
