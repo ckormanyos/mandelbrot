@@ -8,6 +8,12 @@
 #ifndef MANDELBROT_CFG_2022_02_24_H // NOLINT(llvm-header-guard)
   #define MANDELBROT_CFG_2022_02_24_H
 
+  #if defined(__GNUC__)
+  #define MANDELBROT_NODISCARD  [[nodiscard]]
+  #else
+  #define MANDELBROT_NODISCARD
+  #endif
+
   #include <mandelbrot/mandelbrot.h>
 
   // NOLINTBEGIN(*)

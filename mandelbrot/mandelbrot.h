@@ -97,17 +97,17 @@
       return *this;
     }
 
-    auto x_lo() const -> const mandelbrot_config_numeric_type& { return my_x_lo; }
-    auto x_hi() const -> const mandelbrot_config_numeric_type& { return my_x_hi; }
-    auto y_lo() const -> const mandelbrot_config_numeric_type& { return my_y_lo; }
-    auto y_hi() const -> const mandelbrot_config_numeric_type& { return my_y_hi; }
+    MANDELBROT_NODISCARD auto x_lo() const -> const mandelbrot_config_numeric_type& { return my_x_lo; }
+    MANDELBROT_NODISCARD auto x_hi() const -> const mandelbrot_config_numeric_type& { return my_x_hi; }
+    MANDELBROT_NODISCARD auto y_lo() const -> const mandelbrot_config_numeric_type& { return my_y_lo; }
+    MANDELBROT_NODISCARD auto y_hi() const -> const mandelbrot_config_numeric_type& { return my_y_hi; }
 
     auto get_width () -> const mandelbrot_config_numeric_type& { return my_width; }
     auto get_height() -> const mandelbrot_config_numeric_type& { return my_height; }
 
-    virtual auto step() const -> const mandelbrot_config_numeric_type& = 0;
+    MANDELBROT_NODISCARD virtual auto step() const -> const mandelbrot_config_numeric_type& = 0;
 
-    auto integral_width() const -> std::uint_fast32_t
+    MANDELBROT_NODISCARD auto integral_width() const -> std::uint_fast32_t
     {
       const auto non_rounded_width2 =
         static_cast<std::uint_fast32_t>
@@ -122,7 +122,7 @@
         );
     }
 
-    auto integral_height() const -> std::uint_fast32_t
+    MANDELBROT_NODISCARD auto integral_height() const -> std::uint_fast32_t
     {
       const auto non_rounded_height2 =
         static_cast<std::uint_fast32_t>
@@ -223,7 +223,7 @@
   private:
     mandelbrot_config_numeric_type my_step; // NOLINT(readability-identifier-naming)
 
-    auto step() const -> const mandelbrot_config_numeric_type& final { return my_step; }
+    MANDELBROT_NODISCARD auto step() const -> const mandelbrot_config_numeric_type& final { return my_step; }
   };
 
   // This class generates the rows of the mandelbrot iteration.
@@ -247,7 +247,7 @@
       : mandelbrot_config_object   (config),
         mandelbrot_image           (static_cast<boost_gil_x_coord_type>(config.integral_width()), // NOLINT
                                     static_cast<boost_gil_x_coord_type>(config.integral_height())),
-        mandelbrot_view            (boost::gil::rgb8_view_t()),
+        mandelbrot_view            (boost::gil::rgb8_view_t()), // NOLINT(readability-redundant-member-init)
         mandelbrot_iteration_matrix(config.integral_width(),
                                     std::vector<std::uint_fast32_t>(config.integral_height())),
         mandelbrot_color_histogram (max_iterations + 1U, UINT32_C(0))

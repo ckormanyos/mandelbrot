@@ -13,34 +13,37 @@ on:
   pull_request:
 jobs:
   gnumake-clang-tidy-native:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
     strategy:
       fail-fast: false
       matrix:
-        standard: [ c++20 ]
         compiler: [ g++, clang++ ]
+        include:
+          - compiler: g++
+            clang_tidy: ""
+            container: johnmcfarlane/cnl_ci:gcc-11
+          - compiler: clang++
+            clang_tidy: "clang-tidy"
+            container: johnmcfarlane/cnl_ci:clang-13-libcpp
+    runs-on: ubuntu-20.04
+    container: ${{matrix.container}}
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: '0'
+      - name: create build directory
+        run: mkdir $GITHUB_WORKSPACE/build
       - name: install Boost
         run: |
-          sudo apt-get update --quiet
-          sudo apt-get install --no-install-recommends --quiet --yes libboost-dev
-      - name: update-tools
-        run: sudo apt install clang clang-tidy
-      - name: gnumake-clang-tidy-native
+          apt-get update --quiet
+          apt-get install --no-install-recommends --quiet --yes libboost-dev
+      - name: build
+        working-directory: build
         run: |
           cd .tidy/make
           echo "running clang-tidy"
-          echo "make prepare -f make_tidy_01_generic.gmk MY_CC=${{ matrix.compiler }} MY_STD=${{ matrix.standard }}"
+          echo "make prepare -f make_tidy_01_generic.gmk MY_CC=${{ matrix.compiler }} MY_STD=c++20"
           echo
-          make prepare -f make_tidy_01_generic.gmk MY_CC=${{ matrix.compiler }} MY_STD=${{ matrix.standard }}
-          echo "make tidy -f make_tidy_01_generic.gmk --jobs=8 MY_CC=${{ matrix.compiler }} MY_STD=${{ matrix.standard }}"
-          make tidy -f make_tidy_01_generic.gmk --jobs=8 MY_CC=${{ matrix.compiler }} MY_STD=${{ matrix.standard }}
+          make prepare -f make_tidy_01_generic.gmk MY_CC=${{ matrix.compiler }} MY_STD=c++20
+          echo "make tidy -f make_tidy_01_generic.gmk --jobs=8 MY_CC=${{ matrix.compiler }} MY_STD=c++20"
+          make tidy -f make_tidy_01_generic.gmk --jobs=8 MY_CC=${{ matrix.compiler }} MY_STD=c++20
           echo
           echo "verify empty word count of ./tmp/all.tidy_txt"
           wc ./tmp/all.tidy_txt | grep '0 0 0'
