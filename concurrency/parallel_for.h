@@ -27,7 +27,7 @@
           std::thread::hardware_concurrency()
         );
 
-      static const auto number_of_threads =
+      static const auto number_of_threads = // NOLINT(altera-id-dependent-backward-branch)
         static_cast<unsigned>
         (
           ((number_of_threads_hint > static_cast<unsigned>(1U))
@@ -53,7 +53,7 @@
       auto launch_range =
         [&parallel_function](index_type index_lo, index_type index_hi)
         {
-          for(auto i = index_lo; i < index_hi; ++i)
+          for(auto i = index_lo; i < index_hi; ++i) // NOLINT(altera-id-dependent-backward-branch)
           {
             parallel_function(i);
           }
@@ -68,7 +68,7 @@
       auto i2 = (std::min)(static_cast<index_type>(start + static_cast<index_type>(slice)), end);
 
       for(auto   i = static_cast<unsigned>(0U);
-                   ((static_cast<unsigned>(static_cast<index_type>(i) + 1) < number_of_threads) && (i1 < end));
+                   ((static_cast<unsigned>(static_cast<index_type>(i) + 1) < number_of_threads) && (i1 < end)); // NOLINT(altera-id-dependent-backward-branch)
                ++i)
       {
         pool.emplace_back(launch_range, i1, i2);

@@ -16,11 +16,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        compiler: [ g++, clang++ ]
+        compiler: [ clang++ ]
+        standard: [ c++11, c++20 ]
         include:
-          - compiler: g++
-            clang_tidy: ""
-            container: johnmcfarlane/cnl_ci:gcc-11
           - compiler: clang++
             clang_tidy: "clang-tidy"
             container: johnmcfarlane/cnl_ci:clang-13-libcpp
@@ -36,187 +34,11 @@ jobs:
         run: |
           cd .tidy/make
           echo "running clang-tidy"
-          echo "make prepare -f make_tidy_01_generic.gmk MY_CC=${{ matrix.compiler }} MY_STD=c++20"
+          echo "make prepare -f make_tidy_01_generic.gmk MY_CC=${{ matrix.compiler }} MY_STD=${{ matrix.standard }}"
           echo
-          make prepare -f make_tidy_01_generic.gmk MY_CC=${{ matrix.compiler }} MY_STD=c++20
-          echo "make tidy -f make_tidy_01_generic.gmk --jobs=8 MY_CC=${{ matrix.compiler }} MY_STD=c++20"
-          make tidy -f make_tidy_01_generic.gmk --jobs=8 MY_CC=${{ matrix.compiler }} MY_STD=c++20
+          make prepare -f make_tidy_01_generic.gmk MY_CC=${{ matrix.compiler }} MY_STD=${{ matrix.standard }}
+          echo "make tidy -f make_tidy_01_generic.gmk --jobs=8 MY_CC=${{ matrix.compiler }} MY_STD=${{ matrix.standard }}"
+          make tidy -f make_tidy_01_generic.gmk --jobs=8 MY_CC=${{ matrix.compiler }} MY_STD=${{ matrix.standard }}
           echo
           echo "verify empty word count of ./tmp/all.tidy_txt"
           wc ./tmp/all.tidy_txt | grep '0 0 0'
-  gcc-native:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-    strategy:
-      fail-fast: false
-      matrix:
-        compiler: [ g++, clang++ ]
-        standard: [ c++11, c++14, c++17, c++2a ]
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: '0'
-      - name: install Boost
-        run: |
-          sudo apt-get update --quiet
-          sudo apt-get install --no-install-recommends --quiet --yes libboost-dev
-      - name: install gmp
-        run: |
-          sudo apt-get update --quiet
-          sudo apt-get install --no-install-recommends --quiet --yes libgmp-dev
-      - name: gcc-native
-        run: |
-          echo "query GCC version"
-          g++ -v
-          echo "build libjpeg-6b.a"
-          cd jpeg
-          make all
-          cd ..
-          echo '${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=${{ matrix.standard }} -DMANDELBROT_USE_GMP_FLOAT -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
-          ${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=${{ matrix.standard }} -DMANDELBROT_USE_GMP_FLOAT -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
-          echo '${{ matrix.compiler }} test_mandelbrot.o -lpthread -lgmp -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe'
-          ${{ matrix.compiler }} test_mandelbrot.o -lpthread -lgmp -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
-          ls -la ./test_mandelbrot.exe
-          mkdir -p images/tmp
-          ./test_mandelbrot.exe
-          ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
-  gcc-native-cpp_dec_float:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-    strategy:
-      fail-fast: false
-      matrix:
-        compiler: [ g++ ]
-        standard: [ c++11, c++14, c++17, c++2a ]
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: '0'
-      - name: install Boost
-        run: |
-          sudo apt-get update --quiet
-          sudo apt-get install --no-install-recommends --quiet --yes libboost-dev
-      - name: gcc-native-cpp_dec_float
-        run: |
-          echo "query GCC version"
-          g++ -v
-          echo "build libjpeg-6b.a"
-          cd jpeg
-          make all
-          cd ..
-          echo '${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
-          ${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
-          echo '${{ matrix.compiler }} test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe'
-          ${{ matrix.compiler }} test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
-          ls -la ./test_mandelbrot.exe
-          mkdir -p images/tmp
-          ./test_mandelbrot.exe
-          ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
-          echo 'sha1sum ./images/tmp/sha1sum mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep f3abc4437d97bba945d589aac3d96d8bbb67a035'
-          sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep f3abc4437d97bba945d589aac3d96d8bbb67a035
-  gcc-native-cpp_dec_float-asan:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-    strategy:
-      fail-fast: false
-      matrix:
-        compiler: [ g++ ]
-        standard: [ c++11, c++2a ]
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: '0'
-      - name: install Boost
-        run: |
-          sudo apt-get update --quiet
-          sudo apt-get install --no-install-recommends --quiet --yes libboost-dev
-      - name: gcc-native-cpp_dec_float-asan
-        run: |
-          echo "query GCC version"
-          g++ -v
-          echo "build libjpeg-6b.a"
-          cd jpeg
-          make all
-          cd ..
-          echo '${{ matrix.compiler }} -c -finline-functions -fsanitize=address -fsanitize=leak -march=native -mtune=native -O3 -Wall -Wextra -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
-          ${{ matrix.compiler }} -c -finline-functions -fsanitize=address -fsanitize=leak -march=native -mtune=native -O3 -Wall -Wextra -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
-          echo '${{ matrix.compiler }} -finline-functions -fsanitize=address -fsanitize=leak -march=native -mtune=native -O3 test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe'
-          ${{ matrix.compiler }} -finline-functions -fsanitize=address -fsanitize=leak -march=native -mtune=native -O3 test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
-          ls -la ./test_mandelbrot.exe
-          mkdir -p images/tmp
-          ./test_mandelbrot.exe
-          ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
-  gcc-native-cpp_dec_float-ubsan:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-    strategy:
-      fail-fast: false
-      matrix:
-        compiler: [ g++ ]
-        standard: [ c++11, c++2a ]
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: '0'
-      - name: install Boost
-        run: |
-          sudo apt-get update --quiet
-          sudo apt-get install --no-install-recommends --quiet --yes libboost-dev
-      - name: gcc-native-cpp_dec_float-ubsan
-        run: |
-          echo "query GCC version"
-          g++ -v
-          echo "build libjpeg-6b.a"
-          cd jpeg
-          make all
-          cd ..
-          echo '${{ matrix.compiler }} -c -finline-functions -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -march=native -mtune=native -O3 -Wall -Wextra -std=${{ matrix.standard }} -DMANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
-          ${{ matrix.compiler }} -c -finline-functions -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -march=native -mtune=native -O3 -Wall -Wextra -std=${{ matrix.standard }} -DMANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
-          echo '${{ matrix.compiler }} -finline-functions -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -march=native -mtune=native -O3 test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe'
-          ${{ matrix.compiler }} -finline-functions -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -march=native -mtune=native -O3 test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
-          ls -la ./test_mandelbrot.exe
-          mkdir -p images/tmp
-          ./test_mandelbrot.exe
-          ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
-  gcc-native-cpp_dec_float-tsan:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-    strategy:
-      fail-fast: false
-      matrix:
-        compiler: [ g++ ]
-        standard: [ c++11, c++2a ]
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: '0'
-      - name: install Boost
-        run: |
-          sudo apt-get update --quiet
-          sudo apt-get install --no-install-recommends --quiet --yes libboost-dev
-      - name: gcc-native-cpp_dec_float-tsan
-        run: |
-          echo "query GCC version"
-          g++ -v
-          echo "build libjpeg-6b.a"
-          cd jpeg
-          make all
-          cd ..
-          echo '${{ matrix.compiler }} -c -finline-functions -fsanitize=thread -march=native -mtune=native -O3 -Wall -Wextra -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
-          ${{ matrix.compiler }} -c -finline-functions -fsanitize=thread -march=native -mtune=native -O3 -Wall -Wextra -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
-          echo '${{ matrix.compiler }} -finline-functions -fsanitize=thread test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe'
-          ${{ matrix.compiler }} -finline-functions -fsanitize=thread test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
-          ls -la ./test_mandelbrot.exe
-          mkdir -p images/tmp
-          ./test_mandelbrot.exe
-          ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg

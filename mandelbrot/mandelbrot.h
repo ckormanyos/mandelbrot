@@ -58,7 +58,7 @@
         my_height(static_cast<mandelbrot_config_numeric_type&&>(other.my_height)) { }
 
     mandelbrot_config_base(const mandelbrot_config_numeric_type& xl,
-                           const mandelbrot_config_numeric_type& xh,
+                           const mandelbrot_config_numeric_type& xh, // NOLINT(bugprone-easily-swappable-parameters)
                            const mandelbrot_config_numeric_type& yl,
                            const mandelbrot_config_numeric_type& yh)
       : my_x_lo  (std::move(xl)),
@@ -245,15 +245,12 @@
 
     explicit mandelbrot_generator(const mandelbrot_config_type& config)
       : mandelbrot_config_object   (config),
-        mandelbrot_image           (static_cast<boost_gil_x_coord_type>(config.integral_width()), // NOLINT
-                                    static_cast<boost_gil_x_coord_type>(config.integral_height())),
-        mandelbrot_view            (boost::gil::rgb8_view_t()), // NOLINT(readability-redundant-member-init)
+        mandelbrot_image           (static_cast<boost_gil_x_coord_type>(config.integral_width()),   // NOLINT
+                                    static_cast<boost_gil_x_coord_type>(config.integral_height())), // NOLINT
+        mandelbrot_view            (boost::gil::view(mandelbrot_image)),
         mandelbrot_iteration_matrix(config.integral_width(),
                                     std::vector<std::uint_fast32_t>(config.integral_height())),
-        mandelbrot_color_histogram (max_iterations + 1U, UINT32_C(0))
-    {
-      mandelbrot_view = boost::gil::view(mandelbrot_image);
-    }
+        mandelbrot_color_histogram (max_iterations + 1U, UINT32_C(0)) { }
 
     mandelbrot_generator() = delete;
 
@@ -279,8 +276,8 @@
     {
       // Setup the x-axis and y-axis coordinates.
 
-      std::vector<numeric_type> x_values(mandelbrot_config_object.integral_width());
-      std::vector<numeric_type> y_values(mandelbrot_config_object.integral_height());
+      std::vector<numeric_type> x_values(mandelbrot_config_object.integral_width());  // NOLINT
+      std::vector<numeric_type> y_values(mandelbrot_config_object.integral_height()); // NOLINT
 
       {
         numeric_type x_coord(mandelbrot_config_object.x_lo());
