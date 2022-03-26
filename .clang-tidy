@@ -7,7 +7,7 @@ Checks: >
   -llvmlibc-*
 
 WarningsAsErrors: '*'
-HeaderFilterRegex: '.*'
+HeaderFilterRegex: 'mandelbrot/mandelbrot.*'
 AnalyzeTemporaryDtors: false
 FormatStyle:     none
 User:            john

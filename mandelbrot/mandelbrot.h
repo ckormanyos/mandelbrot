@@ -112,7 +112,7 @@
       const auto non_rounded_width2 =
         static_cast<std::uint_fast32_t>
         (
-          mandelbrot_config_numeric_type(my_width * 2U) / this->step()
+          mandelbrot_config_numeric_type(my_width * 2U) / this->step() // NOLINT
         );
 
       return
@@ -167,7 +167,7 @@
                       const typename base_class_type::mandelbrot_config_numeric_type& yl,
                       const typename base_class_type::mandelbrot_config_numeric_type& yh)
       : base_class_type(xl, xh, yl, yh),
-        my_step(base_class_type::get_width() / PixelCountX) { }
+        my_step(base_class_type::get_width() / PixelCountX) { } // NOLINT
 
     mandelbrot_config(const std::string& str_xl,
                       const std::string& str_xh,
@@ -245,7 +245,7 @@
 
     explicit mandelbrot_generator(const mandelbrot_config_type& config)
       : mandelbrot_config_object   (config),
-        mandelbrot_image           (static_cast<boost_gil_x_coord_type>(config.integral_width()),
+        mandelbrot_image           (static_cast<boost_gil_x_coord_type>(config.integral_width()), // NOLINT
                                     static_cast<boost_gil_x_coord_type>(config.integral_height())),
         mandelbrot_view            (boost::gil::rgb8_view_t()),
         mandelbrot_iteration_matrix(config.integral_width(),
@@ -384,7 +384,7 @@
       apply_color_functions(x_values, y_values, color_functions);
 
       output_stream << "Write output JPEG file " << str_filename << "." << std::endl;
-      boost::gil::jpeg_write_view(str_filename, mandelbrot_view);
+      boost::gil::jpeg_write_view(str_filename, mandelbrot_view); // NOLINT
     }
 
   private:

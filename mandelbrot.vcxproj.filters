@@ -88,4 +88,7 @@
       <Filter>Source Files\mandelbrot\cfg</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include=".clang-tidy" />
+  </ItemGroup>
 </Project>

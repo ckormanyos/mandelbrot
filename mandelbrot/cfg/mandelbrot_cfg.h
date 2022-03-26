@@ -10,6 +10,8 @@
 
   #include <mandelbrot/mandelbrot.h>
 
+  // NOLINTBEGIN(*)
+
   #if defined(MANDELBROT_USE_GMP_FLOAT)
 
   #include <boost/multiprecision/gmp.hpp>
@@ -46,7 +48,7 @@
       std::string
       (
           std::string("images/tmp/mandelbrot_")
-        + MANDELBROT_FILENAME_STRING
+        + MANDELBROT_FILENAME_STRING // NOLINT(cppcoreguidelines-pro-bounds-array-to-pointer-decay,hicpp-no-array-decay)
         + std::string(".jpg")
       );
   }
@@ -69,5 +71,7 @@
   } // namespace mandelbrot
   } // namespace ckormanyos
   #endif
+
+  // NOLINTEND(*)
 
 #endif // MANDELBROT_CFG_2022_02_24_H
