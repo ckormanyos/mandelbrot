@@ -326,7 +326,7 @@
 
           mandelbrot_iteration_lock.clear();
 
-          for(auto i_col = static_cast<std::size_t>(0U); i_col < x_values.size(); ++i_col)
+          for(auto i_col = static_cast<std::size_t>(0U); i_col < x_values.size(); ++i_col) // NOLINT(altera-id-dependent-backward-branch)
           {
             numeric_type zr (0U);
             numeric_type zi (0U);
