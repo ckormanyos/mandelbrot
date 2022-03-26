@@ -428,23 +428,10 @@
           const auto gh = static_cast<std::uint8_t>((255U * color_g) / UINT32_C(255));
           const auto bh = static_cast<std::uint8_t>((255U * color_b) / UINT32_C(255));
 
-          const boost::gil::rgb8_pixel_t the_color  = boost::gil::rgb8_pixel_t(rh, gh, bh);
+          const auto the_color  = boost::gil::rgb8_pixel_t(rh, gh, bh);
 
-          {
-            const auto x_col = 
-              static_cast<boost_gil_x_coord_type>
-              (
-                i_col
-              );
-
-            const auto y_row = 
-              static_cast<boost_gil_x_coord_type>
-              (
-                j_row
-              );
-
-            mandelbrot_view(x_col, y_row) = boost::gil::rgb8_pixel_t(the_color);
-          }
+          mandelbrot_view(static_cast<boost_gil_x_coord_type>(i_col),
+                          static_cast<boost_gil_x_coord_type>(j_row)) = boost::gil::rgb8_pixel_t(the_color);
         }
       }
     }

@@ -66,10 +66,10 @@ The following design goals have been incorporated.
 
 Use shell commands such as the following.
 
-Go to the `mandelbrot/jpeg-6b-2022` directory and make the JPEG library. This creates the library file `libjpeg-6b.a` located in the directory `mandelbrot/jpeg-6b-2022/obj`.
+Go to the `mandelbrot/jpeg` directory and make the JPEG library. This creates the library file `libjpeg-6b.a` located in the directory `mandelbrot/jpeg/jpeg-6b-2022/obj`.
 
 ```sh
-cd mandelbrot/jpeg-6b-2022
+cd mandelbrot/jpeg
 make all
 ```
 
@@ -85,13 +85,13 @@ Otherwise, the location of your Boost C++ library headers needs to be included
 with a `-I` switch on the compiler command line.
 
 ```sh
-g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++11 -I. -I./jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++11 -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
 ```
 
 Link `test_mandelbrot.o` to `test_mandelbrot.exe`.
 
 ```sh
-g++ test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg-6b-2022/obj -o test_mandelbrot.exe
+g++ test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
 ```
 
 Make the needed output image directory and run `test_mandelbrot.exe`.

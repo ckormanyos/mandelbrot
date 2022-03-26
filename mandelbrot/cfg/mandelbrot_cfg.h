@@ -18,13 +18,6 @@
   boost::multiprecision::number<boost::multiprecision::gmp_float<static_cast<unsigned>(mandelbrot_digits10)>,\
                                 boost::multiprecision::et_off>
 
-  #elif defined(MANDELBROT_USE_WIDE_DECIMAL)
-
-  #include <math/wide_decimal/decwide_t.h>
-
-  #define MANDELBROT_NUMBER_TYPE_NAME(mandelbrot_digits10) \
-  math::wide_decimal::decwide_t<static_cast<std::int32_t>(mandelbrot_digits10)>
-
   #else
 
   #include <boost/multiprecision/cpp_dec_float.hpp>
