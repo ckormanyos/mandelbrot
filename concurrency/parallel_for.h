@@ -20,7 +20,7 @@
                       index_type             end,
                       callable_function_type parallel_function)
     {
-      // Estimate the number of threads available.
+      // Obtain the number of threads available.
       static const auto number_of_threads_hint =
         static_cast<unsigned>
         (
@@ -42,8 +42,12 @@
           static_cast<index_type>(end - start) + static_cast<index_type>(1)
         );
 
-      const auto slice = (std::max)(static_cast<index_type>(std::round(static_cast<float>(n) / static_cast<float>(number_of_threads))),
-                                    static_cast<index_type>(1));
+      const auto slice =
+        (std::max)
+        (
+          static_cast<index_type>(std::round(static_cast<float>(n) / static_cast<float>(number_of_threads))),
+          static_cast<index_type>(1)
+        );
 
       // Inner loop.
       auto launch_range =
@@ -80,11 +84,11 @@
       }
 
       // Wait for the jobs to finish.
-      for(std::thread& thread_in_pool : pool)
+      for(std::thread& t : pool)
       {
-        if(thread_in_pool.joinable())
+        if(t.joinable())
         {
-          thread_in_pool.join();
+          t.join();
         }
       }
     }

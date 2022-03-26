@@ -5,9 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Source Files\jpeg-6b-2022">
-      <UniqueIdentifier>{efed483f-a695-4e0b-b3a9-9b221c47590d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\concurrency">
       <UniqueIdentifier>{c470728a-5e7f-4d0f-afe4-3b0cac951b90}</UniqueIdentifier>
     </Filter>
@@ -22,164 +19,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="jpeg-6b-2022\jcapimin.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jcapistd.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jccoefct.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jccolor.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jcdctmgr.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jchuff.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jcinit.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jcmainct.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jcmarker.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jcmaster.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jcomapi.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jcparam.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jcphuff.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jcprepct.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jcsample.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jctrans.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jdapimin.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jdatadst.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jdcoefct.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jdcolor.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jddctmgr.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jdinput.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jdmainct.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jdmarker.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jdmerge.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jdpostct.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jdsample.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jerror.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jfdctflt.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jfdctfst.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jfdctint.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jidctflt.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jidctfst.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jidctint.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jidctred.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jmemansi.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jmemmgr.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jquant1.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jquant2.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
-    <ClCompile Include="jpeg-6b-2022\jutils.c">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClCompile>
     <ClCompile Include="test\test_mandelbrot.cpp">
       <Filter>Source Files\test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="jpeg-6b-2022\jchuff.h">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClInclude>
-    <ClInclude Include="jpeg-6b-2022\jconfig.h">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClInclude>
-    <ClInclude Include="jpeg-6b-2022\jdct.h">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClInclude>
-    <ClInclude Include="jpeg-6b-2022\jdhuff.h">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClInclude>
-    <ClInclude Include="jpeg-6b-2022\jerror.h">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClInclude>
-    <ClInclude Include="jpeg-6b-2022\jinclude.h">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClInclude>
-    <ClInclude Include="jpeg-6b-2022\jmemsys.h">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClInclude>
-    <ClInclude Include="jpeg-6b-2022\jmorecfg.h">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClInclude>
-    <ClInclude Include="jpeg-6b-2022\jpegint.h">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClInclude>
-    <ClInclude Include="jpeg-6b-2022\jpeglib.h">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClInclude>
-    <ClInclude Include="jpeg-6b-2022\jversion.h">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </ClInclude>
     <ClInclude Include="mandelbrot\mandelbrot.h">
       <Filter>Source Files\mandelbrot</Filter>
     </ClInclude>
@@ -243,21 +87,5 @@
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_14_ZOOM_WIKI_04.h">
       <Filter>Source Files\mandelbrot\cfg</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="jpeg-6b-2022\libjpeg.doc">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </None>
-    <None Include="jpeg-6b-2022\Makefile">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </None>
-    <None Include="jpeg-6b-2022\README">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="jpeg-6b-2022\_changes.txt">
-      <Filter>Source Files\jpeg-6b-2022</Filter>
-    </Text>
   </ItemGroup>
 </Project>

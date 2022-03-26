@@ -70,19 +70,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)jpeg-6b-2022;$(SolutionDir);C:\boost\boost_1_78_0;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)jpeg\jpeg-6b-2022;$(SolutionDir);C:\boost\boost_1_78_0;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)jpeg-6b-2022;$(SolutionDir);C:\boost\boost_1_78_0;$(SolutionDir)mpir\x64;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)jpeg\jpeg-6b-2022;$(SolutionDir);C:\boost\boost_1_78_0;$(SolutionDir)mpir\x64;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)jpeg-6b-2022;$(SolutionDir);C:\boost\boost_1_78_0;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)jpeg\jpeg-6b-2022;$(SolutionDir);C:\boost\boost_1_78_0;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)jpeg-6b-2022;$(SolutionDir);C:\boost\boost_1_78_0;$(SolutionDir)mpir\x64;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)jpeg\jpeg-6b-2022;$(SolutionDir);C:\boost\boost_1_78_0;$(SolutionDir)mpir\x64;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -93,13 +93,13 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Async</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <DisableSpecificWarnings>4244;4996</DisableSpecificWarnings>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)jpeg\$(Platform)\$(Configuration)\jpeg.lib</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>IF NOT EXIST $(SolutionDir)images\tmp mkdir $(SolutionDir)images\tmp</Command>
@@ -114,13 +114,13 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Async</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <DisableSpecificWarnings>4244;4996</DisableSpecificWarnings>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)jpeg\$(Platform)\$(Configuration)\jpeg.lib</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>IF NOT EXIST $(SolutionDir)images\tmp mkdir $(SolutionDir)images\tmp</Command>
@@ -137,15 +137,15 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Async</ExceptionHandling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <DisableSpecificWarnings>4244;4996</DisableSpecificWarnings>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)jpeg\$(Platform)\$(Configuration)\jpeg.lib</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>IF NOT EXIST $(SolutionDir)images\tmp mkdir $(SolutionDir)images\tmp</Command>
@@ -162,76 +162,25 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Async</ExceptionHandling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <DisableSpecificWarnings>4244;4996</DisableSpecificWarnings>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)jpeg\$(Platform)\$(Configuration)\jpeg.lib</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>IF NOT EXIST $(SolutionDir)images\tmp mkdir $(SolutionDir)images\tmp</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="jpeg-6b-2022\jcapimin.c" />
-    <ClCompile Include="jpeg-6b-2022\jcapistd.c" />
-    <ClCompile Include="jpeg-6b-2022\jccoefct.c" />
-    <ClCompile Include="jpeg-6b-2022\jccolor.c" />
-    <ClCompile Include="jpeg-6b-2022\jcdctmgr.c" />
-    <ClCompile Include="jpeg-6b-2022\jchuff.c" />
-    <ClCompile Include="jpeg-6b-2022\jcinit.c" />
-    <ClCompile Include="jpeg-6b-2022\jcmainct.c" />
-    <ClCompile Include="jpeg-6b-2022\jcmarker.c" />
-    <ClCompile Include="jpeg-6b-2022\jcmaster.c" />
-    <ClCompile Include="jpeg-6b-2022\jcomapi.c" />
-    <ClCompile Include="jpeg-6b-2022\jcparam.c" />
-    <ClCompile Include="jpeg-6b-2022\jcphuff.c" />
-    <ClCompile Include="jpeg-6b-2022\jcprepct.c" />
-    <ClCompile Include="jpeg-6b-2022\jcsample.c" />
-    <ClCompile Include="jpeg-6b-2022\jctrans.c" />
-    <ClCompile Include="jpeg-6b-2022\jdapimin.c" />
-    <ClCompile Include="jpeg-6b-2022\jdatadst.c" />
-    <ClCompile Include="jpeg-6b-2022\jdcoefct.c" />
-    <ClCompile Include="jpeg-6b-2022\jdcolor.c" />
-    <ClCompile Include="jpeg-6b-2022\jddctmgr.c" />
-    <ClCompile Include="jpeg-6b-2022\jdinput.c" />
-    <ClCompile Include="jpeg-6b-2022\jdmainct.c" />
-    <ClCompile Include="jpeg-6b-2022\jdmarker.c" />
-    <ClCompile Include="jpeg-6b-2022\jdmerge.c" />
-    <ClCompile Include="jpeg-6b-2022\jdpostct.c" />
-    <ClCompile Include="jpeg-6b-2022\jdsample.c" />
-    <ClCompile Include="jpeg-6b-2022\jerror.c" />
-    <ClCompile Include="jpeg-6b-2022\jfdctflt.c" />
-    <ClCompile Include="jpeg-6b-2022\jfdctfst.c" />
-    <ClCompile Include="jpeg-6b-2022\jfdctint.c" />
-    <ClCompile Include="jpeg-6b-2022\jidctflt.c" />
-    <ClCompile Include="jpeg-6b-2022\jidctfst.c" />
-    <ClCompile Include="jpeg-6b-2022\jidctint.c" />
-    <ClCompile Include="jpeg-6b-2022\jidctred.c" />
-    <ClCompile Include="jpeg-6b-2022\jmemansi.c" />
-    <ClCompile Include="jpeg-6b-2022\jmemmgr.c" />
-    <ClCompile Include="jpeg-6b-2022\jquant1.c" />
-    <ClCompile Include="jpeg-6b-2022\jquant2.c" />
-    <ClCompile Include="jpeg-6b-2022\jutils.c" />
     <ClCompile Include="test\test_mandelbrot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="concurrency\parallel_for.h" />
-    <ClInclude Include="jpeg-6b-2022\jchuff.h" />
-    <ClInclude Include="jpeg-6b-2022\jconfig.h" />
-    <ClInclude Include="jpeg-6b-2022\jdct.h" />
-    <ClInclude Include="jpeg-6b-2022\jdhuff.h" />
-    <ClInclude Include="jpeg-6b-2022\jerror.h" />
-    <ClInclude Include="jpeg-6b-2022\jinclude.h" />
-    <ClInclude Include="jpeg-6b-2022\jmemsys.h" />
-    <ClInclude Include="jpeg-6b-2022\jmorecfg.h" />
-    <ClInclude Include="jpeg-6b-2022\jpegint.h" />
-    <ClInclude Include="jpeg-6b-2022\jpeglib.h" />
-    <ClInclude Include="jpeg-6b-2022\jversion.h" />
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg.h" />
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_01_FULL.h" />
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_03_TOP.h" />
@@ -252,34 +201,6 @@
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_32_ZOOM_ANOTHER_02.h" />
     <ClInclude Include="mandelbrot\mandelbrot.h" />
     <ClInclude Include="mandelbrot\mandelbrot_color.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="jpeg-6b-2022\libjpeg.doc">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </None>
-    <None Include="jpeg-6b-2022\README">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </None>
-    <None Include="jpeg-6b-2022\Makefile">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="jpeg-6b-2022\_changes.txt">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </Text>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
