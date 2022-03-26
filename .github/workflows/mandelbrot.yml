@@ -12,6 +12,36 @@ on:
       - '**'
   pull_request:
 jobs:
+  gnumake-clang-tidy-native:
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [ clang++ ]
+        standard: [ c++11, c++20 ]
+        include:
+          - compiler: clang++
+            clang_tidy: "clang-tidy"
+            container: johnmcfarlane/cnl_ci:clang-13-libcpp
+    runs-on: ubuntu-20.04
+    container: ${{matrix.container}}
+    steps:
+      - uses: actions/checkout@v2
+      - name: install Boost
+        run: |
+          apt-get update --quiet
+          apt-get install --no-install-recommends --quiet --yes libboost-dev
+      - name: gnumake-clang-tidy-native
+        run: |
+          cd .tidy/make
+          echo "running clang-tidy"
+          echo "make prepare -f make_tidy_01_generic.gmk MY_CC=${{ matrix.compiler }} MY_STD=${{ matrix.standard }}"
+          echo
+          make prepare -f make_tidy_01_generic.gmk MY_CC=${{ matrix.compiler }} MY_STD=${{ matrix.standard }}
+          echo "make tidy -f make_tidy_01_generic.gmk --jobs=8 MY_CC=${{ matrix.compiler }} MY_STD=${{ matrix.standard }}"
+          make tidy -f make_tidy_01_generic.gmk --jobs=8 MY_CC=${{ matrix.compiler }} MY_STD=${{ matrix.standard }}
+          echo
+          echo "verify empty word count of ./tmp/all.tidy_txt"
+          wc ./tmp/all.tidy_txt | grep '0 0 0'
   gcc-native:
     runs-on: ubuntu-latest
     defaults:

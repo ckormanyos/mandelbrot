@@ -58,7 +58,7 @@
         my_height(static_cast<mandelbrot_config_numeric_type&&>(other.my_height)) { }
 
     mandelbrot_config_base(const mandelbrot_config_numeric_type& xl,
-                           const mandelbrot_config_numeric_type& xh,
+                           const mandelbrot_config_numeric_type& xh, // NOLINT(bugprone-easily-swappable-parameters)
                            const mandelbrot_config_numeric_type& yl,
                            const mandelbrot_config_numeric_type& yh)
       : my_x_lo  (std::move(xl)),
@@ -97,22 +97,22 @@
       return *this;
     }
 
-    auto x_lo() const -> const mandelbrot_config_numeric_type& { return my_x_lo; }
-    auto x_hi() const -> const mandelbrot_config_numeric_type& { return my_x_hi; }
-    auto y_lo() const -> const mandelbrot_config_numeric_type& { return my_y_lo; }
-    auto y_hi() const -> const mandelbrot_config_numeric_type& { return my_y_hi; }
+    MANDELBROT_NODISCARD auto x_lo() const -> const mandelbrot_config_numeric_type& { return my_x_lo; }
+    MANDELBROT_NODISCARD auto x_hi() const -> const mandelbrot_config_numeric_type& { return my_x_hi; }
+    MANDELBROT_NODISCARD auto y_lo() const -> const mandelbrot_config_numeric_type& { return my_y_lo; }
+    MANDELBROT_NODISCARD auto y_hi() const -> const mandelbrot_config_numeric_type& { return my_y_hi; }
 
     auto get_width () -> const mandelbrot_config_numeric_type& { return my_width; }
     auto get_height() -> const mandelbrot_config_numeric_type& { return my_height; }
 
-    virtual auto step() const -> const mandelbrot_config_numeric_type& = 0;
+    MANDELBROT_NODISCARD virtual auto step() const -> const mandelbrot_config_numeric_type& = 0;
 
-    auto integral_width() const -> std::uint_fast32_t
+    MANDELBROT_NODISCARD auto integral_width() const -> std::uint_fast32_t
     {
       const auto non_rounded_width2 =
         static_cast<std::uint_fast32_t>
         (
-          mandelbrot_config_numeric_type(my_width * 2U) / this->step()
+          mandelbrot_config_numeric_type(my_width * 2U) / this->step() // NOLINT
         );
 
       return
@@ -122,7 +122,7 @@
         );
     }
 
-    auto integral_height() const -> std::uint_fast32_t
+    MANDELBROT_NODISCARD auto integral_height() const -> std::uint_fast32_t
     {
       const auto non_rounded_height2 =
         static_cast<std::uint_fast32_t>
@@ -167,7 +167,7 @@
                       const typename base_class_type::mandelbrot_config_numeric_type& yl,
                       const typename base_class_type::mandelbrot_config_numeric_type& yh)
       : base_class_type(xl, xh, yl, yh),
-        my_step(base_class_type::get_width() / PixelCountX) { }
+        my_step(base_class_type::get_width() / PixelCountX) { } // NOLINT
 
     mandelbrot_config(const std::string& str_xl,
                       const std::string& str_xh,
@@ -223,7 +223,7 @@
   private:
     mandelbrot_config_numeric_type my_step; // NOLINT(readability-identifier-naming)
 
-    auto step() const -> const mandelbrot_config_numeric_type& final { return my_step; }
+    MANDELBROT_NODISCARD auto step() const -> const mandelbrot_config_numeric_type& final { return my_step; }
   };
 
   // This class generates the rows of the mandelbrot iteration.
@@ -245,15 +245,12 @@
 
     explicit mandelbrot_generator(const mandelbrot_config_type& config)
       : mandelbrot_config_object   (config),
-        mandelbrot_image           (static_cast<boost_gil_x_coord_type>(config.integral_width()),
-                                    static_cast<boost_gil_x_coord_type>(config.integral_height())),
-        mandelbrot_view            (boost::gil::rgb8_view_t()),
+        mandelbrot_image           (static_cast<boost_gil_x_coord_type>(config.integral_width()),   // NOLINT
+                                    static_cast<boost_gil_x_coord_type>(config.integral_height())), // NOLINT
+        mandelbrot_view            (boost::gil::view(mandelbrot_image)),
         mandelbrot_iteration_matrix(config.integral_width(),
                                     std::vector<std::uint_fast32_t>(config.integral_height())),
-        mandelbrot_color_histogram (max_iterations + 1U, UINT32_C(0))
-    {
-      mandelbrot_view = boost::gil::view(mandelbrot_image);
-    }
+        mandelbrot_color_histogram (max_iterations + 1U, UINT32_C(0)) { }
 
     mandelbrot_generator() = delete;
 
@@ -279,8 +276,8 @@
     {
       // Setup the x-axis and y-axis coordinates.
 
-      std::vector<numeric_type> x_values(mandelbrot_config_object.integral_width());
-      std::vector<numeric_type> y_values(mandelbrot_config_object.integral_height());
+      std::vector<numeric_type> x_values(mandelbrot_config_object.integral_width());  // NOLINT
+      std::vector<numeric_type> y_values(mandelbrot_config_object.integral_height()); // NOLINT
 
       {
         numeric_type x_coord(mandelbrot_config_object.x_lo());
@@ -329,7 +326,7 @@
 
           mandelbrot_iteration_lock.clear();
 
-          for(auto i_col = static_cast<std::size_t>(0U); i_col < x_values.size(); ++i_col)
+          for(auto i_col = static_cast<std::size_t>(0U); i_col < x_values.size(); ++i_col) // NOLINT(altera-id-dependent-backward-branch)
           {
             numeric_type zr (0U);
             numeric_type zi (0U);
@@ -384,7 +381,7 @@
       apply_color_functions(x_values, y_values, color_functions);
 
       output_stream << "Write output JPEG file " << str_filename << "." << std::endl;
-      boost::gil::jpeg_write_view(str_filename, mandelbrot_view);
+      boost::gil::jpeg_write_view(str_filename, mandelbrot_view); // NOLINT
     }
 
   private:

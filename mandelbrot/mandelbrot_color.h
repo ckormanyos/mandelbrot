@@ -31,9 +31,9 @@
 
     virtual ~color_functions_base() = default;
 
-    virtual auto color_function_r(const std::uint_fast32_t&) const -> std::uint_fast32_t = 0;
-    virtual auto color_function_g(const std::uint_fast32_t&) const -> std::uint_fast32_t = 0;
-    virtual auto color_function_b(const std::uint_fast32_t&) const -> std::uint_fast32_t = 0;
+    MANDELBROT_NODISCARD virtual auto color_function_r(const std::uint_fast32_t&) const -> std::uint_fast32_t = 0;
+    MANDELBROT_NODISCARD virtual auto color_function_g(const std::uint_fast32_t&) const -> std::uint_fast32_t = 0;
+    MANDELBROT_NODISCARD virtual auto color_function_b(const std::uint_fast32_t&) const -> std::uint_fast32_t = 0;
 
   protected:
     static auto color_phaser_01(std::uint_fast32_t c) -> std::uint_fast32_t
@@ -73,9 +73,9 @@
     ~color_functions_bw() final = default;
 
   private:
-    auto color_function_r(const std::uint_fast32_t& c) const -> std::uint_fast32_t final { return color_phaser_01(c); }
-    auto color_function_g(const std::uint_fast32_t& c) const -> std::uint_fast32_t final { return color_phaser_01(c); }
-    auto color_function_b(const std::uint_fast32_t& c) const -> std::uint_fast32_t final { return color_phaser_01(c); }
+    MANDELBROT_NODISCARD auto color_function_r(const std::uint_fast32_t& c) const -> std::uint_fast32_t final { return color_phaser_01(c); }
+    MANDELBROT_NODISCARD auto color_function_g(const std::uint_fast32_t& c) const -> std::uint_fast32_t final { return color_phaser_01(c); }
+    MANDELBROT_NODISCARD auto color_function_b(const std::uint_fast32_t& c) const -> std::uint_fast32_t final { return color_phaser_01(c); }
   };
 
   class color_functions_pretty final : public color_functions_base
@@ -92,17 +92,17 @@
     auto operator=(color_functions_pretty&&) noexcept -> color_functions_pretty& = default;
 
   private:
-    auto color_function_r(const std::uint_fast32_t& c) const -> std::uint_fast32_t final
+    MANDELBROT_NODISCARD auto color_function_r(const std::uint_fast32_t& c) const -> std::uint_fast32_t final
     {
       return color_phaser_01(c);
     }
 
-    auto color_function_g(const std::uint_fast32_t& c) const -> std::uint_fast32_t final
+    MANDELBROT_NODISCARD auto color_function_g(const std::uint_fast32_t& c) const -> std::uint_fast32_t final
     {
       return c;
     }
 
-    auto color_function_b(const std::uint_fast32_t& c) const -> std::uint_fast32_t final
+    MANDELBROT_NODISCARD auto color_function_b(const std::uint_fast32_t& c) const -> std::uint_fast32_t final
     {
       return
         static_cast<std::uint_fast32_t>

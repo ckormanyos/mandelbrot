@@ -48,7 +48,7 @@ auto main() -> int // NOLINT(bugprone-exception-escape)
   const cfg::mandelbrot_config_type
     mandelbrot_config_object
     (
-      cfg::center_x() - cfg::dx_half(),
+      cfg::center_x() - cfg::dx_half(), // NOLINT
       cfg::center_x() + cfg::dx_half(),
       cfg::center_y() - cfg::dx_half(),
       cfg::center_y() + cfg::dx_half()

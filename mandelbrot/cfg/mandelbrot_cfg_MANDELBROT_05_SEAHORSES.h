@@ -1,4 +1,4 @@
-﻿///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 //      Copyright Christopher Kormanyos 2022.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
@@ -24,7 +24,7 @@
 
   // This is a swirly seahorse image.
 
-  constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_05_SEAHORSES";
+  constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_05_SEAHORSES"; // NOLINT(cppcoreguidelines-avoid-c-arrays,hicpp-avoid-c-arrays,modernize-avoid-c-arrays)
 
   constexpr int  MANDELBROT_CALCULATION_DIGITS10    =      37;
   #if !defined(MANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH)
@@ -34,9 +34,9 @@
   #endif
   constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =    2000;
 
-  constexpr char MANDELBROT_POINT_DX_HALF[]         = "1.76E-12";
-  constexpr char MANDELBROT_POINT_CENTER_X[]        = "-0.7453983606667815";
-  constexpr char MANDELBROT_POINT_CENTER_Y[]        = "0.1125046349959942";
+  constexpr char MANDELBROT_POINT_DX_HALF[]         = "1.76E-12";             // NOLINT(cppcoreguidelines-avoid-c-arrays,hicpp-avoid-c-arrays,modernize-avoid-c-arrays)
+  constexpr char MANDELBROT_POINT_CENTER_X[]        = "-0.7453983606667815";  // NOLINT(cppcoreguidelines-avoid-c-arrays,hicpp-avoid-c-arrays,modernize-avoid-c-arrays)
+  constexpr char MANDELBROT_POINT_CENTER_Y[]        = "0.1125046349959942";   // NOLINT(cppcoreguidelines-avoid-c-arrays,hicpp-avoid-c-arrays,modernize-avoid-c-arrays)
 
   #include <mandelbrot/cfg/mandelbrot_cfg.h>
 
