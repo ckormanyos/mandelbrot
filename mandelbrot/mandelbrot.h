@@ -188,7 +188,7 @@
   private:
     mandelbrot_config_numeric_type my_step; // NOLINT(readability-identifier-naming)
 
-    MANDELBROT_NODISCARD auto step() const -> const mandelbrot_config_numeric_type& override final { return my_step; }
+    MANDELBROT_NODISCARD auto step() const -> const mandelbrot_config_numeric_type& final { return my_step; }
   };
 
   // This class generates the rows of the mandelbrot iteration.

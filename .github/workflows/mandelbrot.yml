@@ -267,3 +267,5 @@ jobs:
           dir %cd%\x64\Release\mandelbrot.exe
           cp %cd%\x64\Release\mandelbrot.exe .
           .\mandelbrot.exe
+          dir .\images\tmp\mandelbrot_MANDELBROT_05_SEAHORSES.jpg
+          certutil -hashfile ".\images\tmp\mandelbrot_MANDELBROT_05_SEAHORSES.jpg" SHA1 | findstr "f3abc4437d97bba945d589aac3d96d8bbb67a035"
