@@ -41,21 +41,9 @@
 
     mandelbrot_config_base() = delete;
 
-    mandelbrot_config_base(const mandelbrot_config_base& other)
-      : my_x_lo  (other.my_x_lo),
-        my_x_hi  (other.my_x_hi),
-        my_y_lo  (other.my_y_lo),
-        my_y_hi  (other.my_y_hi),
-        my_width (other.my_width),
-        my_height(other.my_height) { }
+    mandelbrot_config_base(const mandelbrot_config_base& other) = default;
 
-    mandelbrot_config_base(mandelbrot_config_base&& other) noexcept
-      : my_x_lo  (static_cast<mandelbrot_config_numeric_type&&>(other.my_x_lo)),
-        my_x_hi  (static_cast<mandelbrot_config_numeric_type&&>(other.my_x_hi)),
-        my_y_lo  (static_cast<mandelbrot_config_numeric_type&&>(other.my_y_lo)),
-        my_y_hi  (static_cast<mandelbrot_config_numeric_type&&>(other.my_y_hi)),
-        my_width (static_cast<mandelbrot_config_numeric_type&&>(other.my_width)),
-        my_height(static_cast<mandelbrot_config_numeric_type&&>(other.my_height)) { }
+    mandelbrot_config_base(mandelbrot_config_base&& other) noexcept = default;
 
     mandelbrot_config_base(const mandelbrot_config_numeric_type& xl,
                            const mandelbrot_config_numeric_type& xh, // NOLINT(bugprone-easily-swappable-parameters)
@@ -70,40 +58,17 @@
 
     virtual ~mandelbrot_config_base() = default;
 
-    auto operator=(const mandelbrot_config_base& other) -> mandelbrot_config_base&
-    {
-      if(this != &other)
-      {
-        my_x_lo   = other.my_x_lo;
-        my_x_hi   = other.my_x_hi;
-        my_y_lo   = other.my_y_lo;
-        my_y_hi   = other.my_y_hi;
-        my_width  = other.my_width;
-        my_height = other.my_height;
-      }
+    auto operator=(const mandelbrot_config_base& other) -> mandelbrot_config_base& = default;
 
-      return *this;
-    }
-
-    auto operator=(mandelbrot_config_base&& other) noexcept -> mandelbrot_config_base&
-    {
-      my_x_lo   = static_cast<mandelbrot_config_numeric_type&&>(other.my_x_lo);
-      my_x_hi   = static_cast<mandelbrot_config_numeric_type&&>(other.my_x_hi);
-      my_y_lo   = static_cast<mandelbrot_config_numeric_type&&>(other.my_y_lo);
-      my_y_hi   = static_cast<mandelbrot_config_numeric_type&&>(other.my_y_hi);
-      my_width  = static_cast<mandelbrot_config_numeric_type&&>(other.my_width);
-      my_height = static_cast<mandelbrot_config_numeric_type&&>(other.my_height);
-
-      return *this;
-    }
+    auto operator=(mandelbrot_config_base&& other) noexcept -> mandelbrot_config_base& = default;
 
     MANDELBROT_NODISCARD auto x_lo() const -> const mandelbrot_config_numeric_type& { return my_x_lo; }
     MANDELBROT_NODISCARD auto x_hi() const -> const mandelbrot_config_numeric_type& { return my_x_hi; }
     MANDELBROT_NODISCARD auto y_lo() const -> const mandelbrot_config_numeric_type& { return my_y_lo; }
     MANDELBROT_NODISCARD auto y_hi() const -> const mandelbrot_config_numeric_type& { return my_y_hi; }
 
-    auto get_width () -> const mandelbrot_config_numeric_type& { return my_width; }
-    auto get_height() -> const mandelbrot_config_numeric_type& { return my_height; }
+    MANDELBROT_NODISCARD auto get_width () const -> const mandelbrot_config_numeric_type& { return my_width; }
+    MANDELBROT_NODISCARD auto get_height() const -> const mandelbrot_config_numeric_type& { return my_height; }
 
     MANDELBROT_NODISCARD virtual auto step() const -> const mandelbrot_config_numeric_type& = 0;
 
@@ -409,9 +374,13 @@
                                const std::vector<numeric_type>& y_values,
                                const color::color_functions_base& color_functions) -> void
     {
-      for(auto j_row = static_cast<std::uint_fast32_t>(UINT32_C(0)); j_row < y_values.size(); ++j_row)
+      for(auto   j_row = static_cast<std::uint_fast32_t>(UINT32_C(0));
+                 j_row < static_cast<std::uint_fast32_t>(y_values.size());
+               ++j_row)
       {
-        for(auto i_col = static_cast<std::uint_fast32_t>(UINT32_C(0)); i_col < x_values.size(); ++i_col)
+        for(auto   i_col = static_cast<std::uint_fast32_t>(UINT32_C(0));
+                   i_col < static_cast<std::uint_fast32_t>(x_values.size());
+                 ++i_col)
         {
           const auto hist_color = mandelbrot_color_histogram[mandelbrot_iteration_matrix[i_col][j_row]];
 
@@ -421,14 +390,17 @@
           const auto color_b = static_cast<std::uint_fast32_t>((hist_color <= 4U) ? hist_color : color_functions.color_function_b(hist_color));
 
           // Mix the color from the hue values.
-          const auto rh = static_cast<std::uint8_t>((255U * color_r) / UINT32_C(255));
-          const auto gh = static_cast<std::uint8_t>((255U * color_g) / UINT32_C(255));
-          const auto bh = static_cast<std::uint8_t>((255U * color_b) / UINT32_C(255));
+          const auto rh = static_cast<std::uint8_t>((UINT32_C(255) * color_r) / UINT32_C(255));
+          const auto gh = static_cast<std::uint8_t>((UINT32_C(255) * color_g) / UINT32_C(255));
+          const auto bh = static_cast<std::uint8_t>((UINT32_C(255) * color_b) / UINT32_C(255));
 
-          const auto the_color  = boost::gil::rgb8_pixel_t(rh, gh, bh);
+          const auto the_color = boost::gil::rgb8_pixel_t(rh, gh, bh);
 
-          mandelbrot_view(static_cast<boost_gil_x_coord_type>(i_col),
-                          static_cast<boost_gil_x_coord_type>(j_row)) = boost::gil::rgb8_pixel_t(the_color);
+          mandelbrot_view
+          (
+            static_cast<boost_gil_x_coord_type>(i_col),
+            static_cast<boost_gil_x_coord_type>(j_row)
+          ) = boost::gil::rgb8_pixel_t(the_color);
         }
       }
     }
