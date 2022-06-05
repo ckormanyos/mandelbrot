@@ -17,12 +17,12 @@ jobs:
       fail-fast: false
       matrix:
         compiler: [ clang++ ]
-        standard: [ c++11, c++20 ]
+        standard: [ c++14, c++20 ]
         include:
           - compiler: clang++
             clang_tidy: "clang-tidy"
             container: johnmcfarlane/cnl_ci:clang-13-libcpp
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     container: ${{matrix.container}}
     steps:
       - uses: actions/checkout@v2
@@ -43,7 +43,7 @@ jobs:
           echo "verify empty word count of ./tmp/all.tidy_txt"
           wc ./tmp/all.tidy_txt | grep '0 0 0'
   gcc-native:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     defaults:
       run:
         shell: bash
@@ -51,7 +51,7 @@ jobs:
       fail-fast: false
       matrix:
         compiler: [ g++, clang++ ]
-        standard: [ c++11, c++14, c++17, c++2a ]
+        standard: [ c++14, c++17, c++2a ]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -81,7 +81,7 @@ jobs:
           ./test_mandelbrot.exe
           ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
   gcc-native-cpp_dec_float:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     defaults:
       run:
         shell: bash
@@ -89,7 +89,7 @@ jobs:
       fail-fast: false
       matrix:
         compiler: [ g++ ]
-        standard: [ c++11, c++14, c++17, c++2a ]
+        standard: [ c++14, c++17, c++2a ]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -117,7 +117,7 @@ jobs:
           echo 'sha1sum ./images/tmp/sha1sum mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep f3abc4437d97bba945d589aac3d96d8bbb67a035'
           sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep f3abc4437d97bba945d589aac3d96d8bbb67a035
   gcc-native-cpp_dec_float-asan:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     defaults:
       run:
         shell: bash
@@ -125,7 +125,7 @@ jobs:
       fail-fast: false
       matrix:
         compiler: [ g++ ]
-        standard: [ c++11, c++2a ]
+        standard: [ c++14, c++2a ]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -151,7 +151,7 @@ jobs:
           ./test_mandelbrot.exe
           ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
   gcc-native-cpp_dec_float-ubsan:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     defaults:
       run:
         shell: bash
@@ -159,7 +159,7 @@ jobs:
       fail-fast: false
       matrix:
         compiler: [ g++ ]
-        standard: [ c++11, c++2a ]
+        standard: [ c++14, c++2a ]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -185,7 +185,7 @@ jobs:
           ./test_mandelbrot.exe
           ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
   gcc-native-cpp_dec_float-tsan:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     defaults:
       run:
         shell: bash
@@ -193,7 +193,7 @@ jobs:
       fail-fast: false
       matrix:
         compiler: [ g++ ]
-        standard: [ c++11, c++2a ]
+        standard: [ c++14, c++2a ]
     steps:
       - uses: actions/checkout@v2
         with:
