@@ -53,6 +53,7 @@ jobs:
           git submodule update --init libs/numeric/conversion
           git submodule update --init libs/preprocessor
           git submodule update --init libs/range
+          git submodule update --init libs/smart_ptr
           git submodule update --init libs/static_assert
           git submodule update --init libs/system
           git submodule update --init libs/throw_exception
