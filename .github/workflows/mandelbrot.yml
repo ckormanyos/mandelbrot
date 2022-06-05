@@ -43,6 +43,7 @@ jobs:
           git submodule update --init libs/functional
           git submodule update --init libs/gil
           git submodule update --init libs/integer
+          git submodule update --init libs/io
           git submodule update --init libs/iterator
           git submodule update --init libs/lexical_cast
           git submodule update --init libs/move
