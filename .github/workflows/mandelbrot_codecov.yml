@@ -31,8 +31,8 @@ jobs:
         run: sudo apt install lcov
       - name: install Boost
         run: |
-          apt-get update --quiet
-          apt-get install --no-install-recommends --quiet --yes libboost-dev
+          sudo apt-get update --quiet
+          sudo apt-get install --no-install-recommends --quiet --yes libboost-dev
       - name: gcc-gcov-native
         run: |
           echo "query GCC version"
