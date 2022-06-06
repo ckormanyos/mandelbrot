@@ -15,7 +15,7 @@
     #endif
     #endif
   #elif defined(__GNUC__)
-    #if defined(__SANITIZE_THREAD__) || defined(__SANITIZE_ADDRESS__)
+    #if (defined(__SANITIZE_THREAD__) || defined(__SANITIZE_ADDRESS__) || defined(MANDELBROT_HAS_COVERAGE))
     #if !defined(MANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH)
     #define MANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH
     #endif

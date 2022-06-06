@@ -1,6 +1,9 @@
 ﻿ckormanyos/mandelbrot\
-[![Build Status](https://github.com/ckormanyos/mandelbrot/actions/workflows/mandelbrot.yml/badge.svg)](https://github.com/ckormanyos/mandelbrot/actions)
 ==================
+
+[![Build Status](https://github.com/ckormanyos/mandelbrot/actions/workflows/mandelbrot.yml/badge.svg)](https://github.com/ckormanyos/mandelbrot/actions)
+[![Boost Software License 1.0](https://img.shields.io/badge/license-BSL%201.0-blue.svg)](https://github.com/ckormanyos/mandelbrot/blob/master/LICENSE_1_0.txt)
+[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ckormanyos/mandelbrot)](https://github.com/ckormanyos/mandelbrot)
 
 The Mandelbrot set consists of the set of points
 ![c](https://latex.codecogs.com/svg.image?c)
