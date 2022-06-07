@@ -262,10 +262,7 @@
         y_values.size(),
         [&mandelbrot_iteration_lock, &unordered_parallel_row_count, &output_stream, &x_values, &y_values, this](std::size_t j_row)
         {
-          while(mandelbrot_iteration_lock.test_and_set())
-          {
-            ;
-          }
+          while(mandelbrot_iteration_lock.test_and_set()) { ; }
 
           {
             ++unordered_parallel_row_count;
@@ -322,10 +319,7 @@
               ++iteration_result;
             }
 
-            while(mandelbrot_iteration_lock.test_and_set())
-            {
-              ;
-            }
+            while(mandelbrot_iteration_lock.test_and_set()) { ; }
 
             {
               mandelbrot_iteration_matrix[i_col][j_row] = iteration_result;

@@ -1,7 +1,8 @@
-﻿ckormanyos/mandelbrot\
+﻿ckormanyos/mandelbrot
 ==================
 
 [![Build Status](https://github.com/ckormanyos/mandelbrot/actions/workflows/mandelbrot.yml/badge.svg)](https://github.com/ckormanyos/mandelbrot/actions)
+[![codecov](https://codecov.io/gh/ckormanyos/mandelbrot/branch/main/graph/badge.svg?token=FVIE627J2D)](https://codecov.io/gh/ckormanyos/mandelbrot)
 [![Boost Software License 1.0](https://img.shields.io/badge/license-BSL%201.0-blue.svg)](https://github.com/ckormanyos/mandelbrot/blob/master/LICENSE_1_0.txt)
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ckormanyos/mandelbrot)](https://github.com/ckormanyos/mandelbrot)
 
