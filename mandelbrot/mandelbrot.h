@@ -125,12 +125,12 @@
     using base_class_type = mandelbrot_config_base<NumericType, MaxIterations>;
 
   public:
-    using mandelbrot_config_numeric_type = typename base_class_type::mandelbrot_config_numeric_type;
+    using my_mandelbrot_config_numeric_type = typename base_class_type::mandelbrot_config_numeric_type;
 
-    mandelbrot_config(const typename base_class_type::mandelbrot_config_numeric_type& xl,
-                      const typename base_class_type::mandelbrot_config_numeric_type& xh,
-                      const typename base_class_type::mandelbrot_config_numeric_type& yl,
-                      const typename base_class_type::mandelbrot_config_numeric_type& yh)
+    mandelbrot_config(const my_mandelbrot_config_numeric_type& xl,
+                      const my_mandelbrot_config_numeric_type& xh,
+                      const my_mandelbrot_config_numeric_type& yl,
+                      const my_mandelbrot_config_numeric_type& yh)
       : base_class_type(xl, xh, yl, yh),
         my_step(base_class_type::get_width() / PixelCountX) { } // NOLINT
 
@@ -138,20 +138,20 @@
                       const std::string& str_xh,
                       const std::string& str_yl,
                       const std::string& str_yh)
-      : base_class_type(boost::lexical_cast<typename base_class_type::mandelbrot_config_numeric_type>(str_xl),
-                        boost::lexical_cast<typename base_class_type::mandelbrot_config_numeric_type>(str_xh),
-                        boost::lexical_cast<typename base_class_type::mandelbrot_config_numeric_type>(str_yl),
-                        boost::lexical_cast<typename base_class_type::mandelbrot_config_numeric_type>(str_yh)),
+      : base_class_type(boost::lexical_cast<my_mandelbrot_config_numeric_type>(str_xl),
+                        boost::lexical_cast<my_mandelbrot_config_numeric_type>(str_xh),
+                        boost::lexical_cast<my_mandelbrot_config_numeric_type>(str_yl),
+                        boost::lexical_cast<my_mandelbrot_config_numeric_type>(str_yh)),
         my_step(base_class_type::get_width() / PixelCountX) { }
 
     mandelbrot_config(const char* pc_xl,
                       const char* pc_xh,
                       const char* pc_yl,
                       const char* pc_yh)
-      : base_class_type(boost::lexical_cast<typename base_class_type::mandelbrot_config_numeric_type>(std::string(pc_xl)),
-                        boost::lexical_cast<typename base_class_type::mandelbrot_config_numeric_type>(std::string(pc_xh)),
-                        boost::lexical_cast<typename base_class_type::mandelbrot_config_numeric_type>(std::string(pc_yl)),
-                        boost::lexical_cast<typename base_class_type::mandelbrot_config_numeric_type>(std::string(pc_yh))),
+      : base_class_type(boost::lexical_cast<my_mandelbrot_config_numeric_type>(std::string(pc_xl)),
+                        boost::lexical_cast<my_mandelbrot_config_numeric_type>(std::string(pc_xh)),
+                        boost::lexical_cast<my_mandelbrot_config_numeric_type>(std::string(pc_yl)),
+                        boost::lexical_cast<my_mandelbrot_config_numeric_type>(std::string(pc_yh))),
         my_step(base_class_type::get_width() / PixelCountX) { }
 
     mandelbrot_config(const mandelbrot_config& other)
@@ -186,16 +186,16 @@
     }
 
   private:
-    mandelbrot_config_numeric_type my_step; // NOLINT(readability-identifier-naming)
+    my_mandelbrot_config_numeric_type my_step; // NOLINT(readability-identifier-naming)
 
-    MANDELBROT_NODISCARD auto step() const -> const mandelbrot_config_numeric_type& final { return my_step; }
+    MANDELBROT_NODISCARD auto step() const -> const my_mandelbrot_config_numeric_type& final { return my_step; }
   };
 
   // This class generates the rows of the mandelbrot iteration.
   // The coordinates are set up according to the Mandelbrot configuration.
   template<typename NumericType,
            const std::uint_fast32_t MaxIterations>
-  class mandelbrot_generator final
+  class mandelbrot_generator final // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
   {
   private:
     using numeric_type = NumericType;
@@ -215,7 +215,7 @@
         mandelbrot_view            (boost::gil::view(mandelbrot_image)),
         mandelbrot_iteration_matrix(config.integral_width(),
                                     std::vector<std::uint_fast32_t>(config.integral_height())),
-        mandelbrot_color_histogram (max_iterations + 1U, UINT32_C(0)) { }
+        mandelbrot_color_histogram (static_cast<std::size_t>(max_iterations + 1U), static_cast<std::uint_fast32_t>(UINT32_C(0))) { }
 
     mandelbrot_generator() = delete;
 
@@ -225,13 +225,9 @@
     auto operator=(const mandelbrot_generator&) -> mandelbrot_generator& = delete;
     auto operator=(mandelbrot_generator&&) noexcept -> mandelbrot_generator& = delete;
 
-    ~mandelbrot_generator() = default;
-
-    static auto four() -> const numeric_type&
+    static constexpr auto four() -> numeric_type
     {
-      static const numeric_type my_value_four(4U);
-
-      return my_value_four;
+      return numeric_type(4U);
     }
 
     auto generate_mandelbrot_image(const std::string&                  str_filename,
@@ -364,8 +360,8 @@
       }
     }
 
-    auto apply_color_functions(const std::vector<numeric_type>& x_values,
-                               const std::vector<numeric_type>& y_values,
+    auto apply_color_functions(const std::vector<numeric_type>&   x_values,
+                               const std::vector<numeric_type>&   y_values,
                                const color::color_functions_base& color_functions) -> void
     {
       for(auto   j_row = static_cast<std::uint_fast32_t>(UINT32_C(0));

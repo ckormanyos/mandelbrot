@@ -64,7 +64,7 @@
                                               static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_ITERATIONS),
                                               static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_1D)>;
 
-  using mandelbrot_numeric_type = typename mandelbrot_config_type::mandelbrot_config_numeric_type;
+  using mandelbrot_numeric_type = typename mandelbrot_config_type::my_mandelbrot_config_numeric_type;
 
   inline auto dx_half () -> mandelbrot_numeric_type { return mandelbrot_numeric_type(MANDELBROT_POINT_DX_HALF); }
   inline auto center_x() -> mandelbrot_numeric_type { return mandelbrot_numeric_type(MANDELBROT_POINT_CENTER_X); }
