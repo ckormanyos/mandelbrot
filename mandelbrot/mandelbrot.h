@@ -195,7 +195,7 @@
   // The coordinates are set up according to the Mandelbrot configuration.
   template<typename NumericType,
            const std::uint_fast32_t MaxIterations>
-  class mandelbrot_generator final
+  class mandelbrot_generator final // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
   {
   private:
     using numeric_type = NumericType;
