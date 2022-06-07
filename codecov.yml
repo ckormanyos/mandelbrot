@@ -13,7 +13,10 @@ coverage:
         threshold: 5%
         if_ci_failed: error #success, failure, error, ignore
         only_pulls: false
-    patch: off
+    patch:
+      default:
+        target: 50%
+        threshold: 25%
 
 parsers:
   gcov:
