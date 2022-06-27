@@ -1,10 +1,20 @@
 ﻿ckormanyos/mandelbrot
 ==================
 
-[![Build Status](https://github.com/ckormanyos/mandelbrot/actions/workflows/mandelbrot.yml/badge.svg)](https://github.com/ckormanyos/mandelbrot/actions)
-[![codecov](https://codecov.io/gh/ckormanyos/mandelbrot/branch/main/graph/badge.svg?token=FVIE627J2D)](https://codecov.io/gh/ckormanyos/mandelbrot)
-[![Boost Software License 1.0](https://img.shields.io/badge/license-BSL%201.0-blue.svg)](https://github.com/ckormanyos/mandelbrot/blob/master/LICENSE_1_0.txt)
-[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ckormanyos/mandelbrot)](https://github.com/ckormanyos/mandelbrot)
+<p align="center">
+    <a href="https://github.com/ckormanyos/mandelbrot/actions">
+        <img src="https://github.com/ckormanyos/mandelbrot/actions/workflows/mandelbrot.yml/badge.svg" alt="Build Status"></a>
+    <a href="https://github.com/ckormanyos/mandelbrot/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc">
+        <img src="https://custom-icon-badges.herokuapp.com/github/issues-raw/ckormanyos/mandelbrot?logo=github" alt="Open Issues" /></a>
+    <a href="https://codecov.io/gh/ckormanyos/mandelbrot">
+        <img src="https://codecov.io/gh/ckormanyos/mandelbrot/branch/main/graph/badge.svg?token=FVIE627J2D" alt="code coverage"></a>
+    <a href="https://github.com/ckormanyos/mandelbrot/blob/master/LICENSE_1_0.txt">
+        <img src="https://img.shields.io/badge/license-BSL%201.0-blue.svg" alt="Boost Software License 1.0"></a>
+    <a href="https://github.com/ckormanyos/mandelbrot" alt="Activity">
+        <img src="https://img.shields.io/github/commit-activity/y/ckormanyos/mandelbrot" /></a>
+    <a href="https://github.com/ckormanyos/mandelbrot" alt="GitHub code size in bytes">
+        <img src="https://img.shields.io/github/languages/code-size/ckormanyos/mandelbrot" /></a>
+</p>
 
 The Mandelbrot set consists of the set of points
 ![c](https://latex.codecogs.com/svg.image?c)
