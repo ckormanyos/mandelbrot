@@ -21,7 +21,7 @@ in the complex plane for which the iteration
 
 $$z_{n+1} = z_{n}^2 + c$$,
 
-where $z_{0} = 0 and $z {\in} {\mathbb{C}}$, stays bounded.
+where $z_{0} = 0$ and $z {\in} {\mathbb{C}}$, stays bounded.
 
 ckormanyos/mandelbrot implements a header-only C++ template library for
 extended precision Mandelbrot fractal iterations.
@@ -156,7 +156,7 @@ in black-and-white color representation is shown below.
 This image has the following features and parameters.
 
   - The square image has $2048 {\times} 2048$ pixels.
-  - Centered at the point $(-0.7453983606667815,0.1125046349959942$.
+  - Centered at the point $(-0.7453983606667815,0.1125046349959942)$.
   - Uses a half-width of $1.76{\times}10^{-12}$.
   - Computed with $2,000$ iteratons using the `cpp_dec_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_80_0/libs/multiprecision/doc/html/index.html) instantiated with $37$ decimal digits of precision.
 
@@ -189,7 +189,7 @@ is represented by the image below.
 This image has the the following features and parameters.
 
   - The square image has $1536 {\times} 1536$ pixels.
-  - Centered at the point $(0.3602404434376143632361252444495453084826{\ldots},-0.6413130610648031748603750151793020665794{\ldots})$.
+  - Centered at the point $(0.3602404434376143632361252444495453084{\ldots},-0.6413130610648031748603750151793020665{\ldots})$.
   - See the configuration code [mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h) for the full precision of the center point provided with slightly more than $1,000$ decimal places.
   - Uses a half-width of $4.4 {\times} 10^{-311}$.
   - Computed with $60,000$ iteratons using the `gmp_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_80_0/libs/multiprecision/doc/html/index.html) instantiated with $365$ decimal digits of precision.
