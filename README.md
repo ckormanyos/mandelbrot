@@ -6,8 +6,6 @@
         <img src="https://github.com/ckormanyos/mandelbrot/actions/workflows/mandelbrot.yml/badge.svg" alt="Build Status"></a>
     <a href="https://github.com/ckormanyos/mandelbrot/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc">
         <img src="https://custom-icon-badges.herokuapp.com/github/issues-raw/ckormanyos/mandelbrot?logo=github" alt="Open Issues" /></a>
-    <a href="https://sonarcloud.io/summary/new_code?id=ckormanyos_mandelbrot">
-        <img src="https://sonarcloud.io/api/project_badges/measure?project=ckormanyos_mandelbrot&metric=alert_status" alt="Quality Gate Status"></a>
     <a href="https://codecov.io/gh/ckormanyos/mandelbrot">
         <img src="https://codecov.io/gh/ckormanyos/mandelbrot/branch/main/graph/badge.svg?token=FVIE627J2D" alt="code coverage"></a>
     <a href="https://github.com/ckormanyos/mandelbrot/blob/master/LICENSE_1_0.txt">
@@ -21,11 +19,12 @@
 The Mandelbrot set consists of the set of points $c$
 in the complex plane for which the iteration
 
-$$z_{n+1} = z_{n}^2 + c {\phantom{.}} ,$$
+$$z_{n+1} = z_{n}^2 + c,$$
 
 where $z_{0} = 0$ and $z {\phantom{.}} {\in} {\phantom{.}} {\mathbb{C}}$, stays bounded.
 
-ckormanyos/mandelbrot implements a header-only C++ template library for
+`ckormanyos/mandelbrot` (this repository)
+implements a header-only C++ template library for
 extended precision Mandelbrot fractal iterations.
 
 It is intended to be used for so-called _deep_ _dives_ in the fractal iteration
@@ -259,4 +258,4 @@ The following adaptions have been performed.
   - Remove several unused preprocessor options such as short names for linkers.
   - Eliminate all uses of `NEED_FAR_POINTERS` and `NEED_SHORT_EXTERNAL_NAMES`.
   - Handle Level-3 warnings found in MSVC.
-  - Handle GCC warnings from `-Wall`, `-Wextra`, `-pedantic`, `-Wconversion` and `-Wsign-conversion`.
+  - Handle GCC warnings from `-Wall`, `-Wextra`, `-Wpedantic`, `-Wconversion` and `-Wsign-conversion`.
