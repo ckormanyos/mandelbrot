@@ -21,7 +21,7 @@
 The Mandelbrot set consists of the set of points $c$
 in the complex plane for which the iteration
 
-$$z_{n+1} = z_{n}^2 + c,$$
+$$z_{n+1} = z_{n}^2 + c {\phantom{.}} ,$$
 
 where $z_{0} = 0$ and $z {\phantom{.}} {\in} {\phantom{.}} {\mathbb{C}}$, stays bounded.
 
