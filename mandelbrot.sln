@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\mandelbrot.yml = .github\workflows\mandelbrot.yml
 		.github\workflows\mandelbrot_codecov.yml = .github\workflows\mandelbrot_codecov.yml
+		.github\workflows\mandelbrot_sonar.yml = .github\workflows\mandelbrot_sonar.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_doc", "_doc", "{951EE097-D8B7-4AD4-9F03-9E514A58C8D0}"
