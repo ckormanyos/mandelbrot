@@ -43,7 +43,7 @@ jobs:
           echo "verify empty word count of ./tmp/all.tidy_txt"
           wc ./tmp/all.tidy_txt | grep '0 0 0'
   gcc-native:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
@@ -153,7 +153,7 @@ jobs:
           ./test_mandelbrot.exe
           ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
   gcc-native-cpp_dec_float:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
@@ -189,7 +189,7 @@ jobs:
           echo 'sha1sum ./images/tmp/sha1sum mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep f3abc4437d97bba945d589aac3d96d8bbb67a035'
           sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep f3abc4437d97bba945d589aac3d96d8bbb67a035
   gcc-native-cpp_dec_float-asan:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
@@ -223,7 +223,7 @@ jobs:
           ./test_mandelbrot.exe
           ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
   gcc-native-cpp_dec_float-ubsan:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
@@ -257,7 +257,7 @@ jobs:
           ./test_mandelbrot.exe
           ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
   gcc-native-cpp_dec_float-tsan:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
