@@ -6,6 +6,8 @@
         <img src="https://github.com/ckormanyos/mandelbrot/actions/workflows/mandelbrot.yml/badge.svg" alt="Build Status"></a>
     <a href="https://github.com/ckormanyos/mandelbrot/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc">
         <img src="https://custom-icon-badges.herokuapp.com/github/issues-raw/ckormanyos/mandelbrot?logo=github" alt="Open Issues" /></a>
+    <a href="https://sonarcloud.io/summary/new_code?id=ckormanyos_mandelbrot">
+        <img src="https://sonarcloud.io/api/project_badges/measure?project=ckormanyos_mandelbrot&metric=alert_status" alt="Quality Gate Status"></a>
     <a href="https://codecov.io/gh/ckormanyos/mandelbrot">
         <img src="https://codecov.io/gh/ckormanyos/mandelbrot/branch/main/graph/badge.svg?token=FVIE627J2D" alt="code coverage"></a>
     <a href="https://github.com/ckormanyos/mandelbrot/blob/master/LICENSE_1_0.txt">
