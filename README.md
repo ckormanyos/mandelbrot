@@ -19,9 +19,9 @@
 The Mandelbrot set consists of the set of points $c$
 in the complex plane for which the iteration
 
-$$z_{n+1} = z_{n}^2 + c$$,
+$$z_{n+1} = z_{n}^2 + c,$$
 
-where $z_{0} = 0$ and $z {\in} {\mathbb{C}}$, stays bounded.
+where $z_{0} = 0$ and $z {\phantom{.}} {\in} {\phantom{.}} {\mathbb{C}}$, stays bounded.
 
 ckormanyos/mandelbrot implements a header-only C++ template library for
 extended precision Mandelbrot fractal iterations.
