@@ -162,7 +162,7 @@
       : base_class_type(static_cast<base_class_type&&>(other)),
         my_step(other.my_step) { }
 
-    ~mandelbrot_config() final = default;
+    ~mandelbrot_config() final = default; // LCOV_EXCL_LINE
 
     auto operator=(const mandelbrot_config& other) -> mandelbrot_config&
     {
