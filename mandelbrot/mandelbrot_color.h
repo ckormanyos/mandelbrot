@@ -86,23 +86,23 @@
     color_functions_pretty(const color_functions_pretty&) = default;
     color_functions_pretty(color_functions_pretty&&) noexcept = default;
 
-    ~color_functions_pretty() final = default;
+    ~color_functions_pretty() override = default;
 
     auto operator=(const color_functions_pretty&) -> color_functions_pretty& = default;
     auto operator=(color_functions_pretty&&) noexcept -> color_functions_pretty& = default;
 
   private:
-    MANDELBROT_NODISCARD auto color_function_r(const std::uint_fast32_t& c) const -> std::uint_fast32_t final
+    MANDELBROT_NODISCARD auto color_function_r(const std::uint_fast32_t& c) const -> std::uint_fast32_t override
     {
       return color_phaser_01(c);
     }
 
-    MANDELBROT_NODISCARD auto color_function_g(const std::uint_fast32_t& c) const -> std::uint_fast32_t final
+    MANDELBROT_NODISCARD auto color_function_g(const std::uint_fast32_t& c) const -> std::uint_fast32_t override
     {
       return c;
     }
 
-    MANDELBROT_NODISCARD auto color_function_b(const std::uint_fast32_t& c) const -> std::uint_fast32_t final
+    MANDELBROT_NODISCARD auto color_function_b(const std::uint_fast32_t& c) const -> std::uint_fast32_t override
     {
       return
         static_cast<std::uint_fast32_t>
