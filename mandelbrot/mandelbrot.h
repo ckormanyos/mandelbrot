@@ -162,7 +162,7 @@
       : base_class_type(static_cast<base_class_type&&>(other)),
         my_step(other.my_step) { }
 
-    ~mandelbrot_config() final = default; // LCOV_EXCL_LINE
+    ~mandelbrot_config() override = default; // LCOV_EXCL_LINE
 
     auto operator=(const mandelbrot_config& other) -> mandelbrot_config&
     {
@@ -188,7 +188,7 @@
   private:
     my_mandelbrot_config_numeric_type my_step; // NOLINT(readability-identifier-naming)
 
-    MANDELBROT_NODISCARD auto step() const -> const my_mandelbrot_config_numeric_type& final { return my_step; }
+    MANDELBROT_NODISCARD auto step() const -> const my_mandelbrot_config_numeric_type& override { return my_step; }
   };
 
   // This class generates the rows of the mandelbrot iteration.
