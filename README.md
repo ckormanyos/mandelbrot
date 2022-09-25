@@ -25,13 +25,13 @@ $$z_{n+1} = z_{n}^2 + c {\phantom{.}} ,$$
 
 where $z_{0} = 0$ and $z {\phantom{.}} {\in} {\phantom{.}} {\mathbb{C}}$, stays bounded.
 
-`ckormanyos/mandelbrot` (this repository)
+ckormanyos/mandelbrot (this repository)
 implements a header-only C++ template library for
 extended precision Mandelbrot fractal iterations.
 
 It is intended to be used for so-called _deep_ _dives_ in the fractal iteration
-world. These potentially involve high-precision floating-point
-such as those found in
+world. Fractal iterations are carried out with high-precision
+floating-point types such as those found in
 [Boost.Multiprecison](https://www.boost.org/doc/libs/1_80_0/libs/multiprecision/doc/html/index.html).
 Also fixed-point types having sufficient precision (although these have not yet been used or tested
 extensively in this project) should work well.
@@ -52,9 +52,9 @@ The multithreading dispatcher uses $(n-1)$
 of the available CPU cores that can be found using hardware concurrency.
 
 The following design goals have been incorporated.
-  - ckormanyos/mandelbrot is written in header-only C++11, and compatible through C++11, 14, 17, 20.
+  - ckormanyos/mandelbrot is written in header-only C++11, and compatible through C++11, 14, 17, 20 and beyond.
   - The inner loop performing the work of fractal iteration uses multiple, parallel CPU cores.
-  - C++ template design allows for flexible use of any appropriate kind of big-number type.
+  - C++ template design allows for flexible interchange of any appropriate kind of big-number type in the classes that implement fractal iteration.
   - Visualization of the result uses color-stretching techniques combined with the histogram method.
   - Graphical representation uses [Boost.Gil](https://www.boost.org/doc/libs/1_80_0/libs/gil/doc/html/index.html) in combination with the JPEG-6b library (see [below](#Adaptions-of-and-Notes-on-jpeg-6b)).
   - Color schemes can be easily adapted via straightforward creation (or modification) of a skinny derived class.
@@ -66,13 +66,13 @@ The following design goals have been incorporated.
   - Locate the solution file `mandelbrot.sln` in the root dierctory.
   - Open the solution file in Visual Studio.
   - Build the desired configuration and run in the usual way.
-  - The resulting JPEG image will be placed as a temporary file in the `images\tmp\` folder.
+  - The resulting JPEG image will be placed as a temporary file in the `images\tmp` folder.
 
 ### Build on with `*nix`
 
   - Build the JPEG library with GNUmake.
   - Compile, link and run `test_mandelbrot.cpp`.
-  - The resulting JPEG image will be placed as a temporary file in the `images/tmp/` folder.
+  - The resulting JPEG image will be placed as a temporary file in the `images/tmp` folder.
   - This build makes and uses its own specialized version of the JPEG-6b library (see [below](#Adaptions-of-and-Notes-on-jpeg-6b)) and does not install or use a standard `*nix` version thereof.
 
 Use shell commands such as the following.
@@ -124,6 +124,7 @@ In this case, you also need to link with `-lgmp` in the link stage.
 Improvements on the TODO list include (among others) the following.
   - Experiment with (and implement) massive inner loop parallelization via GPU programming.
   - Find/use an acceleration technique (intended to reduce required precision of deep dives) such as orbit perturbation, series expansion, etc.
+  - Discover more interesting coordinates for iteration (help wanted).
 
 ## Sample Images
 
