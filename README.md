@@ -25,7 +25,8 @@ $$z_{n+1} = z_{n}^2 + c {\phantom{.}} ,$$
 
 where $z_{0} = 0$ and $z {\phantom{.}} {\in} {\phantom{.}} {\mathbb{C}}$, stays bounded.
 
-ckormanyos/mandelbrot implements a header-only C++ template library for
+`ckormanyos/mandelbrot` (this repository)
+implements a header-only C++ template library for
 extended precision Mandelbrot fractal iterations.
 
 It is intended to be used for so-called _deep_ _dives_ in the fractal iteration
@@ -259,4 +260,4 @@ The following adaptions have been performed.
   - Remove several unused preprocessor options such as short names for linkers.
   - Eliminate all uses of `NEED_FAR_POINTERS` and `NEED_SHORT_EXTERNAL_NAMES`.
   - Handle Level-3 warnings found in MSVC.
-  - Handle GCC warnings from `-Wall`, `-Wextra`, `-pedantic`, `-Wconversion` and `-Wsign-conversion`.
+  - Handle GCC warnings from `-Wall`, `-Wextra`, `-Wpedantic`, `-Wconversion` and `-Wsign-conversion`.
