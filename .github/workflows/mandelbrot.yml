@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-20.04
     container: ${{matrix.container}}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: install Boost
         run: |
           apt-get update --quiet
@@ -53,7 +53,7 @@ jobs:
         compiler: [ g++, clang++ ]
         standard: [ c++14, c++17, c++2a ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: '0'
       - name: install Boost
@@ -91,7 +91,7 @@ jobs:
         compiler: [ g++-12, clang++-14 ]
         standard: [ c++14, c++17, c++20, c++2b ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: '0'
       - name: clone-submods-bootstrap-headers-boost-develop
@@ -163,7 +163,7 @@ jobs:
         compiler: [ g++ ]
         standard: [ c++14, c++17, c++2a ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: '0'
       - name: install Boost
@@ -199,7 +199,7 @@ jobs:
         compiler: [ g++ ]
         standard: [ c++14, c++2a ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: '0'
       - name: install Boost
@@ -233,7 +233,7 @@ jobs:
         compiler: [ g++ ]
         standard: [ c++14, c++2a ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: '0'
       - name: install Boost
@@ -267,7 +267,7 @@ jobs:
         compiler: [ g++ ]
         standard: [ c++14, c++2a ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: '0'
       - name: install Boost
@@ -293,7 +293,7 @@ jobs:
   msvc-release-x64:
     runs-on: windows-2019
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: '0'
       - name: clone-submods-bootstrap-headers-boost-develop

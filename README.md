@@ -68,7 +68,7 @@ The following design goals have been incorporated.
   - Build the desired configuration and run in the usual way.
   - The resulting JPEG image will be placed as a temporary file in the `images\tmp` folder.
 
-### Build on with `*nix`
+### Build on `*nix` shell
 
   - Build the JPEG library with GNUmake.
   - Compile, link and run `test_mandelbrot.cpp`.

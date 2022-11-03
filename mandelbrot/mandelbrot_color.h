@@ -70,12 +70,12 @@
     auto operator=(const color_functions_bw&) -> color_functions_bw& = default;
     auto operator=(color_functions_bw&&) noexcept -> color_functions_bw& = default;
 
-    ~color_functions_bw() override = default;
+    ~color_functions_bw() final = default;
 
   private:
-    MANDELBROT_NODISCARD auto color_function_r(const std::uint_fast32_t& c) const -> std::uint_fast32_t override { return color_phaser_01(c); }
-    MANDELBROT_NODISCARD auto color_function_g(const std::uint_fast32_t& c) const -> std::uint_fast32_t override { return color_phaser_01(c); }
-    MANDELBROT_NODISCARD auto color_function_b(const std::uint_fast32_t& c) const -> std::uint_fast32_t override { return color_phaser_01(c); }
+    MANDELBROT_NODISCARD auto color_function_r(const std::uint_fast32_t& c) const -> std::uint_fast32_t final { return color_phaser_01(c); }
+    MANDELBROT_NODISCARD auto color_function_g(const std::uint_fast32_t& c) const -> std::uint_fast32_t final { return color_phaser_01(c); }
+    MANDELBROT_NODISCARD auto color_function_b(const std::uint_fast32_t& c) const -> std::uint_fast32_t final { return color_phaser_01(c); }
   };
 
   class color_functions_pretty final : public color_functions_base
@@ -86,23 +86,23 @@
     color_functions_pretty(const color_functions_pretty&) = default;
     color_functions_pretty(color_functions_pretty&&) noexcept = default;
 
-    ~color_functions_pretty() override = default;
+    ~color_functions_pretty() final = default;
 
     auto operator=(const color_functions_pretty&) -> color_functions_pretty& = default;
     auto operator=(color_functions_pretty&&) noexcept -> color_functions_pretty& = default;
 
   private:
-    MANDELBROT_NODISCARD auto color_function_r(const std::uint_fast32_t& c) const -> std::uint_fast32_t override
+    MANDELBROT_NODISCARD auto color_function_r(const std::uint_fast32_t& c) const -> std::uint_fast32_t final
     {
       return color_phaser_01(c);
     }
 
-    MANDELBROT_NODISCARD auto color_function_g(const std::uint_fast32_t& c) const -> std::uint_fast32_t override
+    MANDELBROT_NODISCARD auto color_function_g(const std::uint_fast32_t& c) const -> std::uint_fast32_t final
     {
       return c;
     }
 
-    MANDELBROT_NODISCARD auto color_function_b(const std::uint_fast32_t& c) const -> std::uint_fast32_t override
+    MANDELBROT_NODISCARD auto color_function_b(const std::uint_fast32_t& c) const -> std::uint_fast32_t final
     {
       return
         static_cast<std::uint_fast32_t>
@@ -172,7 +172,7 @@
     color_stretch_histogram_method(color_stretch_histogram_method&& other) noexcept
       : color_stretch_base(static_cast<color_stretch_base&&>(other)) { }
 
-    ~color_stretch_histogram_method() override = default;
+    ~color_stretch_histogram_method() final = default;
 
     auto operator=(const color_stretch_histogram_method& other) -> color_stretch_histogram_method&
     {
@@ -191,7 +191,7 @@
       return *this;
     }
 
-    auto color_stretch(std::uint_fast32_t& histogram_entry) const -> void override
+    auto color_stretch(std::uint_fast32_t& histogram_entry) const -> void final
     {
       // Perform color stretching using the histogram approach.
       // Convert the histogram entries such that a given entry contains
