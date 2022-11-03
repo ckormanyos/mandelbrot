@@ -106,6 +106,7 @@ jobs:
           git submodule update --init libs/container
           git submodule update --init libs/container_hash
           git submodule update --init libs/core
+          git submodule update --init libs/describe
           git submodule update --init libs/detail
           git submodule update --init libs/filesystem
           git submodule update --init libs/functional
@@ -308,6 +309,7 @@ jobs:
           git submodule update --init libs/container
           git submodule update --init libs/container_hash
           git submodule update --init libs/core
+          git submodule update --init libs/describe
           git submodule update --init libs/detail
           git submodule update --init libs/functional
           git submodule update --init libs/gil
