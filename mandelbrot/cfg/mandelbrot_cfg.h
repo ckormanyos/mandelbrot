@@ -11,7 +11,11 @@
   #if defined(_MSC_VER) && !defined(__GNUC__)
   #define MANDELBROT_NODISCARD
   #else
+  #if (defined(__cplusplus) && (__cplusplus >= 201703L))
   #define MANDELBROT_NODISCARD  [[nodiscard]] // NOLINT(cppcoreguidelines-macro-usage)
+  #else
+  #define MANDELBROT_NODISCARD
+  #endif
   #endif
 
   #include <mandelbrot/mandelbrot.h>

@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-20.04
     container: ${{matrix.container}}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: install Boost
         run: |
           apt-get update --quiet
@@ -53,7 +53,7 @@ jobs:
         compiler: [ g++, clang++ ]
         standard: [ c++14, c++17, c++2a ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: '0'
       - name: install Boost
@@ -72,8 +72,8 @@ jobs:
           cd jpeg
           make all
           cd ..
-          echo '${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -std=${{ matrix.standard }} -DMANDELBROT_USE_GMP_FLOAT -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
-          ${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -std=${{ matrix.standard }} -DMANDELBROT_USE_GMP_FLOAT -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          echo '${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -DMANDELBROT_USE_GMP_FLOAT -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
+          ${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -DMANDELBROT_USE_GMP_FLOAT -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
           echo '${{ matrix.compiler }} test_mandelbrot.o -lpthread -lgmp -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe'
           ${{ matrix.compiler }} test_mandelbrot.o -lpthread -lgmp -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
           ls -la ./test_mandelbrot.exe
@@ -91,7 +91,7 @@ jobs:
         compiler: [ g++-12, clang++-14 ]
         standard: [ c++14, c++17, c++20, c++2b ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: '0'
       - name: clone-submods-bootstrap-headers-boost-develop
@@ -106,6 +106,7 @@ jobs:
           git submodule update --init libs/container
           git submodule update --init libs/container_hash
           git submodule update --init libs/core
+          git submodule update --init libs/describe
           git submodule update --init libs/detail
           git submodule update --init libs/filesystem
           git submodule update --init libs/functional
@@ -144,8 +145,8 @@ jobs:
           cd jpeg
           make all
           cd ..
-          echo '${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -std=${{ matrix.standard }} -DMANDELBROT_USE_GMP_FLOAT -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
-          ${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -std=${{ matrix.standard }} -DMANDELBROT_USE_GMP_FLOAT -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          echo '${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -DMANDELBROT_USE_GMP_FLOAT -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
+          ${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -DMANDELBROT_USE_GMP_FLOAT -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
           echo '${{ matrix.compiler }} test_mandelbrot.o -lpthread -lgmp -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe'
           ${{ matrix.compiler }} test_mandelbrot.o -lpthread -lgmp -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
           ls -la ./test_mandelbrot.exe
@@ -163,7 +164,7 @@ jobs:
         compiler: [ g++ ]
         standard: [ c++14, c++17, c++2a ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: '0'
       - name: install Boost
@@ -178,8 +179,8 @@ jobs:
           cd jpeg
           make all
           cd ..
-          echo '${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
-          ${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          echo '${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
+          ${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
           echo '${{ matrix.compiler }} test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe'
           ${{ matrix.compiler }} test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
           ls -la ./test_mandelbrot.exe
@@ -199,7 +200,7 @@ jobs:
         compiler: [ g++ ]
         standard: [ c++14, c++2a ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: '0'
       - name: install Boost
@@ -214,8 +215,8 @@ jobs:
           cd jpeg
           make all
           cd ..
-          echo '${{ matrix.compiler }} -c -finline-functions -fsanitize=address -fsanitize=leak -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
-          ${{ matrix.compiler }} -c -finline-functions -fsanitize=address -fsanitize=leak -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          echo '${{ matrix.compiler }} -c -finline-functions -fsanitize=address -fsanitize=leak -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
+          ${{ matrix.compiler }} -c -finline-functions -fsanitize=address -fsanitize=leak -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
           echo '${{ matrix.compiler }} -finline-functions -fsanitize=address -fsanitize=leak -march=native -mtune=native -O3 test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe'
           ${{ matrix.compiler }} -finline-functions -fsanitize=address -fsanitize=leak -march=native -mtune=native -O3 test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
           ls -la ./test_mandelbrot.exe
@@ -233,7 +234,7 @@ jobs:
         compiler: [ g++ ]
         standard: [ c++14, c++2a ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: '0'
       - name: install Boost
@@ -248,8 +249,8 @@ jobs:
           cd jpeg
           make all
           cd ..
-          echo '${{ matrix.compiler }} -c -finline-functions -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -std=${{ matrix.standard }} -DMANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
-          ${{ matrix.compiler }} -c -finline-functions -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -std=${{ matrix.standard }} -DMANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          echo '${{ matrix.compiler }} -c -finline-functions -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -DMANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
+          ${{ matrix.compiler }} -c -finline-functions -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -DMANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
           echo '${{ matrix.compiler }} -finline-functions -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -march=native -mtune=native -O3 test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe'
           ${{ matrix.compiler }} -finline-functions -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -march=native -mtune=native -O3 test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
           ls -la ./test_mandelbrot.exe
@@ -267,7 +268,7 @@ jobs:
         compiler: [ g++ ]
         standard: [ c++14, c++2a ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: '0'
       - name: install Boost
@@ -282,8 +283,8 @@ jobs:
           cd jpeg
           make all
           cd ..
-          echo '${{ matrix.compiler }} -c -finline-functions -fsanitize=thread -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
-          ${{ matrix.compiler }} -c -finline-functions -fsanitize=thread -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          echo '${{ matrix.compiler }} -c -finline-functions -fsanitize=thread -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
+          ${{ matrix.compiler }} -c -finline-functions -fsanitize=thread -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
           echo '${{ matrix.compiler }} -finline-functions -fsanitize=thread test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe'
           ${{ matrix.compiler }} -finline-functions -fsanitize=thread test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
           ls -la ./test_mandelbrot.exe
@@ -293,7 +294,7 @@ jobs:
   msvc-release-x64:
     runs-on: windows-2019
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: '0'
       - name: clone-submods-bootstrap-headers-boost-develop
@@ -308,6 +309,7 @@ jobs:
           git submodule update --init libs/container
           git submodule update --init libs/container_hash
           git submodule update --init libs/core
+          git submodule update --init libs/describe
           git submodule update --init libs/detail
           git submodule update --init libs/functional
           git submodule update --init libs/gil

@@ -9,6 +9,12 @@
 #include <iostream>
 #include <string>
 
+#if (defined(__GNUC__) && defined(__clang__))
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+#endif
+
+
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_01_FULL.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_03_TOP.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_04_SWIRL.h>
@@ -79,3 +85,7 @@ auto main() -> int // NOLINT(bugprone-exception-escape)
             << "s"
             << std::endl;
 }
+
+#if (defined(__GNUC__) && defined(__clang__))
+#pragma GCC diagnostic pop
+#endif

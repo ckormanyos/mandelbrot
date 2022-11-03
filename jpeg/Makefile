@@ -24,9 +24,10 @@ CFLAGS     = -x c                              \
              -march=native                     \
              -Wall                             \
              -Wextra                           \
-             -pedantic                         \
+             -Wpedantic                        \
              -Wconversion                      \
              -Wsign-conversion                 \
+             -Werror                           \
              -I.
 
 all : clean $(OBJ_DIR)/libjpeg-6b.a
