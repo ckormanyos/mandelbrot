@@ -1,5 +1,5 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
-//      Copyright Christopher Kormanyos 2015 - 2022.
+//      Copyright Christopher Kormanyos 2015 - 2023.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
@@ -214,8 +214,7 @@
                                     static_cast<boost_gil_x_coord_type>(config.integral_height())), // NOLINT
         mandelbrot_view            (boost::gil::view(mandelbrot_image)),
         mandelbrot_iteration_matrix(config.integral_width(),
-                                    std::vector<std::uint_fast32_t>(config.integral_height())),
-        mandelbrot_color_histogram (static_cast<std::size_t>(max_iterations + 1U), static_cast<std::uint_fast32_t>(UINT32_C(0))) { }
+                                    std::vector<std::uint_fast32_t>(config.integral_height())) { }
 
     mandelbrot_generator() = delete;
 
@@ -346,7 +345,11 @@
           boost::gil::rgb8_view_t                      mandelbrot_view;             // NOLINT(readability-identifier-naming)
 
           std::vector<std::vector<std::uint_fast32_t>> mandelbrot_iteration_matrix; // NOLINT(readability-identifier-naming)
-          std::vector<std::uint_fast32_t>              mandelbrot_color_histogram;  // NOLINT(readability-identifier-naming)
+          std::vector<std::uint_fast32_t>              mandelbrot_color_histogram   // NOLINT(readability-identifier-naming)
+          {
+            static_cast<std::size_t>(max_iterations + 1U),
+            static_cast<std::uint_fast32_t>(UINT32_C(0))
+          };
 
     auto apply_color_stretches(const std::vector<numeric_type>& x_values,
                                const std::vector<numeric_type>& y_values,

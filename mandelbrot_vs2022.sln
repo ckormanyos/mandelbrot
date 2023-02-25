@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{CABF0657-7175-47D3-B614-47D9BED63273}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{054377E5-7DA0-4101-8BA3-1BE0C0DE51B0}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\mandelbrot.yml = .github\workflows\mandelbrot.yml
+		.github\workflows\mandelbrot_codecov.yml = .github\workflows\mandelbrot_codecov.yml
+		.github\workflows\mandelbrot_sonar.yml = .github\workflows\mandelbrot_sonar.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_doc", "_doc", "{951EE097-D8B7-4AD4-9F03-9E514A58C8D0}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".tidy", ".tidy", "{D6D14B8C-1202-4F80-A348-979DADDD6A7A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "make", "make", "{D47BAF5F-ABFE-4A40-871C-6C6BB472B62D}"
+	ProjectSection(SolutionItems) = preProject
+		.tidy\make\make_tidy_01_generic.gmk = .tidy\make\make_tidy_01_generic.gmk
+		.tidy\make\make_tidy_02_files.gmk = .tidy\make\make_tidy_02_files.gmk
+		.tidy\make\make_tidy_03_flags.gmk = .tidy\make\make_tidy_03_flags.gmk
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mandelbrot_vs2022", "mandelbrot_vs2022.vcxproj", "{F6A4D5AD-89B2-419A-9AEF-87391A4E6D1B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "jpeg_vs2022", "jpeg\jpeg_vs2022.vcxproj", "{357A1110-B0BA-4C68-A331-4AFA6037F6F3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F6A4D5AD-89B2-419A-9AEF-87391A4E6D1B}.Debug|x64.ActiveCfg = Debug|x64
+		{F6A4D5AD-89B2-419A-9AEF-87391A4E6D1B}.Debug|x64.Build.0 = Debug|x64
+		{F6A4D5AD-89B2-419A-9AEF-87391A4E6D1B}.Release|x64.ActiveCfg = Release|x64
+		{F6A4D5AD-89B2-419A-9AEF-87391A4E6D1B}.Release|x64.Build.0 = Release|x64
+		{357A1110-B0BA-4C68-A331-4AFA6037F6F3}.Debug|x64.ActiveCfg = Debug|x64
+		{357A1110-B0BA-4C68-A331-4AFA6037F6F3}.Debug|x64.Build.0 = Debug|x64
+		{357A1110-B0BA-4C68-A331-4AFA6037F6F3}.Release|x64.ActiveCfg = Release|x64
+		{357A1110-B0BA-4C68-A331-4AFA6037F6F3}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{054377E5-7DA0-4101-8BA3-1BE0C0DE51B0} = {CABF0657-7175-47D3-B614-47D9BED63273}
+		{D47BAF5F-ABFE-4A40-871C-6C6BB472B62D} = {D6D14B8C-1202-4F80-A348-979DADDD6A7A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {47676891-0CD9-4A1F-9BB8-6055B8AACABD}
+	EndGlobalSection
+EndGlobal

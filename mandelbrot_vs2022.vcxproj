@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F6A4D5AD-89B2-419A-9AEF-87391A4E6D1B}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>mandelbrot</RootNamespace>
+    <ProjectName>mandelbrot_vs2022</ProjectName>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)jpeg\jpeg-6b-2022;$(SolutionDir);C:\boost\boost_1_81_0;$(SolutionDir)mpir\x64;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(SolutionDir)jpeg\jpeg-6b-2022;$(SolutionDir);C:\boost\boost_1_81_0;$(SolutionDir)mpir\x64;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(SolutionDir)jpeg\$(Platform)\$(Configuration)\jpeg_vs2022.lib</AdditionalDependencies>
+    </Link>
+    <PreBuildEvent>
+      <Command>IF NOT EXIST $(SolutionDir)images\tmp mkdir $(SolutionDir)images\tmp</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>$(SolutionDir)jpeg\$(Platform)\$(Configuration)\jpeg_vs2022.lib</AdditionalDependencies>
+    </Link>
+    <PreBuildEvent>
+      <Command>IF NOT EXIST $(SolutionDir)images\tmp mkdir $(SolutionDir)images\tmp</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="test\test_mandelbrot.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="concurrency\parallel_for.h" />
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg.h" />
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_01_FULL.h" />
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_03_TOP.h" />
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_04_SWIRL.h" />
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_05_SEAHORSES.h" />
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_06_BRANCHES.h" />
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_07_SEAHORSE_VALLEY.h" />
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_08_DEEP_DIVE_01.h" />
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_09_DEEP_DIVE_02.h" />
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_10_ZOOM_WIKI_00.h" />
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_11_ZOOM_WIKI_01.h" />
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_12_ZOOM_WIKI_02.h" />
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_13_ZOOM_WIKI_03.h" />
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_14_ZOOM_WIKI_04.h" />
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h" />
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_30_ZOOM_ANOTHER_00.h" />
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_31_ZOOM_ANOTHER_01.h" />
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_32_ZOOM_ANOTHER_02.h" />
+    <ClInclude Include="mandelbrot\mandelbrot.h" />
+    <ClInclude Include="mandelbrot\mandelbrot_color.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".clang-tidy" />
+    <None Include="codecov.yml" />
+    <None Include="lgtm.yml" />
+    <None Include="sonar-project.properties" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="LICENSE_1_0.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
