@@ -1,5 +1,5 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
-//      Copyright Christopher Kormanyos 2015 - 2022.
+//      Copyright Christopher Kormanyos 2015 - 2023.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
@@ -40,11 +40,11 @@
 // cd ..
 
 // Compile with cpp_dec_float
-// g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++11 -I. -I/mnt/c/boost/boost_1_80_0 -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+// g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++11 -I. -I/mnt/c/boost/boost_1_81_0 -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
 // g++ test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
 
 // Compile with gmp_dec_float
-// g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++11 -DMANDELBROT_USE_GMP_FLOAT -I. -I/mnt/c/boost/boost_1_80_0 -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+// g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++2a -DMANDELBROT_USE_GMP_FLOAT -I. -I/mnt/c/boost/boost_1_81_0 -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
 // g++ test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -lgmp -o test_mandelbrot.exe
 
 auto main() -> int // NOLINT(bugprone-exception-escape)

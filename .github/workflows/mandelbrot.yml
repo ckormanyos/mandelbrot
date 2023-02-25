@@ -1,5 +1,5 @@
 ﻿# ------------------------------------------------------------------------------
-#  Copyright Christopher Kormanyos 2022.
+#  Copyright Christopher Kormanyos 2022 - 2023.
 #  Distributed under the Boost Software License,
 #  Version 1.0. (See accompanying file LICENSE_1_0.txt
 #  or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -56,10 +56,43 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: '0'
-      - name: install Boost
+      - name: clone-submods-bootstrap-headers-boost-develop
         run: |
-          sudo apt-get update --quiet
-          sudo apt-get install --no-install-recommends --quiet --yes libboost-dev
+          git clone -b develop --depth 1 https://github.com/boostorg/boost.git ../boost-root
+          cd ../boost-root
+          git submodule update --init tools
+          git submodule update --init libs/array
+          git submodule update --init libs/assert
+          git submodule update --init libs/concept_check
+          git submodule update --init libs/config
+          git submodule update --init libs/container
+          git submodule update --init libs/container_hash
+          git submodule update --init libs/core
+          git submodule update --init libs/describe
+          git submodule update --init libs/detail
+          git submodule update --init libs/filesystem
+          git submodule update --init libs/functional
+          git submodule update --init libs/gil
+          git submodule update --init libs/integer
+          git submodule update --init libs/io
+          git submodule update --init libs/iterator
+          git submodule update --init libs/lexical_cast
+          git submodule update --init libs/move
+          git submodule update --init libs/mp11
+          git submodule update --init libs/mpl
+          git submodule update --init libs/multiprecision
+          git submodule update --init libs/numeric/conversion
+          git submodule update --init libs/preprocessor
+          git submodule update --init libs/range
+          git submodule update --init libs/smart_ptr
+          git submodule update --init libs/static_assert
+          git submodule update --init libs/system
+          git submodule update --init libs/throw_exception
+          git submodule update --init libs/type_traits
+          git submodule update --init libs/utility
+          git submodule update --init libs/variant2
+          ./bootstrap.sh
+          ./b2 headers
       - name: install gmp
         run: |
           sudo apt-get update --quiet
@@ -72,8 +105,8 @@ jobs:
           cd jpeg
           make all
           cd ..
-          echo '${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -DMANDELBROT_USE_GMP_FLOAT -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
-          ${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -DMANDELBROT_USE_GMP_FLOAT -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          echo '${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -DMANDELBROT_USE_GMP_FLOAT -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
+          ${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -DMANDELBROT_USE_GMP_FLOAT -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
           echo '${{ matrix.compiler }} test_mandelbrot.o -lpthread -lgmp -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe'
           ${{ matrix.compiler }} test_mandelbrot.o -lpthread -lgmp -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
           ls -la ./test_mandelbrot.exe
@@ -167,10 +200,43 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: '0'
-      - name: install Boost
+      - name: clone-submods-bootstrap-headers-boost-develop
         run: |
-          sudo apt-get update --quiet
-          sudo apt-get install --no-install-recommends --quiet --yes libboost-dev
+          git clone -b develop --depth 1 https://github.com/boostorg/boost.git ../boost-root
+          cd ../boost-root
+          git submodule update --init tools
+          git submodule update --init libs/array
+          git submodule update --init libs/assert
+          git submodule update --init libs/concept_check
+          git submodule update --init libs/config
+          git submodule update --init libs/container
+          git submodule update --init libs/container_hash
+          git submodule update --init libs/core
+          git submodule update --init libs/describe
+          git submodule update --init libs/detail
+          git submodule update --init libs/filesystem
+          git submodule update --init libs/functional
+          git submodule update --init libs/gil
+          git submodule update --init libs/integer
+          git submodule update --init libs/io
+          git submodule update --init libs/iterator
+          git submodule update --init libs/lexical_cast
+          git submodule update --init libs/move
+          git submodule update --init libs/mp11
+          git submodule update --init libs/mpl
+          git submodule update --init libs/multiprecision
+          git submodule update --init libs/numeric/conversion
+          git submodule update --init libs/preprocessor
+          git submodule update --init libs/range
+          git submodule update --init libs/smart_ptr
+          git submodule update --init libs/static_assert
+          git submodule update --init libs/system
+          git submodule update --init libs/throw_exception
+          git submodule update --init libs/type_traits
+          git submodule update --init libs/utility
+          git submodule update --init libs/variant2
+          ./bootstrap.sh
+          ./b2 headers
       - name: gcc-native-cpp_dec_float
         run: |
           echo "query GCC version"
@@ -179,8 +245,8 @@ jobs:
           cd jpeg
           make all
           cd ..
-          echo '${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
-          ${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          echo '${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
+          ${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
           echo '${{ matrix.compiler }} test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe'
           ${{ matrix.compiler }} test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
           ls -la ./test_mandelbrot.exe
@@ -203,10 +269,43 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: '0'
-      - name: install Boost
+      - name: clone-submods-bootstrap-headers-boost-develop
         run: |
-          sudo apt-get update --quiet
-          sudo apt-get install --no-install-recommends --quiet --yes libboost-dev
+          git clone -b develop --depth 1 https://github.com/boostorg/boost.git ../boost-root
+          cd ../boost-root
+          git submodule update --init tools
+          git submodule update --init libs/array
+          git submodule update --init libs/assert
+          git submodule update --init libs/concept_check
+          git submodule update --init libs/config
+          git submodule update --init libs/container
+          git submodule update --init libs/container_hash
+          git submodule update --init libs/core
+          git submodule update --init libs/describe
+          git submodule update --init libs/detail
+          git submodule update --init libs/filesystem
+          git submodule update --init libs/functional
+          git submodule update --init libs/gil
+          git submodule update --init libs/integer
+          git submodule update --init libs/io
+          git submodule update --init libs/iterator
+          git submodule update --init libs/lexical_cast
+          git submodule update --init libs/move
+          git submodule update --init libs/mp11
+          git submodule update --init libs/mpl
+          git submodule update --init libs/multiprecision
+          git submodule update --init libs/numeric/conversion
+          git submodule update --init libs/preprocessor
+          git submodule update --init libs/range
+          git submodule update --init libs/smart_ptr
+          git submodule update --init libs/static_assert
+          git submodule update --init libs/system
+          git submodule update --init libs/throw_exception
+          git submodule update --init libs/type_traits
+          git submodule update --init libs/utility
+          git submodule update --init libs/variant2
+          ./bootstrap.sh
+          ./b2 headers
       - name: gcc-native-cpp_dec_float-asan
         run: |
           echo "query GCC version"
@@ -215,8 +314,8 @@ jobs:
           cd jpeg
           make all
           cd ..
-          echo '${{ matrix.compiler }} -c -finline-functions -fsanitize=address -fsanitize=leak -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
-          ${{ matrix.compiler }} -c -finline-functions -fsanitize=address -fsanitize=leak -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          echo '${{ matrix.compiler }} -c -finline-functions -fsanitize=address -fsanitize=leak -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
+          ${{ matrix.compiler }} -c -finline-functions -fsanitize=address -fsanitize=leak -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
           echo '${{ matrix.compiler }} -finline-functions -fsanitize=address -fsanitize=leak -march=native -mtune=native -O3 test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe'
           ${{ matrix.compiler }} -finline-functions -fsanitize=address -fsanitize=leak -march=native -mtune=native -O3 test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
           ls -la ./test_mandelbrot.exe
@@ -237,10 +336,43 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: '0'
-      - name: install Boost
+      - name: clone-submods-bootstrap-headers-boost-develop
         run: |
-          sudo apt-get update --quiet
-          sudo apt-get install --no-install-recommends --quiet --yes libboost-dev
+          git clone -b develop --depth 1 https://github.com/boostorg/boost.git ../boost-root
+          cd ../boost-root
+          git submodule update --init tools
+          git submodule update --init libs/array
+          git submodule update --init libs/assert
+          git submodule update --init libs/concept_check
+          git submodule update --init libs/config
+          git submodule update --init libs/container
+          git submodule update --init libs/container_hash
+          git submodule update --init libs/core
+          git submodule update --init libs/describe
+          git submodule update --init libs/detail
+          git submodule update --init libs/filesystem
+          git submodule update --init libs/functional
+          git submodule update --init libs/gil
+          git submodule update --init libs/integer
+          git submodule update --init libs/io
+          git submodule update --init libs/iterator
+          git submodule update --init libs/lexical_cast
+          git submodule update --init libs/move
+          git submodule update --init libs/mp11
+          git submodule update --init libs/mpl
+          git submodule update --init libs/multiprecision
+          git submodule update --init libs/numeric/conversion
+          git submodule update --init libs/preprocessor
+          git submodule update --init libs/range
+          git submodule update --init libs/smart_ptr
+          git submodule update --init libs/static_assert
+          git submodule update --init libs/system
+          git submodule update --init libs/throw_exception
+          git submodule update --init libs/type_traits
+          git submodule update --init libs/utility
+          git submodule update --init libs/variant2
+          ./bootstrap.sh
+          ./b2 headers
       - name: gcc-native-cpp_dec_float-ubsan
         run: |
           echo "query GCC version"
@@ -249,8 +381,8 @@ jobs:
           cd jpeg
           make all
           cd ..
-          echo '${{ matrix.compiler }} -c -finline-functions -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -DMANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
-          ${{ matrix.compiler }} -c -finline-functions -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -DMANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          echo '${{ matrix.compiler }} -c -finline-functions -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -DMANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
+          ${{ matrix.compiler }} -c -finline-functions -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -DMANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
           echo '${{ matrix.compiler }} -finline-functions -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -march=native -mtune=native -O3 test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe'
           ${{ matrix.compiler }} -finline-functions -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -march=native -mtune=native -O3 test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
           ls -la ./test_mandelbrot.exe
@@ -271,10 +403,43 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: '0'
-      - name: install Boost
+      - name: clone-submods-bootstrap-headers-boost-develop
         run: |
-          sudo apt-get update --quiet
-          sudo apt-get install --no-install-recommends --quiet --yes libboost-dev
+          git clone -b develop --depth 1 https://github.com/boostorg/boost.git ../boost-root
+          cd ../boost-root
+          git submodule update --init tools
+          git submodule update --init libs/array
+          git submodule update --init libs/assert
+          git submodule update --init libs/concept_check
+          git submodule update --init libs/config
+          git submodule update --init libs/container
+          git submodule update --init libs/container_hash
+          git submodule update --init libs/core
+          git submodule update --init libs/describe
+          git submodule update --init libs/detail
+          git submodule update --init libs/filesystem
+          git submodule update --init libs/functional
+          git submodule update --init libs/gil
+          git submodule update --init libs/integer
+          git submodule update --init libs/io
+          git submodule update --init libs/iterator
+          git submodule update --init libs/lexical_cast
+          git submodule update --init libs/move
+          git submodule update --init libs/mp11
+          git submodule update --init libs/mpl
+          git submodule update --init libs/multiprecision
+          git submodule update --init libs/numeric/conversion
+          git submodule update --init libs/preprocessor
+          git submodule update --init libs/range
+          git submodule update --init libs/smart_ptr
+          git submodule update --init libs/static_assert
+          git submodule update --init libs/system
+          git submodule update --init libs/throw_exception
+          git submodule update --init libs/type_traits
+          git submodule update --init libs/utility
+          git submodule update --init libs/variant2
+          ./bootstrap.sh
+          ./b2 headers
       - name: gcc-native-cpp_dec_float-tsan
         run: |
           echo "query GCC version"
@@ -283,8 +448,8 @@ jobs:
           cd jpeg
           make all
           cd ..
-          echo '${{ matrix.compiler }} -c -finline-functions -fsanitize=thread -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
-          ${{ matrix.compiler }} -c -finline-functions -fsanitize=thread -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          echo '${{ matrix.compiler }} -c -finline-functions -fsanitize=thread -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
+          ${{ matrix.compiler }} -c -finline-functions -fsanitize=thread -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
           echo '${{ matrix.compiler }} -finline-functions -fsanitize=thread test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe'
           ${{ matrix.compiler }} -finline-functions -fsanitize=thread test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
           ls -la ./test_mandelbrot.exe
@@ -292,7 +457,7 @@ jobs:
           ./test_mandelbrot.exe
           ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
   msvc-release-x64:
-    runs-on: windows-2019
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
         with:
@@ -330,8 +495,10 @@ jobs:
           git submodule update --init libs/variant2
           ./bootstrap.bat
           ./b2 headers
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          toolset: 14.2
       - name: msvc-release-x64
         shell: cmd
         working-directory: ./
@@ -339,7 +506,63 @@ jobs:
           set INCLUDE=%cd%;%cd%\jpeg\jpeg-6b-2022;%cd%\..\boost-root;%INCLUDE%
           MSBuild -m mandelbrot.sln -p:useenv=true -p:Configuration=Release -p:Platform=x64 /t:Rebuild
           dir %cd%\x64\Release\mandelbrot.exe
-          cp %cd%\x64\Release\mandelbrot.exe .
+          copy /Y %cd%\x64\Release\mandelbrot.exe .
+          dir .\mandelbrot.exe
           .\mandelbrot.exe
+          dir .\images\tmp\mandelbrot_MANDELBROT_05_SEAHORSES.jpg
+          certutil -hashfile ".\images\tmp\mandelbrot_MANDELBROT_05_SEAHORSES.jpg" SHA1 | findstr "f3abc4437d97bba945d589aac3d96d8bbb67a035"
+  msvc-release-x64-vs2022:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: '0'
+      - name: clone-submods-bootstrap-headers-boost-develop
+        run: |
+          git clone -b develop --depth 1 https://github.com/boostorg/boost.git ../boost-root
+          cd ../boost-root
+          git submodule update --init tools
+          git submodule update --init libs/array
+          git submodule update --init libs/assert
+          git submodule update --init libs/concept_check
+          git submodule update --init libs/config
+          git submodule update --init libs/container
+          git submodule update --init libs/container_hash
+          git submodule update --init libs/core
+          git submodule update --init libs/describe
+          git submodule update --init libs/detail
+          git submodule update --init libs/functional
+          git submodule update --init libs/gil
+          git submodule update --init libs/integer
+          git submodule update --init libs/iterator
+          git submodule update --init libs/lexical_cast
+          git submodule update --init libs/move
+          git submodule update --init libs/mp11
+          git submodule update --init libs/mpl
+          git submodule update --init libs/multiprecision
+          git submodule update --init libs/numeric/conversion
+          git submodule update --init libs/preprocessor
+          git submodule update --init libs/range
+          git submodule update --init libs/static_assert
+          git submodule update --init libs/throw_exception
+          git submodule update --init libs/type_traits
+          git submodule update --init libs/utility
+          git submodule update --init libs/variant2
+          ./bootstrap.bat
+          ./b2 headers
+      - uses: actions/checkout@v3
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          toolset: 14.3
+      - name: msvc-release-x64-vs2022
+        shell: cmd
+        working-directory: ./
+        run: |
+          set INCLUDE=%cd%;%cd%\jpeg\jpeg-6b-2022;%cd%\..\boost-root;%INCLUDE%
+          MSBuild -m mandelbrot_vs2022.sln -p:useenv=true -p:Configuration=Release -p:Platform=x64 /t:Rebuild
+          dir %cd%\x64\Release\mandelbrot_vs2022.exe
+          copy /Y %cd%\x64\Release\mandelbrot_vs2022.exe .
+          dir .\mandelbrot_vs2022.exe
+          .\mandelbrot_vs2022.exe
           dir .\images\tmp\mandelbrot_MANDELBROT_05_SEAHORSES.jpg
           certutil -hashfile ".\images\tmp\mandelbrot_MANDELBROT_05_SEAHORSES.jpg" SHA1 | findstr "f3abc4437d97bba945d589aac3d96d8bbb67a035"
