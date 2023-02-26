@@ -75,7 +75,7 @@
           auto i2 = (std::min)(static_cast<index_type>(start + slice), end);
 
           for(auto                         i = static_cast<index_type>(0U);
-                   static_cast<index_type>(i + static_cast<index_type>(INT8_C(1))) < static_cast<index_type>(number_of_threads);
+                   static_cast<index_type>(i + static_cast<index_type>(INT8_C(1))) < static_cast<index_type>(number_of_threads); // NOLINT(altera-id-dependent-backward-branch)
                                          ++i)
           {
             pool.emplace_back(launch_range, i1, i2);
