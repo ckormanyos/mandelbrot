@@ -27,7 +27,7 @@
           std::thread::hardware_concurrency()
         );
 
-      const auto number_of_threads =
+      const auto number_of_threads = // NOLINT(altera-id-dependent-backward-branch)
         static_cast<unsigned>
         (
           (std::max)
