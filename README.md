@@ -21,28 +21,29 @@
 The Mandelbrot set consists of the set of points $c$
 in the complex plane for which the iteration
 
-$$z_{n+1} = z_{n}^2 + c {\phantom{.}} ,$$
+$$z_{n+1} = z_{n}^2 + c,$$
 
-where $z_{0} = 0$ and $z {\phantom{.}} {\in} {\phantom{.}} {\mathbb{C}}$, stays bounded.
+where $z_{0}~=~0$ and $z~{\in}~{\mathbb{C}},$ stays bounded.
 
 ckormanyos/mandelbrot (this repository)
 implements a header-only C++ template library for
 extended precision Mandelbrot fractal iterations.
 
-It is intended to be used for so-called _deep_ _dives_ in the fractal iteration
-world. Fractal iterations are carried out with high-precision
+It is intended to be used for _deep_ _dives_ in the world of fractal iterations.
+
+Fractal iterations are carried out with high-precision
 floating-point types such as those found in
-[Boost.Multiprecison](https://www.boost.org/doc/libs/1_80_0/libs/multiprecision/doc/html/index.html).
+[Boost.Multiprecison](https://www.boost.org/doc/libs/1_83_0/libs/multiprecision/doc/html/index.html).
 Also fixed-point types having sufficient precision (although these have not yet been used or tested
 extensively in this project) should work well.
 
 ## Design
 
-This project uses [Boost.Multiprecison](https://www.boost.org/doc/libs/1_80_0/libs/multiprecision/doc/html/index.html)
+This project uses [Boost.Multiprecison](https://www.boost.org/doc/libs/1_83_0/libs/multiprecision/doc/html/index.html)
 to implement
 a high-precision Mandelbrot iteration and visualization.
 Graphic file creation uses
-[Boost.Gil](https://www.boost.org/doc/libs/1_80_0/libs/gil/doc/html/index.html) to wrap the JPEG-6b library (see [below](#Adaptions-of-and-Notes-on-jpeg-6b)).
+[Boost.Gil](https://www.boost.org/doc/libs/1_83_0/libs/gil/doc/html/index.html) to wrap the JPEG-6b library (see [below](#Adaptions-of-and-Notes-on-jpeg-6b)).
 Color-strething in combination with the histogram method
 is used for creating vivid images. The default color
 scheme uses stretched, amplified and modulated black
@@ -52,11 +53,11 @@ The multithreading dispatcher uses $(n-1)$
 of the available CPU cores that can be found using hardware concurrency.
 
 The following design goals have been incorporated.
-  - ckormanyos/mandelbrot is written in header-only C++11, and compatible through C++11, 14, 17, 20 and beyond.
+  - ckormanyos/mandelbrot is written in header-only C++14, and compatible through C++14, 17, 20, 23 and beyond.
   - The inner loop performing the work of fractal iteration uses multiple, parallel CPU cores.
   - C++ template design allows for flexible interchange of any appropriate kind of big-number type in the classes that implement fractal iteration.
   - Visualization of the result uses color-stretching techniques combined with the histogram method.
-  - Graphical representation uses [Boost.Gil](https://www.boost.org/doc/libs/1_80_0/libs/gil/doc/html/index.html) in combination with the JPEG-6b library (see [below](#Adaptions-of-and-Notes-on-jpeg-6b)).
+  - Graphical representation uses [Boost.Gil](https://www.boost.org/doc/libs/1_83_0/libs/gil/doc/html/index.html) in combination with the JPEG-6b library (see [below](#Adaptions-of-and-Notes-on-jpeg-6b)).
   - Color schemes can be easily adapted via straightforward creation (or modification) of a skinny derived class.
 
 ## Building the Project
@@ -96,7 +97,7 @@ Otherwise, the location of your Boost C++ library headers needs to be included
 with a `-I` switch on the compiler command line.
 
 ```sh
-g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++11 -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++14 -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
 ```
 
 Link `test_mandelbrot.o` to `test_mandelbrot.exe`.
@@ -148,7 +149,7 @@ This image has the following features and parameters.
   - The square image has $2048 {\times} 2048$ pixels.
   - Centered at the point $(-0.75,0.0)$.
   - Uses a half-width of $1.25$.
-  - Computed with $2,000$ iteratons using the `cpp_dec_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_80_0/libs/multiprecision/doc/html/index.html) instantiated with $37$ decimal digits of precision.
+  - Computed with $2,000$ iteratons using the `cpp_dec_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_83_0/libs/multiprecision/doc/html/index.html) instantiated with $37$ decimal digits of precision.
 
 ### Swirly Seahorses and Mini Mandelbrot
 
@@ -162,7 +163,7 @@ This image has the following features and parameters.
   - The square image has $2048 {\times} 2048$ pixels.
   - Centered at the point $(-0.7453983606667815,0.1125046349959942)$.
   - Uses a half-width of $1.76{\times}10^{-12}$.
-  - Computed with $2,000$ iteratons using the `cpp_dec_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_80_0/libs/multiprecision/doc/html/index.html) instantiated with $37$ decimal digits of precision.
+  - Computed with $2,000$ iteratons using the `cpp_dec_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_83_0/libs/multiprecision/doc/html/index.html) instantiated with $37$ decimal digits of precision.
 
 ### A Deep Dive
 
@@ -178,7 +179,7 @@ This image has the the following features and parameters.
   - Centered at the point $(-1.2951890821477774570170641771856819267{\ldots},0.44093698267832013888090367835626261211{\ldots})$.
   - See the configuration code [mandelbrot_cfg_MANDELBROT_09_DEEP_DIVE_02.h](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_09_DEEP_DIVE_02.h) for the full precision of the center point.
   - Uses a half-width of $2.55{\times}10^{-55}$.
-  - Computed with $15,000$ iteratons using the `cpp_dec_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_80_0/libs/multiprecision/doc/html/index.html) instantiated with $95$ decimal digits of precision.
+  - Computed with $15,000$ iteratons using the `cpp_dec_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_83_0/libs/multiprecision/doc/html/index.html) instantiated with $95$ decimal digits of precision.
 
 ### A Really Deep Dive
 
@@ -196,7 +197,7 @@ This image has the the following features and parameters.
   - Centered at the point $(0.3602404434376143632361252444495453084{\ldots},-0.6413130610648031748603750151793020665{\ldots})$.
   - See the configuration code [mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h) for the full precision of the center point provided with slightly more than $1,000$ decimal places.
   - Uses a half-width of $4.4 {\times} 10^{-311}$.
-  - Computed with $60,000$ iteratons using the `gmp_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_80_0/libs/multiprecision/doc/html/index.html) instantiated with $365$ decimal digits of precision.
+  - Computed with $60,000$ iteratons using the `gmp_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_83_0/libs/multiprecision/doc/html/index.html) instantiated with $365$ decimal digits of precision.
 
 ## Using ckormanyos/mandelbrot
 
@@ -241,20 +242,20 @@ Clearly named definitions are used to specify:
   - and the coordinate center and half-width of the magnification region,
   - where the dimensions `MANDELBROT_POINT_DX_HALF`, `MANDELBROT_POINT_CENTER_X`, and `MANDELBROT_POINT_CENTER_Y` are provided as character strings, which remain exact even if the magnification scale requires multiple precision.
 
-## Adaptions of and Notes on jpeg-6b
+## Notes on jpeg-6b and its adaptions
 
 We use a modified version of jpeg-6b.
-It is located [here](./jpeg-6b-2022).
+It is located [here](./jpeg/jpeg-6b-2022).
 According to license agreement, this work is referred to as
 _the_ _Independent_ _JPEG_ _Group's_ _software_.
 Please see their
-[original _README_](https://github.com/ckormanyos/mandelbrot/tree/main/jpeg-6b-2022#readme)
+[original _README_](./jpeg/jpeg-6b-2022/README)
 in its entirety for more information about and licensing terms
 of _the_ _Independent_ _JPEG_ _Group's_ _software_.
 
 The following adaptions have been performed.
 
-  - Test/compile only the subset of functions empirically found to be needed for use with [Boost.Gil](https://www.boost.org/doc/libs/1_80_0/libs/gil/doc/html/index.html).
+  - Test/compile only the subset of functions empirically found to be needed for use with [Boost.Gil](https://www.boost.org/doc/libs/1_83_0/libs/gil/doc/html/index.html).
   - Adapt to VS compiler and VS solution workspace (when building with MSVC).
   - Use GNUmake to build the JPEG library (when building on `*nix`).
   - Run the `*.c`/`*.h` files through the [Artistic Style](http://astyle.sourceforge.net/astyle.html) automatic code formatter, using a version of _AStyle_ from somewhere around 2015.
