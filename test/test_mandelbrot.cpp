@@ -5,7 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#include <chrono>
+#include <ctime>
 #include <iostream>
 #include <string>
 
@@ -69,18 +69,19 @@ auto main() -> int // NOLINT(bugprone-exception-escape)
 
   mandelbrot_generator_type mandelbrot_generator(mandelbrot_config_object);
 
-  const auto start = std::chrono::high_resolution_clock::now();
+  const auto start = std::clock();
 
   mandelbrot_generator.generate_mandelbrot_image(cfg::filename(),
                                                  local_color_functions,
                                                  local_color_stretches);
 
-  const auto stop = std::chrono::high_resolution_clock::now();
+  const auto stop = std::clock();
 
-  const auto elapsed =
-    std::chrono::duration_cast<std::chrono::seconds>(stop - start).count();
+  const auto elapsed = static_cast<float>(static_cast<float>(stop - start) / CLOCKS_PER_SEC);
 
   std::cout << "Time for calculation: "
+            << std::fixed
+            << std::setprecision(static_cast<std::streamsize>(INT8_C(1)))
             << elapsed
             << "s"
             << std::endl;
