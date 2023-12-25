@@ -11,8 +11,6 @@ on:
     branches:
       - '**'
   pull_request:
-  schedule:
-    - cron: '30 22 * * *' # run at 10:30 PM UTC
 jobs:
   gnumake-clang-tidy-native:
     strategy:
