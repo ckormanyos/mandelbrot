@@ -25,25 +25,24 @@ $$z_{n+1} = z_{n}^2 + c$$
 
 where $z_{0}=0$ and $z{\in}{\mathbb{C}}$ remains bounded.
 
-ckormanyos/mandelbrot (this repository)
-implements a header-only C++ template library for
-extended precision Mandelbrot fractal iterations.
+`ckormanyos/mandelbrot` implements a header-only C++ template library
+for extended-precision Mandelbrot fractal iterations.
 
-It is intended to be used for _deep_ _dives_ in the world of fractal iterations.
+It is intended for _deep_ _dives_ in the world of fractal iterations.
 
 Fractal iterations are carried out with high-precision
 floating-point types such as those found in
-[Boost.Multiprecison](https://www.boost.org/doc/libs/1_83_0/libs/multiprecision/doc/html/index.html).
+[`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_83_0/libs/multiprecision/doc/html/index.html).
 Also fixed-point types having sufficient precision (although these have not yet been used or tested
 extensively in this project) should work well.
 
 ## Design
 
-This project uses [Boost.Multiprecison](https://www.boost.org/doc/libs/1_83_0/libs/multiprecision/doc/html/index.html)
+This project uses [`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_83_0/libs/multiprecision/doc/html/index.html)
 to implement
 a high-precision Mandelbrot iteration and visualization.
 Graphic file creation uses
-[Boost.Gil](https://www.boost.org/doc/libs/1_83_0/libs/gil/doc/html/index.html) to wrap the JPEG-6b library (see [below](#Adaptions-of-and-Notes-on-jpeg-6b)).
+[`Boost.Gil`](https://www.boost.org/doc/libs/1_83_0/libs/gil/doc/html/index.html) to wrap the JPEG-6b library (see [below](#Adaptions-of-and-Notes-on-jpeg-6b)).
 Color-strething in combination with the histogram method
 is used for creating vivid images. The default color
 scheme uses stretched, amplified and modulated black
@@ -53,11 +52,11 @@ The multithreading dispatcher uses $(n-1)$
 of the available CPU cores that can be found using hardware concurrency.
 
 The following design goals have been incorporated.
-  - ckormanyos/mandelbrot is written in header-only C++14, and compatible through C++14, 17, 20, 23 and beyond.
-  - The inner loop performing the work of fractal iteration uses multiple, parallel CPU cores.
+  - `ckormanyos/mandelbrot` is written in header-only C++14, and compatible through C++14, 17, 20, 23 and beyond.
+  - The inner loop that performs the work of fractal iteration uses multiple, parallel CPU cores.
   - C++ template design allows for flexible interchange of any appropriate kind of big-number type in the classes that implement fractal iteration.
   - Visualization of the result uses color-stretching techniques combined with the histogram method.
-  - Graphical representation uses [Boost.Gil](https://www.boost.org/doc/libs/1_83_0/libs/gil/doc/html/index.html) in combination with the JPEG-6b library (see [below](#Adaptions-of-and-Notes-on-jpeg-6b)).
+  - Graphical representation uses [`Boost.Gil`](https://www.boost.org/doc/libs/1_83_0/libs/gil/doc/html/index.html) in combination with the JPEG-6b library (see [below](#Adaptions-of-and-Notes-on-jpeg-6b)).
   - Color schemes can be easily adapted via straightforward creation (or modification) of a skinny derived class.
 
 ## Building the Project
@@ -114,7 +113,7 @@ mkdir -p images/tmp
 ```
 
 In `*nix`, it is also possible to optionally make use of GMP
-via Boost.Multiprecision's `gmp_float` backend
+via `Boost.Multiprecision`'s `gmp_float` backend
 (instead of the default `cpp_dec_float` backend).
 When doing so, define `-DMANDELBROT_USE_GMP_FLOAT`
 on the command line in the compile `test_mandelbrot.cpp` stage.
@@ -130,11 +129,11 @@ Improvements on the TODO list include (among others) the following.
 ## Sample Images
 
 Several images are highlighted in the paragraphs below.
-Please see the [gallery](./images/gallery) of ckormanyos/mandelbrot
+Please see the [gallery](./images/gallery) of `ckormanyos/mandelbrot`
 for a more comprehensive collection of images.
 
 In these particular images presented from the [gallery](./images/gallery)
-of ckormanyos/mandelbrot,
+of `ckormanyos/mandelbrot`,
 we have concentrated on various beautiful iteration results
 represented in pure black-and-white/gray-scale tones.
 
@@ -149,7 +148,7 @@ This image has the following features and parameters.
   - The square image has $2048 {\times} 2048$ pixels.
   - Centered at the point $(-0.75,0.0)$.
   - Uses a half-width of $1.25$.
-  - Computed with $2,000$ iteratons using the `cpp_dec_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_83_0/libs/multiprecision/doc/html/index.html) instantiated with $37$ decimal digits of precision.
+  - Computed with $2,000$ iteratons using the `cpp_dec_float` type from [`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_83_0/libs/multiprecision/doc/html/index.html) instantiated with $37$ decimal digits of precision.
 
 ### Swirly Seahorses and Mini Mandelbrot
 
@@ -163,7 +162,7 @@ This image has the following features and parameters.
   - The square image has $2048 {\times} 2048$ pixels.
   - Centered at the point $(-0.7453983606667815,0.1125046349959942)$.
   - Uses a half-width of $1.76{\times}10^{-12}$.
-  - Computed with $2,000$ iteratons using the `cpp_dec_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_83_0/libs/multiprecision/doc/html/index.html) instantiated with $37$ decimal digits of precision.
+  - Computed with $2,000$ iteratons using the `cpp_dec_float` type from [`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_83_0/libs/multiprecision/doc/html/index.html) instantiated with $37$ decimal digits of precision.
 
 ### A Deep Dive
 
@@ -179,7 +178,7 @@ This image has the the following features and parameters.
   - Centered at the point $(-1.2951890821477774570170641771856819267{\ldots},0.44093698267832013888090367835626261211{\ldots})$.
   - See the configuration code [mandelbrot_cfg_MANDELBROT_09_DEEP_DIVE_02.h](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_09_DEEP_DIVE_02.h) for the full precision of the center point.
   - Uses a half-width of $2.55{\times}10^{-55}$.
-  - Computed with $15,000$ iteratons using the `cpp_dec_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_83_0/libs/multiprecision/doc/html/index.html) instantiated with $95$ decimal digits of precision.
+  - Computed with $15,000$ iteratons using the `cpp_dec_float` type from [`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_83_0/libs/multiprecision/doc/html/index.html) instantiated with $95$ decimal digits of precision.
 
 ### A Really Deep Dive
 
@@ -195,15 +194,15 @@ This image has the the following features and parameters.
 
   - The square image has $1536 {\times} 1536$ pixels.
   - Centered at the point $(0.3602404434376143632361252444495453084{\ldots},-0.6413130610648031748603750151793020665{\ldots})$.
-  - See the configuration code [mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h) for the full precision of the center point provided with slightly more than $1,000$ decimal places.
+  - See the configuration code [`mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h`](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h) for the full precision of the center point provided with slightly more than $1,000$ decimal places.
   - Uses a half-width of $4.4 {\times} 10^{-311}$.
-  - Computed with $60,000$ iteratons using the `gmp_float` type from [Boost.Multiprecison](https://www.boost.org/doc/libs/1_83_0/libs/multiprecision/doc/html/index.html) instantiated with $365$ decimal digits of precision.
+  - Computed with $60,000$ iteratons using the `gmp_float` type from [`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_83_0/libs/multiprecision/doc/html/index.html) instantiated with $365$ decimal digits of precision.
 
-## Using ckormanyos/mandelbrot
+## Using `ckormanyos/mandelbrot`
 
-ckormanyos/mandelbrot uses configuration files to specify the point,
+`ckormanyos/mandelbrot` uses configuration files to specify the point,
 size and depth of the iterative fractal calculation.
-The configuration files are stored in the [mandelbrot/cfg](./mandelbrot/cfg)
+The configuration files are stored in the [`mandelbrot/cfg`](./mandelbrot/cfg)
 directory.
 
 The code responsible for controlling the iterative calculation,
@@ -213,10 +212,10 @@ is written in a generic and configurable way.
 To characterize a new Mandelbrot fractal iteration, simply write
 a header-configuration-file with content similar to that shown below.
 Include the configuration file in
-[test_mandelbrot.cpp](./test/test_mandelbrot.cpp) and run the calculation.
+[`test_mandelbrot.cpp`](./test/test_mandelbrot.cpp) and run the calculation.
 
 Consider as a sample, for instance, the relevant content of the configuration file
-[mandelbrot_cfg_MANDELBROT_01_FULL.h](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_01_FULL.h).
+[`mandelbrot_cfg_MANDELBROT_01_FULL.h`](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_01_FULL.h).
 
 ```cpp
   // This is the classic full immage.

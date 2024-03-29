@@ -87,6 +87,9 @@
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_14_ZOOM_WIKI_04.h">
       <Filter>Source Files\mandelbrot\cfg</Filter>
     </ClInclude>
+    <ClInclude Include="concurrency\stopwatch.h">
+      <Filter>Source Files\concurrency</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-tidy" />

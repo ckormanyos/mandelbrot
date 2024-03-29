@@ -1,5 +1,5 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
-//      Copyright Christopher Kormanyos 2015 - 2023.
+//      Copyright Christopher Kormanyos 2015 - 2024.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
@@ -92,6 +92,7 @@
     auto operator=(color_functions_pretty&&) noexcept -> color_functions_pretty& = default;
 
   private:
+    // LCOV_EXCL_START
     MANDELBROT_NODISCARD auto color_function_r(const std::uint_fast32_t& c) const -> std::uint_fast32_t override
     {
       return color_phaser_01(c);
@@ -114,6 +115,7 @@
           )
         );
     }
+    // LCOV_EXCL_STOP
   };
 
   class color_stretch_base

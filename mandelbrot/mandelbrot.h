@@ -1,5 +1,5 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
-//      Copyright Christopher Kormanyos 2015 - 2023.
+//      Copyright Christopher Kormanyos 2015 - 2024.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
@@ -248,13 +248,13 @@
         for(auto& y : y_values) { y = y_coord; y_coord -= mandelbrot_config_object.step(); }
       }
 
-      std::atomic_flag mandelbrot_iteration_lock = ATOMIC_FLAG_INIT;
+      std::atomic_flag mandelbrot_iteration_lock { };
 
-      auto unordered_parallel_row_count = static_cast<std::size_t>(0U);
+      std::size_t unordered_parallel_row_count { static_cast<std::size_t>(UINT8_C(0)) };
 
       my_concurrency::parallel_for
       (
-        std::size_t(0U),
+        static_cast<std::size_t>(UINT8_C(0)),
         y_values.size(),
         [&mandelbrot_iteration_lock, &unordered_parallel_row_count, &output_stream, &x_values, &y_values, this](std::size_t j_row)
         {

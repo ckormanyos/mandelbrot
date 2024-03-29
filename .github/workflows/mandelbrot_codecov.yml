@@ -1,5 +1,5 @@
 ﻿# ------------------------------------------------------------------------------
-#  Copyright Christopher Kormanyos 2022.
+#  Copyright Christopher Kormanyos 2022 - 2024.
 #  Distributed under the Boost Software License,
 #  Version 1.0. (See accompanying file LICENSE_1_0.txt
 #  or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -14,7 +14,7 @@ on:
     types: [opened, synchronize, reopened]
 jobs:
   gcc-gcov-native:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
@@ -24,7 +24,7 @@ jobs:
         standard: [ c++14 ]
         compiler: [ g++ ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: '0'
       - name: update-tools
@@ -51,9 +51,10 @@ jobs:
           lcov --remove coverage_unfiltered.info '/usr/*' '*boost/*' '*concurrency/*' '*/cfg/*' '*test_mandelbrot.cpp' '*mandelbrot_color.h' --output-file coverage.info
           genhtml coverage.info --demangle-cpp --output-directory report
       - name: upload-codecov
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v4
         with:
-          files: ./coverage.info
+          plugin: gcov
+          file: ${{ runner.workspace }}/wide-integer/.gcov/make/coverage.info
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
-          functionalities: fix
+          verbose: false
