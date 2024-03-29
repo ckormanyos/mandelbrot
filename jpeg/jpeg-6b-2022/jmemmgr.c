@@ -807,11 +807,11 @@ do_sarray_io(j_common_ptr cinfo, jvirt_sarray_ptr ptr, boolean writing)
 {
   long bytesperrow, file_offset, byte_count, rows, thisrow, i;
 
-  bytesperrow = (long) ptr->samplesperrow * SIZEOF(JSAMPLE);
+  bytesperrow = (long) ((long) ptr->samplesperrow * (long) SIZEOF(JSAMPLE));
   file_offset = ptr->cur_start_row * bytesperrow;
 
   /* Loop to read or write each allocation chunk in mem_buffer */
-  for(i = 0; i < (long) ptr->rows_in_mem; i += ptr->rowsperchunk)
+  for(i = 0; i < (long) ptr->rows_in_mem; i += (long) ptr->rowsperchunk)
   {
     /* One chunk, but check for short chunk at end of buffer */
     rows = MIN((long) ptr->rowsperchunk, (long) ptr->rows_in_mem - i);
@@ -852,7 +852,7 @@ do_barray_io(j_common_ptr cinfo, jvirt_barray_ptr ptr, boolean writing)
   file_offset = ptr->cur_start_row * bytesperrow;
 
   /* Loop to read or write each allocation chunk in mem_buffer */
-  for(i = 0; i < (long) ptr->rows_in_mem; i += ptr->rowsperchunk)
+  for(i = 0; i < (long) ptr->rows_in_mem; i += (long) ptr->rowsperchunk)
   {
     /* One chunk, but check for short chunk at end of buffer */
     rows = MIN((long) ptr->rowsperchunk, (long) ptr->rows_in_mem - i);
@@ -933,7 +933,7 @@ access_virt_sarray(j_common_ptr cinfo, jvirt_sarray_ptr ptr,
       /* use long arithmetic here to avoid overflow & unsigned problems */
       long ltemp;
 
-      ltemp = (long) end_row - (long) ptr->rows_in_mem;
+      ltemp = (long) ((long) end_row - (long) ptr->rows_in_mem);
 
       if(ltemp < 0)
       {
