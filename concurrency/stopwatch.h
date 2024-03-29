@@ -26,30 +26,6 @@
   public:
     using duration_type = typename clock_type::duration;
 
-    stopwatch() : m_start(clock_type::now()) { }
-
-    stopwatch(const stopwatch& other) : m_start(other.m_start) { }
-    stopwatch(stopwatch&& other) noexcept : m_start(other.m_start) { }
-
-    auto operator=(const stopwatch& other) -> stopwatch&
-    {
-      if(this != &other)
-      {
-        m_start = other.m_start;
-      }
-
-      return *this;
-    }
-
-    auto operator=(stopwatch&& other) noexcept -> stopwatch&
-    {
-      m_start = other.m_start;
-
-      return *this;
-    }
-
-    ~stopwatch() = default;
-
     auto reset() -> void
     {
       m_start = clock_type::now();
@@ -62,7 +38,7 @@
     }
 
   private:
-    typename clock_type::time_point m_start; // NOLINT(readability-identifier-naming)
+    typename clock_type::time_point m_start { clock_type::now() }; // NOLINT(readability-identifier-naming)
 
     STOPWATCH_NODISCARD auto elapsed() const -> duration_type
     {

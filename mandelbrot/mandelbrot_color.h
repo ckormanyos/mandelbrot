@@ -92,6 +92,7 @@
     auto operator=(color_functions_pretty&&) noexcept -> color_functions_pretty& = default;
 
   private:
+    // LCOV_EXCL_START
     MANDELBROT_NODISCARD auto color_function_r(const std::uint_fast32_t& c) const -> std::uint_fast32_t override
     {
       return color_phaser_01(c);
@@ -114,6 +115,7 @@
           )
         );
     }
+    // LCOV_EXCL_STOP
   };
 
   class color_stretch_base
