@@ -105,8 +105,13 @@ jobs:
           cd jpeg
           make all
           cd ..
+          if [ "${{ matrix.compiler }}" = "clang++" ]; then
+            export EXTRA_FLAGS="-stdlib=libc++"
+          else
+            export EXTRA_FLAGS=""
+          fi
           echo '${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -DMANDELBROT_USE_GMP_FLOAT -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
-          ${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -DMANDELBROT_USE_GMP_FLOAT -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          ${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} $EXTRA_FLAGS -DMANDELBROT_USE_GMP_FLOAT -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
           echo '${{ matrix.compiler }} test_mandelbrot.o -lpthread -lgmp -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe'
           ${{ matrix.compiler }} test_mandelbrot.o -lpthread -lgmp -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
           ls -la ./test_mandelbrot.exe

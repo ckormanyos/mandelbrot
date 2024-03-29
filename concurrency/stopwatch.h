@@ -5,8 +5,18 @@
 //  or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef STOPWATCH_2024_03_28_H
+#ifndef STOPWATCH_2024_03_28_H // NOLINT(llvm-header-guard)
   #define STOPWATCH_2024_03_28_H
+
+  #if defined(_MSC_VER) && !defined(__GNUC__)
+  #define STOPWATCH_NODISCARD
+  #else
+  #if (defined(__cplusplus) && (__cplusplus >= 201703L))
+  #define STOPWATCH_NODISCARD  [[nodiscard]] // NOLINT(cppcoreguidelines-macro-usage)
+  #else
+  #define STOPWATCH_NODISCARD
+  #endif
+  #endif
 
   #include <chrono>
 
@@ -38,7 +48,7 @@
       return *this;
     }
 
-    ~stopwatch() { }
+    ~stopwatch() = default;
 
     auto reset() -> void
     {
@@ -52,9 +62,9 @@
     }
 
   private:
-    typename clock_type::time_point m_start;
+    typename clock_type::time_point m_start; // NOLINT(readability-identifier-naming)
 
-    auto elapsed() const -> duration_type
+    STOPWATCH_NODISCARD auto elapsed() const -> duration_type
     {
       return (clock_type::now() - m_start);
     }
