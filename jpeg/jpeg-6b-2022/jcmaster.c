@@ -566,7 +566,7 @@ prepare_for_pass(j_compress_ptr cinfo)
       break;
 #ifdef ENTROPY_OPT_SUPPORTED
 
-#if defined(__GNUC__)
+#if (defined(__GNUC__) && (!defined(__clang__) && !defined(__APPLE__)))
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wimplicit-fallthrough="
 #endif
@@ -591,7 +591,7 @@ prepare_for_pass(j_compress_ptr cinfo)
       master->pass_number++;
       /*FALLTHROUGH*/
 
-#if defined(__GNUC__)
+#if (defined(__GNUC__) && (!defined(__clang__) && !defined(__APPLE__)))
 #pragma GCC diagnostic pop
 #endif
 
