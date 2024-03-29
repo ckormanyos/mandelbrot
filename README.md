@@ -118,27 +118,6 @@ When doing so, define `-DMANDELBROT_USE_GMP_FLOAT`
 on the command line in the compile `test_mandelbrot.cpp` stage.
 In this case, you also need to link with `-lgmp` in the link stage.
 
-## Testing and Continuous Integration
-
-A small test program exercises a variety fractal iterations
-that can be selected individually at compile-time.
-The default confuguration uses the
-relatively quick-to-calculate _seahorse_ image configured in
-[mandelbrot_cfg_MANDELBROT_05_SEAHORSES.h](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_05_SEAHORSES.h).
-
-Continuous integration runs on Ubuntu and MacOS with both GCC/clang
-and also runs on Windows with MSVC. GCC's run-time
-[sanitizers](https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html)
-are also used in CI in order to help assure dynamic quality.
-CI uses the develop branch of modular-boost for multiprecision types.
-
-## TODOs
-
-Improvements on the TODO list include (among others) the following.
-  - Experiment with (and implement) massive inner loop parallelization via GPU programming.
-  - Find/use an acceleration technique (intended to reduce required precision of deep dives) such as orbit perturbation, series expansion, etc.
-  - Discover more interesting coordinates for iteration (help wanted).
-
 ## Sample Images
 
 Several images are highlighted in the paragraphs below.
@@ -253,6 +232,27 @@ Clearly named definitions are used to specify:
   - the numbers of pixels and iterations,
   - and the coordinate center and half-width of the magnification region,
   - where the dimensions `MANDELBROT_POINT_DX_HALF`, `MANDELBROT_POINT_CENTER_X`, and `MANDELBROT_POINT_CENTER_Y` are provided as character strings, which remain exact even if the magnification scale requires multiple precision.
+
+## Testing and Continuous Integration
+
+A small test program exercises a variety fractal iterations
+that can be selected individually at compile-time.
+The default confuguration uses the
+relatively quick-to-calculate _seahorse_ image configured in
+[mandelbrot_cfg_MANDELBROT_05_SEAHORSES.h](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_05_SEAHORSES.h).
+
+Continuous integration runs on Ubuntu and MacOS with both GCC/clang
+and also runs on Windows with MSVC. GCC's run-time
+[sanitizers](https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html)
+are also used in CI in order to help assure dynamic quality.
+CI uses the develop branch of modular-boost for multiprecision types.
+
+## TODOs
+
+Improvements on the TODO list include (among others) the following.
+  - Experiment with (and implement) massive inner loop parallelization via GPU programming.
+  - Find/use an acceleration technique (intended to reduce required precision of deep dives) such as orbit perturbation, series expansion, etc.
+  - Discover more interesting coordinates for iteration (help wanted).
 
 ## Notes on jpeg-6b and its adaptions
 

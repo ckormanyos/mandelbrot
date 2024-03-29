@@ -43,11 +43,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)jpeg\jpeg-6b-2022;$(SolutionDir);C:\boost\boost_1_81_0;$(SolutionDir)mpir\x64;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)jpeg\jpeg-6b-2022;$(SolutionDir);C:\boost\boost_1_84_0;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)jpeg\jpeg-6b-2022;$(SolutionDir);C:\boost\boost_1_81_0;$(SolutionDir)mpir\x64;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)jpeg\jpeg-6b-2022;$(SolutionDir);C:\boost\boost_1_84_0;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -100,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="concurrency\parallel_for.h" />
+    <ClInclude Include="concurrency\stopwatch.h" />
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg.h" />
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_01_FULL.h" />
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_03_TOP.h" />
