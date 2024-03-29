@@ -42,7 +42,7 @@ to implement
 a high-precision Mandelbrot iteration and visualization.
 Graphic file creation uses
 [`Boost.Gil`](https://www.boost.org/doc/libs/1_84_0/libs/gil/doc/html/index.html) to wrap the JPEG-6b library (see [below](#Adaptions-of-and-Notes-on-jpeg-6b)).
-Color-strething in combination with the histogram method
+Color-stretching in combination with the histogram method
 is used for creating vivid images. The default color
 scheme uses stretched, amplified and modulated black
 and white coloring. The Mandelbrot iteration is carried
