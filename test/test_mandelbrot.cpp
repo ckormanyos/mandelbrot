@@ -1,19 +1,21 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
-//      Copyright Christopher Kormanyos 2015 - 2023.
+//      Copyright Christopher Kormanyos 2015 - 2024.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#include <ctime>
+
+#include <concurrency/stopwatch.h>
+
+#include <iomanip>
 #include <iostream>
-#include <string>
+#include <sstream>
 
 #if (defined(__GNUC__) && defined(__clang__))
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 #endif
-
 
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_01_FULL.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_03_TOP.h>
@@ -40,11 +42,11 @@
 // cd ..
 
 // Compile with cpp_dec_float
-// g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++14 -I. -I/mnt/c/boost/boost_1_81_0 -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+// g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++14 -I. -I/mnt/c/boost/boost_1_84_0 -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
 // g++ test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
 
 // Compile with gmp_float
-// g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++14 -DMANDELBROT_USE_GMP_FLOAT -I. -I/mnt/c/boost/boost_1_81_0 -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+// g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++14 -DMANDELBROT_USE_GMP_FLOAT -I. -I/mnt/c/boost/boost_1_84_0 -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
 // g++ test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -lgmp -o test_mandelbrot.exe
 
 auto main() -> int // NOLINT(bugprone-exception-escape)
@@ -54,7 +56,7 @@ auto main() -> int // NOLINT(bugprone-exception-escape)
   const cfg::mandelbrot_config_type
     mandelbrot_config_object
     (
-      cfg::center_x() - cfg::dx_half(), // NOLINT
+      cfg::center_x() - cfg::dx_half(),
       cfg::center_x() + cfg::dx_half(),
       cfg::center_y() - cfg::dx_half(),
       cfg::center_y() + cfg::dx_half()
@@ -69,22 +71,30 @@ auto main() -> int // NOLINT(bugprone-exception-escape)
 
   mandelbrot_generator_type mandelbrot_generator(mandelbrot_config_object);
 
-  const auto start = std::clock();
+  using stopwatch_type = ::stopwatch<std::chrono::high_resolution_clock>;
+
+  stopwatch_type my_stopwatch;
+
+  my_stopwatch.reset();
 
   mandelbrot_generator.generate_mandelbrot_image(cfg::filename(),
                                                  local_color_functions,
                                                  local_color_stretches);
 
-  const auto stop = std::clock();
+  const auto execution_time = stopwatch_type::elapsed_time<float>(my_stopwatch);
 
-  const auto elapsed = static_cast<float>(static_cast<float>(stop - start) / CLOCKS_PER_SEC);
+  {
+    std::stringstream strm;
 
-  std::cout << "Time for calculation: "
-            << std::fixed
-            << std::setprecision(static_cast<std::streamsize>(INT8_C(1)))
-            << elapsed
-            << "s"
-            << std::endl;
+    strm << "Time for calculation: "
+         << std::fixed
+         << std::setprecision(static_cast<std::streamsize>(INT8_C(1)))
+         << "execution_time: "
+         << execution_time
+         << "s";
+
+    std::cout << strm.str() << std::endl;
+  }
 }
 
 #if (defined(__GNUC__) && defined(__clang__))
