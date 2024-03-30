@@ -21,6 +21,8 @@
   class color_functions_base
   {
   public:
+    virtual ~color_functions_base() { }
+
     MANDELBROT_NODISCARD virtual auto color_function_r(const std::uint_fast32_t&) const -> std::uint_fast32_t = 0;
     MANDELBROT_NODISCARD virtual auto color_function_g(const std::uint_fast32_t&) const -> std::uint_fast32_t = 0;
     MANDELBROT_NODISCARD virtual auto color_function_b(const std::uint_fast32_t&) const -> std::uint_fast32_t = 0;
@@ -59,6 +61,9 @@
 
   class color_functions_pretty final : public color_functions_base
   {
+  public:
+    ~color_functions_pretty() override { }
+
   private:
     // LCOV_EXCL_START
     MANDELBROT_NODISCARD auto color_function_r(const std::uint_fast32_t& c) const -> std::uint_fast32_t override
@@ -89,6 +94,8 @@
   class color_stretch_base
   {
   public:
+    virtual ~color_stretch_base() { }
+
     auto init(const std::uint_fast32_t total_pixels) const -> void
     {
       my_total_pixels = total_pixels;
@@ -105,6 +112,8 @@
   class color_stretch_histogram_method final : public color_stretch_base
   {
   public:
+    ~color_stretch_histogram_method() override { }
+
     auto color_stretch(std::uint_fast32_t& histogram_entry) const -> void override
     {
       // Perform color stretching using the histogram approach.
