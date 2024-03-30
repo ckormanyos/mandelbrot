@@ -162,36 +162,7 @@
                         boost::lexical_cast<my_mandelbrot_config_numeric_type>(std::string(pc_yh))),
         my_step(base_class_type::get_width() / PixelCountX) { }
 
-    mandelbrot_config(const mandelbrot_config& other)
-      : base_class_type(static_cast<const base_class_type&>(other)),
-        my_step(other.my_step) { }
-
-    mandelbrot_config(mandelbrot_config&& other) noexcept
-      : base_class_type(static_cast<base_class_type&&>(other)),
-        my_step(other.my_step) { }
-
     ~mandelbrot_config() override = default; // LCOV_EXCL_LINE
-
-    auto operator=(const mandelbrot_config& other) -> mandelbrot_config&
-    {
-      if(this != other)
-      {
-        static_cast<void>(base_class_type::operator=(static_cast<const base_class_type&>(other)));
-
-        my_step = other.my_step;
-      }
-
-      return *this;
-    }
-
-    auto operator=(mandelbrot_config&& other) noexcept -> mandelbrot_config&
-    {
-      static_cast<void>(base_class_type::operator=(static_cast<base_class_type&&>(other)));
-
-      my_step = other.my_step;
-
-      return *this;
-    }
 
   private:
     my_mandelbrot_config_numeric_type my_step; // NOLINT(readability-identifier-naming)
