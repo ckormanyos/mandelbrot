@@ -127,7 +127,7 @@
   template<typename NumericType,
            const std::uint_fast32_t MaxIterations,
            const std::uint_fast32_t PixelCountX>
-  class mandelbrot_config final : public mandelbrot_config_base<NumericType, MaxIterations>
+  class mandelbrot_config final : public mandelbrot_config_base<NumericType, MaxIterations> // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
   {
   private:
     using base_class_type = mandelbrot_config_base<NumericType, MaxIterations>;

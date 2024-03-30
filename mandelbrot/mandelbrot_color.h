@@ -59,7 +59,7 @@
     MANDELBROT_NODISCARD auto color_function_b(const std::uint_fast32_t& c) const -> std::uint_fast32_t override { return color_phaser_01(c); }
   };
 
-  class color_functions_pretty final : public color_functions_base
+  class color_functions_pretty final : public color_functions_base // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
   {
   public:
     ~color_functions_pretty() override = default; // LCOV_EXCL_LINE
@@ -91,7 +91,7 @@
     // LCOV_EXCL_STOP
   };
 
-  class color_stretch_base
+  class color_stretch_base // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
   {
   public:
     virtual ~color_stretch_base() = default; // LCOV_EXCL_LINE
@@ -109,7 +109,7 @@
     mutable std::uint_fast32_t my_sum          { }; // NOLINT(cppcoreguidelines-non-private-member-variables-in-classes,misc-non-private-member-variables-in-classes,readability-identifier-naming)
   };
 
-  class color_stretch_histogram_method final : public color_stretch_base
+  class color_stretch_histogram_method final : public color_stretch_base // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
   {
   public:
     ~color_stretch_histogram_method() override = default; // LCOV_EXCL_LINE
