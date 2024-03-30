@@ -318,8 +318,8 @@
               // Optimized complex multiply and add.
               zi *= zr;
 
-              zi = (zi  + zi)  + y_values[j_row];
-              zr = (zr2 - zi2) + x_values[i_col];
+              zi += (zi + y_values[j_row]);
+              zr  = (zr2 - zi2) + x_values[i_col];
 
               zr2 = zr * zr;
               zi2 = zi * zi;
