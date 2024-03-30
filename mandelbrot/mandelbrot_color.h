@@ -18,7 +18,7 @@
   namespace ckormanyos { namespace mandelbrot { namespace color { // NOLINT(modernize-concat-nested-namespaces)
   #endif
 
-  class color_functions_base
+  class color_functions_base // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
   {
   public:
     virtual ~color_functions_base() = default; // LCOV_EXCL_LINE
