@@ -294,16 +294,14 @@
 
           mandelbrot_iteration_lock.clear();
 
-          const std::size_t x_vals_size { x_values.size() };
-
           for(auto   i_col = static_cast<std::size_t>(UINT8_C(0));
-                     i_col < x_vals_size; // NOLINT(altera-id-dependent-backward-branch)
+                     i_col < x_values.size(); // NOLINT(altera-id-dependent-backward-branch)
                    ++i_col)
           {
-            numeric_type zr (static_cast<unsigned>(UINT8_C(0)));
-            numeric_type zi (static_cast<unsigned>(UINT8_C(0)));
-            numeric_type zr2(static_cast<unsigned>(UINT8_C(0)));
-            numeric_type zi2(static_cast<unsigned>(UINT8_C(0)));
+            numeric_type zr  { static_cast<unsigned>(UINT8_C(0)) };
+            numeric_type zi  { static_cast<unsigned>(UINT8_C(0)) };
+            numeric_type zr2 { static_cast<unsigned>(UINT8_C(0)) };
+            numeric_type zi2 { static_cast<unsigned>(UINT8_C(0)) };
 
             // Use an optimized complex-numbered multiplication scheme.
             // Thereby reduce the main work of the Mandelbrot iteration to
@@ -320,11 +318,11 @@
               // Optimized complex multiply and add.
               zi *= zr;
 
-              zi  = (zi  + zi)  + y_values[j_row];
-              zr  = (zr2 - zi2) + x_values[i_col];
+              zi = (zi  + zi)  + y_values[j_row];
+              zr = (zr2 - zi2) + x_values[i_col];
 
-              zr2 = zr; zr2 *= zr;
-              zi2 = zi; zi2 *= zi;
+              zr2 = zr * zr;
+              zi2 = zi * zi;
 
               ++iteration_result;
             }
