@@ -212,7 +212,7 @@
       {
         using std::pow;
 
-        const auto histogram_scale = pow(sum_div_total_pixels, 1.2);
+        const auto histogram_scale = pow(sum_div_total_pixels, 1.2F);
 
         const auto scaled_histogram_value =
           static_cast<std::uint_fast32_t>
@@ -223,7 +223,7 @@
         histogram_entry =
           static_cast<std::uint_fast32_t>
           (
-            UINT32_C(255) - scaled_histogram_value
+            static_cast<std::uint_fast32_t>(UINT8_C(255)) - scaled_histogram_value
           );
       }
     }
