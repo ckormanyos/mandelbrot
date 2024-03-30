@@ -218,11 +218,12 @@
 
     explicit mandelbrot_generator(const mandelbrot_config_type& config)
       : mandelbrot_config_object   (config),
-        mandelbrot_image           (static_cast<boost_gil_x_coord_type>(config.integral_width()),
-                                    static_cast<boost_gil_x_coord_type>(config.integral_height())),
+        mandelbrot_image           (static_cast<boost_gil_x_coord_type>(config.integral_width()),   // NOLINT
+                                    static_cast<boost_gil_x_coord_type>(config.integral_height())), // NOLINT
         mandelbrot_view            (boost::gil::view(mandelbrot_image)),
         mandelbrot_iteration_matrix(config.integral_width(),
-                                    std::vector<std::uint_fast32_t>(config.integral_height())) { }
+                                    std::vector<std::uint_fast32_t>(config.integral_height())),
+        mandelbrot_color_histogram (static_cast<std::size_t>(max_iterations + 1U), static_cast<std::uint_fast32_t>(UINT32_C(0))) { }
 
     mandelbrot_generator() = delete;
 
@@ -358,13 +359,7 @@
           boost::gil::rgb8_view_t                      mandelbrot_view;             // NOLINT(readability-identifier-naming)
 
           std::vector<std::vector<std::uint_fast32_t>> mandelbrot_iteration_matrix; // NOLINT(readability-identifier-naming)
-
-          std::vector<std::uint_fast32_t>
-            mandelbrot_color_histogram                                               // NOLINT(readability-identifier-naming)
-            {
-              static_cast<std::size_t>(max_iterations + static_cast<std::uint_fast32_t>(UINT8_C(1))),
-              static_cast<std::uint_fast32_t>(UINT8_C(0))
-            };
+          std::vector<std::uint_fast32_t>              mandelbrot_color_histogram;  // NOLINT(readability-identifier-naming)
 
     auto apply_color_stretches(const std::vector<numeric_type>& x_values,
                                const std::vector<numeric_type>& y_values,
