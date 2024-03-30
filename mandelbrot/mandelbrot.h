@@ -313,7 +313,7 @@
             // Perform the iteration sequence for generating the Mandelbrot set.
             // Here is the main work of the program.
 
-            while((iteration_result < max_iterations) && ((zr2 + zi2) < four()))
+            while((iteration_result < max_iterations) && ((zr2 + zi2) < four())) // NOLINT(altera-id-dependent-backward-branch)
             {
               // Optimized complex multiply and add.
               zi *= zr;
