@@ -247,12 +247,12 @@
     {
       // Setup the x-axis and y-axis coordinates.
 
-      std::vector<numeric_type> x_values(mandelbrot_config_object.integral_width());
-      std::vector<numeric_type> y_values(mandelbrot_config_object.integral_height());
+      std::vector<numeric_type> x_values { mandelbrot_config_object.integral_width() };  // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
+      std::vector<numeric_type> y_values { mandelbrot_config_object.integral_height() }; // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
 
       {
-        numeric_type x_coord(mandelbrot_config_object.x_lo());
-        numeric_type y_coord(mandelbrot_config_object.y_hi());
+        numeric_type x_coord { mandelbrot_config_object.x_lo() };
+        numeric_type y_coord { mandelbrot_config_object.y_hi() };
 
         for(auto& x : x_values) { x = x_coord; x_coord += mandelbrot_config_object.step(); }
         for(auto& y : y_values) { y = y_coord; y_coord -= mandelbrot_config_object.step(); }
@@ -393,16 +393,17 @@
           const auto color_b = static_cast<std::uint_fast32_t>((hist_color <= static_cast<std::uint_fast32_t>(UINT8_C(4))) ? hist_color : color_functions.color_function_b(hist_color));
 
           // Mix the color from the hue values.
-          const auto rh = static_cast<std::uint8_t>((UINT8_C(255) * color_r) / UINT8_C(255));
-          const auto gh = static_cast<std::uint8_t>((UINT8_C(255) * color_g) / UINT8_C(255));
-          const auto bh = static_cast<std::uint8_t>((UINT8_C(255) * color_b) / UINT8_C(255));
-
-          const boost::gil::rgb8_pixel_t the_color { rh, gh, bh };
 
           const boost_gil_x_coord_type x_col { static_cast<boost_gil_x_coord_type>(i_col) };
           const boost_gil_x_coord_type y_row { static_cast<boost_gil_x_coord_type>(j_row) };
 
-          mandelbrot_view(x_col, y_row) = boost::gil::rgb8_pixel_t(the_color);
+          mandelbrot_view(x_col, y_row) =
+            boost::gil::rgb8_pixel_t
+            {
+              static_cast<std::uint8_t>((UINT8_C(255) * color_r) / UINT8_C(255)),
+              static_cast<std::uint8_t>((UINT8_C(255) * color_g) / UINT8_C(255)),
+              static_cast<std::uint8_t>((UINT8_C(255) * color_b) / UINT8_C(255))
+            };
         }
       }
     }
