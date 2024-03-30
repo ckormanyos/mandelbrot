@@ -21,16 +21,6 @@
   class color_functions_base
   {
   public:
-    color_functions_base() = default;
-
-    color_functions_base(const color_functions_base&) = default;
-    color_functions_base(color_functions_base&&) noexcept = default;
-
-    auto operator=(const color_functions_base&) -> color_functions_base& = default;
-    auto operator=(color_functions_base&&) noexcept -> color_functions_base& = default;
-
-    virtual ~color_functions_base() = default;
-
     MANDELBROT_NODISCARD virtual auto color_function_r(const std::uint_fast32_t&) const -> std::uint_fast32_t = 0;
     MANDELBROT_NODISCARD virtual auto color_function_g(const std::uint_fast32_t&) const -> std::uint_fast32_t = 0;
     MANDELBROT_NODISCARD virtual auto color_function_b(const std::uint_fast32_t&) const -> std::uint_fast32_t = 0;
@@ -61,17 +51,6 @@
 
   class color_functions_bw final : public color_functions_base
   {
-  public:
-    color_functions_bw() = default;
-
-    color_functions_bw(const color_functions_bw&) = default;
-    color_functions_bw(color_functions_bw&&) noexcept = default;
-
-    auto operator=(const color_functions_bw&) -> color_functions_bw& = default;
-    auto operator=(color_functions_bw&&) noexcept -> color_functions_bw& = default;
-
-    ~color_functions_bw() override = default;
-
   private:
     MANDELBROT_NODISCARD auto color_function_r(const std::uint_fast32_t& c) const -> std::uint_fast32_t override { return color_phaser_01(c); }
     MANDELBROT_NODISCARD auto color_function_g(const std::uint_fast32_t& c) const -> std::uint_fast32_t override { return color_phaser_01(c); }
@@ -80,17 +59,6 @@
 
   class color_functions_pretty final : public color_functions_base
   {
-  public:
-    color_functions_pretty() = default;
-
-    color_functions_pretty(const color_functions_pretty&) = default;
-    color_functions_pretty(color_functions_pretty&&) noexcept = default;
-
-    ~color_functions_pretty() override = default;
-
-    auto operator=(const color_functions_pretty&) -> color_functions_pretty& = default;
-    auto operator=(color_functions_pretty&&) noexcept -> color_functions_pretty& = default;
-
   private:
     // LCOV_EXCL_START
     MANDELBROT_NODISCARD auto color_function_r(const std::uint_fast32_t& c) const -> std::uint_fast32_t override
@@ -121,8 +89,6 @@
   class color_stretch_base
   {
   public:
-    virtual ~color_stretch_base() = default;
-
     auto init(const std::uint_fast32_t total_pixels) const -> void
     {
       my_total_pixels = total_pixels;
