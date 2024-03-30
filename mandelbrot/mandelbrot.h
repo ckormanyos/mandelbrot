@@ -247,12 +247,12 @@
     {
       // Setup the x-axis and y-axis coordinates.
 
-      std::vector<numeric_type> x_values { mandelbrot_config_object.integral_width() };  // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
-      std::vector<numeric_type> y_values { mandelbrot_config_object.integral_height() }; // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
+      std::vector<numeric_type> x_values(mandelbrot_config_object.integral_width());   // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
+      std::vector<numeric_type> y_values(mandelbrot_config_object.integral_height());   // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
 
       {
-        numeric_type x_coord { mandelbrot_config_object.x_lo() };
-        numeric_type y_coord { mandelbrot_config_object.y_hi() };
+        numeric_type x_coord(mandelbrot_config_object.x_lo());
+        numeric_type y_coord(mandelbrot_config_object.y_hi());
 
         for(auto& x : x_values) { x = x_coord; x_coord += mandelbrot_config_object.step(); }
         for(auto& y : y_values) { y = y_coord; y_coord -= mandelbrot_config_object.step(); }
