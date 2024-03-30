@@ -393,17 +393,16 @@
           const auto color_b = static_cast<std::uint_fast32_t>((hist_color <= static_cast<std::uint_fast32_t>(UINT8_C(4))) ? hist_color : color_functions.color_function_b(hist_color));
 
           // Mix the color from the hue values.
+          const auto rh = static_cast<std::uint8_t>((UINT8_C(255) * color_r) / UINT8_C(255));
+          const auto gh = static_cast<std::uint8_t>((UINT8_C(255) * color_g) / UINT8_C(255));
+          const auto bh = static_cast<std::uint8_t>((UINT8_C(255) * color_b) / UINT8_C(255));
+
+          const boost::gil::rgb8_pixel_t the_color { rh, gh, bh };
 
           const boost_gil_x_coord_type x_col { static_cast<boost_gil_x_coord_type>(i_col) };
           const boost_gil_x_coord_type y_row { static_cast<boost_gil_x_coord_type>(j_row) };
 
-          mandelbrot_view(x_col, y_row) =
-            boost::gil::rgb8_pixel_t
-            {
-              static_cast<std::uint8_t>((UINT8_C(255) * color_r) / UINT8_C(255)),
-              static_cast<std::uint8_t>((UINT8_C(255) * color_g) / UINT8_C(255)),
-              static_cast<std::uint8_t>((UINT8_C(255) * color_b) / UINT8_C(255))
-            };
+          mandelbrot_view(x_col, y_row) = boost::gil::rgb8_pixel_t(the_color);
         }
       }
     }
