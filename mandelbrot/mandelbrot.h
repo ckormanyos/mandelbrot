@@ -218,8 +218,8 @@
 
     explicit mandelbrot_generator(const mandelbrot_config_type& config)
       : mandelbrot_config_object   (config),
-        mandelbrot_image           (static_cast<boost_gil_x_coord_type>(config.integral_width()),   // NOLINT
-                                    static_cast<boost_gil_x_coord_type>(config.integral_height())), // NOLINT
+        mandelbrot_image           (static_cast<boost_gil_x_coord_type>(config.integral_width()),
+                                    static_cast<boost_gil_x_coord_type>(config.integral_height())),
         mandelbrot_view            (boost::gil::view(mandelbrot_image)),
         mandelbrot_iteration_matrix(config.integral_width(),
                                     std::vector<std::uint_fast32_t>(config.integral_height())),
@@ -294,9 +294,11 @@
 
           mandelbrot_iteration_lock.clear();
 
+          const std::size_t x_vals_size { x_values.size() };
+
           for(auto   i_col = static_cast<std::size_t>(UINT8_C(0));
-                     i_col < x_values.size();
-                   ++i_col) // NOLINT(altera-id-dependent-backward-branch)
+                     i_col < x_vals_size; // NOLINT(altera-id-dependent-backward-branch)
+                   ++i_col)
           {
             numeric_type zr (static_cast<unsigned>(UINT8_C(0)));
             numeric_type zi (static_cast<unsigned>(UINT8_C(0)));
@@ -399,8 +401,8 @@
 
           const boost::gil::rgb8_pixel_t the_color { rh, gh, bh };
 
-          boost_gil_x_coord_type x_col { static_cast<boost_gil_x_coord_type>(i_col) };
-          boost_gil_x_coord_type y_row { static_cast<boost_gil_y_coord_type>(j_row) };
+          const boost_gil_x_coord_type x_col { static_cast<boost_gil_x_coord_type>(i_col) };
+          const boost_gil_x_coord_type y_row { static_cast<boost_gil_x_coord_type>(j_row) };
 
           mandelbrot_view(x_col, y_row) = boost::gil::rgb8_pixel_t(the_color);
         }
