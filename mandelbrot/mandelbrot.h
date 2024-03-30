@@ -53,8 +53,8 @@
         my_x_hi  (std::move(xh)),
         my_y_lo  (std::move(yl)),
         my_y_hi  (std::move(yh)),
-        my_width (my_x_hi - my_x_lo),
-        my_height(my_y_hi - my_y_lo) { }
+        my_width (std::move(my_x_hi - my_x_lo)),
+        my_height(std::move(my_y_hi - my_y_lo)) { }
 
     virtual ~mandelbrot_config_base() = default;
 
@@ -77,13 +77,17 @@
       const auto non_rounded_width2 =
         static_cast<std::uint_fast32_t>
         (
-          mandelbrot_config_numeric_type(my_width * 2U) / this->step() // NOLINT
+          mandelbrot_config_numeric_type(my_width * static_cast<std::uint_fast32_t>(UINT8_C(2))) / this->step()
         );
 
       return
         static_cast<std::uint_fast32_t>
         (
-          static_cast<std::uint_fast32_t>(non_rounded_width2 + 1U) / 2U
+            static_cast<std::uint_fast32_t>
+            (
+              non_rounded_width2 + static_cast<std::uint_fast32_t>(UINT8_C(1))
+            )
+          / static_cast<std::uint_fast32_t>(UINT8_C(2))
         );
     }
 
@@ -92,13 +96,17 @@
       const auto non_rounded_height2 =
         static_cast<std::uint_fast32_t>
         (
-          mandelbrot_config_numeric_type(my_height * 2U) / this->step()
+          mandelbrot_config_numeric_type(my_height * static_cast<std::uint_fast32_t>(UINT8_C(2))) / this->step()
         );
 
       return
         static_cast<std::uint_fast32_t>
         (
-          static_cast<std::uint_fast32_t>(non_rounded_height2 + 1U) / 2U
+            static_cast<std::uint_fast32_t>
+            (
+              non_rounded_height2 + static_cast<std::uint_fast32_t>(UINT8_C(1))
+            )
+          / static_cast<std::uint_fast32_t>(UINT8_C(2))
         );
     }
 
@@ -210,8 +218,8 @@
 
     explicit mandelbrot_generator(const mandelbrot_config_type& config)
       : mandelbrot_config_object   (config),
-        mandelbrot_image           (static_cast<boost_gil_x_coord_type>(config.integral_width()),   // NOLINT
-                                    static_cast<boost_gil_x_coord_type>(config.integral_height())), // NOLINT
+        mandelbrot_image           (static_cast<boost_gil_x_coord_type>(config.integral_width()),
+                                    static_cast<boost_gil_x_coord_type>(config.integral_height())),
         mandelbrot_view            (boost::gil::view(mandelbrot_image)),
         mandelbrot_iteration_matrix(config.integral_width(),
                                     std::vector<std::uint_fast32_t>(config.integral_height())),
@@ -225,9 +233,11 @@
     auto operator=(const mandelbrot_generator&) -> mandelbrot_generator& = delete;
     auto operator=(mandelbrot_generator&&) noexcept -> mandelbrot_generator& = delete;
 
-    static constexpr auto four() -> numeric_type
+    static auto four() -> const numeric_type&
     {
-      return numeric_type(4U);
+      static const numeric_type my_four { static_cast<unsigned>(UINT8_C(4)) };
+
+      return my_four;
     }
 
     auto generate_mandelbrot_image(const std::string&                  str_filename,
@@ -237,8 +247,8 @@
     {
       // Setup the x-axis and y-axis coordinates.
 
-      std::vector<numeric_type> x_values(mandelbrot_config_object.integral_width());  // NOLINT
-      std::vector<numeric_type> y_values(mandelbrot_config_object.integral_height()); // NOLINT
+      std::vector<numeric_type> x_values(mandelbrot_config_object.integral_width());   // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
+      std::vector<numeric_type> y_values(mandelbrot_config_object.integral_height());   // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
 
       {
         numeric_type x_coord(mandelbrot_config_object.x_lo());
@@ -284,33 +294,35 @@
 
           mandelbrot_iteration_lock.clear();
 
-          for(auto i_col = static_cast<std::size_t>(0U); i_col < x_values.size(); ++i_col) // NOLINT(altera-id-dependent-backward-branch)
+          for(auto   i_col = static_cast<std::size_t>(UINT8_C(0));
+                     i_col < x_values.size(); // NOLINT(altera-id-dependent-backward-branch)
+                   ++i_col)
           {
-            numeric_type zr (0U);
-            numeric_type zi (0U);
-            numeric_type zr2(0U);
-            numeric_type zi2(0U);
+            numeric_type zr  { static_cast<unsigned>(UINT8_C(0)) };
+            numeric_type zi  { static_cast<unsigned>(UINT8_C(0)) };
+            numeric_type zr2 { static_cast<unsigned>(UINT8_C(0)) };
+            numeric_type zi2 { static_cast<unsigned>(UINT8_C(0)) };
 
             // Use an optimized complex-numbered multiplication scheme.
             // Thereby reduce the main work of the Mandelbrot iteration to
             // three real-valued multiplications and several real-valued
             // addition/subtraction operations.
 
-            auto iteration_result = static_cast<std::uint_fast32_t>(UINT32_C(0));
+            auto iteration_result = static_cast<std::uint_fast32_t>(UINT8_C(0));
 
             // Perform the iteration sequence for generating the Mandelbrot set.
             // Here is the main work of the program.
 
-            while((iteration_result < max_iterations) && ((zr2 + zi2) < four()))
+            while((iteration_result < max_iterations) && ((zr2 + zi2) < four())) // NOLINT(altera-id-dependent-backward-branch)
             {
               // Optimized complex multiply and add.
               zi *= zr;
 
-              zi  = (zi  + zi)  + y_values[j_row];
-              zr  = (zr2 - zi2) + x_values[i_col];
+              zi = (zi  + zi)  + y_values[j_row];
+              zr = (zr2 - zi2) + x_values[i_col];
 
-              zr2 = zr; zr2 *= zr;
-              zi2 = zi; zi2 *= zi;
+              zr2 = zr * zr;
+              zi2 = zi * zi;
 
               ++iteration_result;
             }
@@ -319,6 +331,7 @@
 
             {
               mandelbrot_iteration_matrix[i_col][j_row] = iteration_result;
+
               ++mandelbrot_color_histogram[iteration_result];
             }
 
@@ -336,7 +349,7 @@
       apply_color_functions(x_values, y_values, color_functions);
 
       output_stream << "Write output JPEG file " << str_filename << "." << std::endl;
-      boost::gil::jpeg_write_view(str_filename, mandelbrot_view); // NOLINT
+      boost::gil::jpeg_write_view(str_filename, mandelbrot_view);
     }
 
   private:
@@ -364,33 +377,50 @@
                                const std::vector<numeric_type>&   y_values,
                                const color::color_functions_base& color_functions) -> void
     {
-      for(auto   j_row = static_cast<std::uint_fast32_t>(UINT32_C(0));
+      for(auto   j_row = static_cast<std::uint_fast32_t>(UINT8_C(0));
                  j_row < static_cast<std::uint_fast32_t>(y_values.size());
                ++j_row)
       {
-        for(auto   i_col = static_cast<std::uint_fast32_t>(UINT32_C(0));
+        for(auto   i_col = static_cast<std::uint_fast32_t>(UINT8_C(0));
                    i_col < static_cast<std::uint_fast32_t>(x_values.size());
                  ++i_col)
         {
           const auto hist_color = mandelbrot_color_histogram[mandelbrot_iteration_matrix[i_col][j_row]];
 
           // Get the three hue values.
-          const auto color_r = static_cast<std::uint_fast32_t>((hist_color <= 4U) ? hist_color : color_functions.color_function_r(hist_color));
-          const auto color_g = static_cast<std::uint_fast32_t>((hist_color <= 4U) ? hist_color : color_functions.color_function_g(hist_color));
-          const auto color_b = static_cast<std::uint_fast32_t>((hist_color <= 4U) ? hist_color : color_functions.color_function_b(hist_color));
+          const auto color_r = static_cast<std::uint_fast32_t>((hist_color <= static_cast<std::uint_fast32_t>(UINT8_C(4))) ? hist_color : color_functions.color_function_r(hist_color));
+          const auto color_g = static_cast<std::uint_fast32_t>((hist_color <= static_cast<std::uint_fast32_t>(UINT8_C(4))) ? hist_color : color_functions.color_function_g(hist_color));
+          const auto color_b = static_cast<std::uint_fast32_t>((hist_color <= static_cast<std::uint_fast32_t>(UINT8_C(4))) ? hist_color : color_functions.color_function_b(hist_color));
 
           // Mix the color from the hue values.
-          const auto rh = static_cast<std::uint8_t>((UINT32_C(255) * color_r) / UINT32_C(255));
-          const auto gh = static_cast<std::uint8_t>((UINT32_C(255) * color_g) / UINT32_C(255));
-          const auto bh = static_cast<std::uint8_t>((UINT32_C(255) * color_b) / UINT32_C(255));
 
-          const auto the_color = boost::gil::rgb8_pixel_t(rh, gh, bh);
+          auto color_scaler =
+            [](const std::uint_fast32_t color)
+            {
+              return
+                static_cast<std::uint8_t>
+                (
+                  static_cast<std::uint_fast32_t>
+                  (
+                    static_cast<std::uint_fast32_t>
+                    (
+                      static_cast<std::uint_fast32_t>(UINT8_C(255)) * color
+                    )
+                    / static_cast<std::uint_fast32_t>(UINT8_C(255))
+                  )
+                );
+            };
 
-          mandelbrot_view
-          (
-            static_cast<boost_gil_x_coord_type>(i_col),
-            static_cast<boost_gil_x_coord_type>(j_row)
-          ) = boost::gil::rgb8_pixel_t(the_color);
+          const boost_gil_x_coord_type x_col { static_cast<boost_gil_x_coord_type>(i_col) };
+          const boost_gil_x_coord_type y_row { static_cast<boost_gil_x_coord_type>(j_row) };
+
+          mandelbrot_view(x_col, y_row) =
+            boost::gil::rgb8_pixel_t
+            {
+              color_scaler(color_r),
+              color_scaler(color_g),
+              color_scaler(color_b)
+            };
         }
       }
     }
