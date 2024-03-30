@@ -121,34 +121,7 @@
   class color_stretch_base
   {
   public:
-    color_stretch_base() = default;
-
-    color_stretch_base(const color_stretch_base& other) = default;
-
-    color_stretch_base(color_stretch_base&& other) noexcept
-      : my_total_pixels(other.my_total_pixels),
-        my_sum         (other.my_sum) { }
-
     virtual ~color_stretch_base() = default;
-
-    auto operator=(const color_stretch_base& other) -> color_stretch_base&
-    {
-      if(this != &other)
-      {
-        my_total_pixels = other.my_total_pixels;
-        my_sum          = other.my_sum;
-      }
-
-      return *this;
-    }
-
-    auto operator=(color_stretch_base&& other) noexcept -> color_stretch_base&
-    {
-      my_total_pixels = other.my_total_pixels;
-      my_sum          = other.my_sum;
-
-      return *this;
-    }
 
     auto init(const std::uint_fast32_t total_pixels) const -> void
     {
@@ -160,39 +133,12 @@
 
   protected:
     mutable std::uint_fast32_t my_total_pixels { }; // NOLINT(cppcoreguidelines-non-private-member-variables-in-classes,misc-non-private-member-variables-in-classes,readability-identifier-naming)
-    mutable std::uint_fast32_t my_sum { };          // NOLINT(cppcoreguidelines-non-private-member-variables-in-classes,misc-non-private-member-variables-in-classes,readability-identifier-naming)
+    mutable std::uint_fast32_t my_sum          { }; // NOLINT(cppcoreguidelines-non-private-member-variables-in-classes,misc-non-private-member-variables-in-classes,readability-identifier-naming)
   };
 
   class color_stretch_histogram_method final : public color_stretch_base
   {
   public:
-    color_stretch_histogram_method() = default;
-
-    color_stretch_histogram_method(const color_stretch_histogram_method& other)
-      : color_stretch_base(static_cast<const color_stretch_base&>(other)) { }
-
-    color_stretch_histogram_method(color_stretch_histogram_method&& other) noexcept
-      : color_stretch_base(static_cast<color_stretch_base&&>(other)) { }
-
-    ~color_stretch_histogram_method() override = default;
-
-    auto operator=(const color_stretch_histogram_method& other) -> color_stretch_histogram_method&
-    {
-      if(this != &other)
-      {
-        static_cast<void>(color_stretch_base::operator=(static_cast<const color_stretch_base&>(other)));
-      }
-
-      return *this;
-    }
-
-    auto operator=(color_stretch_histogram_method&& other) noexcept -> color_stretch_histogram_method&
-    {
-      static_cast<void>(color_stretch_base::operator=(static_cast<color_stretch_base&&>(other)));
-
-      return *this;
-    }
-
     auto color_stretch(std::uint_fast32_t& histogram_entry) const -> void override
     {
       // Perform color stretching using the histogram approach.
@@ -203,29 +149,22 @@
 
       my_sum += histogram_entry;
 
-      const auto sum_div_total_pixels =
-        static_cast<float>
-        (
-          static_cast<float>(my_sum) / static_cast<float>(my_total_pixels)
-        );
-
+      const float sum_div_total_pixels
       {
-        using std::pow;
+        static_cast<float>(my_sum) / static_cast<float>(my_total_pixels)
+      };
 
-        const auto histogram_scale = pow(sum_div_total_pixels, 1.2F);
+      using std::pow;
 
-        const auto scaled_histogram_value =
-          static_cast<std::uint_fast32_t>
-          (
-            static_cast<float>(histogram_scale * 255.0F)
-          );
-
-        histogram_entry =
-          static_cast<std::uint_fast32_t>
-          (
-            static_cast<std::uint_fast32_t>(UINT8_C(255)) - scaled_histogram_value
-          );
-      }
+      histogram_entry =
+        static_cast<std::uint_fast32_t>
+        (
+            static_cast<std::uint_fast32_t>(UINT8_C(255))
+          - static_cast<std::uint_fast32_t>
+            (
+              static_cast<float>(pow(sum_div_total_pixels, 1.2F) * 255.0F)
+            )
+        );
     }
   };
 

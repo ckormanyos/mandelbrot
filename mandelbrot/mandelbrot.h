@@ -247,8 +247,8 @@
     {
       // Setup the x-axis and y-axis coordinates.
 
-      std::vector<numeric_type> x_values(mandelbrot_config_object.integral_width());   // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
-      std::vector<numeric_type> y_values(mandelbrot_config_object.integral_height());   // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
+      std::vector<numeric_type> x_values(mandelbrot_config_object.integral_width());  // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
+      std::vector<numeric_type> y_values(mandelbrot_config_object.integral_height()); // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
 
       {
         numeric_type x_coord(mandelbrot_config_object.x_lo());
@@ -315,7 +315,9 @@
 
             while((iteration_result < max_iterations) && ((zr2 + zi2) < four())) // NOLINT(altera-id-dependent-backward-branch)
             {
-              // Optimized complex multiply and add.
+              // The inner loop performs optimized complex multiply and add.
+              // This is the main work of the fractal iteration scheme.
+
               zi *= zr;
 
               zi += (zi + y_values[j_row]);
