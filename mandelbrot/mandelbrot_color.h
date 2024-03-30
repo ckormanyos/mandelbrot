@@ -18,18 +18,10 @@
   namespace ckormanyos { namespace mandelbrot { namespace color { // NOLINT(modernize-concat-nested-namespaces)
   #endif
 
-  class color_functions_base
+  class color_functions_base // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
   {
   public:
-    color_functions_base() = default;
-
-    color_functions_base(const color_functions_base&) = default;
-    color_functions_base(color_functions_base&&) noexcept = default;
-
-    auto operator=(const color_functions_base&) -> color_functions_base& = default;
-    auto operator=(color_functions_base&&) noexcept -> color_functions_base& = default;
-
-    virtual ~color_functions_base() = default;
+    virtual ~color_functions_base() = default; // LCOV_EXCL_LINE
 
     MANDELBROT_NODISCARD virtual auto color_function_r(const std::uint_fast32_t&) const -> std::uint_fast32_t = 0;
     MANDELBROT_NODISCARD virtual auto color_function_g(const std::uint_fast32_t&) const -> std::uint_fast32_t = 0;
@@ -61,35 +53,16 @@
 
   class color_functions_bw final : public color_functions_base
   {
-  public:
-    color_functions_bw() = default;
-
-    color_functions_bw(const color_functions_bw&) = default;
-    color_functions_bw(color_functions_bw&&) noexcept = default;
-
-    auto operator=(const color_functions_bw&) -> color_functions_bw& = default;
-    auto operator=(color_functions_bw&&) noexcept -> color_functions_bw& = default;
-
-    ~color_functions_bw() override = default;
-
   private:
     MANDELBROT_NODISCARD auto color_function_r(const std::uint_fast32_t& c) const -> std::uint_fast32_t override { return color_phaser_01(c); }
     MANDELBROT_NODISCARD auto color_function_g(const std::uint_fast32_t& c) const -> std::uint_fast32_t override { return color_phaser_01(c); }
     MANDELBROT_NODISCARD auto color_function_b(const std::uint_fast32_t& c) const -> std::uint_fast32_t override { return color_phaser_01(c); }
   };
 
-  class color_functions_pretty final : public color_functions_base
+  class color_functions_pretty final : public color_functions_base // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
   {
   public:
-    color_functions_pretty() = default;
-
-    color_functions_pretty(const color_functions_pretty&) = default;
-    color_functions_pretty(color_functions_pretty&&) noexcept = default;
-
-    ~color_functions_pretty() override = default;
-
-    auto operator=(const color_functions_pretty&) -> color_functions_pretty& = default;
-    auto operator=(color_functions_pretty&&) noexcept -> color_functions_pretty& = default;
+    ~color_functions_pretty() override = default; // LCOV_EXCL_LINE
 
   private:
     // LCOV_EXCL_START
@@ -118,80 +91,28 @@
     // LCOV_EXCL_STOP
   };
 
-  class color_stretch_base
+  class color_stretch_base // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
   {
   public:
-    color_stretch_base() = default;
-
-    color_stretch_base(const color_stretch_base& other) = default;
-
-    color_stretch_base(color_stretch_base&& other) noexcept
-      : my_total_pixels(other.my_total_pixels),
-        my_sum         (other.my_sum) { }
-
-    virtual ~color_stretch_base() = default;
-
-    auto operator=(const color_stretch_base& other) -> color_stretch_base&
-    {
-      if(this != &other)
-      {
-        my_total_pixels = other.my_total_pixels;
-        my_sum          = other.my_sum;
-      }
-
-      return *this;
-    }
-
-    auto operator=(color_stretch_base&& other) noexcept -> color_stretch_base&
-    {
-      my_total_pixels = other.my_total_pixels;
-      my_sum          = other.my_sum;
-
-      return *this;
-    }
+    virtual ~color_stretch_base() = default; // LCOV_EXCL_LINE
 
     auto init(const std::uint_fast32_t total_pixels) const -> void
     {
       my_total_pixels = total_pixels;
-      my_sum          = 0U;
+      my_sum          = static_cast<std::uint_fast32_t>(UINT8_C(0));
     }
 
     virtual auto color_stretch(std::uint_fast32_t&) const -> void = 0; // NOLINT(google-runtime-references)
 
   protected:
     mutable std::uint_fast32_t my_total_pixels { }; // NOLINT(cppcoreguidelines-non-private-member-variables-in-classes,misc-non-private-member-variables-in-classes,readability-identifier-naming)
-    mutable std::uint_fast32_t my_sum { };          // NOLINT(cppcoreguidelines-non-private-member-variables-in-classes,misc-non-private-member-variables-in-classes,readability-identifier-naming)
+    mutable std::uint_fast32_t my_sum          { }; // NOLINT(cppcoreguidelines-non-private-member-variables-in-classes,misc-non-private-member-variables-in-classes,readability-identifier-naming)
   };
 
-  class color_stretch_histogram_method final : public color_stretch_base
+  class color_stretch_histogram_method final : public color_stretch_base // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
   {
   public:
-    color_stretch_histogram_method() = default;
-
-    color_stretch_histogram_method(const color_stretch_histogram_method& other)
-      : color_stretch_base(static_cast<const color_stretch_base&>(other)) { }
-
-    color_stretch_histogram_method(color_stretch_histogram_method&& other) noexcept
-      : color_stretch_base(static_cast<color_stretch_base&&>(other)) { }
-
-    ~color_stretch_histogram_method() override = default;
-
-    auto operator=(const color_stretch_histogram_method& other) -> color_stretch_histogram_method&
-    {
-      if(this != &other)
-      {
-        static_cast<void>(color_stretch_base::operator=(static_cast<const color_stretch_base&>(other)));
-      }
-
-      return *this;
-    }
-
-    auto operator=(color_stretch_histogram_method&& other) noexcept -> color_stretch_histogram_method&
-    {
-      static_cast<void>(color_stretch_base::operator=(static_cast<color_stretch_base&&>(other)));
-
-      return *this;
-    }
+    ~color_stretch_histogram_method() override = default; // LCOV_EXCL_LINE
 
     auto color_stretch(std::uint_fast32_t& histogram_entry) const -> void override
     {
@@ -203,29 +124,22 @@
 
       my_sum += histogram_entry;
 
-      const auto sum_div_total_pixels =
-        static_cast<float>
-        (
-          static_cast<float>(my_sum) / static_cast<float>(my_total_pixels)
-        );
-
+      const float sum_div_total_pixels
       {
-        using std::pow;
+        static_cast<float>(my_sum) / static_cast<float>(my_total_pixels)
+      };
 
-        const auto histogram_scale = pow(sum_div_total_pixels, 1.2F);
+      using std::pow;
 
-        const auto scaled_histogram_value =
-          static_cast<std::uint_fast32_t>
-          (
-            static_cast<float>(histogram_scale * 255.0F)
-          );
-
-        histogram_entry =
-          static_cast<std::uint_fast32_t>
-          (
-            static_cast<std::uint_fast32_t>(UINT8_C(255)) - scaled_histogram_value
-          );
-      }
+      histogram_entry =
+        static_cast<std::uint_fast32_t>
+        (
+            static_cast<std::uint_fast32_t>(UINT8_C(255))
+          - static_cast<std::uint_fast32_t>
+            (
+              static_cast<float>(pow(sum_div_total_pixels, 1.2F) * 255.0F) // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+            )
+        );
     }
   };
 

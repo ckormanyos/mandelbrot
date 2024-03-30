@@ -127,7 +127,7 @@
   template<typename NumericType,
            const std::uint_fast32_t MaxIterations,
            const std::uint_fast32_t PixelCountX>
-  class mandelbrot_config final : public mandelbrot_config_base<NumericType, MaxIterations>
+  class mandelbrot_config final : public mandelbrot_config_base<NumericType, MaxIterations> // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
   {
   private:
     using base_class_type = mandelbrot_config_base<NumericType, MaxIterations>;
@@ -162,36 +162,7 @@
                         boost::lexical_cast<my_mandelbrot_config_numeric_type>(std::string(pc_yh))),
         my_step(base_class_type::get_width() / PixelCountX) { }
 
-    mandelbrot_config(const mandelbrot_config& other)
-      : base_class_type(static_cast<const base_class_type&>(other)),
-        my_step(other.my_step) { }
-
-    mandelbrot_config(mandelbrot_config&& other) noexcept
-      : base_class_type(static_cast<base_class_type&&>(other)),
-        my_step(other.my_step) { }
-
     ~mandelbrot_config() override = default; // LCOV_EXCL_LINE
-
-    auto operator=(const mandelbrot_config& other) -> mandelbrot_config&
-    {
-      if(this != other)
-      {
-        static_cast<void>(base_class_type::operator=(static_cast<const base_class_type&>(other)));
-
-        my_step = other.my_step;
-      }
-
-      return *this;
-    }
-
-    auto operator=(mandelbrot_config&& other) noexcept -> mandelbrot_config&
-    {
-      static_cast<void>(base_class_type::operator=(static_cast<base_class_type&&>(other)));
-
-      my_step = other.my_step;
-
-      return *this;
-    }
 
   private:
     my_mandelbrot_config_numeric_type my_step; // NOLINT(readability-identifier-naming)
@@ -247,8 +218,8 @@
     {
       // Setup the x-axis and y-axis coordinates.
 
-      std::vector<numeric_type> x_values(mandelbrot_config_object.integral_width());   // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
-      std::vector<numeric_type> y_values(mandelbrot_config_object.integral_height());   // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
+      std::vector<numeric_type> x_values(mandelbrot_config_object.integral_width());  // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
+      std::vector<numeric_type> y_values(mandelbrot_config_object.integral_height()); // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
 
       {
         numeric_type x_coord(mandelbrot_config_object.x_lo());
@@ -315,7 +286,9 @@
 
             while((iteration_result < max_iterations) && ((zr2 + zi2) < four())) // NOLINT(altera-id-dependent-backward-branch)
             {
-              // Optimized complex multiply and add.
+              // The inner loop performs optimized complex multiply and add.
+              // This is the main work of the fractal iteration scheme.
+
               zi *= zr;
 
               zi += (zi + y_values[j_row]);
