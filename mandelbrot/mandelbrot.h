@@ -402,21 +402,25 @@
                 (
                   static_cast<std::uint_fast32_t>
                   (
-                    static_cast<std::uint_fast32_t>(UINT8_C(255)) * color
+                    static_cast<std::uint_fast32_t>
+                    (
+                      static_cast<std::uint_fast32_t>(UINT8_C(255)) * color
+                    )
+                    / static_cast<std::uint_fast32_t>(UINT8_C(255))
                   )
-                  / static_cast<std::uint_fast32_t>(UINT8_C(255))
                 );
             };
 
-          const boost::gil::rgb8_pixel_t
-            the_color
+          const boost_gil_x_coord_type x_col { static_cast<boost_gil_x_coord_type>(i_col) };
+          const boost_gil_x_coord_type y_row { static_cast<boost_gil_x_coord_type>(j_row) };
+
+          mandelbrot_view(x_col, y_row) =
+            boost::gil::rgb8_pixel_t
             {
               color_scaler(color_r),
               color_scaler(color_g),
               color_scaler(color_b)
             };
-
-          mandelbrot_view(static_cast<boost_gil_x_coord_type>(i_col), static_cast<boost_gil_x_coord_type>(j_row)) = the_color;
         }
       }
     }
