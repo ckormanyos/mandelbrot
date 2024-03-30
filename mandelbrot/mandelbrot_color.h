@@ -92,7 +92,7 @@
     auto init(const std::uint_fast32_t total_pixels) const -> void
     {
       my_total_pixels = total_pixels;
-      my_sum          = 0U;
+      my_sum          = static_cast<std::uint_fast32_t>(UINT8_C(0));
     }
 
     virtual auto color_stretch(std::uint_fast32_t&) const -> void = 0; // NOLINT(google-runtime-references)
@@ -128,7 +128,7 @@
             static_cast<std::uint_fast32_t>(UINT8_C(255))
           - static_cast<std::uint_fast32_t>
             (
-              static_cast<float>(pow(sum_div_total_pixels, 1.2F) * 255.0F)
+              static_cast<float>(pow(sum_div_total_pixels, 1.2F) * 255.0F) // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
             )
         );
     }
