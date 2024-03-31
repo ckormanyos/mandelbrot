@@ -8,19 +8,19 @@
 #ifndef MANDELBROT_2015_06_15_H // NOLINT(llvm-header-guard)
   #define MANDELBROT_2015_06_15_H
 
-  #include <atomic>
-  #include <ctime>
-  #include <iomanip>
-  #include <ostream>
-  #include <string>
+  #include <concurrency/parallel_for.h>
+  #include <mandelbrot/mandelbrot_color.h>
 
   #include <boost/gil/extension/io/jpeg/old.hpp>
   #include <boost/gil/image.hpp>
   #include <boost/gil/typedefs.hpp>
   #include <boost/lexical_cast.hpp>
 
-  #include <concurrency/parallel_for.h>
-  #include <mandelbrot/mandelbrot_color.h>
+  #include <atomic>
+  #include <cstddef>
+  #include <iomanip>
+  #include <ostream>
+  #include <string>
 
   #if(__cplusplus >= 201703L)
   namespace ckormanyos::mandelbrot {
@@ -218,15 +218,21 @@
     {
       // Setup the x-axis and y-axis coordinates.
 
-      std::vector<numeric_type> x_values(mandelbrot_config_object.integral_width());  // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
-      std::vector<numeric_type> y_values(mandelbrot_config_object.integral_height()); // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
+      const auto flg = output_stream.flags();
 
+      output_stream.setf(std::ios::fixed);
+      output_stream.precision(static_cast<std::streamsize>(INT8_C(1)));
+
+      std::vector<numeric_type> x_coord(mandelbrot_config_object.integral_width());  // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
+      std::vector<numeric_type> y_coord(mandelbrot_config_object.integral_height()); // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
+
+      // Initialize the x-y coordinates.
       {
-        numeric_type x_coord(mandelbrot_config_object.x_lo());
-        numeric_type y_coord(mandelbrot_config_object.y_hi());
+        numeric_type x_val(mandelbrot_config_object.x_lo());
+        numeric_type y_val(mandelbrot_config_object.y_hi());
 
-        for(auto& x : x_values) { x = x_coord; x_coord += mandelbrot_config_object.step(); }
-        for(auto& y : y_values) { y = y_coord; y_coord -= mandelbrot_config_object.step(); }
+        for(auto& x : x_coord) { x = x_val; x_val += mandelbrot_config_object.step(); }
+        for(auto& y : y_coord) { y = y_val; y_val -= mandelbrot_config_object.step(); }
       }
 
       std::atomic_flag mandelbrot_iteration_lock { };
@@ -236,8 +242,8 @@
       my_concurrency::parallel_for
       (
         static_cast<std::size_t>(UINT8_C(0)),
-        y_values.size(),
-        [&mandelbrot_iteration_lock, &unordered_parallel_row_count, &output_stream, &x_values, &y_values, this](std::size_t j_row)
+        y_coord.size(),
+        [&mandelbrot_iteration_lock, &unordered_parallel_row_count, &output_stream, &x_coord, &y_coord, this](std::size_t j_row)
         {
           while(mandelbrot_iteration_lock.test_and_set()) { ; }
 
@@ -248,25 +254,24 @@
               static_cast<float>
               (
                   static_cast<float>(100.0F * static_cast<float>(unordered_parallel_row_count))
-                / static_cast<float>(y_values.size())
+                / static_cast<float>(y_coord.size())
               );
 
             output_stream << "Calculating Mandelbrot image at row "
                           << unordered_parallel_row_count
                           << " of "
-                          << y_values.size()
+                          << y_coord.size()
                           << ". Total processed so far: "
                           << std::fixed
                           << std::setprecision(1)
                           << percent
-                          << "%. Have patience."
-                          << "\r";
+                          << "%. Have patience.\r";
           }
 
           mandelbrot_iteration_lock.clear();
 
           for(auto   i_col = static_cast<std::size_t>(UINT8_C(0));
-                     i_col < x_values.size(); // NOLINT(altera-id-dependent-backward-branch)
+                     i_col < x_coord.size(); // NOLINT(altera-id-dependent-backward-branch)
                    ++i_col)
           {
             numeric_type zr  { static_cast<unsigned>(UINT8_C(0)) };
@@ -291,8 +296,8 @@
 
               zi *= zr;
 
-              zi += (zi + y_values[j_row]);
-              zr  = (zr2 - zi2) + x_values[i_col];
+              zi += (zi + y_coord[j_row]);
+              zr  = (zr2 - zi2) + x_coord[i_col];
 
               zr2 = zr * zr;
               zi2 = zi * zi;
@@ -313,16 +318,18 @@
         }
       );
 
-      output_stream << std::endl;
+      output_stream << '\n';
 
-      output_stream << "Perform color stretching." << std::endl;
-      apply_color_stretches(x_values, y_values, color_stretches);
+      output_stream << "Perform color stretching." << '\n';
+      apply_color_stretches(x_coord, y_coord, color_stretches);
 
-      output_stream << "Apply color functions." << std::endl;
-      apply_color_functions(x_values, y_values, color_functions);
+      output_stream << "Apply color functions." << '\n';
+      apply_color_functions(x_coord, y_coord, color_functions);
 
-      output_stream << "Write output JPEG file " << str_filename << "." << std::endl;
+      output_stream << "Write output JPEG file " << str_filename << "." << '\n';
       boost::gil::jpeg_write_view(str_filename, mandelbrot_view);
+
+      output_stream.flags(flg);
     }
 
   private:

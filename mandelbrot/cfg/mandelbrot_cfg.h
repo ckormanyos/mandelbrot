@@ -20,6 +20,9 @@
 
   #include <mandelbrot/mandelbrot.h>
 
+  #include <cstdint>
+  #include <string>
+
   // NOLINTBEGIN(*)
 
   #if defined(MANDELBROT_USE_GMP_FLOAT)
@@ -55,12 +58,11 @@
   inline auto filename() -> std::string
   {
     return
-      std::string
-      (
+      {
           std::string("images/tmp/mandelbrot_")
         + MANDELBROT_FILENAME_STRING // NOLINT(cppcoreguidelines-pro-bounds-array-to-pointer-decay,hicpp-no-array-decay)
         + std::string(".jpg")
-      );
+      };
   }
 
   using mandelbrot_config_type  =
