@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-//  Copyright Christopher Kormanyos 2017 - 2023.
+//  Copyright Christopher Kormanyos 2017 - 2024.
 //  Distributed under the Boost Software License,
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt
 //  or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -9,6 +9,7 @@
   #define PARALLEL_FOR_2017_12_18_H
 
   #include <algorithm>
+  #include <cmath>
   #include <thread>
   #include <vector>
 
@@ -65,10 +66,12 @@
               static_cast<index_type>(end - start) + static_cast<index_type>(1)
             );
 
+          using std::round;
+
           const auto slice =
             (std::max)
             (
-              static_cast<index_type>(std::round(static_cast<float>(n) / static_cast<float>(number_of_threads))),
+              static_cast<index_type>(round(static_cast<float>(n) / static_cast<float>(number_of_threads))),
               static_cast<index_type>(1)
             );
 

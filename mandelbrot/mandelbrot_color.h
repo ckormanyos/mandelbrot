@@ -9,7 +9,6 @@
   #define MANDELBROT_COLOR_2015_06_15_H
 
   #include <cmath>
-  #include <cstddef>
   #include <cstdint>
 
   #if(__cplusplus >= 201703L)
