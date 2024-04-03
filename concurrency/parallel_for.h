@@ -78,7 +78,7 @@
                    ++i)
           {
             index_type total_lines = slice;
-            if (i < last % static_cast<index_type>(number_of_threads))
+            if (i < (last % static_cast<index_type>(number_of_threads)))
             {
               ++total_lines;
             }
