@@ -252,10 +252,12 @@ Details:
   - The listed points have approximately $54$ decimal digits of precision.
   - Calculations use a half-width of $1.4{\times}10^{-51}$.
   - Iterations are carried out with a big-float representation having $76$ decimal digits of precision.
-  - See the table below for these points and links to pictures.
+  - See the table below for these points and links to the corresponding pictures.
 
-TODO: Make table, picutures and links to already-known
-points in my collection.
+| Point $(x + iy)$ | Picture |
+| ------------------------------------------------------------ | ------------------ |
+| $(-1.250199658842382318952058559805451497534994030366858920092+i 0.013242809714635662393731687465424899234037230926337059871$ | TODO |
+| More TODO | TODO |
 
 ## Testing and Continuous Integration
 
