@@ -233,6 +233,30 @@ Clearly named definitions are used to specify:
   - and the coordinate center and half-width of the magnification region,
   - where the dimensions `MANDELBROT_POINT_DX_HALF`, `MANDELBROT_POINT_CENTER_X`, and `MANDELBROT_POINT_CENTER_Y` are provided as character strings, which remain exact even if the magnification scale requires multiple precision.
 
+## The $10^{51}$ Digit Magnification Club
+
+Discovering the Mandelbrot set leads to fascinating research that is
+mathematically complicated. Investigations in this domain offer enriching
+findings. Yet it can sometimes be challenging obtain results.
+In particular, it can be difficult to find deep-dive points within
+the infinitely-complex (and complex-valued) Mandelbrot area.
+Miniscule coordinates that offer interesting deep dives are
+not intuitively easy to guess or find (even with dedicated searches).
+
+In this section, we specifically list several points having proven
+deep-dives to $10^{51}$ magnification. Once a point is found,
+a picture has been created with full $51$-decimal digit precision.
+Pictures are presented in the corresponding links for the points.
+
+Details:
+  - The listed points have approximately $54$ decimal digits of precision.
+  - Calculations use a half-width of $1.4{\times}10^{-51}$.
+  - Iterations are carried out with a big-float representation having $76$ decimal digits of precision.
+  - See the table below for these points and links to pictures.
+
+TODO: Make table, picutures and links to already-known
+points in my collection.
+
 ## Testing and Continuous Integration
 
 A small test program exercises a variety fractal iterations
