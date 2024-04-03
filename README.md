@@ -233,7 +233,9 @@ Clearly named definitions are used to specify:
   - and the coordinate center and half-width of the magnification region,
   - where the dimensions `MANDELBROT_POINT_DX_HALF`, `MANDELBROT_POINT_CENTER_X`, and `MANDELBROT_POINT_CENTER_Y` are provided as character strings, which remain exact even if the magnification scale requires multiple precision.
 
-## The $10^{51}$ Digit Magnification Club
+## The $10^{\mbox{\textit{\normal{51}}}}$ Magnification Club
+
+Let's find some proven deep dives!
 
 Discovering the Mandelbrot set leads to fascinating research that is
 mathematically complicated. Investigations in this domain offer enriching
