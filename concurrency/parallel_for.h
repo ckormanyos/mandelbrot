@@ -9,6 +9,7 @@
   #define PARALLEL_FOR_2017_12_18_H
 
   #include <algorithm>
+  #include <cmath>
   #include <thread>
   #include <vector>
 
@@ -16,8 +17,8 @@
   {
     template<typename index_type,
              typename callable_function_type>
-    auto parallel_for(index_type             start,
-                      index_type             end,
+    auto parallel_for(index_type             first,
+                      index_type             last,
                       callable_function_type parallel_function) -> void
     {
       // Estimate the number of threads available.
@@ -51,7 +52,7 @@
           {
             for (auto i = static_cast<index_type>(0U); i < total_lines; ++i) // NOLINT(altera-id-dependent-backward-branch)
             {
-              parallel_function(i*n + offset);
+              parallel_function( (i * n) + offset );
             }
           };
 
@@ -60,13 +61,15 @@
           const auto n =
             static_cast<index_type>
             (
-              static_cast<index_type>(end - start)
+              static_cast<index_type>(last - first)
             );
+
+          using std::floor;
 
           const auto slice =
             (std::max)
             (
-              static_cast<index_type>(std::floorf(static_cast<float>(n) / static_cast<float>(number_of_threads))),
+              static_cast<index_type>(floor(static_cast<float>(n) / static_cast<float>(number_of_threads))),
               static_cast<index_type>(1)
             );
 
@@ -75,7 +78,7 @@
                    ++i)
           {
             index_type total_lines = slice;
-            if (i < end % static_cast<index_type>(number_of_threads))
+            if (i < last % static_cast<index_type>(number_of_threads))
             {
               ++total_lines;
             }
@@ -99,11 +102,11 @@
     // Provide a serial version for easy comparison.
     template<typename index_type,
              typename callable_function_type>
-    auto sequential_for(index_type             start,
-                        index_type             end,
+    auto sequential_for(index_type             first,
+                        index_type             last,
                         callable_function_type sequential_function) -> void
     {
-      for(auto i = start; i < end; ++i)
+      for(auto i = first; i < last; ++i)
       {
         sequential_function(i);
       }
