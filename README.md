@@ -240,13 +240,13 @@ Let's find some proven deep dives!
 Discovering the Mandelbrot set leads to fascinating research that is
 mathematically complicated. Investigations in this domain offer enriching
 findings. Yet it can sometimes be challenging obtain results.
-In particular, it can be difficult to find deep-dive points within
+In particular, it can be difficult to find deep dive points within
 the infinitely-complex (and complex-valued) Mandelbrot area.
 Miniscule coordinates that offer interesting deep dives are
 not intuitively easy to guess or find (even with dedicated searches).
 
 In this section, we specifically list several points having proven
-deep-dives to $10^{51}$ magnification. Once a point is found,
+deep dives to $10^{51}$ magnification. Once a point is found,
 a picture has been created with full $51$-decimal digit precision.
 Pictures are presented in the corresponding links for the points.
 
