@@ -8,18 +8,6 @@
 #ifndef MANDELBROT_CFG_MANDELBROT_31_ZOOM_ANOTHER_01_2022_02_24_H
   #define MANDELBROT_CFG_MANDELBROT_31_ZOOM_ANOTHER_01_2022_02_24_H
 
-  // At the moment, this is my personal best deep dive with relatively
-  // high precision. This deep dive features magnification of
-  // approximately 1e310, which is 1 and 310 zeros. Generating this
-  // image took about 15 hours on my machine.
-
-  // TBD: Try to zoom even deeper with higher precision and more iterations.
-  // The remarkable video here: https://www.youtube.com/watch?v=pCpLWbHVNhk
-  // makes use of the same high-precision coordinate (shown below).
-  // The author of that video, for instance, reports and beautifully
-  // depicts achieving a deep zoom of approximately 1e1091 at this
-  // staggeringly high-precision coordinate.
-
   constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_31_ZOOM_ANOTHER_01";
 
   constexpr int  MANDELBROT_CALCULATION_DIGITS10    =     287;

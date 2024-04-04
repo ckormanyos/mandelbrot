@@ -233,6 +233,37 @@ Clearly named definitions are used to specify:
   - and the coordinate center and half-width of the magnification region,
   - where the dimensions `MANDELBROT_POINT_DX_HALF`, `MANDELBROT_POINT_CENTER_X`, and `MANDELBROT_POINT_CENTER_Y` are provided as character strings, which remain exact even if the magnification scale requires multiple precision.
 
+## The $10^{\mbox{\small{51}}}$ Magnification Club
+
+Let's find some proven deep dives!
+
+Discovering the Mandelbrot set leads to fascinating research that is
+mathematically complicated. Investigations in this domain offer enriching
+findings. Yet it can sometimes be challenging obtain results.
+In particular, it can be difficult to find deep dive points within
+the infinitely-complex (and complex-valued) Mandelbrot area.
+Miniscule coordinates that offer interesting deep dives are
+not intuitively easy to guess or find (even with dedicated searches).
+
+In this section, we specifically list several points having proven
+deep dives to $10^{51}$ magnification. Once a point is found,
+a picture has been created with full $51$-decimal digit precision.
+Images are presented in the corresponding links for the points.
+
+Details:
+  - The listed points have approximately $54$ decimal digits of precision.
+  - Calculations use a half-width of $1.4{\times}10^{-51}$.
+  - Iterations are carried out with a big-float representation having $76$ decimal digits of precision.
+  - See the table below for these points and links to the corresponding images.
+
+| Name                   | Point $(x + iy)$ | Picture |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ---------------- |
+| `08_DEEP_DIVE_01`      | $(-1.295189082147777457017064177185681926706566460884888469217+i~0.440936982678320138880903678356262612113214627431396203682$ | [image](./mandelbrot/cfg/mandelbrot_MANDELBROT_08_DEEP_DIVE_01_magnify51.jpg)      |
+| `20_ZOOM_VERY_DEEP_00` | $(+0.360240443437614363236125244449545308482607807958585750488-i~0.641313061064803174860375015179302066579494952282305259556$ | [image](./mandelbrot/cfg/mandelbrot_MANDELBROT_20_ZOOM_VERY_DEEP_00_magnify51.jpg) |
+| `30_ZOOM_ANOTHER_00`   | $(-1.740062382579339905220844167065825638296641720436171866880+i~0.028175339779211048992411521144319509687539076742990608570$ | [image](./mandelbrot/cfg/mandelbrot_MANDELBROT_30_ZOOM_ANOTHER_00_magnify51.jpg)   |
+| `45_SEAHORSE_OTHER_01` | TODO                                                                                                                          | TODO |
+| `50_TENDRIL_AREA_01`   | $(-1.250199658842382318952058559805451497534994030366858920092+i~0.013242809714635662393731687465424899234037230926337059871$ | [image](./mandelbrot/cfg/mandelbrot_MANDELBROT_50_TENDRIL_AREA_01_magnify51.jpg)   |
+
 ## Testing and Continuous Integration
 
 A small test program exercises a variety fractal iterations
