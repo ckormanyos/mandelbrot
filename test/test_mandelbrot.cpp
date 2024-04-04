@@ -61,8 +61,8 @@ auto main() -> int // NOLINT(bugprone-exception-escape)
     (
       cfg::center_x() - cfg::dx_half(),
       cfg::center_x() + cfg::dx_half(),
-      cfg::center_y() - cfg::dx_half(),
-      cfg::center_y() + cfg::dx_half()
+      cfg::center_y() - cfg::dy_half(),
+      cfg::center_y() + cfg::dy_half()
     );
 
   using mandelbrot_generator_type =

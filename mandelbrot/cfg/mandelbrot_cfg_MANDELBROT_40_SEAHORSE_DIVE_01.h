@@ -12,9 +12,11 @@
 
   constexpr int  MANDELBROT_CALCULATION_DIGITS10    =     34;
   constexpr int  MANDELBROT_CALCULATION_PIXELS_1D   =   2048;
+  constexpr int  MANDELBROT_CALCULATION_PIXELS_2D   =   2048;
   constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =   4000;
 
   constexpr char MANDELBROT_POINT_DX_HALF[]         = "4.2E-13";
+  constexpr char MANDELBROT_POINT_DY_HALF[]         = "4.2E-13";
   constexpr char MANDELBROT_POINT_CENTER_X[]        = "-0.7436438870371589572";
   constexpr char MANDELBROT_POINT_CENTER_Y[]        = "+0.1318259042053125126";
 

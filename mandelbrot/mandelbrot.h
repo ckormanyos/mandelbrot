@@ -126,7 +126,8 @@
   // method can be modified accordingly.
   template<typename NumericType,
            const std::uint_fast32_t MaxIterations,
-           const std::uint_fast32_t PixelCountX>
+           const std::uint_fast32_t PixelCountX,
+           const std::uint_fast32_t PixelCountY>
   class mandelbrot_config final : public mandelbrot_config_base<NumericType, MaxIterations> // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
   {
   private:
@@ -190,7 +191,7 @@
     explicit mandelbrot_generator(const mandelbrot_config_type& config)
       : mandelbrot_config_object   (config),
         mandelbrot_image           (static_cast<boost_gil_x_coord_type>(config.integral_width()),
-                                    static_cast<boost_gil_x_coord_type>(config.integral_height())),
+                                    static_cast<boost_gil_y_coord_type>(config.integral_height())),
         mandelbrot_view            (boost::gil::view(mandelbrot_image)),
         mandelbrot_iteration_matrix(config.integral_width(),
                                     std::vector<std::uint_fast32_t>(config.integral_height())),
