@@ -80,9 +80,7 @@ auto main() -> int // NOLINT(bugprone-exception-escape)
 
   using stopwatch_type = ::stopwatch<std::chrono::high_resolution_clock>;
 
-  stopwatch_type my_stopwatch;
-
-  my_stopwatch.reset();
+  stopwatch_type my_stopwatch { };
 
   mandelbrot_generator.generate_mandelbrot_image(cfg::filename(),
                                                  local_color_functions,
