@@ -48,7 +48,7 @@
       {
         // Inner loop.
         const auto launch_nth =
-          [&parallel_function](index_type offset, index_type n, index_type total_lines)
+          [&parallel_function](index_type offset, index_type n, index_type total_lines) // NOLINT(bugprone-easily-swappable-parameters)
           {
             for (auto i = static_cast<index_type>(0U); i < total_lines; ++i) // NOLINT(altera-id-dependent-backward-branch)
             {
