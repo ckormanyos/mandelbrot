@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-//  Copyright Christopher Kormanyos 2017 - 2024.
+//  Copyright Christopher Kormanyos 2017 - 2023.
 //  Distributed under the Boost Software License,
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt
 //  or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -17,8 +17,8 @@
   {
     template<typename index_type,
              typename callable_function_type>
-    auto parallel_for(index_type             start,
-                      index_type             end,
+    auto parallel_for(index_type             first,
+                      index_type             last,
                       callable_function_type parallel_function) -> void
     {
       // Estimate the number of threads available.
@@ -47,57 +47,46 @@
 
       {
         // Inner loop.
-        const auto launch_range =
-          [&parallel_function](index_type index_lo, index_type index_hi)
+        const auto launch_nth =
+          [&parallel_function](index_type offset, index_type n, index_type total_lines) // NOLINT(bugprone-easily-swappable-parameters)
           {
-            for(auto i = index_lo; i < index_hi; ++i) // NOLINT(altera-id-dependent-backward-branch)
+            for (auto i = static_cast<index_type>(0U); i < total_lines; ++i) // NOLINT(altera-id-dependent-backward-branch)
             {
-              parallel_function(i);
+              parallel_function( (i * n) + offset );
             }
           };
-
-        auto i1 = start;
 
         {
           // Set the size of a slice for the range functions.
           const auto n =
             static_cast<index_type>
             (
-              static_cast<index_type>(end - start) + static_cast<index_type>(1)
+              static_cast<index_type>(last - first)
             );
 
-          using std::round;
+          using std::floor;
 
           const auto slice =
             (std::max)
             (
-              static_cast<index_type>(round(static_cast<float>(n) / static_cast<float>(number_of_threads))),
+              static_cast<index_type>(floor(static_cast<float>(n) / static_cast<float>(number_of_threads))),
               static_cast<index_type>(1)
             );
 
-          auto i2 = (std::min)(static_cast<index_type>(start + slice), end);
-
-          for(auto                         i = static_cast<index_type>(0U);
-                   static_cast<index_type>(i + static_cast<index_type>(INT8_C(1))) < static_cast<index_type>(number_of_threads); // NOLINT(altera-id-dependent-backward-branch)
-                                         ++i)
+          for(auto   i = static_cast<index_type>(0U);
+                     i < static_cast<index_type>(number_of_threads); // NOLINT(altera-id-dependent-backward-branch)
+                   ++i)
           {
-            pool.emplace_back(launch_range, i1, i2);
-
-            i1 = i2;
-
-            if(i1 >= end)
+            index_type total_lines = slice;
+            if (i < (last % static_cast<index_type>(number_of_threads)))
             {
-              break;
+              ++total_lines;
             }
 
-            i2 = (std::min)(static_cast<index_type>(i2 + slice), end);
+            pool.emplace_back(launch_nth, i, static_cast<index_type>(number_of_threads), total_lines);
           }
         }
 
-        if(i1 < end)
-        {
-          pool.emplace_back(launch_range, i1, end);
-        }
       }
 
       // Wait for the jobs to finish.
@@ -113,11 +102,11 @@
     // Provide a serial version for easy comparison.
     template<typename index_type,
              typename callable_function_type>
-    auto sequential_for(index_type             start,
-                        index_type             end,
+    auto sequential_for(index_type             first,
+                        index_type             last,
                         callable_function_type sequential_function) -> void
     {
-      for(auto i = start; i < end; ++i)
+      for(auto i = first; i < last; ++i)
       {
         sequential_function(i);
       }
