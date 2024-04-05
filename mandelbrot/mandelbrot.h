@@ -305,15 +305,18 @@
               ++iteration_result;
             }
 
-            while(mandelbrot_iteration_lock.test_and_set()) { ; }
+            mandelbrot_iteration_matrix[i_col][j_row] = iteration_result;
 
-            {
-              mandelbrot_iteration_matrix[i_col][j_row] = iteration_result;
+            std::atomic<std::uint_fast32_t>*
+              ptr_hist
+              {
+                reinterpret_cast<std::atomic<std::uint_fast32_t>*>
+                (
+                  &mandelbrot_color_histogram[static_cast<std::size_t>(iteration_result)]
+                )
+              };
 
-              ++mandelbrot_color_histogram[iteration_result];
-            }
-
-            mandelbrot_iteration_lock.clear();
+            std::atomic_fetch_add(ptr_hist, static_cast<std::uint_fast32_t>(UINT8_C(1)));
           }
         }
       );
