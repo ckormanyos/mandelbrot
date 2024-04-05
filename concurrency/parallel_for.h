@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-//  Copyright Christopher Kormanyos 2017 - 2023.
+//  Copyright Christopher Kormanyos 2017 - 2024.
 //  Distributed under the Boost Software License,
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt
 //  or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -50,9 +50,9 @@
         const auto launch_nth =
           [&parallel_function](index_type offset, index_type n, index_type total_lines) // NOLINT(bugprone-easily-swappable-parameters)
           {
-            for (auto i = static_cast<index_type>(0U); i < total_lines; ++i) // NOLINT(altera-id-dependent-backward-branch)
+            for(auto i = static_cast<index_type>(0U); i < total_lines; ++i) // NOLINT(altera-id-dependent-backward-branch)
             {
-              parallel_function( (i * n) + offset );
+              parallel_function(static_cast<index_type>(i * n) + offset );
             }
           };
 
@@ -78,7 +78,8 @@
                    ++i)
           {
             index_type total_lines = slice;
-            if (i < (last % static_cast<index_type>(number_of_threads)))
+
+            if(i < static_cast<index_type>(last % static_cast<index_type>(number_of_threads)))
             {
               ++total_lines;
             }
