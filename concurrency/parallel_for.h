@@ -48,17 +48,17 @@
       {
         // Inner loop.
         const auto launch_nth =
-          [&parallel_function](index_type offset, index_type n, index_type total_lines) // NOLINT(bugprone-easily-swappable-parameters)
+          [&parallel_function](index_type offset, index_type nth, index_type total_lines) // NOLINT(bugprone-easily-swappable-parameters)
           {
-            for(auto i = static_cast<index_type>(0U); i < total_lines; ++i) // NOLINT(altera-id-dependent-backward-branch)
+            for(auto idx = static_cast<index_type>(0U); idx < total_lines; ++idx) // NOLINT(altera-id-dependent-backward-branch)
             {
-              parallel_function(static_cast<index_type>(i * n) + offset );
+              parallel_function(static_cast<index_type>(idx * nth) + offset );
             }
           };
 
         {
-          // Set the size of a slice for the range functions.
-          const auto n =
+          // Set the size (distance) for the range functions.
+          const auto n_distance =
             static_cast<index_type>
             (
               static_cast<index_type>(last - first)
@@ -69,22 +69,22 @@
           const auto slice =
             (std::max)
             (
-              static_cast<index_type>(floor(static_cast<float>(n) / static_cast<float>(number_of_threads))),
+              static_cast<index_type>(floor(static_cast<float>(n_distance) / static_cast<float>(number_of_threads))),
               static_cast<index_type>(1)
             );
 
-          for(auto   i = static_cast<index_type>(0U);
-                     i < static_cast<index_type>(number_of_threads); // NOLINT(altera-id-dependent-backward-branch)
-                   ++i)
+          for(auto   idx = static_cast<index_type>(0);
+                     idx < static_cast<index_type>(number_of_threads); // NOLINT(altera-id-dependent-backward-branch)
+                   ++idx)
           {
             index_type total_lines = slice;
 
-            if(i < static_cast<index_type>(last % static_cast<index_type>(number_of_threads)))
+            if(idx < static_cast<index_type>(last % static_cast<index_type>(number_of_threads)))
             {
               ++total_lines;
             }
 
-            pool.emplace_back(launch_nth, i, static_cast<index_type>(number_of_threads), total_lines);
+            pool.emplace_back(launch_nth, idx, static_cast<index_type>(number_of_threads), total_lines);
           }
         }
 
@@ -107,10 +107,12 @@
                         index_type             last,
                         callable_function_type sequential_function) -> void
     {
-      for(auto i = first; i < last; ++i)
+      // LCOV_EXCL_START
+      for(auto idx = first; idx < last; ++idx)
       {
-        sequential_function(i);
+        sequential_function(idx);
       }
+      // LCOV_EXCL_STOP
     }
   } // namespace my_concurrency
 
