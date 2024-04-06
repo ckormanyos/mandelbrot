@@ -168,7 +168,7 @@ This image has the the following features and parameters.
 
   - The square image has $2048 {\times} 2048$ pixels.
   - Centered at the point $(-1.2951890821477774570170641771856819267{\ldots}+~i0.44093698267832013888090367835626261211{\ldots})$.
-  - See the configuration code [mandelbrot_cfg_MANDELBROT_09_DEEP_DIVE_02.h](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_09_DEEP_DIVE_02.h) for the full precision of the center point.
+  - See the configuration code [mandelbrot_cfg_MANDELBROT_09_DEEP_DIVE_02.h](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_09_DEEP_DIVE_02.h) for the full precision of the center point.
   - Uses a half-width of $2.55{\times}10^{-55}$.
   - Computed with $15,000$ iteratons using the `cpp_dec_float` type from [`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_84_0/libs/multiprecision/doc/html/index.html) instantiated with $95$ decimal digits of precision.
 
@@ -184,7 +184,7 @@ This image has the the following features and parameters.
 
   - The square image has $2048 {\times} 2048$ pixels.
   - Centered at the point $(-1.7683830049648722692890015019043698317{\ldots}-i~0.0035564756051580419085635598914228270{\ldots})$.
-  - See the configuration code [mandelbrot_cfg_MANDELBROT_60_SATELITE_REGION_01.h](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_60_SATELITE_REGION_01.h) for the full precision of the center point.
+  - See the configuration code [mandelbrot_cfg_MANDELBROT_60_SATELITE_REGION_01.h](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_60_SATELITE_REGION_01.h) for the full precision of the center point.
   - Uses a half-width of $8.1{\times}10^{-95}$.
   - Computed with $60,000$ iteratons using the `cpp_dec_float` type from [`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_84_0/libs/multiprecision/doc/html/index.html) instantiated with $95$ decimal digits of precision.
 
@@ -202,7 +202,7 @@ This image has the the following features and parameters.
 
   - The square image has $1536 {\times} 1536$ pixels.
   - Centered at the point $(0.3602404434376143632361252444495453084{\ldots}-i~0.6413130610648031748603750151793020665{\ldots})$.
-  - See the configuration code [`mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h`](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h) for the full precision of the center point provided with slightly more than $1,000$ decimal places.
+  - See the configuration code [`mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h`](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h) for the full precision of the center point provided with slightly more than $1,000$ decimal places.
   - Uses a half-width of $4.4 {\times} 10^{-311}$.
   - Computed with $60,000$ iteratons using the `gmp_float` type from [`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_84_0/libs/multiprecision/doc/html/index.html) instantiated with $365$ decimal digits of precision.
 
@@ -220,10 +220,10 @@ is written in a generic and configurable way.
 To characterize a new Mandelbrot fractal iteration, simply write
 a header-configuration-file with content similar to that shown below.
 Include the configuration file in
-[`test_mandelbrot.cpp`](./test/test_mandelbrot.cpp) and run the calculation.
+[`test_mandelbrot.cpp`](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/test/test_mandelbrot.cpp) and run the calculation.
 
 Consider as a sample, for instance, the relevant content of the configuration file
-[`mandelbrot_cfg_MANDELBROT_01_FULL.h`](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_01_FULL.h).
+[`mandelbrot_cfg_MANDELBROT_01_FULL.h`](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_01_FULL.h).
 
 ```cpp
   // This is the classic full immage.
@@ -286,7 +286,7 @@ A small test program exercises a variety fractal iterations
 that can be selected individually at compile-time.
 The default confuguration uses the
 relatively quick-to-calculate _seahorse_ image configured in
-[mandelbrot_cfg_MANDELBROT_05_SEAHORSES.h](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_05_SEAHORSES.h).
+[mandelbrot_cfg_MANDELBROT_05_SEAHORSES.h](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_05_SEAHORSES.h).
 
 Continuous integration runs on Ubuntu and MacOS with both GCC/clang
 and also runs on Windows with MSVC. GCC's run-time
@@ -304,11 +304,11 @@ Improvements on the TODO list include (among others) the following.
 ## Notes on jpeg-6b and its adaptions
 
 We use a modified version of jpeg-6b.
-It is located [here](./jpeg/jpeg-6b-2022).
+It is located [here](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/jpeg/jpeg-6b-2022).
 According to license agreement, this work is referred to as
 _the_ _Independent_ _JPEG_ _Group's_ _software_.
 Please see their
-[original _README_](./jpeg/jpeg-6b-2022/README)
+[original _README_](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/jpeg/jpeg-6b-2022/README)
 in its entirety for more information about and licensing terms
 of _the_ _Independent_ _JPEG_ _Group's_ _software_.
 
