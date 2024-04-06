@@ -175,7 +175,7 @@ This image has the the following features and parameters.
 ### A Deeper Dive
 
 The following deep dive has a scale of approximately
-$2.55{\times}10^{-55}$.
+$8.1{\times}10^{-95}$.
 The result of this deep dive iteration is represented by the image below.
 
 ![](./images/gallery/mandelbrot_MANDELBROT_60_SATELITE_REGION_01.jpg)
