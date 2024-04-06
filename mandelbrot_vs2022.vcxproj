@@ -126,7 +126,6 @@
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_45_SEAHORSE_OTHER_01_magnify51.h" />
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_50_TENDRIL_AREA_01_magnify51.h" />
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_60_SATELITE_REGION_01.h" />
-    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_60_SATELITE_REGION_01_magnify51.h" />
     <ClInclude Include="mandelbrot\mandelbrot.h" />
     <ClInclude Include="mandelbrot\mandelbrot_color.h" />
   </ItemGroup>
