@@ -70,14 +70,15 @@
     MANDELBROT_NODISCARD auto get_width () const -> const mandelbrot_config_numeric_type& { return my_width; }
     MANDELBROT_NODISCARD auto get_height() const -> const mandelbrot_config_numeric_type& { return my_height; }
 
-    MANDELBROT_NODISCARD virtual auto step() const -> const mandelbrot_config_numeric_type& = 0;
+    MANDELBROT_NODISCARD virtual auto step_hor() const -> const mandelbrot_config_numeric_type & = 0;
+    MANDELBROT_NODISCARD virtual auto step_ver() const -> const mandelbrot_config_numeric_type & = 0;
 
     MANDELBROT_NODISCARD auto integral_width() const -> std::uint_fast32_t
     {
       const auto non_rounded_width2 =
         static_cast<std::uint_fast32_t>
         (
-          mandelbrot_config_numeric_type(my_width * static_cast<std::uint_fast32_t>(UINT8_C(2))) / this->step()
+          mandelbrot_config_numeric_type(my_width * static_cast<std::uint_fast32_t>(UINT8_C(2))) / this->step_hor()
         );
 
       return
@@ -96,7 +97,7 @@
       const auto non_rounded_height2 =
         static_cast<std::uint_fast32_t>
         (
-          mandelbrot_config_numeric_type(my_height * static_cast<std::uint_fast32_t>(UINT8_C(2))) / this->step()
+          mandelbrot_config_numeric_type(my_height * static_cast<std::uint_fast32_t>(UINT8_C(2))) / this->step_ver()
         );
 
       return
@@ -141,7 +142,8 @@
                       const my_mandelbrot_config_numeric_type& yl,
                       const my_mandelbrot_config_numeric_type& yh)
       : base_class_type(xl, xh, yl, yh),
-        my_step(base_class_type::get_width() / PixelCountX) { } // NOLINT
+        my_step_hor(base_class_type::get_width() / PixelCountX),
+        my_step_ver(base_class_type::get_height() / PixelCountY) { } // NOLINT
 
     mandelbrot_config(const std::string& str_xl,
                       const std::string& str_xh,
@@ -151,7 +153,8 @@
                         boost::lexical_cast<my_mandelbrot_config_numeric_type>(str_xh),
                         boost::lexical_cast<my_mandelbrot_config_numeric_type>(str_yl),
                         boost::lexical_cast<my_mandelbrot_config_numeric_type>(str_yh)),
-        my_step(base_class_type::get_width() / PixelCountX) { }
+        my_step_hor(base_class_type::get_width() / PixelCountX),
+        my_step_ver(base_class_type::get_height() / PixelCountY) { }
 
     mandelbrot_config(const char* pc_xl,
                       const char* pc_xh,
@@ -161,14 +164,17 @@
                         boost::lexical_cast<my_mandelbrot_config_numeric_type>(std::string(pc_xh)),
                         boost::lexical_cast<my_mandelbrot_config_numeric_type>(std::string(pc_yl)),
                         boost::lexical_cast<my_mandelbrot_config_numeric_type>(std::string(pc_yh))),
-        my_step(base_class_type::get_width() / PixelCountX) { }
+        my_step_hor(base_class_type::get_width() / PixelCountX),
+        my_step_ver(base_class_type::get_height() / PixelCountY) { }
 
     ~mandelbrot_config() override = default; // LCOV_EXCL_LINE
 
   private:
-    my_mandelbrot_config_numeric_type my_step; // NOLINT(readability-identifier-naming)
+    my_mandelbrot_config_numeric_type my_step_hor; // NOLINT(readability-identifier-naming)
+    my_mandelbrot_config_numeric_type my_step_ver; // NOLINT(readability-identifier-naming)
 
-    MANDELBROT_NODISCARD auto step() const -> const my_mandelbrot_config_numeric_type& override { return my_step; }
+    MANDELBROT_NODISCARD auto step_hor() const -> const my_mandelbrot_config_numeric_type & override { return my_step_hor; }
+    MANDELBROT_NODISCARD auto step_ver() const -> const my_mandelbrot_config_numeric_type & override { return my_step_ver; }
   };
 
   // This class generates the rows of the mandelbrot iteration.
@@ -232,8 +238,8 @@
         numeric_type x_val(mandelbrot_config_object.x_lo());
         numeric_type y_val(mandelbrot_config_object.y_hi());
 
-        for(auto& x : x_coord) { x = x_val; x_val += mandelbrot_config_object.step(); }
-        for(auto& y : y_coord) { y = y_val; y_val -= mandelbrot_config_object.step(); }
+        for(auto& x : x_coord) { x = x_val; x_val += mandelbrot_config_object.step_hor(); }
+        for(auto& y : y_coord) { y = y_val; y_val -= mandelbrot_config_object.step_ver(); }
       }
 
       std::atomic_flag mandelbrot_iteration_lock { };
