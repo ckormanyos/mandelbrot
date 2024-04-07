@@ -10,27 +10,21 @@
 
   constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_70_DOUADY_RABBIT_03";
 
-  constexpr int  MANDELBROT_CALCULATION_DIGITS10    =      52;
-  constexpr int  MANDELBROT_CALCULATION_PIXELS_1D   =     128;
-  constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =   80000;
-
-  constexpr char MANDELBROT_POINT_DX_HALF[]         = "1.1E-28";
-
-  constexpr char MANDELBROT_POINT_CENTER_X[]        = "-0.7801539136839937487185685844950";
-  constexpr char MANDELBROT_POINT_CENTER_Y[]        = "+0.1334867309879689900412281286100";
-
-  #if 0
-  constexpr int  MANDELBROT_CALCULATION_DIGITS10    =      48;
+  constexpr int  MANDELBROT_CALCULATION_DIGITS10    =      54;
   constexpr int  MANDELBROT_CALCULATION_PIXELS_1D   =    2048;
-  constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =   70000;
+  constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =  100000;
 
-  constexpr char MANDELBROT_POINT_DX_HALF[]         = "1.1E-21";
-  //constexpr char MANDELBROT_POINT_DX_HALF[]         = "1.1E-23";
+  // This iteration runs into a stretched Mandelbrot-like
+  // figure at a magnification of approximately 10^30.
 
-  constexpr char MANDELBROT_POINT_CENTER_X[]        = "-0.78015391368399374871881775";
-  constexpr char MANDELBROT_POINT_CENTER_Y[]        = "+0.13348673098796899004137610";
-  #endif
+  // Even though the digit count is relatively low for this
+  // particular iteration, it required quite a long total
+  // time to generate the full 2048*2048 pixel image.
 
+  constexpr char MANDELBROT_POINT_DX_HALF[]         = "1.4E-27";
+
+  constexpr char MANDELBROT_POINT_CENTER_X[]        = "-0.780153913683993748718568584494930";
+  constexpr char MANDELBROT_POINT_CENTER_Y[]        = "+0.133486730987968990041228128620890";
 
   #include <mandelbrot/cfg/mandelbrot_cfg.h>
 
