@@ -33,6 +33,8 @@
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_14_ZOOM_WIKI_04.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00_magnify51.h>
+//#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_25_ZOOM_SEARCH_00.h>
+//#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_25_ZOOM_SEARCH_01.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_30_ZOOM_ANOTHER_00.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_30_ZOOM_ANOTHER_00_magnify51.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_31_ZOOM_ANOTHER_01.h>
