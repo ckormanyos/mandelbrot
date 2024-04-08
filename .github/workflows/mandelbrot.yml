@@ -9,8 +9,9 @@ name: mandelbrot
 on:
   push:
     branches:
-      - '**'
+      - main
   pull_request:
+    types: [opened, synchronize, reopened]
 jobs:
   gnumake-clang-tidy-native:
     strategy:
