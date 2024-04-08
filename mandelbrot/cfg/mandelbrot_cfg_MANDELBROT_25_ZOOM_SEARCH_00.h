@@ -15,7 +15,7 @@
   constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =    8000;
 
   // There are countless points to iterate that dive on and on,
-  // deeper and deeper without showing ant interesting variation.
+  // deeper and deeper without showing any interesting variation.
   // There are, however, some interesting scenes such as this one.
   // The image resembles huge towers or wobbly columns
   // with meandering roads or streams below.
