@@ -54,5 +54,6 @@ jobs:
         with:
           plugin: gcov
           file: ${{ runner.workspace }}/wide-integer/.gcov/make/coverage.info
+          token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
           verbose: false
