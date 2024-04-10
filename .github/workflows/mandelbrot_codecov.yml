@@ -9,8 +9,9 @@ name: mandelbrot_codecov
 on:
   push:
     branches:
-      - '**'
+      - main
   pull_request:
+    types: [opened, synchronize, reopened]
 jobs:
   gcc-gcov-native:
     runs-on: ubuntu-latest
