@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-//      Copyright Christopher Kormanyos 2022.
+//      Copyright Christopher Kormanyos 2022 - 2024.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
@@ -21,7 +21,7 @@
   constexpr char MANDELBROT_POINT_DX_HALF[]         = "1.25E-107";
   constexpr char MANDELBROT_POINT_DY_HALF[]         = "1.25E-107";
   constexpr char MANDELBROT_POINT_CENTER_X[]        = "-1.99999999913827011875827476290869498831680913663682095950680227271547027727918984035447670553861909622481524124";
-  constexpr char MANDELBROT_POINT_CENTER_Y[]        = "0.00000000000001314895443507637575136247566806505002151700520912095709529449343530548994027524594471095886432006";
+  constexpr char MANDELBROT_POINT_CENTER_Y[]        = "+0.00000000000001314895443507637575136247566806505002151700520912095709529449343530548994027524594471095886432006";
 
   #include <mandelbrot/cfg/mandelbrot_cfg.h>
 
