@@ -12,9 +12,12 @@ auto LoadJPEGImage(const wchar_t* filename) -> HBITMAP
   IWICBitmapFrameDecode* pFrame     { nullptr };
   IWICFormatConverter*   pConverter { nullptr };
 
-  CoInitialize(nullptr);
+  static_cast<void>(CoInitialize(nullptr));
 
-  CoCreateInstance(CLSID_WICImagingFactory, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pFactory));
+  static_cast<void>
+  (
+    CoCreateInstance(CLSID_WICImagingFactory, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pFactory))
+  );
 
   pFactory->CreateDecoderFromFilename(filename, nullptr, GENERIC_READ, WICDecodeMetadataCacheOnLoad, &pDecoder);
   pDecoder->GetFrame(0, &pFrame);
@@ -27,27 +30,33 @@ auto LoadJPEGImage(const wchar_t* filename) -> HBITMAP
                          0.0F,
                          WICBitmapPaletteTypeMedianCut);
 
-  UINT width, height;
+  UINT width  { };
+  UINT height { };
+
   pFrame->GetSize(&width, &height);
 
-  BITMAPINFOHEADER bi =
-  {
-     sizeof(BITMAPINFOHEADER),
-    +static_cast<LONG>(width),
-    -static_cast<LONG>(height),
-    1,
-    32,
-    BI_RGB,
-    width * height * 4,
-    0,
-    0,
-    0,
-    0
-  };
+  BITMAPINFOHEADER
+    bi
+    {
+       sizeof(BITMAPINFOHEADER),
+      +static_cast<LONG>(width),
+      -static_cast<LONG>(height),
+      1,
+      32,
+      BI_RGB,
+      width * height * 4,
+      0,
+      0,
+      0,
+      0
+    };
 
   void* pixels { nullptr };
 
-  HBITMAP hBitmap = CreateDIBSection(nullptr, (BITMAPINFO*) &bi, DIB_RGB_COLORS, &pixels, nullptr, 0);
+  HBITMAP hBitmap
+  {
+    CreateDIBSection(nullptr, (BITMAPINFO*) &bi, DIB_RGB_COLORS, &pixels, nullptr, 0)
+  };
 
   pConverter->CopyPixels(nullptr, width * 4, width * height * 4, static_cast<BYTE*>(pixels));
 
@@ -59,46 +68,48 @@ auto LoadJPEGImage(const wchar_t* filename) -> HBITMAP
   return hBitmap;
 }
 
-LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+auto CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) -> LRESULT
 {
-    switch (uMsg)
+  switch (uMsg)
+  {
+    case WM_PAINT:
     {
-        case WM_PAINT:
-        {
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hwnd, &ps);
+      PAINTSTRUCT ps;
+      HDC hdc = BeginPaint(hwnd, &ps);
 
-            // Load JPEG image
-            HBITMAP hBitmap = LoadJPEGImage(L"mandelbrot_MANDELBROT_05_SEAHORSES.jpg");
+      // Load JPEG image
+      HBITMAP hBitmap = LoadJPEGImage(L"mandelbrot_MANDELBROT_05_SEAHORSES.jpg");
 
-            // Draw the image onto the window's client area
-            HDC hdcMem = CreateCompatibleDC(hdc);
-            SelectObject(hdcMem, hBitmap);
-            BITMAP bitmap;
-            GetObject(hBitmap, sizeof(bitmap), &bitmap);
-            StretchBlt(hdc, 0, 0, bitmap.bmWidth, bitmap.bmHeight, hdcMem, 0, 0, bitmap.bmWidth, bitmap.bmHeight, SRCCOPY);
+      // Draw the image onto the window's client area
+      HDC hdcMem = CreateCompatibleDC(hdc);
+      SelectObject(hdcMem, hBitmap);
+      BITMAP bitmap;
+      GetObject(hBitmap, sizeof(bitmap), &bitmap);
+      StretchBlt(hdc, 0, 0, bitmap.bmWidth, bitmap.bmHeight, hdcMem, 0, 0, bitmap.bmWidth, bitmap.bmHeight, SRCCOPY);
 
-            DeleteDC(hdcMem);
-            DeleteObject(hBitmap);
+      DeleteDC(hdcMem);
+      DeleteObject(hBitmap);
 
-            EndPaint(hwnd, &ps);
-            return 0;
-        }
-        case WM_DESTROY:
-        {
-            PostQuitMessage(0);
-            return 0;
-        }
-        default:
-        {
-            return DefWindowProc(hwnd, uMsg, wParam, lParam);
-        }
+      EndPaint(hwnd, &ps);
+      return 0;
     }
+    case WM_DESTROY:
+    {
+      PostQuitMessage(0);
+
+      return 0;
+    }
+    default:
+    {
+      return DefWindowProc(hwnd, uMsg, wParam, lParam);
+    }
+  }
 }
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-    WNDCLASSEX wc =
+  WNDCLASSEX
+    wc
     {
       sizeof(WNDCLASSEX),
       CS_HREDRAW | CS_VREDRAW,
@@ -114,31 +125,51 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
       LoadIcon(nullptr, IDI_APPLICATION)
     };
 
-    if (!RegisterClassEx(&wc))
-    {
-        MessageBox(nullptr, L"Window Registration Failed!", L"Error!", MB_ICONEXCLAMATION | MB_OK);
-        return 0;
-    }
-
-    HWND hwnd = CreateWindowEx(0, L"WindowClass", L"Window Title", WS_OVERLAPPEDWINDOW | WS_HSCROLL | WS_VSCROLL, CW_USEDEFAULT,
-                               CW_USEDEFAULT, 800, 600, nullptr, nullptr, hInstance, nullptr);
-
-    if (hwnd == nullptr)
-    {
-        MessageBox(nullptr, L"Window Creation Failed!", L"Error!", MB_ICONEXCLAMATION | MB_OK);
-        return 0;
-    }
-
-    ShowWindow(hwnd, nCmdShow);
-    UpdateWindow(hwnd);
-
-    MSG msg { };
-
-    while (GetMessage(&msg, nullptr, 0, 0))
-    {
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
-    }
+  if(!RegisterClassEx(&wc))
+  {
+    MessageBox(nullptr, L"Window Registration Failed!", L"Error!", MB_ICONEXCLAMATION | MB_OK);
 
     return 0;
+  }
+
+  HWND
+    handle_to_window
+    {
+      ::CreateWindowEx
+      (
+        0,
+        L"WindowClass",
+        L"Window Title",
+        WS_OVERLAPPEDWINDOW | WS_HSCROLL | WS_VSCROLL, CW_USEDEFAULT,
+        CW_USEDEFAULT,
+        1024,
+        1024,
+        nullptr,
+        nullptr,
+        hInstance,
+        nullptr
+      )
+    };
+
+  if(handle_to_window == nullptr)
+  {
+    ::MessageBox(nullptr, L"Window Creation Failed!", L"Error!", MB_ICONEXCLAMATION | MB_OK);
+
+    return 0;
+  }
+
+  ShowWindow(handle_to_window, nCmdShow);
+
+  UpdateWindow(handle_to_window);
+
+  MSG msg { };
+
+  while(::GetMessage(&msg, nullptr, 0, 0))
+  {
+    TranslateMessage(&msg);
+
+    DispatchMessage(&msg);
+  }
+
+  return 0;
 }
