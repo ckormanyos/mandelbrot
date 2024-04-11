@@ -138,7 +138,7 @@ A black-and-white rendition of the well-known, classic full Mandelbrot iteration
 This image has the following features and parameters.
 
   - The square image has $2048 {\times} 2048$ pixels.
-  - Centered at the point $(-0.75,0.0)$.
+  - Centered at the point $(-0.75+i~0.0)$.
   - Uses a half-width of $1.25$.
   - Computed with $2,000$ iteratons using the `cpp_dec_float` type from [`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_84_0/libs/multiprecision/doc/html/index.html) instantiated with $37$ decimal digits of precision.
 
@@ -152,7 +152,7 @@ in black-and-white color representation is shown below.
 This image has the following features and parameters.
 
   - The square image has $2048 {\times} 2048$ pixels.
-  - Centered at the point $(-0.7453983606667815,0.1125046349959942)$.
+  - Centered at the point $(-0.7453983606667815+i~0.1125046349959942)$.
   - Uses a half-width of $1.76{\times}10^{-12}$.
   - Computed with $2,000$ iteratons using the `cpp_dec_float` type from [`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_84_0/libs/multiprecision/doc/html/index.html) instantiated with $37$ decimal digits of precision.
 
@@ -167,10 +167,26 @@ The result of this deep dive iteration is represented by the image below.
 This image has the the following features and parameters.
 
   - The square image has $2048 {\times} 2048$ pixels.
-  - Centered at the point $(-1.2951890821477774570170641771856819267{\ldots},0.44093698267832013888090367835626261211{\ldots})$.
-  - See the configuration code [mandelbrot_cfg_MANDELBROT_09_DEEP_DIVE_02.h](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_09_DEEP_DIVE_02.h) for the full precision of the center point.
+  - Centered at the point $(-1.2951890821477774570170641771856819267{\ldots}+~i0.44093698267832013888090367835626261211{\ldots})$.
+  - See the configuration code [mandelbrot_cfg_MANDELBROT_09_DEEP_DIVE_02.h](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_09_DEEP_DIVE_02.h) for the full precision of the center point.
   - Uses a half-width of $2.55{\times}10^{-55}$.
   - Computed with $15,000$ iteratons using the `cpp_dec_float` type from [`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_84_0/libs/multiprecision/doc/html/index.html) instantiated with $95$ decimal digits of precision.
+
+### A Deeper Dive
+
+The following deep dive has a scale of approximately
+$8.1{\times}10^{-95}$.
+The result of this deep dive iteration is represented by the image below.
+
+![](./images/gallery/mandelbrot_MANDELBROT_60_SATELITE_REGION_01.jpg)
+
+This image has the the following features and parameters.
+
+  - The square image has $2048 {\times} 2048$ pixels.
+  - Centered at the point $(-1.7683830049648722692890015019043698317{\ldots}-i~0.0035564756051580419085635598914228270{\ldots})$.
+  - See the configuration code [mandelbrot_cfg_MANDELBROT_60_SATELITE_REGION_01.h](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_60_SATELITE_REGION_01.h) for the full precision of the center point.
+  - Uses a half-width of $8.1{\times}10^{-95}$.
+  - Computed with $60,000$ iteratons using the `cpp_dec_float` type from [`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_84_0/libs/multiprecision/doc/html/index.html) instantiated with $95$ decimal digits of precision.
 
 ### A Really Deep Dive
 
@@ -185,8 +201,8 @@ is represented by the image below.
 This image has the the following features and parameters.
 
   - The square image has $1536 {\times} 1536$ pixels.
-  - Centered at the point $(0.3602404434376143632361252444495453084{\ldots},-0.6413130610648031748603750151793020665{\ldots})$.
-  - See the configuration code [`mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h`](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h) for the full precision of the center point provided with slightly more than $1,000$ decimal places.
+  - Centered at the point $(0.3602404434376143632361252444495453084{\ldots}-i~0.6413130610648031748603750151793020665{\ldots})$.
+  - See the configuration code [`mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h`](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h) for the full precision of the center point provided with slightly more than $1,000$ decimal places.
   - Uses a half-width of $4.4 {\times} 10^{-311}$.
   - Computed with $60,000$ iteratons using the `gmp_float` type from [`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_84_0/libs/multiprecision/doc/html/index.html) instantiated with $365$ decimal digits of precision.
 
@@ -204,10 +220,10 @@ is written in a generic and configurable way.
 To characterize a new Mandelbrot fractal iteration, simply write
 a header-configuration-file with content similar to that shown below.
 Include the configuration file in
-[`test_mandelbrot.cpp`](./test/test_mandelbrot.cpp) and run the calculation.
+[`test_mandelbrot.cpp`](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/test/test_mandelbrot.cpp) and run the calculation.
 
 Consider as a sample, for instance, the relevant content of the configuration file
-[`mandelbrot_cfg_MANDELBROT_01_FULL.h`](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_01_FULL.h).
+[`mandelbrot_cfg_MANDELBROT_01_FULL.h`](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_01_FULL.h).
 
 ```cpp
   // This is the classic full immage.
@@ -233,13 +249,44 @@ Clearly named definitions are used to specify:
   - and the coordinate center and half-width of the magnification region,
   - where the dimensions `MANDELBROT_POINT_DX_HALF`, `MANDELBROT_POINT_CENTER_X`, and `MANDELBROT_POINT_CENTER_Y` are provided as character strings, which remain exact even if the magnification scale requires multiple precision.
 
+## The $10^{\mbox{\small{51}}}$ Magnification Club
+
+Let's find some proven deep dives!
+
+Discovering the Mandelbrot set leads to fascinating research that is
+mathematically complicated. Investigations in this domain offer enriching
+findings. Yet it can sometimes be challenging obtain results.
+In particular, it can be difficult to find deep dive points within
+the infinitely-complex (and complex-valued) Mandelbrot area.
+Miniscule coordinates that offer interesting deep dives are
+not intuitively easy to guess or find (even with dedicated searches).
+
+In this section, we specifically list several points having proven
+deep dives to $10^{51}$ magnification. Once a point is found,
+a picture has been created with full $51$-decimal digit precision.
+Images are presented in the corresponding links for the points.
+
+Details:
+  - The listed points have approximately $54$ decimal digits of precision.
+  - Calculations use a half-width of $1.4{\times}10^{-51}$.
+  - Iterations are carried out with a big-float representation having $76$ decimal digits of precision.
+  - See the table below for these points and links to the corresponding images.
+
+| Name                      | Point $(x + iy)$ | Image |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ---------------- |
+| `08_DEEP_DIVE_01`         | $(-1.295189082147777457017064177185681926706566460884888469217+i~0.440936982678320138880903678356262612113214627431396203682$ | [image](https://github.com/ckormanyos/mandelbrot/tree/main/images/gallery/mandelbrot_MANDELBROT_08_DEEP_DIVE_01_magnify51.jpg)          |
+| `20_ZOOM_VERY_DEEP_00`    | $(+0.360240443437614363236125244449545308482607807958585750488-i~0.641313061064803174860375015179302066579494952282305259556$ | [image](https://github.com/ckormanyos/mandelbrot/tree/main/images/gallery/mandelbrot_MANDELBROT_20_ZOOM_VERY_DEEP_00_magnify51.jpg)     |
+| `30_ZOOM_ANOTHER_00`      | $(-1.740062382579339905220844167065825638296641720436171866880+i~0.028175339779211048992411521144319509687539076742990608570$ | [image](https://github.com/ckormanyos/mandelbrot/tree/main/images/gallery/mandelbrot_MANDELBROT_30_ZOOM_ANOTHER_00_magnify51.jpg)       |
+| `45_SEAHORSE_OTHER_01`    | $(-0.745605122368264995520769522753086369510716449777505626833+i~0.112859495427252849953537572395520089297826357072986239717$ | [image](https://github.com/ckormanyos/mandelbrot/tree/main/images/gallery/mandelbrot_MANDELBROT_45_SEAHORSE_OTHER_01_magnify51.jpg)     |
+| `50_TENDRIL_AREA_01`      | $(-1.250199658842382318952058559805451497534994030366858920092+i~0.013242809714635662393731687465424899234037230926337059871$ | [image](https://github.com/ckormanyos/mandelbrot/tree/main/images/gallery/mandelbrot_MANDELBROT_50_TENDRIL_AREA_01_magnify51.jpg)       |
+
 ## Testing and Continuous Integration
 
 A small test program exercises a variety fractal iterations
 that can be selected individually at compile-time.
 The default confuguration uses the
 relatively quick-to-calculate _seahorse_ image configured in
-[mandelbrot_cfg_MANDELBROT_05_SEAHORSES.h](./mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_05_SEAHORSES.h).
+[mandelbrot_cfg_MANDELBROT_05_SEAHORSES.h](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_05_SEAHORSES.h).
 
 Continuous integration runs on Ubuntu and MacOS with both GCC/clang
 and also runs on Windows with MSVC. GCC's run-time
@@ -257,11 +304,11 @@ Improvements on the TODO list include (among others) the following.
 ## Notes on jpeg-6b and its adaptions
 
 We use a modified version of jpeg-6b.
-It is located [here](./jpeg/jpeg-6b-2022).
+It is located [here](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/jpeg/jpeg-6b-2022).
 According to license agreement, this work is referred to as
 _the_ _Independent_ _JPEG_ _Group's_ _software_.
 Please see their
-[original _README_](./jpeg/jpeg-6b-2022/README)
+[original _README_](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/jpeg/jpeg-6b-2022/README)
 in its entirety for more information about and licensing terms
 of _the_ _Independent_ _JPEG_ _Group's_ _software_.
 

@@ -24,7 +24,8 @@
   struct stopwatch
   {
   public:
-    using duration_type = typename clock_type::duration;
+    using time_point_type = typename clock_type::time_point;
+    using duration_type   = typename clock_type::duration;
 
     auto reset() -> void
     {
@@ -38,7 +39,7 @@
     }
 
   private:
-    typename clock_type::time_point m_start { clock_type::now() }; // NOLINT(readability-identifier-naming)
+    time_point_type m_start { clock_type::now() }; // NOLINT(readability-identifier-naming)
 
     STOPWATCH_NODISCARD auto elapsed() const -> duration_type
     {
