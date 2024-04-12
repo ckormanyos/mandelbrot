@@ -231,10 +231,12 @@ Consider as a sample, for instance, the relevant content of the configuration fi
   constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_01_FULL";
 
   constexpr int  MANDELBROT_CALCULATION_DIGITS10    =      37;
-  constexpr int  MANDELBROT_CALCULATION_PIXELS_1D   =    2048;
+  constexpr int  MANDELBROT_CALCULATION_PIXELS_X    =    2048;
+  constexpr int  MANDELBROT_CALCULATION_PIXELS_Y    =    2048;
   constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =    2000;
 
   constexpr char MANDELBROT_POINT_DX_HALF[]         = "1.25";
+  constexpr char MANDELBROT_POINT_DY_HALF[]         = "1.25";
   constexpr char MANDELBROT_POINT_CENTER_X[]        = "0.75";
   constexpr char MANDELBROT_POINT_CENTER_Y[]        = "0.0";
 
