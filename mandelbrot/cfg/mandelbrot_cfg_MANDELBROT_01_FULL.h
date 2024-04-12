@@ -16,8 +16,8 @@
   constexpr int  MANDELBROT_CALCULATION_PIXELS_1D   =    2048;
   constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =    2000;
 
-  constexpr char MANDELBROT_POINT_DX_HALF[]         = "1.25";
-  constexpr char MANDELBROT_POINT_CENTER_X[]        = "0.75";
+  constexpr char MANDELBROT_POINT_DX_HALF[]         = "+1.25";
+  constexpr char MANDELBROT_POINT_CENTER_X[]        = "-0.75";
   constexpr char MANDELBROT_POINT_CENTER_Y[]        = "0.0";
 
   #include <mandelbrot/cfg/mandelbrot_cfg.h>
