@@ -68,8 +68,8 @@
   using mandelbrot_config_type  =
     ckormanyos::mandelbrot::mandelbrot_config<detail::numeric_type,
                                               static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_ITERATIONS),
-                                              static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_1D),
-                                              static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_2D)>;
+                                              static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_X),
+                                              static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_Y)>;
 
   using mandelbrot_numeric_type = typename mandelbrot_config_type::my_mandelbrot_config_numeric_type;
 

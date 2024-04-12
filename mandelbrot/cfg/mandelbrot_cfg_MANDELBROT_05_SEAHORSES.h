@@ -28,11 +28,11 @@
 
   constexpr int  MANDELBROT_CALCULATION_DIGITS10    =      37;
   #if !defined(MANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH)
-  constexpr int  MANDELBROT_CALCULATION_PIXELS_1D   =    2048;
-  constexpr int  MANDELBROT_CALCULATION_PIXELS_2D   =    2048;
+  constexpr int  MANDELBROT_CALCULATION_PIXELS_X    =    2048;
+  constexpr int  MANDELBROT_CALCULATION_PIXELS_Y    =    2048;
   #else
-  constexpr int  MANDELBROT_CALCULATION_PIXELS_1D   =     256;
-  constexpr int  MANDELBROT_CALCULATION_PIXELS_2D   =     256;
+  constexpr int  MANDELBROT_CALCULATION_PIXELS_X    =     256;
+  constexpr int  MANDELBROT_CALCULATION_PIXELS_Y    =     256;
   #endif
   constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =    2000;
 
