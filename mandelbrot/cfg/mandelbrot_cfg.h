@@ -68,11 +68,13 @@
   using mandelbrot_config_type  =
     ckormanyos::mandelbrot::mandelbrot_config<detail::numeric_type,
                                               static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_ITERATIONS),
-                                              static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_1D)>;
+                                              static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_X),
+                                              static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_Y)>;
 
   using mandelbrot_numeric_type = typename mandelbrot_config_type::my_mandelbrot_config_numeric_type;
 
   inline auto dx_half () -> mandelbrot_numeric_type { return mandelbrot_numeric_type(MANDELBROT_POINT_DX_HALF); }
+  inline auto dy_half()  -> mandelbrot_numeric_type { return mandelbrot_numeric_type(MANDELBROT_POINT_DY_HALF); }
   inline auto center_x() -> mandelbrot_numeric_type { return mandelbrot_numeric_type(MANDELBROT_POINT_CENTER_X); }
   inline auto center_y() -> mandelbrot_numeric_type { return mandelbrot_numeric_type(MANDELBROT_POINT_CENTER_Y); }
 
