@@ -322,24 +322,27 @@
         std::string str_x { };
         std::string str_y { };
 
+        const std::string str_n { "\n" };
+
         {
           std::stringstream strm { };
 
-          strm << std::setprecision(std::numeric_limits<local_value_type>::digits10) << coordinate.my_x;
+          strm << std::setprecision(std::numeric_limits<local_value_type>::digits10) << std::showpos << coordinate.my_x;
 
-          str_x = strm.str() + "\n";
+          str_x = "x_val: " + strm.str() + str_n;
         }
 
         {
           std::stringstream strm { };
 
-          strm << std::setprecision(std::numeric_limits<local_value_type>::digits10) << coordinate.my_y;
+          strm << std::setprecision(std::numeric_limits<local_value_type>::digits10) << std::showpos << coordinate.my_y;
 
-          str_y = strm.str() + "\n";
+          str_y = "y_val: " + strm.str() + str_n;
         }
 
         ::WriteConsole(mandelbrot_discovery_detail::console_output(), str_x.c_str(), static_cast<::DWORD>(str_x.size()), &bytesWritten, nullptr);
         ::WriteConsole(mandelbrot_discovery_detail::console_output(), str_y.c_str(), static_cast<::DWORD>(str_y.size()), &bytesWritten, nullptr);
+        ::WriteConsole(mandelbrot_discovery_detail::console_output(), str_n.c_str(), static_cast<::DWORD>(str_n.size()), &bytesWritten, nullptr);
       }
 
       if(message == static_cast<::UINT>(WM_DESTROY))
