@@ -1,14 +1,18 @@
 #ifndef MANDELBROT_DISCOVERY_2024_04_12_H
   #define MANDELBROT_DISCOVERY_2024_04_12_H
 
+  #include <Geometry.h>
+
   #include <windows.h>
   #include <wincodec.h>
-
-  #include <boost/multiprecision/cpp_dec_float.hpp>
 
   #include <chrono>
   #include <cstdint>
   #include <cstring>
+  #include <iomanip>
+  #include <limits>
+  #include <mutex>
+  #include <sstream>
   #include <string>
   #include <thread>
 
@@ -16,24 +20,31 @@
   {
     const char WindowTitleDefault[] = "Mandelbrot Discovery";
 
-    auto ConsoleInput() -> HANDLE&
+    auto console_input() -> HANDLE&
     {
       static HANDLE my_handle { };
 
       return my_handle;
     }
 
-    auto ConsoleOutput() -> HANDLE&
+    auto console_output() -> HANDLE&
     {
       static HANDLE my_handle { };
 
       return my_handle;
+    }
+
+    auto console_sync_mtx() -> std::mutex&
+    {
+      static std::mutex my_mtx { };
+
+      return my_mtx;
     }
   }
 
   template<const int   WindowWidth,
-           const int   WindowHeight      = WindowWidth,
-           const int   MultiPrecDigits10 = 37,
+           const int   WindowHeight,
+           typename    MandelbrotNumericType,
            const char* WindowTitle       = mandelbrot_discovery_detail::WindowTitleDefault,
            const int   IconId            = static_cast<int>(INT8_C(0)),
            const int   ScreenCoordinateX = static_cast<int>(UINT16_C(32)),
@@ -41,7 +52,7 @@
   class mandelbrot_discovery final
   {
   private:
-    static constexpr std::int32_t multiple_precision_digits10 = static_cast<std::int32_t>(MultiPrecDigits10);
+    using mandelbrot_numeric_type = MandelbrotNumericType;
 
     static constexpr int screen_coordinate_x = static_cast<int>(ScreenCoordinateX);    // Screen coordinate X
     static constexpr int screen_coordinate_y = static_cast<int>(ScreenCoordinateY);    // Screen coordinate Y
@@ -52,9 +63,10 @@
     static constexpr int window_width        = static_cast<int>(client_width  + 18);   // Total window width
     static constexpr int window_height       = static_cast<int>(client_height + 42);   // Total window height
 
-    using big_float_type = boost::multiprecision::number<boost::multiprecision::cpp_dec_float<multiple_precision_digits10>, boost::multiprecision::et_off>;
-
   public:
+    using point_type     = typename geometry::point_type<mandelbrot_numeric_type>;
+    using rectangle_type = geometry::rectangle_type<point_type>;
+
     mandelbrot_discovery() = default;
 
     mandelbrot_discovery(const mandelbrot_discovery&) = delete;
@@ -164,8 +176,8 @@
       AllocConsole();
 
       // Get handles to the standard output
-      mandelbrot_discovery_detail::ConsoleOutput() = GetStdHandle(STD_OUTPUT_HANDLE);
-      mandelbrot_discovery_detail::ConsoleInput()  = GetStdHandle(STD_INPUT_HANDLE);
+      mandelbrot_discovery_detail::console_output() = GetStdHandle(STD_OUTPUT_HANDLE);
+      mandelbrot_discovery_detail::console_input () = GetStdHandle(STD_INPUT_HANDLE);
 
       auto get_message_is_ok = true;
 
@@ -214,9 +226,18 @@
       return static_cast<int>(INT8_C(0));
     }
 
+    static auto set_rectangle(rectangle_type* p_rectangle) -> void
+    {
+      extern auto rectangle() -> rectangle_type*;
+
+      my_ptr_to_rectangle = p_rectangle;
+    }
+
   private:
     ::HWND      my_handle_to_window   { nullptr };
     ::HINSTANCE my_handle_to_instance { nullptr };
+
+    static rectangle_type* my_ptr_to_rectangle;
 
     static std::thread     my_thread;
     static volatile ::LONG my_thread_wants_exit;
@@ -236,40 +257,40 @@
 
       if(message == static_cast<::UINT>(WM_PAINT))
       {
-        PAINTSTRUCT ps { };
+        ::PAINTSTRUCT ps { };
 
-        HDC hdc { BeginPaint(handle_to_window, &ps) };
+        ::HDC hdc { BeginPaint(handle_to_window, &ps) };
 
         // Load JPEG image.
-        const HBITMAP hBitmap { load_jpeg_image(L"mandelbrot_MANDELBROT_01_FULL.jpg") };
+        const ::HBITMAP hBitmap { load_jpeg_image(L"mandelbrot_MANDELBROT_01_FULL.jpg") };
 
         // Draw the image onto the window's client area
-        HDC hdcMem { CreateCompatibleDC(hdc) };
+        ::HDC hdcMem { CreateCompatibleDC(hdc) };
         SelectObject(hdcMem, hBitmap);
 
-        BITMAP bitmap { };
-        GetObject(hBitmap, sizeof(bitmap), &bitmap);
+        ::BITMAP bitmap { };
+        GetObject(hBitmap, static_cast<int>(sizeof(bitmap)), &bitmap);
 
         const auto result_stretch =
           StretchBlt
           (
             hdc,
-            0,
-            0,
-            bitmap.bmWidth,
-            bitmap.bmHeight,
+            static_cast<int>(INT8_C(0)),
+            static_cast<int>(INT8_C(0)),
+            static_cast<int>(bitmap.bmWidth),
+            static_cast<int>(bitmap.bmHeight),
             hdcMem,
-            0,
-            0,
-            bitmap.bmWidth,
-            bitmap.bmHeight,
-            SRCCOPY
+            static_cast<int>(INT8_C(0)),
+            static_cast<int>(INT8_C(0)),
+            static_cast<int>(bitmap.bmWidth),
+            static_cast<int>(bitmap.bmHeight),
+            static_cast<::DWORD>(SRCCOPY)
           );
 
         const auto result_draw_is_ok = (result_stretch == TRUE);
 
-        DeleteDC(hdcMem);
-        DeleteObject(hBitmap);
+        ::DeleteDC(hdcMem);
+        ::DeleteObject(hBitmap);
 
         const auto result_end_paint_is_ok = (::EndPaint(handle_to_window, &ps) == TRUE);
 
@@ -286,17 +307,39 @@
 
       if(message == static_cast<::UINT>(WM_LBUTTONDOWN))
       {
-        // Display some text
-        DWORD bytesWritten { };
+        // Display the x,y coordinate.
+        ::DWORD bytesWritten { };
 
-        const WORD x_param = static_cast<WORD>(static_cast<DWORD>(l_param));
-        const WORD y_param = static_cast<WORD>(static_cast<DWORD>(l_param) >> 16U);
+        const int pixel_x { static_cast<int>(static_cast<::WORD>(static_cast<::DWORD>(l_param))) };
+        const int pixel_y { static_cast<int>(static_cast<::WORD>(static_cast<::DWORD>(l_param) >> 16U)) };
 
-        std::string str_x = std::to_string(static_cast<std::uint32_t>(x_param)) + "\n";
-        std::string str_y = std::to_string(static_cast<std::uint32_t>(y_param)) + "\n";
+        point_type coordinate { };
 
-        WriteConsole(mandelbrot_discovery_detail::ConsoleOutput(), str_x.c_str(), static_cast<DWORD>(str_x.size()), &bytesWritten, nullptr);
-        WriteConsole(mandelbrot_discovery_detail::ConsoleOutput(), str_y.c_str(), static_cast<DWORD>(str_y.size()), &bytesWritten, nullptr);
+        my_ptr_to_rectangle->pixel_to_point(pixel_x, pixel_y, coordinate);
+
+        using local_value_type = typename point_type::value_type;
+
+        std::string str_x { };
+        std::string str_y { };
+
+        {
+          std::stringstream strm { };
+
+          strm << std::setprecision(std::numeric_limits<local_value_type>::digits10) << coordinate.my_x;
+
+          str_x = strm.str() + "\n";
+        }
+
+        {
+          std::stringstream strm { };
+
+          strm << std::setprecision(std::numeric_limits<local_value_type>::digits10) << coordinate.my_y;
+
+          str_y = strm.str() + "\n";
+        }
+
+        ::WriteConsole(mandelbrot_discovery_detail::console_output(), str_x.c_str(), static_cast<::DWORD>(str_x.size()), &bytesWritten, nullptr);
+        ::WriteConsole(mandelbrot_discovery_detail::console_output(), str_y.c_str(), static_cast<::DWORD>(str_y.size()), &bytesWritten, nullptr);
       }
 
       if(message == static_cast<::UINT>(WM_DESTROY))
@@ -347,20 +390,20 @@
     {
       // Load JPEG image using WIC.
 
-      IWICImagingFactory*    pFactory   { nullptr };
-      IWICBitmapDecoder*     pDecoder   { nullptr };
-      IWICBitmapFrameDecode* pFrame     { nullptr };
-      IWICFormatConverter*   pConverter { nullptr };
+      ::IWICImagingFactory*    pFactory   { nullptr };
+      ::IWICBitmapDecoder*     pDecoder   { nullptr };
+      ::IWICBitmapFrameDecode* pFrame     { nullptr };
+      ::IWICFormatConverter*   pConverter { nullptr };
 
-      static_cast<void>(CoInitialize(nullptr));
+      static_cast<void>(::CoInitialize(nullptr));
 
       static_cast<void>
       (
-        CoCreateInstance(CLSID_WICImagingFactory, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pFactory))
+        ::CoCreateInstance(CLSID_WICImagingFactory, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pFactory))
       );
 
       pFactory->CreateDecoderFromFilename(filename, nullptr, GENERIC_READ, WICDecodeMetadataCacheOnLoad, &pDecoder);
-      pDecoder->GetFrame(0, &pFrame);
+      pDecoder->GetFrame(static_cast<::UINT>(UINT8_C(0)), &pFrame);
       pFactory->CreateFormatConverter(&pConverter);
 
       pConverter->Initialize(pFrame,
@@ -370,46 +413,46 @@
                              0.0F,
                              WICBitmapPaletteTypeMedianCut);
 
-      UINT width  { };
-      UINT height { };
+      ::UINT width  { };
+      ::UINT height { };
 
       pFrame->GetSize(&width, &height);
 
-      const DWORD header_area
+      const ::DWORD header_area
       {
-        static_cast<DWORD>
+        static_cast<::DWORD>
         (
-          static_cast<DWORD>(width) * static_cast<DWORD>(height) * static_cast<DWORD>(UINT8_C(4))
+          static_cast<::DWORD>(width) * static_cast<::DWORD>(height) * static_cast<::DWORD>(UINT8_C(4))
         )
       };
 
-      BITMAPINFOHEADER
+      ::BITMAPINFOHEADER
         bi
         {
-           sizeof(BITMAPINFOHEADER),
-          +static_cast<LONG>(width),
-          -static_cast<LONG>(height),
-           static_cast<WORD>(UINT8_C(1)),
-           static_cast<WORD>(UINT8_C(32)),
-           static_cast<DWORD>(BI_RGB),
+           static_cast<::DWORD>(sizeof(::BITMAPINFOHEADER)),
+          +static_cast<::LONG>(width),
+          -static_cast<::LONG>(height),
+           static_cast<::WORD>(UINT8_C(1)),
+           static_cast<::WORD>(UINT8_C(32)),
+           static_cast<::DWORD>(BI_RGB),
            header_area,
-           static_cast<LONG>(INT8_C(0)),
-           static_cast<LONG>(INT8_C(0)),
-           static_cast<DWORD>(UINT8_C(0)),
-           static_cast<DWORD>(UINT8_C(0))
+           static_cast<::LONG>(INT8_C(0)),
+           static_cast<::LONG>(INT8_C(0)),
+           static_cast<::DWORD>(UINT8_C(0)),
+           static_cast<::DWORD>(UINT8_C(0))
         };
 
       void* pixels { nullptr };
 
-      HBITMAP hBitmap
+      ::HBITMAP hBitmap
       {
-        CreateDIBSection(nullptr, (BITMAPINFO*) &bi, DIB_RGB_COLORS, &pixels, nullptr, 0)
+        CreateDIBSection(nullptr, reinterpret_cast<::BITMAPINFO*>(&bi), DIB_RGB_COLORS, &pixels, nullptr, static_cast<::DWORD>(UINT8_C(0)))
       };
 
       pConverter->CopyPixels(nullptr,
-                             static_cast<UINT>(width * static_cast<UINT>(UINT8_C(4))),
-                             static_cast<UINT>(header_area),
-                             static_cast<BYTE*>(pixels));
+                             static_cast<::UINT>(width * static_cast<::UINT>(UINT8_C(4))),
+                             static_cast<::UINT>(header_area),
+                             static_cast<::BYTE*>(pixels));
 
       pFactory->Release();
       pDecoder->Release();
@@ -422,29 +465,38 @@
 
   template<const int   WindowWidth,
            const int   WindowHeight,
-           const int   MultiPrecDigits10,
+           typename    MandelbrotNumericType,
            const char* WindowTitle,
            const int   IconId,
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
-  std::thread mandelbrot_discovery<WindowWidth, WindowHeight, MultiPrecDigits10, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_thread;
+  std::thread mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotNumericType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_thread;
 
   template<const int   WindowWidth,
            const int   WindowHeight,
-           const int   MultiPrecDigits10,
+           typename    MandelbrotNumericType,
            const char* WindowTitle,
            const int   IconId,
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
-  volatile ::LONG mandelbrot_discovery<WindowWidth, WindowHeight, MultiPrecDigits10, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_thread_wants_exit;
+  volatile ::LONG mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotNumericType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_thread_wants_exit;
 
   template<const int   WindowWidth,
            const int   WindowHeight,
-           const int   MultiPrecDigits10,
+           typename    MandelbrotNumericType,
            const char* WindowTitle,
            const int   IconId,
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
-  volatile ::LONG mandelbrot_discovery<WindowWidth, WindowHeight, MultiPrecDigits10, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_thread_did_exit;
+  volatile ::LONG mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotNumericType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_thread_did_exit;
+
+  template<const int   WindowWidth,
+           const int   WindowHeight,
+           typename    MandelbrotNumericType,
+           const char* WindowTitle,
+           const int   IconId,
+           const int   ScreenCoordinateX,
+           const int   ScreenCoordinateY>
+  typename mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotNumericType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::rectangle_type* mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotNumericType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_ptr_to_rectangle { nullptr };
 
 #endif // MANDELBROT_DISCOVERY_2024_04_12_H
