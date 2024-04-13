@@ -139,7 +139,7 @@ This image has the following features and parameters.
 
   - The square image has $2048 {\times} 2048$ pixels.
   - Centered at the point $(-0.75+i~0.0)$.
-  - Uses a half-width of $1.25$.
+  - Uses a half-width of $1.35$.
   - Computed with $2,000$ iteratons using the `cpp_dec_float` type from [`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_84_0/libs/multiprecision/doc/html/index.html) instantiated with $37$ decimal digits of precision.
 
 ### Swirly Seahorses and Mini Mandelbrot
@@ -167,7 +167,7 @@ The result of this deep dive iteration is represented by the image below.
 This image has the the following features and parameters.
 
   - The square image has $2048 {\times} 2048$ pixels.
-  - Centered at the point $(-1.2951890821477774570170641771856819267{\ldots}+~i0.44093698267832013888090367835626261211{\ldots})$.
+  - Centered at the point $(-1.2951890821477774570170641771856819267{\ldots}+i~0.44093698267832013888090367835626261211{\ldots})$.
   - See the configuration code [mandelbrot_cfg_MANDELBROT_09_DEEP_DIVE_02.h](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_09_DEEP_DIVE_02.h) for the full precision of the center point.
   - Uses a half-width of $2.55{\times}10^{-55}$.
   - Computed with $15,000$ iteratons using the `cpp_dec_float` type from [`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_84_0/libs/multiprecision/doc/html/index.html) instantiated with $95$ decimal digits of precision.
