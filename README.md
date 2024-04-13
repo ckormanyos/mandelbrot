@@ -52,6 +52,7 @@ of the available CPU cores that can be found using hardware concurrency.
 
 The following design goals have been incorporated.
   - `ckormanyos/mandelbrot` is written in header-only C++14, and compatible through C++14, 17, 20, 23 and beyond.
+  - Support rectangular (including square) images having essentially any size and magnification, provided that the precision of the iteration type is set accordingly.
   - The inner loop that performs the work of fractal iteration uses multiple, parallel CPU cores.
   - C++ template design allows for flexible interchange of any appropriate kind of big-number type in the classes that implement fractal iteration.
   - Visualization of the result uses color-stretching techniques combined with the histogram method.
@@ -231,12 +232,14 @@ Consider as a sample, for instance, the relevant content of the configuration fi
   constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_01_FULL";
 
   constexpr int  MANDELBROT_CALCULATION_DIGITS10    =      37;
-  constexpr int  MANDELBROT_CALCULATION_PIXELS_1D   =    2048;
+  constexpr int  MANDELBROT_CALCULATION_PIXELS_X    =    2048;
+  constexpr int  MANDELBROT_CALCULATION_PIXELS_Y    =    2048;
   constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =    2000;
 
-  constexpr char MANDELBROT_POINT_DX_HALF[]         = "1.25";
-  constexpr char MANDELBROT_POINT_CENTER_X[]        = "0.75";
-  constexpr char MANDELBROT_POINT_CENTER_Y[]        = "0.0";
+  constexpr char MANDELBROT_POINT_DX_HALF[]         = "1.35";
+  constexpr char MANDELBROT_POINT_DY_HALF[]         = "1.35";
+  constexpr char MANDELBROT_POINT_CENTER_X[]        = "-0.75";
+  constexpr char MANDELBROT_POINT_CENTER_Y[]        = "+0.00";
 
   #include <mandelbrot/cfg/mandelbrot_cfg.h>
 ```
