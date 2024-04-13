@@ -11,7 +11,8 @@
   constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_70_DOUADY_RABBIT_03";
 
   constexpr int  MANDELBROT_CALCULATION_DIGITS10    =      54;
-  constexpr int  MANDELBROT_CALCULATION_PIXELS_1D   =    2048;
+  constexpr int  MANDELBROT_CALCULATION_PIXELS_X    =    2048;
+  constexpr int  MANDELBROT_CALCULATION_PIXELS_Y    =    2048;
   constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =  100000;
 
   // This iteration runs into a stretched Mandelbrot-like
@@ -22,6 +23,7 @@
   // time to generate the full 2048*2048 pixel image.
 
   constexpr char MANDELBROT_POINT_DX_HALF[]         = "1.4E-27";
+  constexpr char MANDELBROT_POINT_DY_HALF[]         = "1.4E-27";
 
   constexpr char MANDELBROT_POINT_CENTER_X[]        = "-0.780153913683993748718568584494930";
   constexpr char MANDELBROT_POINT_CENTER_Y[]        = "+0.133486730987968990041228128620890";

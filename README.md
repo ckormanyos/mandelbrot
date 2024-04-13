@@ -52,6 +52,7 @@ of the available CPU cores that can be found using hardware concurrency.
 
 The following design goals have been incorporated.
   - `ckormanyos/mandelbrot` is written in header-only C++14, and compatible through C++14, 17, 20, 23 and beyond.
+  - Support rectangular (including square) images having essentially any size and magnification, provided that the precision of the iteration type is set accordingly.
   - The inner loop that performs the work of fractal iteration uses multiple, parallel CPU cores.
   - C++ template design allows for flexible interchange of any appropriate kind of big-number type in the classes that implement fractal iteration.
   - Visualization of the result uses color-stretching techniques combined with the histogram method.
@@ -139,7 +140,7 @@ This image has the following features and parameters.
 
   - The square image has $2048 {\times} 2048$ pixels.
   - Centered at the point $(-0.75+i~0.0)$.
-  - Uses a half-width of $1.25$.
+  - Uses a half-width of $1.35$.
   - Computed with $2,000$ iteratons using the `cpp_dec_float` type from [`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_84_0/libs/multiprecision/doc/html/index.html) instantiated with $37$ decimal digits of precision.
 
 ### Swirly Seahorses and Mini Mandelbrot
@@ -167,7 +168,7 @@ The result of this deep dive iteration is represented by the image below.
 This image has the the following features and parameters.
 
   - The square image has $2048 {\times} 2048$ pixels.
-  - Centered at the point $(-1.2951890821477774570170641771856819267{\ldots}+~i0.44093698267832013888090367835626261211{\ldots})$.
+  - Centered at the point $(-1.2951890821477774570170641771856819267{\ldots}+i~0.44093698267832013888090367835626261211{\ldots})$.
   - See the configuration code [mandelbrot_cfg_MANDELBROT_09_DEEP_DIVE_02.h](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_09_DEEP_DIVE_02.h) for the full precision of the center point.
   - Uses a half-width of $2.55{\times}10^{-55}$.
   - Computed with $15,000$ iteratons using the `cpp_dec_float` type from [`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_84_0/libs/multiprecision/doc/html/index.html) instantiated with $95$ decimal digits of precision.
@@ -231,12 +232,14 @@ Consider as a sample, for instance, the relevant content of the configuration fi
   constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_01_FULL";
 
   constexpr int  MANDELBROT_CALCULATION_DIGITS10    =      37;
-  constexpr int  MANDELBROT_CALCULATION_PIXELS_1D   =    2048;
+  constexpr int  MANDELBROT_CALCULATION_PIXELS_X    =    2048;
+  constexpr int  MANDELBROT_CALCULATION_PIXELS_Y    =    2048;
   constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =    2000;
 
-  constexpr char MANDELBROT_POINT_DX_HALF[]         = "1.25";
-  constexpr char MANDELBROT_POINT_CENTER_X[]        = "0.75";
-  constexpr char MANDELBROT_POINT_CENTER_Y[]        = "0.0";
+  constexpr char MANDELBROT_POINT_DX_HALF[]         = "1.35";
+  constexpr char MANDELBROT_POINT_DY_HALF[]         = "1.35";
+  constexpr char MANDELBROT_POINT_CENTER_X[]        = "-0.75";
+  constexpr char MANDELBROT_POINT_CENTER_Y[]        = "+0.00";
 
   #include <mandelbrot/cfg/mandelbrot_cfg.h>
 ```

@@ -11,7 +11,8 @@
   constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_25_ZOOM_SEARCH_00";
 
   constexpr int  MANDELBROT_CALCULATION_DIGITS10    =      58;
-  constexpr int  MANDELBROT_CALCULATION_PIXELS_1D   =    2048;
+  constexpr int  MANDELBROT_CALCULATION_PIXELS_X    =    2048;
+  constexpr int  MANDELBROT_CALCULATION_PIXELS_Y    =    2048;
   constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =    8000;
 
   // There are countless points to iterate that dive on and on,
@@ -21,7 +22,9 @@
   // with meandering roads or streams below.
 
   constexpr char MANDELBROT_POINT_DX_HALF[]         = "1.1E-32";
+  constexpr char MANDELBROT_POINT_DY_HALF[]         = "1.1E-32";
   //constexpr char MANDELBROT_POINT_DX_HALF[]         = "1.1E-36";
+  //constexpr char MANDELBROT_POINT_DY_HALF[]         = "1.1E-36";
   constexpr char MANDELBROT_POINT_CENTER_X[]        = "+0.364780049945910647420847479526784741020";
   constexpr char MANDELBROT_POINT_CENTER_Y[]        = "-0.629477855705057324723497932015414892010";
 

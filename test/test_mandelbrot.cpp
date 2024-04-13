@@ -27,6 +27,7 @@
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_08_DEEP_DIVE_01_magnify51.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_09_DEEP_DIVE_02.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_10_ZOOM_WIKI_00.h>
+//#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_10_ZOOM_WIKI_00_rect.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_11_ZOOM_WIKI_01.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_12_ZOOM_WIKI_02.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_13_ZOOM_WIKI_03.h>
@@ -70,8 +71,8 @@ auto main() -> int // NOLINT(bugprone-exception-escape)
     (
       cfg::center_x() - cfg::dx_half(),
       cfg::center_x() + cfg::dx_half(),
-      cfg::center_y() - cfg::dx_half(),
-      cfg::center_y() + cfg::dx_half()
+      cfg::center_y() - cfg::dy_half(),
+      cfg::center_y() + cfg::dy_half()
     );
 
   using mandelbrot_generator_type =

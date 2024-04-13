@@ -11,7 +11,8 @@
   constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_25_ZOOM_SEARCH_01";
 
   constexpr int  MANDELBROT_CALCULATION_DIGITS10    =      48;
-  constexpr int  MANDELBROT_CALCULATION_PIXELS_1D   =    2048;
+  constexpr int  MANDELBROT_CALCULATION_PIXELS_X    =    2048;
+  constexpr int  MANDELBROT_CALCULATION_PIXELS_Y    =    2048;
   constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =  140000;
 
   // This was a fun point. It ends up hitting a Mandelbrot
@@ -26,6 +27,7 @@
   // about the inner circumferences of the enclosing ovals.
 
   constexpr char MANDELBROT_POINT_DX_HALF[]         = "5.8E-21";
+  constexpr char MANDELBROT_POINT_DY_HALF[]         = "5.8E-21";
   constexpr char MANDELBROT_POINT_CENTER_X[]        = "-0.1528532287297766170184556480";
   constexpr char MANDELBROT_POINT_CENTER_Y[]        = "-1.0396895160836967088522828690";
 
