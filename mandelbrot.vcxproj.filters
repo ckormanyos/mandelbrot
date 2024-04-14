@@ -123,6 +123,9 @@
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_25_ZOOM_SEARCH_01.h">
       <Filter>Source Files\mandelbrot\cfg</Filter>
     </ClInclude>
+    <ClInclude Include="mandelbrot\mandelbrot_text_output.h">
+      <Filter>Source Files\mandelbrot</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-tidy" />
