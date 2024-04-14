@@ -18,7 +18,7 @@
   namespace ckormanyos { namespace mandelbrot {
   #endif
 
-  class mandelbrot_text_output_base
+  class mandelbrot_text_output_base // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
   {
   public:
     virtual ~mandelbrot_text_output_base() = default;
@@ -29,7 +29,7 @@
     mandelbrot_text_output_base() = default;
   };
 
-  class mandelbrot_text_output_cout : public mandelbrot_text_output_base
+  class mandelbrot_text_output_cout : public mandelbrot_text_output_base // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
   {
   public:
     ~mandelbrot_text_output_cout() override = default;
