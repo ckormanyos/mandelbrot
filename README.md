@@ -77,7 +77,7 @@ The following design goals have been incorporated.
 
 Use shell commands such as the following.
 
-Go to the `mandelbrot/jpeg` directory and make the JPEG library. This creates the library file `libjpeg-6b.a` located in the directory `mandelbrot/jpeg/jpeg-6b-2022/obj`.
+Go to the [`mandelbrot/jpeg`](./mandelbrot/jpeg) directory and make the JPEG library. This creates the library file `libjpeg-6b.a` located in the directory `mandelbrot/jpeg/jpeg-6b-2022/obj`.
 
 ```sh
 cd mandelbrot/jpeg
@@ -325,3 +325,12 @@ The following adaptions have been performed.
   - Eliminate all uses of `NEED_FAR_POINTERS` and `NEED_SHORT_EXTERNAL_NAMES`.
   - Handle Level-3 warnings found in MSVC.
   - Handle GCC warnings from `-Wall`, `-Wextra`, `-Wpedantic`, `-Wconversion` and `-Wsign-conversion`.
+
+## Mandelbrot Discovery
+
+The Mandelbrot Discovery program aims to provide semi-automatic assistance
+to find interesting points for fractal deep dives.
+
+This project is work in progress which is being undertaken in the
+[`mandelbrot/MandelbrotDiscovery`](./mandelbrot/MandelbrotDiscovery)
+directory.

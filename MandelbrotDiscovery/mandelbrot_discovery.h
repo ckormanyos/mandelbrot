@@ -159,8 +159,8 @@
       if(result_alloc_console_is_ok)
       {
         // Get handles to the standard output and input.
-        console_output() = GetStdHandle(STD_OUTPUT_HANDLE);
-        console_input () = GetStdHandle(STD_INPUT_HANDLE);
+        console_output() = ::GetStdHandle(STD_OUTPUT_HANDLE);
+        console_input () = ::GetStdHandle(STD_INPUT_HANDLE);
       }
 
       // Start the thread process.
@@ -202,8 +202,8 @@
           {
             // Process Win32 API messages (via standard Windows message pump).
 
-            const auto translate_message_is_ok = (::TranslateMessage(&message) == TRUE);
-            const auto dispatch_message_is_ok  = (::DispatchMessage (&message) == TRUE);
+            const bool translate_message_is_ok { (::TranslateMessage(&message) == TRUE) };
+            const bool dispatch_message_is_ok  { (::DispatchMessage (&message) == TRUE) };
 
             static_cast<void>(translate_message_is_ok);
             static_cast<void>(dispatch_message_is_ok);
@@ -221,8 +221,6 @@
 
     static auto set_rectangle(rectangle_type* p_rectangle) noexcept -> void
     {
-      extern auto rectangle() -> rectangle_type*;
-
       my_ptr_to_rectangle = p_rectangle;
     }
 
