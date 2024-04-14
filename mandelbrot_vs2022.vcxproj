@@ -21,7 +21,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mandelbrot_debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mandelbrot_release|x64'" Label="Configuration">
@@ -64,7 +64,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)jpeg\$(Platform)\$(Configuration)\jpeg_vs2022.lib</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)jpeg\$(Platform)\$(Configuration)\jpeg.lib</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>IF NOT EXIST $(SolutionDir)images\tmp mkdir $(SolutionDir)images\tmp</Command>
@@ -89,7 +89,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>$(SolutionDir)jpeg\$(Platform)\$(Configuration)\jpeg_vs2022.lib</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)jpeg\$(Platform)\$(Configuration)\jpeg.lib</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>IF NOT EXIST $(SolutionDir)images\tmp mkdir $(SolutionDir)images\tmp</Command>
