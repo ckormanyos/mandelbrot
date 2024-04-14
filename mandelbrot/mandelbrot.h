@@ -355,7 +355,7 @@
           std::vector<std::vector<std::uint_fast32_t>> mandelbrot_iteration_matrix; // NOLINT(readability-identifier-naming)
           std::vector<std::uint_fast32_t>              mandelbrot_color_histogram;  // NOLINT(readability-identifier-naming)
 
-    static mandelbrot_text_output_cout my_standard_output;
+    static mandelbrot_text_output_cout my_standard_output; // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
 
     auto apply_color_stretches(const std::vector<numeric_type>& x_values,
                                const std::vector<numeric_type>& y_values,
@@ -424,7 +424,7 @@
 
   template<typename NumericType,
            const std::uint_fast32_t MaxIterations>
-  mandelbrot_text_output_cout mandelbrot_generator<NumericType, MaxIterations>::my_standard_output;
+  mandelbrot_text_output_cout mandelbrot_generator<NumericType, MaxIterations>::my_standard_output; // NOLINT(cppcoreguidelines-avoid-non-const-global-variables,hicpp-uppercase-literal-suffix,readability-uppercase-literal-suffix)
 
   #if(__cplusplus >= 201703L)
   } // namespace ckormanyos::mandelbrot
