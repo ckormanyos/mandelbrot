@@ -215,7 +215,7 @@ This image has the the following features and parameters.
 `ckormanyos/mandelbrot` uses configuration files to specify the point,
 size and depth of the iterative fractal calculation.
 The configuration files are stored in the
-[`mandelbrot/cfg`](https://github.com/ckormanyos/mandelbrot/tree/main/cfg)
+[`mandelbrot/cfg`](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/cfg)
 directory.
 
 The code responsible for controlling the iterative calculation,
