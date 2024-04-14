@@ -77,7 +77,10 @@ The following design goals have been incorporated.
 
 Use shell commands such as the following.
 
-Go to the [`mandelbrot/jpeg`](./mandelbrot/jpeg) directory and make the JPEG library. This creates the library file `libjpeg-6b.a` located in the directory `mandelbrot/jpeg/jpeg-6b-2022/obj`.
+Go to the [`mandelbrot/jpeg`](https://github.com/ckormanyos/mandelbrot/tree/main/jpeg)
+directory and make the JPEG library. This creates the library file `libjpeg-6b.a`
+which will be subsequently located in the temporarily-created
+directory `mandelbrot/jpeg/jpeg-6b-2022/obj`.
 
 ```sh
 cd mandelbrot/jpeg
@@ -211,7 +214,7 @@ This image has the the following features and parameters.
 
 `ckormanyos/mandelbrot` uses configuration files to specify the point,
 size and depth of the iterative fractal calculation.
-The configuration files are stored in the [`mandelbrot/cfg`](./mandelbrot/cfg)
+The configuration files are stored in the [`mandelbrot/cfg`](https://github.com/ckormanyos/mandelbrot/tree/main/cfg)
 directory.
 
 The code responsible for controlling the iterative calculation,
@@ -332,5 +335,5 @@ The Mandelbrot Discovery program aims to provide semi-automatic assistance
 to find interesting points for fractal deep dives.
 
 This project is work in progress which is being undertaken in the
-[`mandelbrot/MandelbrotDiscovery`](./mandelbrot/MandelbrotDiscovery)
+[`mandelbrot/MandelbrotDiscovery`](https://github.com/ckormanyos/mandelbrot/tree/main/MandelbrotDiscovery)
 directory.
