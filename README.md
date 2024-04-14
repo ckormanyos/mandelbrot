@@ -214,7 +214,8 @@ This image has the the following features and parameters.
 
 `ckormanyos/mandelbrot` uses configuration files to specify the point,
 size and depth of the iterative fractal calculation.
-The configuration files are stored in the [`mandelbrot/cfg`](https://github.com/ckormanyos/mandelbrot/tree/main/cfg)
+The configuration files are stored in the
+[`mandelbrot/cfg`](https://github.com/ckormanyos/mandelbrot/tree/main/cfg)
 directory.
 
 The code responsible for controlling the iterative calculation,
@@ -224,7 +225,8 @@ is written in a generic and configurable way.
 To characterize a new Mandelbrot fractal iteration, simply write
 a header-configuration-file with content similar to that shown below.
 Include the configuration file in
-[`test_mandelbrot.cpp`](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/test/test_mandelbrot.cpp) and run the calculation.
+[`test_mandelbrot.cpp`](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/test/test_mandelbrot.cpp)
+and run the calculation.
 
 Consider as a sample, for instance, the relevant content of the configuration file
 [`mandelbrot_cfg_MANDELBROT_01_FULL.h`](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_01_FULL.h).
