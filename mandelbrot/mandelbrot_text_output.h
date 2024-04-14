@@ -21,7 +21,7 @@
   class mandelbrot_text_output_base
   {
   public:
-    virtual ~mandelbrot_text_output_base() { } // NOLINT(hicpp-use-equals-default,modernize-use-equals-default)
+    virtual ~mandelbrot_text_output_base() = default;
 
     virtual auto write(const std::string&) -> bool = 0;
 
@@ -32,9 +32,7 @@
   class mandelbrot_text_output_cout : public mandelbrot_text_output_base
   {
   public:
-    mandelbrot_text_output_cout() = default;
-
-    ~mandelbrot_text_output_cout() override { } // NOLINT(hicpp-use-equals-default,modernize-use-equals-default)
+    ~mandelbrot_text_output_cout() override = default;
 
     auto write(const std::string& str_to_write) -> bool override
     {
