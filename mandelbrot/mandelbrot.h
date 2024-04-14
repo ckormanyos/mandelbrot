@@ -10,6 +10,7 @@
 
   #include <concurrency/parallel_for.h>
   #include <mandelbrot/mandelbrot_color.h>
+  #include <mandelbrot/mandelbrot_text_output.h>
 
   #include <boost/gil/extension/io/jpeg/old.hpp>
   #include <boost/gil/image.hpp>
@@ -221,14 +222,9 @@
     auto generate_mandelbrot_image(const std::string&                 str_filename,
                                    const color::color_functions_base& color_functions = color::color_functions_bw(),
                                    const color::color_stretch_base&   color_stretches = color::color_stretch_histogram_method(),
-                                         std::ostream&                output_stream   = std::cout) -> void
+                                         mandelbrot_text_output_base& text_output     = my_standard_output) -> void
     {
       // Setup the x-axis and y-axis coordinates.
-
-      const auto flg = output_stream.flags();
-
-      output_stream.setf(std::ios::fixed);
-      output_stream.precision(static_cast<std::streamsize>(INT8_C(1)));
 
       std::vector<numeric_type> x_coord(mandelbrot_config_object.integral_width());  // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
       std::vector<numeric_type> y_coord(mandelbrot_config_object.integral_height()); // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
@@ -250,7 +246,7 @@
       (
         static_cast<std::size_t>(UINT8_C(0)),
         y_coord.size(),
-        [&mandelbrot_iteration_lock, &unordered_parallel_row_count, &output_stream, &x_coord, &y_coord, this](std::size_t j_row)
+        [&mandelbrot_iteration_lock, &unordered_parallel_row_count, &text_output, &x_coord, &y_coord, this](std::size_t j_row)
         {
           while(mandelbrot_iteration_lock.test_and_set()) { ; }
 
@@ -264,15 +260,19 @@
                 / static_cast<float>(y_coord.size())
               );
 
-            output_stream << "Calculating Mandelbrot image at row "
-                          << unordered_parallel_row_count
-                          << " of "
-                          << y_coord.size()
-                          << ". Total processed so far: "
-                          << std::fixed
-                          << std::setprecision(1)
-                          << percent
-                          << "%. Have patience.\r";
+            std::stringstream strm { };
+
+            strm << "Calculating Mandelbrot image at row "
+                 << unordered_parallel_row_count
+                 << " of "
+                 << y_coord.size()
+                 << ". Total processed so far: "
+                 << std::fixed
+                 << std::setprecision(1)
+                 << percent
+                 << "%. Have patience.\r";
+
+            text_output.write(strm.str());
           }
 
           mandelbrot_iteration_lock.clear();
@@ -328,18 +328,22 @@
         }
       );
 
-      output_stream << '\n';
+      std::string str { };
 
-      output_stream << "Perform color stretching." << '\n';
+      str = "\n";
+      text_output.write(str);
+
+      str = "Perform color stretching.\n";
+      text_output.write(str);
       apply_color_stretches(x_coord, y_coord, color_stretches);
 
-      output_stream << "Apply color functions." << '\n';
+      str = "Apply color functions.\n";
+      text_output.write(str);
       apply_color_functions(x_coord, y_coord, color_functions);
 
-      output_stream << "Write output JPEG file " << str_filename << "." << '\n';
+      str = "Write output JPEG file " + str_filename + ".\n";
+      text_output.write(str);
       boost::gil::jpeg_write_view(str_filename, mandelbrot_view);
-
-      output_stream.flags(flg);
     }
 
   private:
@@ -350,6 +354,8 @@
 
           std::vector<std::vector<std::uint_fast32_t>> mandelbrot_iteration_matrix; // NOLINT(readability-identifier-naming)
           std::vector<std::uint_fast32_t>              mandelbrot_color_histogram;  // NOLINT(readability-identifier-naming)
+
+    static mandelbrot_text_output_cout my_standard_output;
 
     auto apply_color_stretches(const std::vector<numeric_type>& x_values,
                                const std::vector<numeric_type>& y_values,
@@ -415,6 +421,10 @@
       }
     }
   };
+
+  template<typename NumericType,
+           const std::uint_fast32_t MaxIterations>
+  mandelbrot_text_output_cout mandelbrot_generator<NumericType, MaxIterations>::my_standard_output;
 
   #if(__cplusplus >= 201703L)
   } // namespace ckormanyos::mandelbrot
