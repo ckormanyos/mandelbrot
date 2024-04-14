@@ -7,7 +7,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MandelbrotDiscovery.cpp">
+    <ClCompile Include="mandelbrot_discovery.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -20,10 +20,13 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MandelbrotDiscovery.h">
+    <ClInclude Include="mandelbrot_discovery.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Geometry.h">
+    <ClInclude Include="geometry.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utility.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

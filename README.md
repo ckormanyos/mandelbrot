@@ -77,7 +77,10 @@ The following design goals have been incorporated.
 
 Use shell commands such as the following.
 
-Go to the `mandelbrot/jpeg` directory and make the JPEG library. This creates the library file `libjpeg-6b.a` located in the directory `mandelbrot/jpeg/jpeg-6b-2022/obj`.
+Go to the [`mandelbrot/jpeg`](https://github.com/ckormanyos/mandelbrot/tree/main/jpeg)
+directory and make the JPEG library. This creates the library file `libjpeg-6b.a`
+which will be subsequently located in the temporarily-created
+directory `mandelbrot/jpeg/jpeg-6b-2022/obj`.
 
 ```sh
 cd mandelbrot/jpeg
@@ -211,7 +214,8 @@ This image has the the following features and parameters.
 
 `ckormanyos/mandelbrot` uses configuration files to specify the point,
 size and depth of the iterative fractal calculation.
-The configuration files are stored in the [`mandelbrot/cfg`](./mandelbrot/cfg)
+The configuration files are stored in the
+[`mandelbrot/cfg`](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/cfg)
 directory.
 
 The code responsible for controlling the iterative calculation,
@@ -221,7 +225,8 @@ is written in a generic and configurable way.
 To characterize a new Mandelbrot fractal iteration, simply write
 a header-configuration-file with content similar to that shown below.
 Include the configuration file in
-[`test_mandelbrot.cpp`](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/test/test_mandelbrot.cpp) and run the calculation.
+[`test_mandelbrot.cpp`](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/test/test_mandelbrot.cpp)
+and run the calculation.
 
 Consider as a sample, for instance, the relevant content of the configuration file
 [`mandelbrot_cfg_MANDELBROT_01_FULL.h`](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_01_FULL.h).
@@ -325,3 +330,12 @@ The following adaptions have been performed.
   - Eliminate all uses of `NEED_FAR_POINTERS` and `NEED_SHORT_EXTERNAL_NAMES`.
   - Handle Level-3 warnings found in MSVC.
   - Handle GCC warnings from `-Wall`, `-Wextra`, `-Wpedantic`, `-Wconversion` and `-Wsign-conversion`.
+
+## Mandelbrot Discovery
+
+The Mandelbrot Discovery program aims to provide semi-automatic assistance
+to find interesting points for fractal deep dives.
+
+This project is work in progress which is being undertaken in the
+[`mandelbrot/MandelbrotDiscovery`](https://github.com/ckormanyos/mandelbrot/tree/main/MandelbrotDiscovery)
+directory.
