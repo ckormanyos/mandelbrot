@@ -124,11 +124,6 @@
           (::ShowWindow(my_handle_to_window, SW_SHOW) == TRUE);
 
         create_window_is_ok = (show_window_result_is_ok && create_window_is_ok);
-
-        my_thread = std::thread(thread_process);
-
-        // Detach this process from its spawning thread object.
-        my_thread.detach();
       }
 
       const auto handle_to_active_window = ::GetActiveWindow();
@@ -167,6 +162,12 @@
         console_output() = GetStdHandle(STD_OUTPUT_HANDLE);
         console_input () = GetStdHandle(STD_INPUT_HANDLE);
       }
+
+      // Start the thread process.
+      my_thread = std::thread(thread_process);
+
+      // Detach this process from its spawning thread object.
+      my_thread.detach();
 
       bool get_message_is_ok { true };
 
@@ -234,6 +235,7 @@
     static std::thread     my_thread;
     static volatile ::LONG my_thread_wants_exit;
     static volatile ::LONG my_thread_did_exit;
+    static volatile ::LONG my_thread_new_set_on;
 
     static constexpr auto window_title() noexcept -> const char* { return WindowTitle; }
     static constexpr auto icon_id() noexcept -> int { return IconId; }
@@ -304,34 +306,53 @@
 
       if(message == static_cast<::UINT>(WM_LBUTTONDOWN))
       {
-        // Display the x,y coordinate.
+        ::LRESULT lresult { };
 
-        const int pixel_x
+        for(auto   i = static_cast<unsigned>(UINT8_C(0));
+                   i < static_cast<unsigned>(UINT8_C(40));
+                 ++i)
         {
-          static_cast<int>(static_cast<::WORD>(static_cast<::DWORD>(l_param)))
-        };
+          if(my_thread_new_set_on == static_cast<::LONG>(INT8_C(1)))
+          {
+            break;
+          }
 
-        const int pixel_y
-        {
-          static_cast<int>(static_cast<::WORD>(static_cast<::DWORD>(l_param) >> static_cast<unsigned>(UINT8_C(16))))
-        };
-
-        point_type coordinate { };
-
-        auto result_is_ok = my_ptr_to_rectangle->pixel_to_point(pixel_x, pixel_y, coordinate);
-
-        if(result_is_ok)
-        {
-          result_is_ok = (write_number("x_val: ", coordinate.my_x) && result_is_ok);
-          result_is_ok = (write_number("y_val: ", coordinate.my_y) && result_is_ok);
-          result_is_ok = (write_string("\n")                       && result_is_ok);
+          ::Sleep(static_cast<::DWORD>(UINT8_C(5)));
         }
 
-        const auto lresult =
-          static_cast<::LRESULT>
-          (
-            result_is_ok ? static_cast<::LRESULT>(INT8_C(0)) : static_cast<::LRESULT>(INT8_C(-1))
-          );
+        if(my_thread_new_set_on)
+        {
+          // Display the x,y coordinate.
+
+          const int pixel_x
+          {
+            static_cast<int>(static_cast<::WORD>(static_cast<::DWORD>(l_param)))
+          };
+
+          const int pixel_y
+          {
+            static_cast<int>(static_cast<::WORD>(static_cast<::DWORD>(l_param) >> static_cast<unsigned>(UINT8_C(16))))
+          };
+
+          point_type coordinate { };
+
+          auto result_is_ok = my_ptr_to_rectangle->pixel_to_point(pixel_x, pixel_y, coordinate);
+
+          if(result_is_ok)
+          {
+            result_is_ok = (write_number("x_val: ", coordinate.my_x) && result_is_ok);
+            result_is_ok = (write_number("y_val: ", coordinate.my_y) && result_is_ok);
+            result_is_ok = (write_string("\n")                       && result_is_ok);
+          }
+
+          const auto lresult =
+            static_cast<::LRESULT>
+            (
+              result_is_ok ? static_cast<::LRESULT>(INT8_C(0)) : static_cast<::LRESULT>(INT8_C(-1))
+            );
+
+          static_cast<void>(::InterlockedExchange(&my_thread_new_set_on, static_cast<::LONG>(INT8_C(0))));
+        }
 
         return lresult;
       }
@@ -374,7 +395,26 @@
     {
       while(my_thread_wants_exit == static_cast<::LONG>(INT8_C(0)))
       {
-        std::this_thread::sleep_for(std::chrono::microseconds(static_cast<unsigned>(UINT8_C(250))));
+        std::this_thread::sleep_for(std::chrono::microseconds(static_cast<unsigned>(UINT8_C(20))));
+
+        while(   (my_thread_new_set_on == static_cast<::LONG>(INT8_C(1)))
+              && (my_thread_wants_exit == static_cast<::LONG>(INT8_C(0))))
+        {
+          std::this_thread::sleep_for(std::chrono::microseconds(static_cast<unsigned>(UINT8_C(20))));
+        }
+
+        write_string("cmd: ");
+
+        std::string str_cmd { };
+
+        read_string(str_cmd);
+
+        if(str_cmd == "set")
+        {
+          write_string("click to set a point\n");
+
+          static_cast<void>(::InterlockedExchange(&my_thread_new_set_on, static_cast<::LONG>(INT8_C(1))));
+        }
       }
 
       static_cast<void>(::InterlockedExchange(&my_thread_did_exit, static_cast<::LONG>(INT8_C(1))));
@@ -462,6 +502,36 @@
       pConverter->Release();
 
       return hBitmap;
+    }
+
+    static auto read_string(std::string& str_to_read) -> bool
+    {
+      constexpr std::size_t input_buffer_size { static_cast<std::size_t>(UINT16_C(2048)) };
+
+      char* input_buffer = new char[input_buffer_size];
+
+      DWORD bytes_read { };
+
+      const auto result_read =
+        ::ReadConsole(console_input(), input_buffer, input_buffer_size, &bytes_read, nullptr);
+
+      const bool result_read_is_ok = ((result_read == TRUE) && (bytes_read > static_cast<DWORD>(UINT8_C(2))));
+
+      if(result_read_is_ok)
+      {
+        str_to_read =
+          std::string
+          (
+            input_buffer,
+            input_buffer + static_cast<std::size_t>(bytes_read - static_cast<DWORD>(UINT8_C(2)))
+          );
+      }
+      else
+      {
+        str_to_read.erase();
+      }
+
+      return result_read_is_ok;
     }
 
     static auto write_string(const std::string& str_to_write) -> bool
@@ -565,6 +635,15 @@
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
   volatile ::LONG mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotNumericType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_thread_did_exit;
+
+  template<const int   WindowWidth,
+           const int   WindowHeight,
+           typename    MandelbrotNumericType,
+           const char* WindowTitle,
+           const int   IconId,
+           const int   ScreenCoordinateX,
+           const int   ScreenCoordinateY>
+  volatile ::LONG mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotNumericType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_thread_new_set_on;
 
   template<const int   WindowWidth,
            const int   WindowHeight,
