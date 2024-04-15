@@ -25,7 +25,7 @@
 
   namespace mandelbrot_discovery_detail
   {
-    const char WindowTitleDefault[] = "Mandelbrot Discovery";
+    constexpr char WindowTitleDefault[] = "Mandelbrot Discovery";
   }
 
   template<const int   WindowWidth,
