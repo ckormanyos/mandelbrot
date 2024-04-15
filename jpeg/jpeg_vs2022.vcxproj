@@ -108,13 +108,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)jpeg\$(Platform)\$(Configuration)\</OutDir>
     <IncludePath>$(IncludePath)</IncludePath>
     <ExternalIncludePath>$(IncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)jpeg\$(Platform)\$(Configuration)\</OutDir>
     <IncludePath>$(IncludePath)</IncludePath>
     <ExternalIncludePath>$(IncludePath)</ExternalIncludePath>
   </PropertyGroup>

@@ -132,6 +132,14 @@
       int        my_pixels_x { };
       int        my_pixels_y { };
     };
+
+    template<typename PointType>
+    inline auto operator/(const rectangle_type<PointType>& lhs, const int n) -> rectangle_type<PointType>
+    {
+      using local_point_type = PointType;
+
+      return rectangle_type<local_point_type>(lhs) /= n;
+    }
   } // namespace geometry
 
 #endif // GEOMETRY_2024_04_13_H

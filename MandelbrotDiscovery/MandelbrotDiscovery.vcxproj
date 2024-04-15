@@ -84,11 +84,63 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\jpeg\jpeg-6b-2022\jchuff.h" />
+    <ClInclude Include="..\jpeg\jpeg-6b-2022\jconfig.h" />
+    <ClInclude Include="..\jpeg\jpeg-6b-2022\jdct.h" />
+    <ClInclude Include="..\jpeg\jpeg-6b-2022\jdhuff.h" />
+    <ClInclude Include="..\jpeg\jpeg-6b-2022\jerror.h" />
+    <ClInclude Include="..\jpeg\jpeg-6b-2022\jinclude.h" />
+    <ClInclude Include="..\jpeg\jpeg-6b-2022\jmemsys.h" />
+    <ClInclude Include="..\jpeg\jpeg-6b-2022\jmorecfg.h" />
+    <ClInclude Include="..\jpeg\jpeg-6b-2022\jpegint.h" />
+    <ClInclude Include="..\jpeg\jpeg-6b-2022\jpeglib.h" />
+    <ClInclude Include="..\jpeg\jpeg-6b-2022\jversion.h" />
     <ClInclude Include="geometry.h" />
     <ClInclude Include="mandelbrot_discovery.h" />
     <ClInclude Include="utility.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jcapimin.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jcapistd.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jccoefct.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jccolor.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jcdctmgr.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jchuff.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jcinit.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jcmainct.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jcmarker.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jcmaster.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jcomapi.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jcparam.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jcphuff.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jcprepct.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jcsample.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jctrans.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jdapimin.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jdatadst.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jdcoefct.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jdcolor.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jddctmgr.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jdhuff.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jdinput.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jdmainct.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jdmarker.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jdmerge.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jdpostct.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jdsample.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jerror.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jfdctflt.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jfdctfst.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jfdctint.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jidctflt.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jidctfst.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jidctint.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jidctred.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jmemansi.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jmemmgr.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jquant1.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jquant2.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jutils.c" />
     <ClCompile Include="mandelbrot_discovery.cpp" />
   </ItemGroup>
   <ItemGroup>

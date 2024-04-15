@@ -516,9 +516,9 @@ jobs:
         working-directory: ./
         run: |
           set INCLUDE=%cd%;%cd%\jpeg\jpeg-6b-2022;%cd%\..\boost-root;%INCLUDE%
-          MSBuild -m mandelbrot.sln -p:useenv=true -p:Configuration=mandelbrot_release -p:Platform=x64 /t:Rebuild
-          dir %cd%\x64\mandelbrot_release\mandelbrot.exe
-          copy /Y %cd%\x64\mandelbrot_release\mandelbrot.exe .
+          MSBuild -m mandelbrot.sln -p:useenv=true -p:Configuration=Release -p:Platform=x64 /t:Rebuild
+          dir %cd%\x64\Release\mandelbrot.exe
+          copy /Y %cd%\x64\Release\mandelbrot.exe .
           dir .\mandelbrot.exe
           .\mandelbrot.exe
           dir .\images\tmp\mandelbrot_MANDELBROT_05_SEAHORSES.jpg
@@ -571,9 +571,9 @@ jobs:
         working-directory: ./
         run: |
           set INCLUDE=%cd%;%cd%\jpeg\jpeg-6b-2022;%cd%\..\boost-root;%INCLUDE%
-          MSBuild -m mandelbrot_vs2022.sln -p:useenv=true -p:Configuration=mandelbrot_release -p:Platform=x64 /t:Rebuild
-          dir %cd%\x64\mandelbrot_release\mandelbrot_vs2022.exe
-          copy /Y %cd%\x64\mandelbrot_release\mandelbrot_vs2022.exe .
+          MSBuild -m mandelbrot_vs2022.sln -p:useenv=true -p:Configuration=Release -p:Platform=x64 /t:Rebuild
+          dir %cd%\x64\Release\mandelbrot_vs2022.exe
+          copy /Y %cd%\x64\Release\mandelbrot_vs2022.exe .
           dir .\mandelbrot_vs2022.exe
           .\mandelbrot_vs2022.exe
           dir .\images\tmp\mandelbrot_MANDELBROT_05_SEAHORSES.jpg
