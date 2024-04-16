@@ -12,10 +12,10 @@
 
 namespace local::cfg
 {
-  constexpr int  MANDELBROT_CALCULATION_DIGITS10    =      54;
+  constexpr int  MANDELBROT_CALCULATION_DIGITS10    =     124;
   constexpr int  MANDELBROT_CALCULATION_PIXELS_X    =     768;
   constexpr int  MANDELBROT_CALCULATION_PIXELS_Y    =     768;
-  constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =    6000;
+  constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =    8000;
 
   constexpr char MANDELBROT_POINT_DX_HALF[]         = "1.35";
   constexpr char MANDELBROT_POINT_DY_HALF[]         = "1.35";

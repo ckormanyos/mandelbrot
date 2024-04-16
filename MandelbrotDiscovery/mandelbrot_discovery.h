@@ -494,7 +494,7 @@
 
           const auto zoom_factor_p10 = ilogb(my_mandelbrot_zoom_factor);
 
-          write_string("mandelbrot_zoom: " + std::to_string(zoom_factor_p10 + 1) + "\n");
+          write_string("mandelbrot_zoom: " + std::to_string(zoom_factor_p10) + "\n");
 
           // My first point found.
           // x_val: -1.2504666102669714123046875
