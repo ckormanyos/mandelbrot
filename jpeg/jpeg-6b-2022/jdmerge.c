@@ -53,8 +53,8 @@ typedef struct
   /* Private state for YCC->RGB conversion */
   int* Cr_r_tab;    /* => table for Cr to R conversion */
   int* Cb_b_tab;    /* => table for Cb to B conversion */
-  INT32* Cr_g_tab;    /* => table for Cr to G conversion */
-  INT32* Cb_g_tab;    /* => table for Cb to G conversion */
+  INT32_JPEG* Cr_g_tab;    /* => table for Cr to G conversion */
+  INT32_JPEG* Cb_g_tab;    /* => table for Cb to G conversion */
 
   /* For 2:1 vertical sampling, we produce two output rows at a time.
    * We need a "spare" row buffer to hold the second output row if the
@@ -71,8 +71,8 @@ typedef struct
 typedef my_upsampler* my_upsample_ptr;
 
 #define SCALEBITS  16  /* speediest right-shift on some machines */
-#define ONE_HALF  ((INT32) 1 << (SCALEBITS-1))
-#define FIX(x)    ((INT32) ((x) * (1L<<SCALEBITS) + 0.5))
+#define ONE_HALF  ((INT32_JPEG) 1 << (SCALEBITS-1))
+#define FIX(x)    ((INT32_JPEG) ((x) * (1L<<SCALEBITS) + 0.5))
 
 
 /*
@@ -85,7 +85,7 @@ build_ycc_rgb_table(j_decompress_ptr cinfo)
 {
   my_upsample_ptr upsample = (my_upsample_ptr) cinfo->upsample;
   int i;
-  INT32 x;
+  INT32_JPEG x;
   SHIFT_TEMPS
 
   upsample->Cr_r_tab = (int*)
@@ -94,12 +94,12 @@ build_ycc_rgb_table(j_decompress_ptr cinfo)
   upsample->Cb_b_tab = (int*)
                        (*cinfo->mem->alloc_small)((j_common_ptr) cinfo, JPOOL_IMAGE,
                            (MAXJSAMPLE + 1) * SIZEOF(int));
-  upsample->Cr_g_tab = (INT32*)
+  upsample->Cr_g_tab = (INT32_JPEG*)
                        (*cinfo->mem->alloc_small)((j_common_ptr) cinfo, JPOOL_IMAGE,
-                           (MAXJSAMPLE + 1) * SIZEOF(INT32));
-  upsample->Cb_g_tab = (INT32*)
+                           (MAXJSAMPLE + 1) * SIZEOF(INT32_JPEG));
+  upsample->Cb_g_tab = (INT32_JPEG*)
                        (*cinfo->mem->alloc_small)((j_common_ptr) cinfo, JPOOL_IMAGE,
-                           (MAXJSAMPLE + 1) * SIZEOF(INT32));
+                           (MAXJSAMPLE + 1) * SIZEOF(INT32_JPEG));
 
   for(i = 0, x = -CENTERJSAMPLE; i <= MAXJSAMPLE; i++, x++)
   {
@@ -263,8 +263,8 @@ h2v1_merged_upsample(j_decompress_ptr cinfo,
   JSAMPLE* range_limit = cinfo->sample_range_limit;
   int* Crrtab = upsample->Cr_r_tab;
   int* Cbbtab = upsample->Cb_b_tab;
-  INT32* Crgtab = upsample->Cr_g_tab;
-  INT32* Cbgtab = upsample->Cb_g_tab;
+  INT32_JPEG* Crgtab = upsample->Cr_g_tab;
+  INT32_JPEG* Cbgtab = upsample->Cb_g_tab;
   SHIFT_TEMPS
 
   inptr0 = input_buf[0][in_row_group_ctr];
@@ -329,8 +329,8 @@ h2v2_merged_upsample(j_decompress_ptr cinfo,
   JSAMPLE* range_limit = cinfo->sample_range_limit;
   int* Crrtab = upsample->Cr_r_tab;
   int* Cbbtab = upsample->Cb_b_tab;
-  INT32* Crgtab = upsample->Cr_g_tab;
-  INT32* Cbgtab = upsample->Cb_g_tab;
+  INT32_JPEG* Crgtab = upsample->Cr_g_tab;
+  INT32_JPEG* Cbgtab = upsample->Cb_g_tab;
   SHIFT_TEMPS
 
   inptr00 = input_buf[0][in_row_group_ctr * 2];

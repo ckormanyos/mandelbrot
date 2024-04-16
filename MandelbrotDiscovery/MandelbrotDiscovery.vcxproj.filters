@@ -191,6 +191,9 @@
     <ClInclude Include="..\jpeg\jpeg-6b-2022\jdhuff.h">
       <Filter>jpeg\jpeg-6b-2022</Filter>
     </ClInclude>
+    <ClInclude Include="text.h">
+      <Filter>MandelbrotDiscovery</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MandelbrotDiscovery.rc">

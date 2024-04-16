@@ -397,7 +397,7 @@ h2v2_fancy_upsample(j_decompress_ptr cinfo, jpeg_component_info* compptr,
 #if BITS_IN_JSAMPLE == 8
   int thiscolsum, lastcolsum, nextcolsum;
 #else
-  INT32 thiscolsum, lastcolsum, nextcolsum;
+  INT32_JPEG thiscolsum, lastcolsum, nextcolsum;
 #endif
   JDIMENSION colctr;
   int inrow, outrow, v;

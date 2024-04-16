@@ -9,6 +9,22 @@
   #define MANDELBROT_DISCOVERY_2024_04_12_H
 
   #include <geometry.h>
+  #include <text.h>
+
+  #if !defined(MANDELBROT_NODISCARD)
+  #if defined(_MSC_VER) && !defined(__GNUC__)
+  #define MANDELBROT_NODISCARD
+  #else
+  #if (defined(__cplusplus) && (__cplusplus >= 201703L))
+  #define MANDELBROT_NODISCARD  [[nodiscard]] // NOLINT(cppcoreguidelines-macro-usage)
+  #else
+  #define MANDELBROT_NODISCARD
+  #endif
+  #endif
+  #endif
+
+  #include <concurrency/stopwatch.h>
+  #include <mandelbrot/mandelbrot.h>
 
   #include <windows.h>
   #include <wincodec.h>
@@ -229,12 +245,15 @@
     ::HWND      my_handle_to_window   { nullptr };
     ::HINSTANCE my_handle_to_instance { nullptr };
 
+    static point_type      my_rectangle_center;
     static rectangle_type* my_ptr_to_rectangle;
 
-    static std::thread       my_thread;
-    static volatile ::LONG   my_thread_wants_exit;
-    static volatile ::LONG   my_thread_did_exit;
-    static std::atomic<bool> my_thread_wait_for_new_set_click;
+    static std::thread             my_thread;
+    static volatile ::LONG         my_thread_wants_exit;
+    static volatile ::LONG         my_thread_did_exit;
+    static std::atomic<bool>       my_thread_wait_for_new_set_click;
+    static mandelbrot_numeric_type my_mandelbrot_zoom_factor;
+
 
     static constexpr auto window_title() noexcept -> const char* { return WindowTitle; }
     static constexpr auto icon_id() noexcept -> int { return IconId; }
@@ -272,7 +291,14 @@
         const ::HDC hdc { BeginPaint(handle_to_window, &ps) };
 
         // Load JPEG image.
-        const ::HBITMAP hBitmap { load_jpeg_image(L"mandelbrot_MANDELBROT_01_FULL.jpg") };
+        const ::HBITMAP hBitmap
+        {
+          load_jpeg_image
+          (
+            (my_mandelbrot_zoom_factor > 1) ? L"mandelbrot_zooming.jpg"
+                                            : L"mandelbrot_MANDELBROT_01_FULL.jpg"
+          )
+        };
 
         // Draw the image onto the window's client area
         ::HDC hdcMem { CreateCompatibleDC(hdc) };
@@ -340,15 +366,13 @@
             static_cast<int>(static_cast<::WORD>(static_cast<::DWORD>(l_param) >> static_cast<unsigned>(UINT8_C(16))))
           };
 
-          point_type coordinate { };
-
-          auto result_is_ok = my_ptr_to_rectangle->pixel_to_point(pixel_x, pixel_y, coordinate);
+          auto result_is_ok = my_ptr_to_rectangle->pixel_to_point(pixel_x, pixel_y, my_rectangle_center);
 
           if(result_is_ok)
           {
-            result_is_ok = (write_number("x_val: ", coordinate.my_x) && result_is_ok);
-            result_is_ok = (write_number("y_val: ", coordinate.my_y) && result_is_ok);
-            result_is_ok = (write_string("\n")                       && result_is_ok);
+            result_is_ok = (write_number("x_val: ", my_rectangle_center.my_x) && result_is_ok);
+            result_is_ok = (write_number("y_val: ", my_rectangle_center.my_y) && result_is_ok);
+            result_is_ok = (write_string("\n")                                && result_is_ok);
           }
 
           const auto lresult =
@@ -419,6 +443,70 @@
           {
             std::this_thread::sleep_for(std::chrono::microseconds(static_cast<unsigned>(UINT8_C(20))));
           }
+        }
+        else if(str_cmd == "calc")
+        {
+          constexpr auto MANDELBROT_CALCULATION_ITERATIONS = static_cast<std::uint_fast32_t>(2000);
+          constexpr auto MANDELBROT_CALCULATION_PIXELS_X   = static_cast<std::uint_fast32_t>(768);
+          constexpr auto MANDELBROT_CALCULATION_PIXELS_Y   = static_cast<std::uint_fast32_t>(768);
+
+          // Rescale and re-center the rectangle.
+          my_ptr_to_rectangle->operator/=(10);
+          my_ptr_to_rectangle->recenter(my_rectangle_center);
+
+          using mandelbrot_generator_type =
+            ckormanyos::mandelbrot::mandelbrot_generator<mandelbrot_numeric_type, MANDELBROT_CALCULATION_ITERATIONS>;
+
+                ckormanyos::mandelbrot::color::color_stretch_histogram_method local_color_stretches;
+          const ckormanyos::mandelbrot::color::color_functions_bw             local_color_functions;
+
+          using local_mandelbrot_config_type  =
+            ckormanyos::mandelbrot::mandelbrot_config<mandelbrot_numeric_type,
+                                                      static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_ITERATIONS),
+                                                      static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_X),
+                                                      static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_Y)>;
+
+          const local_mandelbrot_config_type
+            mandelbrot_config_object
+            (
+              my_ptr_to_rectangle->my_center.my_x - my_ptr_to_rectangle->my_dx_half,
+              my_ptr_to_rectangle->my_center.my_x + my_ptr_to_rectangle->my_dx_half,
+              my_ptr_to_rectangle->my_center.my_y - my_ptr_to_rectangle->my_dy_half,
+              my_ptr_to_rectangle->my_center.my_y + my_ptr_to_rectangle->my_dy_half
+            );
+
+          mandelbrot_generator_type mandelbrot_generator(mandelbrot_config_object);
+
+          util::text::text_output_alloc_console text_out(mandelbrot_discovery::write_string);
+
+          using stopwatch_type = ::stopwatch<std::chrono::high_resolution_clock>;
+
+          stopwatch_type my_stopwatch { };
+
+          mandelbrot_generator.generate_mandelbrot_image("mandelbrot_zooming.jpg",
+                                                         local_color_functions,
+                                                         local_color_stretches,
+                                                         text_out);
+
+          const auto execution_time = stopwatch_type::elapsed_time<float>(my_stopwatch);
+
+          my_mandelbrot_zoom_factor *= 10;
+
+          const auto zoom_factor_p10 = ilogb(my_mandelbrot_zoom_factor);
+
+          write_string("mandelbrot_zoom: " + std::to_string(zoom_factor_p10 + 1) + "\n");
+
+          // My first point found.
+          // x_val: -1.2504666102669714123046875
+          // y_val: -0.0103464834627013576171875
+
+          using local_window_type = mandelbrot_discovery;
+
+          ::RECT rect { };
+
+          ::GetClientRect(local_window_type::instance().get_handle_to_window(), &rect);
+
+          ::RedrawWindow(local_window_type::instance().get_handle_to_window(), &rect, nullptr, RDW_INVALIDATE);
         }
       }
 
@@ -657,6 +745,24 @@
            const int   IconId,
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
+  typename mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotNumericType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::point_type mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotNumericType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_rectangle_center { };
+
+  template<const int   WindowWidth,
+           const int   WindowHeight,
+           typename    MandelbrotNumericType,
+           const char* WindowTitle,
+           const int   IconId,
+           const int   ScreenCoordinateX,
+           const int   ScreenCoordinateY>
   typename mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotNumericType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::rectangle_type* mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotNumericType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_ptr_to_rectangle { nullptr };
+
+  template<const int   WindowWidth,
+           const int   WindowHeight,
+           typename    MandelbrotNumericType,
+           const char* WindowTitle,
+           const int   IconId,
+           const int   ScreenCoordinateX,
+           const int   ScreenCoordinateY>
+  typename mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotNumericType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::mandelbrot_numeric_type mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotNumericType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_mandelbrot_zoom_factor { 1 };
 
 #endif // MANDELBROT_DISCOVERY_2024_04_12_H

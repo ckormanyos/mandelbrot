@@ -22,8 +22,8 @@ typedef struct
   /* Private state for YCC->RGB conversion */
   int* Cr_r_tab;    /* => table for Cr to R conversion */
   int* Cb_b_tab;    /* => table for Cb to B conversion */
-  INT32* Cr_g_tab;    /* => table for Cr to G conversion */
-  INT32* Cb_g_tab;    /* => table for Cb to G conversion */
+  INT32_JPEG* Cr_g_tab;    /* => table for Cr to G conversion */
+  INT32_JPEG* Cb_g_tab;    /* => table for Cb to G conversion */
 } my_color_deconverter;
 
 typedef my_color_deconverter* my_cconvert_ptr;
@@ -59,8 +59,8 @@ typedef my_color_deconverter* my_cconvert_ptr;
  */
 
 #define SCALEBITS  16  /* speediest right-shift on some machines */
-#define ONE_HALF  ((INT32) 1 << (SCALEBITS-1))
-#define FIX(x)    ((INT32) ((x) * (1L<<SCALEBITS) + 0.5))
+#define ONE_HALF  ((INT32_JPEG) 1 << (SCALEBITS-1))
+#define FIX(x)    ((INT32_JPEG) ((x) * (1L<<SCALEBITS) + 0.5))
 
 
 /*
@@ -72,7 +72,7 @@ build_ycc_rgb_table(j_decompress_ptr cinfo)
 {
   my_cconvert_ptr cconvert = (my_cconvert_ptr) cinfo->cconvert;
   int i;
-  INT32 x;
+  INT32_JPEG x;
   SHIFT_TEMPS
 
   cconvert->Cr_r_tab = (int*)
@@ -81,12 +81,12 @@ build_ycc_rgb_table(j_decompress_ptr cinfo)
   cconvert->Cb_b_tab = (int*)
                        (*cinfo->mem->alloc_small)((j_common_ptr) cinfo, JPOOL_IMAGE,
                            (MAXJSAMPLE + 1) * SIZEOF(int));
-  cconvert->Cr_g_tab = (INT32*)
+  cconvert->Cr_g_tab = (INT32_JPEG*)
                        (*cinfo->mem->alloc_small)((j_common_ptr) cinfo, JPOOL_IMAGE,
-                           (MAXJSAMPLE + 1) * SIZEOF(INT32));
-  cconvert->Cb_g_tab = (INT32*)
+                           (MAXJSAMPLE + 1) * SIZEOF(INT32_JPEG));
+  cconvert->Cb_g_tab = (INT32_JPEG*)
                        (*cinfo->mem->alloc_small)((j_common_ptr) cinfo, JPOOL_IMAGE,
-                           (MAXJSAMPLE + 1) * SIZEOF(INT32));
+                           (MAXJSAMPLE + 1) * SIZEOF(INT32_JPEG));
 
   for(i = 0, x = -CENTERJSAMPLE; i <= MAXJSAMPLE; i++, x++)
   {
@@ -133,8 +133,8 @@ ycc_rgb_convert(j_decompress_ptr cinfo,
   JSAMPLE* range_limit = cinfo->sample_range_limit;
   int* Crrtab = cconvert->Cr_r_tab;
   int* Cbbtab = cconvert->Cb_b_tab;
-  INT32* Crgtab = cconvert->Cr_g_tab;
-  INT32* Cbgtab = cconvert->Cb_g_tab;
+  INT32_JPEG* Crgtab = cconvert->Cr_g_tab;
+  INT32_JPEG* Cbgtab = cconvert->Cb_g_tab;
   SHIFT_TEMPS
 
   while(--num_rows >= 0)
@@ -269,8 +269,8 @@ ycck_cmyk_convert(j_decompress_ptr cinfo,
   JSAMPLE* range_limit = cinfo->sample_range_limit;
   int* Crrtab = cconvert->Cr_r_tab;
   int* Cbbtab = cconvert->Cb_b_tab;
-  INT32* Crgtab = cconvert->Cr_g_tab;
-  INT32* Cbgtab = cconvert->Cb_g_tab;
+  INT32_JPEG* Crgtab = cconvert->Cr_g_tab;
+  INT32_JPEG* Cbgtab = cconvert->Cb_g_tab;
   SHIFT_TEMPS
 
   while(--num_rows >= 0)
