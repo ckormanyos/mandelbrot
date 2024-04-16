@@ -13,6 +13,7 @@
   #include <windows.h>
   #include <wincodec.h>
 
+  #include <atomic>
   #include <chrono>
   #include <cstdint>
   #include <cstring>
@@ -230,10 +231,10 @@
 
     static rectangle_type* my_ptr_to_rectangle;
 
-    static std::thread     my_thread;
-    static volatile ::LONG my_thread_wants_exit;
-    static volatile ::LONG my_thread_did_exit;
-    static volatile ::LONG my_thread_new_set_on;
+    static std::thread       my_thread;
+    static volatile ::LONG   my_thread_wants_exit;
+    static volatile ::LONG   my_thread_did_exit;
+    static std::atomic<bool> my_thread_wait_for_new_set_click;
 
     static constexpr auto window_title() noexcept -> const char* { return WindowTitle; }
     static constexpr auto icon_id() noexcept -> int { return IconId; }
@@ -244,6 +245,18 @@
     static auto console_output() -> ::HANDLE&;
 
     static auto console_sync_mtx() -> std::mutex&;
+
+    static auto set_wait_for_click_response(const bool set_on) -> bool
+    {
+      my_thread_wait_for_new_set_click.store(set_on);
+
+      return (get_wait_for_click_response() == set_on);
+    }
+
+    static auto get_wait_for_click_response() -> bool
+    {
+      return my_thread_wait_for_new_set_click.load();
+    }
 
     static auto CALLBACK my_window_callback(::HWND   handle_to_window,
                                             ::UINT   message,
@@ -306,19 +319,14 @@
       {
         ::LRESULT lresult { };
 
-        for(auto   i = static_cast<unsigned>(UINT8_C(0));
-                   i < static_cast<unsigned>(UINT8_C(40));
-                 ++i)
+        for(auto     idx = static_cast<unsigned>(UINT8_C(0));
+                   ((idx < static_cast<unsigned>(UINT8_C(40))) && (!get_wait_for_click_response()));
+                   ++idx)
         {
-          if(my_thread_new_set_on == static_cast<::LONG>(INT8_C(1)))
-          {
-            break;
-          }
-
           ::Sleep(static_cast<::DWORD>(UINT8_C(5)));
         }
 
-        if(my_thread_new_set_on)
+        if(get_wait_for_click_response())
         {
           // Display the x,y coordinate.
 
@@ -349,7 +357,7 @@
               result_is_ok ? static_cast<::LRESULT>(INT8_C(0)) : static_cast<::LRESULT>(INT8_C(-1))
             );
 
-          static_cast<void>(::InterlockedExchange(&my_thread_new_set_on, static_cast<::LONG>(INT8_C(0))));
+          static_cast<void>(set_wait_for_click_response(false));
         }
 
         return lresult;
@@ -395,12 +403,6 @@
       {
         std::this_thread::sleep_for(std::chrono::microseconds(static_cast<unsigned>(UINT8_C(20))));
 
-        while(   (my_thread_new_set_on == static_cast<::LONG>(INT8_C(1)))
-              && (my_thread_wants_exit == static_cast<::LONG>(INT8_C(0))))
-        {
-          std::this_thread::sleep_for(std::chrono::microseconds(static_cast<unsigned>(UINT8_C(20))));
-        }
-
         write_string("cmd: ");
 
         std::string str_cmd { };
@@ -411,7 +413,12 @@
         {
           write_string("click to set a point\n");
 
-          static_cast<void>(::InterlockedExchange(&my_thread_new_set_on, static_cast<::LONG>(INT8_C(1))));
+          static_cast<void>(set_wait_for_click_response(true));
+
+          while(get_wait_for_click_response())
+          {
+            std::this_thread::sleep_for(std::chrono::microseconds(static_cast<unsigned>(UINT8_C(20))));
+          }
         }
       }
 
@@ -641,7 +648,7 @@
            const int   IconId,
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
-  volatile ::LONG mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotNumericType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_thread_new_set_on;
+  std::atomic<bool> mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotNumericType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_thread_wait_for_new_set_click;
 
   template<const int   WindowWidth,
            const int   WindowHeight,
