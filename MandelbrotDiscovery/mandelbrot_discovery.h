@@ -8,6 +8,8 @@
 #ifndef MANDELBROT_DISCOVERY_2024_04_12_H
   #define MANDELBROT_DISCOVERY_2024_04_12_H
 
+  #define NOMINMAX
+
   #include <geometry.h>
   #include <text.h>
 
