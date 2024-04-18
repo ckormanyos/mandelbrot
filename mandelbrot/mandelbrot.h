@@ -230,16 +230,54 @@
       output_stream.setf(std::ios::fixed);
       output_stream.precision(static_cast<std::streamsize>(INT8_C(1)));
 
+      std::vector<numeric_type> zkr(mandelbrot_config_object.max_iterations);
+      std::vector<numeric_type> zki(mandelbrot_config_object.max_iterations);
+
+      using std::floor;
+      numeric_type x_center(static_cast<numeric_type>((mandelbrot_config_object.x_lo() + mandelbrot_config_object.x_hi()) / static_cast<numeric_type>(UINT8_C(2))));
+      numeric_type y_center(static_cast<numeric_type>((mandelbrot_config_object.y_lo() + mandelbrot_config_object.y_hi()) / static_cast<numeric_type>(UINT8_C(2))));
+
+      // Initialize the Zk-Komponence of the centrap point, assumption max itterations are reached
+      {
+        zkr[0] = static_cast<unsigned>(UINT8_C(0));
+        zki[0] = static_cast<unsigned>(UINT8_C(0));
+        numeric_type zr2{ static_cast<unsigned>(UINT8_C(0)) };
+        numeric_type zi2{ static_cast<unsigned>(UINT8_C(0)) };
+
+        auto iteration_result = static_cast<std::uint_fast32_t>(UINT8_C(1));
+
+        while ((iteration_result < max_iterations) && ((zr2 + zi2) < four())) // NOLINT(altera-id-dependent-backward-branch)
+        {
+          // The inner loop performs optimized complex multiply and add.
+          // This is the main work of the fractal iteration scheme.
+
+          zki[iteration_result] = zki[iteration_result-1] * zkr[iteration_result-1];
+
+          zki[iteration_result] += (zki[iteration_result] + y_center);
+          zkr[iteration_result] = (zr2 - zi2) + x_center;
+
+          zr2 = zkr[iteration_result] * zkr[iteration_result];
+          zi2 = zki[iteration_result] * zki[iteration_result];
+
+          ++iteration_result;
+        }
+
+        if (iteration_result < max_iterations)
+        {
+          output_stream << "central point escalates \n";
+        }
+      }
+
       std::vector<numeric_type> x_coord(mandelbrot_config_object.integral_width());  // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
       std::vector<numeric_type> y_coord(mandelbrot_config_object.integral_height()); // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
 
       // Initialize the x-y coordinates.
       {
-        numeric_type x_val(mandelbrot_config_object.x_lo());
-        numeric_type y_val(mandelbrot_config_object.y_hi());
+        numeric_type x_val(mandelbrot_config_object.x_lo() - x_center);
+        numeric_type y_val(mandelbrot_config_object.y_hi() - y_center);
 
-        for(auto& x : x_coord) { x = x_val; x_val += mandelbrot_config_object.step_x(); }
-        for(auto& y : y_coord) { y = y_val; y_val -= mandelbrot_config_object.step_y(); }
+        for (auto& x : x_coord) { x = x_val; x_val += mandelbrot_config_object.step_x(); }
+        for (auto& y : y_coord) { y = y_val; y_val -= mandelbrot_config_object.step_y(); }
       }
 
       std::atomic_flag mandelbrot_iteration_lock { };
@@ -250,7 +288,7 @@
       (
         static_cast<std::size_t>(UINT8_C(0)),
         y_coord.size(),
-        [&mandelbrot_iteration_lock, &unordered_parallel_row_count, &output_stream, &x_coord, &y_coord, this](std::size_t j_row)
+        [&mandelbrot_iteration_lock, &unordered_parallel_row_count, &output_stream, &x_coord, &y_coord, &zkr, &zki, this](std::size_t j_row)
         {
           while(mandelbrot_iteration_lock.test_and_set()) { ; }
 
@@ -291,23 +329,33 @@
             // three real-valued multiplications and several real-valued
             // addition/subtraction operations.
 
-            auto iteration_result = static_cast<std::uint_fast32_t>(UINT8_C(0));
+            auto iteration_result = static_cast<std::uint_fast32_t>(UINT8_C(1));
 
             // Perform the iteration sequence for generating the Mandelbrot set.
             // Here is the main work of the program.
 
             while((iteration_result < max_iterations) && ((zr2 + zi2) < four())) // NOLINT(altera-id-dependent-backward-branch)
             {
-              // The inner loop performs optimized complex multiply and add.
-              // This is the main work of the fractal iteration scheme.
+              auto zrOld = zr;
+              zr = (zr * zr) - (zi * zi) + (static_cast<numeric_type>(UINT8_C(2)) * ((zkr[static_cast<std::size_t>(iteration_result)-1] * zr) - (zki[static_cast<std::size_t>(iteration_result)-1] * zi))) + x_coord[i_col];
+              zi = (static_cast<numeric_type>(UINT8_C(2)) * zi * zrOld) +  (static_cast<numeric_type>(UINT8_C(2)) * ((zki[static_cast<std::size_t>(iteration_result)-1] * zrOld) + (zkr[static_cast<std::size_t>(iteration_result)-1] * zi))) + y_coord[j_row];
 
-              zi *= zr;
+              zr2 = (zr + zkr[static_cast<std::size_t>(iteration_result)]) * (zr + zkr[static_cast<std::size_t>(iteration_result)]);
+              zi2 = (zi + zki[static_cast<std::size_t>(iteration_result)]) * (zi + zki[static_cast<std::size_t>(iteration_result)]);
+              
+              // comment: zr2 = zr*zr; zi2= zi*zi is OK ish if four is 400 with some inacuraty
 
-              zi += (zi + y_coord[j_row]);
-              zr  = (zr2 - zi2) + x_coord[i_col];
 
-              zr2 = zr * zr;
-              zi2 = zi * zi;
+              //// The inner loop performs optimized complex multiply and add.
+              //// This is the main work of the fractal iteration scheme.
+              //
+              //zi *= zr;
+              //
+              //zi += (zi + y_coord[j_row]);
+              //zr  = (zr2 - zi2) + x_coord[i_col];
+              //
+              //zr2 = zr * zr;
+              //zi2 = zi * zi;
 
               ++iteration_result;
             }
