@@ -321,8 +321,7 @@
           {
             numeric_type er  { static_cast<unsigned>(UINT8_C(0)) };
             numeric_type ei  { static_cast<unsigned>(UINT8_C(0)) };
-            numeric_type er2 { static_cast<unsigned>(UINT8_C(0)) };
-            numeric_type ei2 { static_cast<unsigned>(UINT8_C(0)) };
+
             numeric_type zr2 { static_cast<unsigned>(UINT8_C(0)) };
             numeric_type zi2 { static_cast<unsigned>(UINT8_C(0)) };
             numeric_type zer { static_cast<unsigned>(UINT8_C(0)) };
@@ -353,21 +352,23 @@
               // where as zk is the precalucated value.
 
 
-              ei = ei * (er + zkrTemp) + (zkiTemp * er);
+              ei *= (er + zkrTemp);
+              ei += (zkiTemp * er);
               ei += ei + y_coord[j_row];
-              er = (er2 + zer) - (ei2 + zei) + x_coord[i_col];
+              er = zer - zei + x_coord[i_col];
 
               zkrTemp = zkr[static_cast<std::size_t>(iteration_result)];
               zkiTemp = zki[static_cast<std::size_t>(iteration_result)];
 
-              er2 = er * er;
-              ei2 = ei * ei;
+              zer = er;
+              zer *= (static_cast<numeric_type>(UINT8_C(2)) * zkrTemp) + er;
 
-              zer = (static_cast<numeric_type>(UINT8_C(2)) * (er * zkrTemp));
-              zei = (static_cast<numeric_type>(UINT8_C(2)) * (ei * zkiTemp));
+              zei = ei;
+              zei *= (static_cast<numeric_type>(UINT8_C(2)) * zkiTemp) + ei;
+              //2*er *t + er *er = er * (2*t + er)
 
-              zr2 = er2 + zer + (zkrTemp * zkrTemp);
-              zi2 = ei2 + zei + (zkiTemp * zkiTemp);
+              zr2 = zer + (zkrTemp * zkrTemp);
+              zi2 = zei + (zkiTemp * zkiTemp);
               
               // comment: zr2 = zr*zr; zi2= zi*zi is OK ish if four is 400 with some inacuraty
 
