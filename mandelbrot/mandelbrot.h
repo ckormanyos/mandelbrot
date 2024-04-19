@@ -323,6 +323,12 @@
             numeric_type ei  { static_cast<unsigned>(UINT8_C(0)) };
             numeric_type er2 { static_cast<unsigned>(UINT8_C(0)) };
             numeric_type ei2 { static_cast<unsigned>(UINT8_C(0)) };
+            numeric_type zr2 { static_cast<unsigned>(UINT8_C(0)) };
+            numeric_type zi2 { static_cast<unsigned>(UINT8_C(0)) };
+            numeric_type zer { static_cast<unsigned>(UINT8_C(0)) };
+            numeric_type zei { static_cast<unsigned>(UINT8_C(0)) };
+            numeric_type zkrTemp{ static_cast<unsigned>(UINT8_C(0)) };
+            numeric_type zkiTemp{ static_cast<unsigned>(UINT8_C(0)) };
 
             // Use an optimized complex-numbered multiplication scheme.
             // Thereby reduce the main work of the Mandelbrot iteration to
@@ -334,7 +340,7 @@
             // Perform the iteration sequence for generating the Mandelbrot set.
             // Here is the main work of the program.
 
-            while((iteration_result < (max_iterations + static_cast<std::uint_fast32_t>(UINT8_C(1)))) && ((er2 + ei2) < four())) // NOLINT(altera-id-dependent-backward-branch)
+            while((iteration_result < (max_iterations + static_cast<std::uint_fast32_t>(UINT8_C(1)))) && ((zr2 + zi2) < four())) // NOLINT(altera-id-dependent-backward-branch)
             {
 
               // core funktionality original formular is:
@@ -346,12 +352,21 @@
               //           e_{k+1} =             e_{k}^2 + 2*z{k}*e_{k} + d
               // where as zk is the precalucated value.
 
-              auto erOld = er;
-              er = (er * er) - (ei * ei) + (static_cast<numeric_type>(UINT8_C(2)) * ((zkr[static_cast<std::size_t>(iteration_result)-1] * er) - (zki[static_cast<std::size_t>(iteration_result)-1] * ei))) + x_coord[i_col];
-              ei = (static_cast<numeric_type>(UINT8_C(2)) * ei * erOld) +  (static_cast<numeric_type>(UINT8_C(2)) * ((zki[static_cast<std::size_t>(iteration_result)-1] * erOld) + (zkr[static_cast<std::size_t>(iteration_result)-1] * ei))) + y_coord[j_row];
 
-              er2 = (er + zkr[static_cast<std::size_t>(iteration_result)]) * (er + zkr[static_cast<std::size_t>(iteration_result)]);
-              ei2 = (ei + zki[static_cast<std::size_t>(iteration_result)]) * (ei + zki[static_cast<std::size_t>(iteration_result)]);
+              ei = (static_cast<numeric_type>(UINT8_C(2)) * ei * er) + (static_cast<numeric_type>(UINT8_C(2)) * ((zkiTemp * er) + (zkrTemp * ei))) + y_coord[j_row];
+              er = (er2) - (ei2) + (zer - zei) + x_coord[i_col];
+
+              zkrTemp = zkr[static_cast<std::size_t>(iteration_result)];
+              zkiTemp = zki[static_cast<std::size_t>(iteration_result)];
+
+              er2 = er * er;
+              ei2 = ei * ei;
+
+              zer = (static_cast<numeric_type>(UINT8_C(2)) * (er * zkrTemp));
+              zei = (static_cast<numeric_type>(UINT8_C(2)) * (ei * zkiTemp));
+
+              zr2 = er2 + zer + (zkrTemp * zkrTemp);
+              zi2 = ei2 + zei + (zkiTemp * zkiTemp);
               
               // comment: zr2 = zr*zr; zi2= zi*zi is OK ish if four is 400 with some inacuraty
 
