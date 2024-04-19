@@ -353,8 +353,9 @@
               // where as zk is the precalucated value.
 
 
-              ei = (static_cast<numeric_type>(UINT8_C(2)) * ei * er) + (static_cast<numeric_type>(UINT8_C(2)) * ((zkiTemp * er) + (zkrTemp * ei))) + y_coord[j_row];
-              er = (er2) - (ei2) + (zer - zei) + x_coord[i_col];
+              ei = ei * (er + zkrTemp) + (zkiTemp * er);
+              ei += ei + y_coord[j_row];
+              er = (er2 + zer) - (ei2 + zei) + x_coord[i_col];
 
               zkrTemp = zkr[static_cast<std::size_t>(iteration_result)];
               zkiTemp = zki[static_cast<std::size_t>(iteration_result)];
@@ -369,18 +370,6 @@
               zi2 = ei2 + zei + (zkiTemp * zkiTemp);
               
               // comment: zr2 = zr*zr; zi2= zi*zi is OK ish if four is 400 with some inacuraty
-
-
-              //// The inner loop performs optimized complex multiply and add.
-              //// This is the main work of the fractal iteration scheme.
-              //
-              //zi *= zr;
-              //
-              //zi += (zi + y_coord[j_row]);
-              //zr  = (zr2 - zi2) + x_coord[i_col];
-              //
-              //zr2 = zr * zr;
-              //zi2 = zi * zi;
 
               ++iteration_result;
             }
