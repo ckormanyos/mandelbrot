@@ -498,9 +498,7 @@
 
           write_string("mandelbrot_zoom: " + std::to_string(zoom_factor_p10) + "\n");
 
-          // My first point found.
-          // x_val: -1.2504666102669714123046875
-          // y_val: -0.0103464834627013576171875
+          // Redraw the client window with the new JPEG.
 
           using local_window_type = mandelbrot_discovery;
 
