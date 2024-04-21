@@ -236,8 +236,8 @@
       output_stream.setf(std::ios::fixed);
       output_stream.precision(static_cast<std::streamsize>(INT8_C(1)));
 
-      std::vector<numeric_type> zkr(mandelbrot_config_object.max_iterations + static_cast<std::uint_fast32_t>(UINT8_C(1)));
-      std::vector<numeric_type> zki(mandelbrot_config_object.max_iterations + static_cast<std::uint_fast32_t>(UINT8_C(1)));
+      std::vector<calc_numberic_type> zkr(mandelbrot_config_object.max_iterations + static_cast<std::uint_fast32_t>(UINT8_C(1)));
+      std::vector<calc_numberic_type> zki(mandelbrot_config_object.max_iterations + static_cast<std::uint_fast32_t>(UINT8_C(1)));
 
       using std::floor;
       numeric_type x_center(static_cast<numeric_type>((mandelbrot_config_object.x_lo() + mandelbrot_config_object.x_hi()) / static_cast<numeric_type>(UINT8_C(2))));
@@ -245,10 +245,13 @@
 
       // Initialize the Zk-Komponence of the central point, assumption: max itterations is reached
       {
-        zkr[0] = static_cast<numeric_type>(UINT8_C(0));
-        zki[0] = static_cast<numeric_type>(UINT8_C(0));
+        zkr[0] = static_cast<calc_numberic_type>(UINT8_C(0));
+        zki[0] = static_cast<calc_numberic_type>(UINT8_C(0));
+        numeric_type zr{ static_cast<numeric_type>(UINT8_C(0)) };
+        numeric_type zi{ static_cast<numeric_type>(UINT8_C(0)) };
         numeric_type zr2{ static_cast<numeric_type>(UINT8_C(0)) };
         numeric_type zi2{ static_cast<numeric_type>(UINT8_C(0)) };
+
 
         auto iteration_result = static_cast<std::uint_fast32_t>(UINT8_C(1));
 
@@ -257,13 +260,16 @@
           // The inner loop performs optimized complex multiply and add.
           // This is the main work of the fractal iteration scheme.
 
-          zki[iteration_result] = zki[iteration_result-1] * zkr[iteration_result-1];
+          zi *= zr;
 
-          zki[iteration_result] += (zki[iteration_result] + y_center);
-          zkr[iteration_result] = (zr2 - zi2) + x_center;
+          zi += (zi + y_center);
+          zr = (zr2 - zi2) + x_center;
 
-          zr2 = zkr[iteration_result] * zkr[iteration_result];
-          zi2 = zki[iteration_result] * zki[iteration_result];
+          zr2 = zr * zr;
+          zi2 = zi * zi;
+
+          zkr[iteration_result] = static_cast<calc_numberic_type>(zr);
+          zki[iteration_result] = static_cast<calc_numberic_type>(zi);
 
           ++iteration_result;
         }
@@ -274,16 +280,16 @@
         }
       }
 
-      std::vector<numeric_type> x_coord(mandelbrot_config_object.integral_width());  // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
-      std::vector<numeric_type> y_coord(mandelbrot_config_object.integral_height()); // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
+      std::vector<calc_numberic_type> x_coord(mandelbrot_config_object.integral_width());  // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
+      std::vector<calc_numberic_type> y_coord(mandelbrot_config_object.integral_height()); // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
 
       // Initialize the x-y coordinates.
       {
-        numeric_type x_val(mandelbrot_config_object.x_lo() - x_center);
-        numeric_type y_val(mandelbrot_config_object.y_hi() - y_center);
+        calc_numberic_type x_val(static_cast<calc_numberic_type>(mandelbrot_config_object.x_lo() - x_center));
+        calc_numberic_type y_val(static_cast<calc_numberic_type>(mandelbrot_config_object.y_hi() - y_center));
 
-        for (auto& x : x_coord) { x = x_val; x_val += mandelbrot_config_object.step_x(); }
-        for (auto& y : y_coord) { y = y_val; y_val -= mandelbrot_config_object.step_y(); }
+        for (auto& x : x_coord) { x = x_val; x_val += static_cast<calc_numberic_type>(mandelbrot_config_object.step_x()); }
+        for (auto& y : y_coord) { y = y_val; y_val -= static_cast<calc_numberic_type>(mandelbrot_config_object.step_y()); }
       }
 
       std::atomic_flag mandelbrot_iteration_lock { };
@@ -360,11 +366,11 @@
 
               ei *= (er + zkrTemp);
               ei += (zkiTemp * er);
-              ei += ei + static_cast<calc_numberic_type>(y_coord[j_row]);
-              er = zer - zei + static_cast<calc_numberic_type>(x_coord[i_col]);
+              ei += ei + y_coord[j_row];
+              er = zer - zei + x_coord[i_col];
 
-              zkrTemp = static_cast<calc_numberic_type>(zkr[static_cast<std::size_t>(iteration_result)]);
-              zkiTemp = static_cast<calc_numberic_type>(zki[static_cast<std::size_t>(iteration_result)]);
+              zkrTemp = zkr[static_cast<std::size_t>(iteration_result)];
+              zkiTemp = zki[static_cast<std::size_t>(iteration_result)];
 
               zer = er;
               zer *= (static_cast<calc_numberic_type>(UINT8_C(2)) * zkrTemp) + er;
@@ -423,8 +429,8 @@
           std::vector<std::vector<std::uint_fast32_t>> mandelbrot_iteration_matrix; // NOLINT(readability-identifier-naming)
           std::vector<std::uint_fast32_t>              mandelbrot_color_histogram;  // NOLINT(readability-identifier-naming)
 
-    auto apply_color_stretches(const std::vector<numeric_type>& x_values,
-                               const std::vector<numeric_type>& y_values,
+    auto apply_color_stretches(const std::vector<calc_numberic_type>& x_values,
+                               const std::vector<calc_numberic_type>& y_values,
                                const color::color_stretch_base& color_stretches) -> void
     {
       color_stretches.init(static_cast<std::uint_fast32_t>(x_values.size() * y_values.size()));
@@ -435,8 +441,8 @@
       }
     }
 
-    auto apply_color_functions(const std::vector<numeric_type>&   x_values,
-                               const std::vector<numeric_type>&   y_values,
+    auto apply_color_functions(const std::vector<calc_numberic_type>&   x_values,
+                               const std::vector<calc_numberic_type>&   y_values,
                                const color::color_functions_base& color_functions) -> void
     {
       for(auto   j_row = static_cast<std::uint_fast32_t>(UINT8_C(0));
