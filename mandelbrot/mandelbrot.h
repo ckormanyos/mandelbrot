@@ -30,11 +30,13 @@
 
   // Declare a base class for the Mandelbrot configuration.
   template<typename NumericType,
+           typename CalcNumericType,
            const std::uint_fast32_t MaxIterations>
   class mandelbrot_config_base
   {
   protected:
     using mandelbrot_config_numeric_type = NumericType;
+    using mandelbrot_config_calc_numeric_type = CalcNumericType;
 
   public:
     static constexpr auto max_iterations = static_cast<std::uint_fast32_t>(MaxIterations);
@@ -126,16 +128,18 @@
   // parameter. If a custom pixel count is required, the step()
   // method can be modified accordingly.
   template<typename NumericType,
+           typename CalcNumericType,
            const std::uint_fast32_t MaxIterations,
            const std::uint_fast32_t PixelCountX,
            const std::uint_fast32_t PixelCountY>
-  class mandelbrot_config final : public mandelbrot_config_base<NumericType, MaxIterations> // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
+  class mandelbrot_config final : public mandelbrot_config_base<NumericType, CalcNumericType, MaxIterations> // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
   {
   private:
-    using base_class_type = mandelbrot_config_base<NumericType, MaxIterations>;
+    using base_class_type = mandelbrot_config_base<NumericType, CalcNumericType, MaxIterations>;
 
   public:
     using my_mandelbrot_config_numeric_type = typename base_class_type::mandelbrot_config_numeric_type;
+    using my_mandelbrot_config_calc_numeric_type = typename base_class_type::mandelbrot_config_calc_numeric_type;
 
     mandelbrot_config(const my_mandelbrot_config_numeric_type& xl,
                       const my_mandelbrot_config_numeric_type& xh,
@@ -180,11 +184,13 @@
   // This class generates the rows of the mandelbrot iteration.
   // The coordinates are set up according to the Mandelbrot configuration.
   template<typename NumericType,
+           typename CalcNumericType,
            const std::uint_fast32_t MaxIterations>
   class mandelbrot_generator final // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
   {
   private:
     using numeric_type = NumericType;
+    using calc_numberic_type = CalcNumericType;
 
     static constexpr auto max_iterations = static_cast<std::uint_fast32_t>(MaxIterations);
 
@@ -192,7 +198,7 @@
     using boost_gil_y_coord_type = boost::gil::rgb8_image_t::y_coord_t;
 
   public:
-    using mandelbrot_config_type = mandelbrot_config_base<numeric_type, max_iterations>;
+    using mandelbrot_config_type = mandelbrot_config_base<numeric_type, calc_numberic_type, max_iterations>;
 
     explicit mandelbrot_generator(const mandelbrot_config_type& config)
       : mandelbrot_config_object   (config),
@@ -319,15 +325,15 @@
                      i_col < x_coord.size(); // NOLINT(altera-id-dependent-backward-branch)
                    ++i_col)
           {
-            numeric_type er  { static_cast<unsigned>(UINT8_C(0)) };
-            numeric_type ei  { static_cast<unsigned>(UINT8_C(0)) };
+            calc_numberic_type er  { static_cast<unsigned>(UINT8_C(0)) };
+            calc_numberic_type ei  { static_cast<unsigned>(UINT8_C(0)) };
 
-            numeric_type zr2 { static_cast<unsigned>(UINT8_C(0)) };
-            numeric_type zi2 { static_cast<unsigned>(UINT8_C(0)) };
-            numeric_type zer { static_cast<unsigned>(UINT8_C(0)) };
-            numeric_type zei { static_cast<unsigned>(UINT8_C(0)) };
-            numeric_type zkrTemp{ static_cast<unsigned>(UINT8_C(0)) };
-            numeric_type zkiTemp{ static_cast<unsigned>(UINT8_C(0)) };
+            calc_numberic_type zr2 { static_cast<unsigned>(UINT8_C(0)) };
+            calc_numberic_type zi2 { static_cast<unsigned>(UINT8_C(0)) };
+            calc_numberic_type zer { static_cast<unsigned>(UINT8_C(0)) };
+            calc_numberic_type zei { static_cast<unsigned>(UINT8_C(0)) };
+            calc_numberic_type zkrTemp{ static_cast<unsigned>(UINT8_C(0)) };
+            calc_numberic_type zkiTemp{ static_cast<unsigned>(UINT8_C(0)) };
 
             // Use an optimized complex-numbered multiplication scheme.
             // Thereby reduce the main work of the Mandelbrot iteration to
@@ -354,17 +360,17 @@
 
               ei *= (er + zkrTemp);
               ei += (zkiTemp * er);
-              ei += ei + y_coord[j_row];
-              er = zer - zei + x_coord[i_col];
+              ei += ei + static_cast<calc_numberic_type>(y_coord[j_row]);
+              er = zer - zei + static_cast<calc_numberic_type>(x_coord[i_col]);
 
-              zkrTemp = zkr[static_cast<std::size_t>(iteration_result)];
-              zkiTemp = zki[static_cast<std::size_t>(iteration_result)];
+              zkrTemp = static_cast<calc_numberic_type>(zkr[static_cast<std::size_t>(iteration_result)]);
+              zkiTemp = static_cast<calc_numberic_type>(zki[static_cast<std::size_t>(iteration_result)]);
 
               zer = er;
-              zer *= (static_cast<numeric_type>(UINT8_C(2)) * zkrTemp) + er;
+              zer *= (static_cast<calc_numberic_type>(UINT8_C(2)) * zkrTemp) + er;
 
               zei = ei;
-              zei *= (static_cast<numeric_type>(UINT8_C(2)) * zkiTemp) + ei;
+              zei *= (static_cast<calc_numberic_type>(UINT8_C(2)) * zkiTemp) + ei;
               //2*er *t + er *er = er * (2*t + er)
 
               zr2 = zer + (zkrTemp * zkrTemp);
