@@ -338,8 +338,8 @@
             calc_numberic_type zi2 { static_cast<unsigned>(UINT8_C(0)) };
             calc_numberic_type zer { static_cast<unsigned>(UINT8_C(0)) };
             calc_numberic_type zei { static_cast<unsigned>(UINT8_C(0)) };
-            calc_numberic_type zkrTemp{ static_cast<unsigned>(UINT8_C(0)) };
-            calc_numberic_type zkiTemp{ static_cast<unsigned>(UINT8_C(0)) };
+            calc_numberic_type zkr_temp{ static_cast<unsigned>(UINT8_C(0)) };
+            calc_numberic_type zki_temp{ static_cast<unsigned>(UINT8_C(0)) };
 
             // Use an optimized complex-numbered multiplication scheme.
             // Thereby reduce the main work of the Mandelbrot iteration to
@@ -364,23 +364,23 @@
               // where as zk is the precalucated value.
 
 
-              ei *= (er + zkrTemp);
-              ei += (zkiTemp * er);
+              ei *= (er + zkr_temp);
+              ei += (zki_temp * er);
               ei += ei + y_coord[j_row];
               er = zer - zei + x_coord[i_col];
 
-              zkrTemp = zkr[static_cast<std::size_t>(iteration_result)];
-              zkiTemp = zki[static_cast<std::size_t>(iteration_result)];
+              zkr_temp = zkr[static_cast<std::size_t>(iteration_result)];
+              zki_temp = zki[static_cast<std::size_t>(iteration_result)];
 
               zer = er;
-              zer *= (static_cast<calc_numberic_type>(UINT8_C(2)) * zkrTemp) + er;
+              zer *= (static_cast<calc_numberic_type>(UINT8_C(2)) * zkr_temp) + er;
 
               zei = ei;
-              zei *= (static_cast<calc_numberic_type>(UINT8_C(2)) * zkiTemp) + ei;
+              zei *= (static_cast<calc_numberic_type>(UINT8_C(2)) * zki_temp) + ei;
               //2*er *t + er *er = er * (2*t + er)
 
-              zr2 = zer + (zkrTemp * zkrTemp);
-              zi2 = zei + (zkiTemp * zkiTemp);
+              zr2 = zer + (zkr_temp * zkr_temp);
+              zi2 = zei + (zki_temp * zki_temp);
               
               // comment: zr2 = zr*zr; zi2= zi*zi is OK ish if four is 400 with some inacuraty
 
