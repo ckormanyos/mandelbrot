@@ -253,9 +253,9 @@
         numeric_type zi2{ static_cast<numeric_type>(UINT8_C(0)) };
 
 
-        auto iteration_result = static_cast<std::uint_fast32_t>(UINT8_C(1));
+        auto iteration_result = static_cast<std::uint_fast32_t>(UINT8_C(0));
 
-        while ((iteration_result < (max_iterations + static_cast<std::uint_fast32_t>(UINT8_C(1)))) && ((zr2 + zi2) < four())) // NOLINT(altera-id-dependent-backward-branch)
+        while ((iteration_result < max_iterations) && ((zr2 + zi2) < four())) // NOLINT(altera-id-dependent-backward-branch)
         {
           // The inner loop performs optimized complex multiply and add.
           // This is the main work of the fractal iteration scheme.
@@ -268,13 +268,13 @@
           zr2 = zr * zr;
           zi2 = zi * zi;
 
-          zkr[iteration_result] = static_cast<calc_numberic_type>(zr);
-          zki[iteration_result] = static_cast<calc_numberic_type>(zi);
-
           ++iteration_result;
+
+          zkr[static_cast<std::size_t>(iteration_result)] = static_cast<calc_numberic_type>(zr);
+          zki[static_cast<std::size_t>(iteration_result)] = static_cast<calc_numberic_type>(zi);
         }
 
-        if (iteration_result < (max_iterations + static_cast<std::uint_fast32_t>(UINT8_C(1))))
+        if (iteration_result < max_iterations)
         {
           output_stream << "central point escalates \n";
         }
@@ -285,8 +285,8 @@
 
       // Initialize the x-y coordinates.
       {
-        calc_numberic_type x_val(static_cast<calc_numberic_type>(mandelbrot_config_object.x_lo() - x_center));
-        calc_numberic_type y_val(static_cast<calc_numberic_type>(mandelbrot_config_object.y_hi() - y_center));
+        auto x_val(static_cast<calc_numberic_type>(mandelbrot_config_object.x_lo() - x_center));
+        auto y_val(static_cast<calc_numberic_type>(mandelbrot_config_object.y_hi() - y_center));
 
         for (auto& x : x_coord) { x = x_val; x_val += static_cast<calc_numberic_type>(mandelbrot_config_object.step_x()); }
         for (auto& y : y_coord) { y = y_val; y_val -= static_cast<calc_numberic_type>(mandelbrot_config_object.step_y()); }
@@ -334,8 +334,7 @@
             calc_numberic_type er  { static_cast<unsigned>(UINT8_C(0)) };
             calc_numberic_type ei  { static_cast<unsigned>(UINT8_C(0)) };
 
-            calc_numberic_type zr2 { static_cast<unsigned>(UINT8_C(0)) };
-            calc_numberic_type zi2 { static_cast<unsigned>(UINT8_C(0)) };
+            calc_numberic_type quad_length { static_cast<unsigned>(UINT8_C(0)) };
             calc_numberic_type zer { static_cast<unsigned>(UINT8_C(0)) };
             calc_numberic_type zei { static_cast<unsigned>(UINT8_C(0)) };
             calc_numberic_type zkr_temp{ static_cast<unsigned>(UINT8_C(0)) };
@@ -351,7 +350,7 @@
             // Perform the iteration sequence for generating the Mandelbrot set.
             // Here is the main work of the program.
 
-            while((iteration_result < (max_iterations + static_cast<std::uint_fast32_t>(UINT8_C(1)))) && ((zr2 + zi2) < four())) // NOLINT(altera-id-dependent-backward-branch)
+            while((iteration_result < (max_iterations + static_cast<std::uint_fast32_t>(UINT8_C(1)))) && (quad_length < static_cast<calc_numberic_type>(four()))) // NOLINT(altera-id-dependent-backward-branch)
             {
 
               // core funktionality original formular is:
@@ -379,8 +378,7 @@
               zei *= (static_cast<calc_numberic_type>(UINT8_C(2)) * zki_temp) + ei;
               //2*er *t + er *er = er * (2*t + er)
 
-              zr2 = zer + (zkr_temp * zkr_temp);
-              zi2 = zei + (zki_temp * zki_temp);
+              quad_length = zer + (zkr_temp * zkr_temp) + zei + (zki_temp * zki_temp);
               
               // comment: zr2 = zr*zr; zi2= zi*zi is OK ish if four is 400 with some inacuraty
 
