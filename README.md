@@ -52,6 +52,7 @@ of the available CPU cores that can be found using hardware concurrency.
 
 The following design goals have been incorporated.
   - `ckormanyos/mandelbrot` is written in header-only C++14, and compatible through C++14, 17, 20, 23 and beyond.
+  - Support rectangular (including square) images having essentially any size and magnification, provided that the precision of the iteration type is set accordingly.
   - The inner loop that performs the work of fractal iteration uses multiple, parallel CPU cores.
   - C++ template design allows for flexible interchange of any appropriate kind of big-number type in the classes that implement fractal iteration.
   - Visualization of the result uses color-stretching techniques combined with the histogram method.
@@ -76,7 +77,10 @@ The following design goals have been incorporated.
 
 Use shell commands such as the following.
 
-Go to the `mandelbrot/jpeg` directory and make the JPEG library. This creates the library file `libjpeg-6b.a` located in the directory `mandelbrot/jpeg/jpeg-6b-2022/obj`.
+Go to the [`mandelbrot/jpeg`](https://github.com/ckormanyos/mandelbrot/tree/main/jpeg)
+directory and make the JPEG library. This creates the library file `libjpeg-6b.a`
+which will be subsequently located in the temporarily-created
+directory `mandelbrot/jpeg/jpeg-6b-2022/obj`.
 
 ```sh
 cd mandelbrot/jpeg
@@ -139,7 +143,7 @@ This image has the following features and parameters.
 
   - The square image has $2048 {\times} 2048$ pixels.
   - Centered at the point $(-0.75+i~0.0)$.
-  - Uses a half-width of $1.25$.
+  - Uses a half-width of $1.35$.
   - Computed with $2,000$ iteratons using the `cpp_dec_float` type from [`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_84_0/libs/multiprecision/doc/html/index.html) instantiated with $37$ decimal digits of precision.
 
 ### Swirly Seahorses and Mini Mandelbrot
@@ -167,7 +171,7 @@ The result of this deep dive iteration is represented by the image below.
 This image has the the following features and parameters.
 
   - The square image has $2048 {\times} 2048$ pixels.
-  - Centered at the point $(-1.2951890821477774570170641771856819267{\ldots}+~i0.44093698267832013888090367835626261211{\ldots})$.
+  - Centered at the point $(-1.2951890821477774570170641771856819267{\ldots}+i~0.44093698267832013888090367835626261211{\ldots})$.
   - See the configuration code [mandelbrot_cfg_MANDELBROT_09_DEEP_DIVE_02.h](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_09_DEEP_DIVE_02.h) for the full precision of the center point.
   - Uses a half-width of $2.55{\times}10^{-55}$.
   - Computed with $15,000$ iteratons using the `cpp_dec_float` type from [`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_84_0/libs/multiprecision/doc/html/index.html) instantiated with $95$ decimal digits of precision.
@@ -210,7 +214,8 @@ This image has the the following features and parameters.
 
 `ckormanyos/mandelbrot` uses configuration files to specify the point,
 size and depth of the iterative fractal calculation.
-The configuration files are stored in the [`mandelbrot/cfg`](./mandelbrot/cfg)
+The configuration files are stored in the
+[`mandelbrot/cfg`](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/cfg)
 directory.
 
 The code responsible for controlling the iterative calculation,
@@ -220,7 +225,8 @@ is written in a generic and configurable way.
 To characterize a new Mandelbrot fractal iteration, simply write
 a header-configuration-file with content similar to that shown below.
 Include the configuration file in
-[`test_mandelbrot.cpp`](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/test/test_mandelbrot.cpp) and run the calculation.
+[`test_mandelbrot.cpp`](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/test/test_mandelbrot.cpp)
+and run the calculation.
 
 Consider as a sample, for instance, the relevant content of the configuration file
 [`mandelbrot_cfg_MANDELBROT_01_FULL.h`](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_01_FULL.h).
@@ -235,10 +241,10 @@ Consider as a sample, for instance, the relevant content of the configuration fi
   constexpr int  MANDELBROT_CALCULATION_PIXELS_Y    =    2048;
   constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =    2000;
 
-  constexpr char MANDELBROT_POINT_DX_HALF[]         = "1.25";
-  constexpr char MANDELBROT_POINT_DY_HALF[]         = "1.25";
-  constexpr char MANDELBROT_POINT_CENTER_X[]        = "0.75";
-  constexpr char MANDELBROT_POINT_CENTER_Y[]        = "0.0";
+  constexpr char MANDELBROT_POINT_DX_HALF[]         = "1.35";
+  constexpr char MANDELBROT_POINT_DY_HALF[]         = "1.35";
+  constexpr char MANDELBROT_POINT_CENTER_X[]        = "-0.75";
+  constexpr char MANDELBROT_POINT_CENTER_Y[]        = "+0.00";
 
   #include <mandelbrot/cfg/mandelbrot_cfg.h>
 ```
@@ -280,7 +286,6 @@ Details:
 | `20_ZOOM_VERY_DEEP_00`    | $(+0.360240443437614363236125244449545308482607807958585750488-i~0.641313061064803174860375015179302066579494952282305259556$ | [image](https://github.com/ckormanyos/mandelbrot/tree/main/images/gallery/mandelbrot_MANDELBROT_20_ZOOM_VERY_DEEP_00_magnify51.jpg)     |
 | `30_ZOOM_ANOTHER_00`      | $(-1.740062382579339905220844167065825638296641720436171866880+i~0.028175339779211048992411521144319509687539076742990608570$ | [image](https://github.com/ckormanyos/mandelbrot/tree/main/images/gallery/mandelbrot_MANDELBROT_30_ZOOM_ANOTHER_00_magnify51.jpg)       |
 | `45_SEAHORSE_OTHER_01`    | $(-0.745605122368264995520769522753086369510716449777505626833+i~0.112859495427252849953537572395520089297826357072986239717$ | [image](https://github.com/ckormanyos/mandelbrot/tree/main/images/gallery/mandelbrot_MANDELBROT_45_SEAHORSE_OTHER_01_magnify51.jpg)     |
-| `50_TENDRIL_AREA_01`      | $(-1.250199658842382318952058559805451497534994030366858920092+i~0.013242809714635662393731687465424899234037230926337059871$ | [image](https://github.com/ckormanyos/mandelbrot/tree/main/images/gallery/mandelbrot_MANDELBROT_50_TENDRIL_AREA_01_magnify51.jpg)       |
 
 ## Testing and Continuous Integration
 
@@ -324,3 +329,12 @@ The following adaptions have been performed.
   - Eliminate all uses of `NEED_FAR_POINTERS` and `NEED_SHORT_EXTERNAL_NAMES`.
   - Handle Level-3 warnings found in MSVC.
   - Handle GCC warnings from `-Wall`, `-Wextra`, `-Wpedantic`, `-Wconversion` and `-Wsign-conversion`.
+
+## Mandelbrot Discovery
+
+The Mandelbrot Discovery program aims to provide semi-automatic assistance
+to find interesting points for fractal deep dives.
+
+This project is work in progress which is being undertaken in the
+[`mandelbrot/MandelbrotDiscovery`](https://github.com/ckormanyos/mandelbrot/tree/main/MandelbrotDiscovery)
+directory.

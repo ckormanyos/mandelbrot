@@ -17,9 +17,9 @@
 typedef struct
 {
   /* Basic tables: (element [0] of each array is unused) */
-  INT32 maxcode[18];    /* largest code of length k (-1 if none) */
+  INT32_JPEG maxcode[18];    /* largest code of length k (-1 if none) */
   /* (maxcode[17] is a sentinel to ensure jpeg_huff_decode terminates) */
-  INT32 valoffset[17];    /* huffval[] offset for codes of length k */
+  INT32_JPEG valoffset[17];    /* huffval[] offset for codes of length k */
   /* valoffset[k] = huffval[] index of 1st symbol of code length k, less
    * the smallest code of length k; so given a code of length k, the
    * corresponding symbol is huffval[code + valoffset[k]]
@@ -61,7 +61,7 @@ JPP((j_decompress_ptr cinfo, boolean isDC, int tblno,
  * necessary.
  */
 
-typedef INT32 bit_buf_type;  /* type of bit-extraction buffer */
+typedef INT32_JPEG bit_buf_type;  /* type of bit-extraction buffer */
 #define BIT_BUF_SIZE  32  /* size of buffer in bits */
 
 /* If long is > 32 bits on your machine, and shifting/masking longs is

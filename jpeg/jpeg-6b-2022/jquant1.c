@@ -129,8 +129,8 @@ static const UINT8 base_dither_matrix[ODITHER_SIZE][ODITHER_SIZE] =
 typedef INT16 FSERROR;    /* 16 bits should be enough */
 typedef int LOCFSERROR;    /* use 'int' for calculation temps */
 #else
-typedef INT32 FSERROR;    /* may need more than 16 bits */
-typedef INT32 LOCFSERROR;  /* be sure calculation temps are big enough */
+typedef INT32_JPEG FSERROR;    /* may need more than 16 bits */
+typedef INT32_JPEG LOCFSERROR;  /* be sure calculation temps are big enough */
 #endif
 
 typedef FSERROR* FSERRPTR;  /* pointer to error array (in FAR storage!) */
@@ -277,7 +277,7 @@ output_value(j_decompress_ptr cinfo, int ci, int j, int maxj)
    * (Forcing the upper and lower values to the limits ensures that
    * dithering can't produce a color outside the selected gamut.)
    */
-  return (int)(((INT32) j * MAXJSAMPLE + maxj / 2) / maxj);
+  return (int)(((INT32_JPEG) j * MAXJSAMPLE + maxj / 2) / maxj);
 }
 
 
@@ -290,7 +290,7 @@ largest_input_value(j_decompress_ptr cinfo, int ci, int j, int maxj)
   (void) ci;
 
   /* Breakpoints are halfway between values returned by output_value */
-  return (int)(((INT32)(2 * j + 1) * MAXJSAMPLE + maxj) / (2 * maxj));
+  return (int)(((INT32_JPEG)(2 * j + 1) * MAXJSAMPLE + maxj) / (2 * maxj));
 }
 
 
@@ -449,7 +449,7 @@ make_odither_array(j_decompress_ptr cinfo, int ncolors)
 {
   ODITHER_MATRIX_PTR odither;
   int j, k;
-  INT32 num, den;
+  INT32_JPEG num, den;
 
   odither = (ODITHER_MATRIX_PTR)
             (*cinfo->mem->alloc_small)((j_common_ptr) cinfo, JPOOL_IMAGE,
@@ -459,13 +459,13 @@ make_odither_array(j_decompress_ptr cinfo, int ncolors)
    * (f=0..N-1) should be (N-1-2*f)/(2*N) * MAXJSAMPLE/(ncolors-1).
    * On 16-bit-int machine, be careful to avoid overflow.
    */
-  den = 2 * ODITHER_CELLS * ((INT32)(ncolors - 1));
+  den = 2 * ODITHER_CELLS * ((INT32_JPEG)(ncolors - 1));
 
   for(j = 0; j < ODITHER_SIZE; j++)
   {
     for(k = 0; k < ODITHER_SIZE; k++)
     {
-      num = ((INT32)(ODITHER_CELLS - 1 - 2 * ((int)base_dither_matrix[j][k])))
+      num = ((INT32_JPEG)(ODITHER_CELLS - 1 - 2 * ((int)base_dither_matrix[j][k])))
             * MAXJSAMPLE;
       /* Ensure round towards zero despite C's lack of consistency
        * about rounding negative values in integer division...

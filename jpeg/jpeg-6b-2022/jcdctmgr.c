@@ -138,8 +138,8 @@ start_pass_fdctmgr(j_compress_ptr cinfo)
           for(i = 0; i < DCTSIZE2; i++)
           {
             dtbl[i] = (DCTELEM)
-                      DESCALE(MULTIPLY16V16((INT32) qtbl->quantval[i],
-                                            (INT32) aanscales[i]),
+                      DESCALE(MULTIPLY16V16((INT32_JPEG) qtbl->quantval[i],
+                                            (INT32_JPEG) aanscales[i]),
                               CONST_BITS - 3);
           }
         }

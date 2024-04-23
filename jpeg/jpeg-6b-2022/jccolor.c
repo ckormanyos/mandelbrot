@@ -20,7 +20,7 @@ typedef struct
   struct jpeg_color_converter pub; /* public fields */
 
   /* Private state for RGB->YCC conversion */
-  INT32* rgb_ycc_tab;    /* => table for RGB to YCbCr conversion */
+  INT32_JPEG* rgb_ycc_tab;    /* => table for RGB to YCbCr conversion */
 } my_color_converter;
 
 typedef my_color_converter* my_cconvert_ptr;
@@ -57,9 +57,9 @@ typedef my_color_converter* my_cconvert_ptr;
  */
 
 #define SCALEBITS  16  /* speediest right-shift on some machines */
-#define CBCR_OFFSET  ((INT32) CENTERJSAMPLE << SCALEBITS)
-#define ONE_HALF  ((INT32) 1 << (SCALEBITS-1))
-#define FIX(x)    ((INT32) ((x) * (1L<<SCALEBITS) + 0.5))
+#define CBCR_OFFSET  ((INT32_JPEG) CENTERJSAMPLE << SCALEBITS)
+#define ONE_HALF  ((INT32_JPEG) 1 << (SCALEBITS-1))
+#define FIX(x)    ((INT32_JPEG) ((x) * (1L<<SCALEBITS) + 0.5))
 
 /* We allocate one big table and divide it up into eight parts, instead of
  * doing eight alloc_small requests.  This lets us use a single table base
@@ -87,13 +87,13 @@ METHODDEF(void)
 rgb_ycc_start(j_compress_ptr cinfo)
 {
   my_cconvert_ptr cconvert = (my_cconvert_ptr) cinfo->cconvert;
-  INT32* rgb_ycc_tab;
-  INT32 i;
+  INT32_JPEG* rgb_ycc_tab;
+  INT32_JPEG i;
 
   /* Allocate and fill in the conversion tables. */
-  cconvert->rgb_ycc_tab = rgb_ycc_tab = (INT32*)
+  cconvert->rgb_ycc_tab = rgb_ycc_tab = (INT32_JPEG*)
                                         (*cinfo->mem->alloc_small)((j_common_ptr) cinfo, JPOOL_IMAGE,
-                                            (TABLE_SIZE * SIZEOF(INT32)));
+                                            (TABLE_SIZE * SIZEOF(INT32_JPEG)));
 
   for(i = 0; i <= MAXJSAMPLE; i++)
   {
@@ -135,7 +135,7 @@ rgb_ycc_convert(j_compress_ptr cinfo,
 {
   my_cconvert_ptr cconvert = (my_cconvert_ptr) cinfo->cconvert;
   int r, g, b;
-  INT32* ctab = cconvert->rgb_ycc_tab;
+  INT32_JPEG* ctab = cconvert->rgb_ycc_tab;
   JSAMPROW inptr;
   JSAMPROW outptr0, outptr1, outptr2;
   JDIMENSION col;
@@ -194,7 +194,7 @@ rgb_gray_convert(j_compress_ptr cinfo,
 {
   my_cconvert_ptr cconvert = (my_cconvert_ptr) cinfo->cconvert;
   int r, g, b;
-  INT32* ctab = cconvert->rgb_ycc_tab;
+  INT32_JPEG* ctab = cconvert->rgb_ycc_tab;
   JSAMPROW inptr;
   JSAMPROW outptr;
   JDIMENSION col;
@@ -236,7 +236,7 @@ cmyk_ycck_convert(j_compress_ptr cinfo,
 {
   my_cconvert_ptr cconvert = (my_cconvert_ptr) cinfo->cconvert;
   int r, g, b;
-  INT32* ctab = cconvert->rgb_ycc_tab;
+  INT32_JPEG* ctab = cconvert->rgb_ycc_tab;
   JSAMPROW inptr;
   JSAMPROW outptr0, outptr1, outptr2, outptr3;
   JDIMENSION col;

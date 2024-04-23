@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{7a64b037-0443-48ad-bf63-d92ea62e0591}</ProjectGuid>
+    <RootNamespace>MandelbrotDiscovery</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir);$(SolutionDir)..;$(SolutionDir)..\jpeg\jpeg-6b-2022;C:\boost\boost_1_84_0\;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(SolutionDir);$(SolutionDir)..;$(SolutionDir)..\jpeg\jpeg-6b-2022;C:\boost\boost_1_84_0\;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\jpeg\jpeg-6b-2022\jchuff.h" />
+    <ClInclude Include="..\jpeg\jpeg-6b-2022\jconfig.h" />
+    <ClInclude Include="..\jpeg\jpeg-6b-2022\jdct.h" />
+    <ClInclude Include="..\jpeg\jpeg-6b-2022\jdhuff.h" />
+    <ClInclude Include="..\jpeg\jpeg-6b-2022\jerror.h" />
+    <ClInclude Include="..\jpeg\jpeg-6b-2022\jinclude.h" />
+    <ClInclude Include="..\jpeg\jpeg-6b-2022\jmemsys.h" />
+    <ClInclude Include="..\jpeg\jpeg-6b-2022\jmorecfg.h" />
+    <ClInclude Include="..\jpeg\jpeg-6b-2022\jpegint.h" />
+    <ClInclude Include="..\jpeg\jpeg-6b-2022\jpeglib.h" />
+    <ClInclude Include="..\jpeg\jpeg-6b-2022\jversion.h" />
+    <ClInclude Include="geometry.h" />
+    <ClInclude Include="mandelbrot_discovery.h" />
+    <ClInclude Include="text.h" />
+    <ClInclude Include="utility.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jcapimin.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jcapistd.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jccoefct.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jccolor.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jcdctmgr.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jchuff.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jcinit.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jcmainct.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jcmarker.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jcmaster.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jcomapi.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jcparam.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jcphuff.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jcprepct.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jcsample.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jctrans.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jdapimin.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jdatadst.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jdcoefct.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jdcolor.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jddctmgr.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jdhuff.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jdinput.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jdmainct.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jdmarker.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jdmerge.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jdpostct.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jdsample.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jerror.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jfdctflt.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jfdctfst.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jfdctint.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jidctflt.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jidctfst.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jidctint.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jidctred.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jmemansi.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jmemmgr.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jquant1.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jquant2.c" />
+    <ClCompile Include="..\jpeg\jpeg-6b-2022\jutils.c" />
+    <ClCompile Include="mandelbrot_discovery.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MandelbrotDiscovery.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="MandelbrotDiscovery.ico" />
+    <Image Include="small.ico" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

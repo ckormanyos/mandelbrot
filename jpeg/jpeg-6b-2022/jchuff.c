@@ -28,7 +28,7 @@
 
 typedef struct
 {
-  INT32 put_buffer;    /* current bit-accumulation buffer */
+  INT32_JPEG put_buffer;    /* current bit-accumulation buffer */
   int put_bits;      /* # of bits now in it */
   int last_dc_val[MAX_COMPS_IN_SCAN]; /* last DC coef for each component */
 } savable_state;
@@ -274,7 +274,7 @@ jpeg_make_c_derived_tbl(j_compress_ptr cinfo, boolean isDC, int tblno,
     /* code is now 1 more than the last code used for codelength si; but
      * it must still fit in si bits, since no code is allowed to be all ones.
      */
-    if(((INT32) code) >= (((INT32) 1) << si))
+    if(((INT32_JPEG) code) >= (((INT32_JPEG) 1) << si))
     {
       ERREXIT(cinfo, JERR_BAD_HUFF_TABLE);
     }
@@ -356,7 +356,7 @@ emit_bits(working_state* state, unsigned int code, int size)
 /* Emit some bits; return TRUE if successful, FALSE if must suspend */
 {
   /* This routine is heavily used, so it's worth coding tightly. */
-  INT32 put_buffer = (INT32) code;
+  INT32_JPEG put_buffer = (INT32_JPEG) code;
   int put_bits = state->cur.put_bits;
 
   /* if size is 0, caller used an invalid Huffman table entry */
@@ -365,7 +365,7 @@ emit_bits(working_state* state, unsigned int code, int size)
     ERREXIT(state->cinfo, JERR_HUFF_MISSING_CODE);
   }
 
-  put_buffer &= (((INT32) 1) << size) - 1; /* mask off any extra bits in code */
+  put_buffer &= (((INT32_JPEG) 1) << size) - 1; /* mask off any extra bits in code */
 
   put_bits += size;    /* new number of bits in buffer */
 
