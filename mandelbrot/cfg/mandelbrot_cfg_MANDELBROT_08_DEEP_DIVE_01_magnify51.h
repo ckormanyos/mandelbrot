@@ -13,9 +13,10 @@
 
   constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_08_DEEP_DIVE_01_magnify51";
 
-  constexpr int  MANDELBROT_CALCULATION_DIGITS10    =      76;
+  constexpr int  MANDELBROT_SETUP_DIGITS10          =      76;
+  constexpr int  MANDELBROT_CALCULATION_DIGITS10    =      20;
   constexpr int  MANDELBROT_CALCULATION_PIXELS_X    =    2048;
-  constexpr int  MANDELBROT_CALCULATION_PIXELS_Y     =   2048;
+  constexpr int  MANDELBROT_CALCULATION_PIXELS_Y    =    2048;
   constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =    2000;
 
   constexpr char MANDELBROT_POINT_DX_HALF[]         = "1.4E-51";
