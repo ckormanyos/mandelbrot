@@ -14,7 +14,8 @@
 
   constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_10_ZOOM_WIKI_00_rect";
 
-  constexpr int  MANDELBROT_CALCULATION_DIGITS10    =      60;
+  constexpr int  MANDELBROT_SETUP_DIGITS10          =      60;
+  constexpr int  MANDELBROT_CALCULATION_DIGITS10    =      20;
   constexpr int  MANDELBROT_CALCULATION_PIXELS_X    =    3840;
   constexpr int  MANDELBROT_CALCULATION_PIXELS_Y    =    2160;
   constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =  100000;
