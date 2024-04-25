@@ -269,15 +269,6 @@
           zkr[static_cast<std::size_t>(iteration_result)] = static_cast<my_iteration_numeric_type>(zr);
           zki[static_cast<std::size_t>(iteration_result)] = static_cast<my_iteration_numeric_type>(zi);
         }
-
-        if (iteration_result < max_iterations)
-        {
-          std::stringstream strm{ };
-
-          strm << "central point escalates \n";
-
-          text_output.write(strm.str());
-        }
       }
 
       std::vector<my_iteration_numeric_type> x_coord(mandelbrot_config_object.integral_width());  // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
