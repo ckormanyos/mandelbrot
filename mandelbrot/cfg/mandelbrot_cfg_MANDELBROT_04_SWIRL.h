@@ -12,7 +12,8 @@
 
   constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_04_SWIRL";
 
-  constexpr int  MANDELBROT_CALCULATION_DIGITS10    =      31;
+  constexpr int  MANDELBROT_SETUP_DIGITS10          =      31;
+  constexpr int  MANDELBROT_CALCULATION_DIGITS10    =      20;
   constexpr int  MANDELBROT_CALCULATION_PIXELS_X    =    2048;
   constexpr int  MANDELBROT_CALCULATION_PIXELS_Y    =    2048;
   constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =    2000;
