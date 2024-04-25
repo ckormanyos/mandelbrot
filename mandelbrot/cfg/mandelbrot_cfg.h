@@ -39,12 +39,12 @@
 
   #include <boost/multiprecision/cpp_dec_float.hpp>
 
-  #define MANDELBROT_NUMBER_TYPE_NAME(mandelbrot_digits10) /* NOLINT(cppcoreguidelines-macro-usage) */ \
-  boost::multiprecision::number<boost::multiprecision::cpp_dec_float<static_cast<unsigned>(mandelbrot_digits10)>,\
+  #define MANDELBROT_NUMBER_TYPE_NAME(MANDELBROT_DIGITS10) /* NOLINT(cppcoreguidelines-macro-usage) */ \
+  boost::multiprecision::number<boost::multiprecision::cpp_dec_float<static_cast<unsigned>(MANDELBROT_DIGITS10)>,\
                                 boost::multiprecision::et_off>
 
-  #define MANDELBROT_PRECISION_NUMBER_TYPE_NAME(mandelbrot_calc_digits10) /* NOLINT(cppcoreguidelines-macro-usage) */ \
-  boost::multiprecision::number<boost::multiprecision::cpp_dec_float<static_cast<unsigned>(mandelbrot_calc_digits10)>,\
+  #define MANDELBROT_PRECISION_NUMBER_TYPE_NAME(MANDELBROT_DIGITS10) /* NOLINT(cppcoreguidelines-macro-usage) */ \
+  boost::multiprecision::number<boost::multiprecision::cpp_dec_float<static_cast<unsigned>(MANDELBROT_DIGITS10)>,\
                                 boost::multiprecision::et_off>
 
   #endif

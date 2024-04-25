@@ -138,8 +138,8 @@
     using base_class_type = mandelbrot_config_base<CoordPntNumericType, IterateNumericType, MaxIterations>;
 
   public:
-    using base_class_type::my_coord_pnt_numeric_type;
-    using base_class_type::my_iteration_numeric_type;
+    using my_coord_pnt_numeric_type = typename base_class_type::my_coord_pnt_numeric_type;
+    using my_iteration_numeric_type = typename base_class_type::my_iteration_numeric_type;
 
     mandelbrot_config(const my_coord_pnt_numeric_type& xl,
                       const my_coord_pnt_numeric_type& xh,
