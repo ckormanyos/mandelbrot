@@ -57,8 +57,8 @@
 
   namespace detail {
 
-  using      numeric_type = MANDELBROT_NUMBER_TYPE_NAME( MANDELBROT_SETUP_DIGITS10 ); // NOLINT(cppcoreguidelines-macro-usage)
-  using calc_numeric_type = MANDELBROT_NUMBER_TYPE_NAME( MANDELBROT_CALCULATION_DIGITS10 ); // NOLINT(cppcoreguidelines-macro-usage)
+  using coord_pnt_numeric_type = MANDELBROT_NUMBER_TYPE_NAME( MANDELBROT_COORD_PNT_DIGITS10 ); // NOLINT(cppcoreguidelines-macro-usage)
+  using iteration_numeric_type = MANDELBROT_NUMBER_TYPE_NAME( MANDELBROT_ITERATION_DIGITS10 ); // NOLINT(cppcoreguidelines-macro-usage)
 
   } // namespace detail
 
@@ -73,19 +73,19 @@
   }
 
   using mandelbrot_config_type  =
-    ckormanyos::mandelbrot::mandelbrot_config<detail::numeric_type,
-                                              detail::calc_numeric_type,
+    ckormanyos::mandelbrot::mandelbrot_config<detail::coord_pnt_numeric_type,
+                                              detail::iteration_numeric_type,
                                               static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_ITERATIONS),
                                               static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_X),
                                               static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_Y)>;
 
-  using mandelbrot_numeric_type = typename mandelbrot_config_type::my_mandelbrot_config_numeric_type;
-  using mandelbrot_calc_numeric_type = typename mandelbrot_config_type::my_mandelbrot_config_calc_numeric_type;
+  using coord_pnt_numeric_type = typename mandelbrot_config_type::my_coord_pnt_numeric_type;
+  using iteration_numeric_type = typename mandelbrot_config_type::my_iteration_numeric_type;
 
-  inline auto dx_half () -> mandelbrot_numeric_type { return mandelbrot_numeric_type(MANDELBROT_POINT_DX_HALF); }
-  inline auto dy_half()  -> mandelbrot_numeric_type { return mandelbrot_numeric_type(MANDELBROT_POINT_DY_HALF); }
-  inline auto center_x() -> mandelbrot_numeric_type { return mandelbrot_numeric_type(MANDELBROT_POINT_CENTER_X); }
-  inline auto center_y() -> mandelbrot_numeric_type { return mandelbrot_numeric_type(MANDELBROT_POINT_CENTER_Y); }
+  inline auto dx_half () -> coord_pnt_numeric_type { return coord_pnt_numeric_type(MANDELBROT_POINT_DX_HALF); }
+  inline auto dy_half()  -> coord_pnt_numeric_type { return coord_pnt_numeric_type(MANDELBROT_POINT_DY_HALF); }
+  inline auto center_x() -> coord_pnt_numeric_type { return coord_pnt_numeric_type(MANDELBROT_POINT_CENTER_X); }
+  inline auto center_y() -> coord_pnt_numeric_type { return coord_pnt_numeric_type(MANDELBROT_POINT_CENTER_Y); }
 
   #if(__cplusplus >= 201703L)
   } // namespace ckormanyos::mandelbrot::cfg

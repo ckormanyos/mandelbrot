@@ -76,8 +76,8 @@ auto main() -> int // NOLINT(bugprone-exception-escape)
     );
 
   using mandelbrot_generator_type =
-    mandelbrot_generator<cfg::mandelbrot_numeric_type,
-                         cfg::mandelbrot_calc_numeric_type,
+    mandelbrot_generator<cfg::coord_pnt_numeric_type,
+                         cfg::iteration_numeric_type,
                          cfg::mandelbrot_config_type::max_iterations>;
 
         color::color_stretch_histogram_method local_color_stretches;
