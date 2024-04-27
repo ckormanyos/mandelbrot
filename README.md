@@ -317,8 +317,8 @@ $$
 z_{k+1} = z_{k}^2 + c
 $$
 
-and perform a perterbative _delta_ transformation on the coordinates,
-see also [Deep Zoom Theory: Perturbation](https://mathr.co.uk/blog/2021-05-14_deep_zoom_theory_and_practice.html#a2021-05-14_deep_zoom_theory_and_practice_perturbation).
+and perform a perturbative _delta_ transformation on the coordinates.
+See also [Deep Zoom Theory: Perturbation](https://mathr.co.uk/blog/2021-05-14_deep_zoom_theory_and_practice.html#a2021-05-14_deep_zoom_theory_and_practice_perturbation).
 
 In other words
 
@@ -334,19 +334,21 @@ $$
 c~{\rightarrow}~c + d{\mbox{.}}
 $$
 
-Plugging this into the original formula results in:
+Plugging this into the original formula results in
 
 $$
-z_{k+1} + e_{k+1} = z_{k} + c + e_{k}^2 + 2 z_{k} e_{k} + d{\mbox{,}}
+z_{k+1} + e_{k+1} = z_{k} + c + e_{k}^2 + 2 z_{k} e_{k} + d{\mbox{.}}
 $$
 
-thereby replacing the original formula with
+Thereby, we replace the original formula with
 
 $$
 e_{k+1} = e_{k}^2 + 2 z_{k} e_{k} + d{\mbox{.}}
 $$
 
-where $z_{k}$ is the pre-calculated value.
+where $z_{k}$ is the pre-calculated value. The transformed
+coordinates can be iteratied with drastically decreased precision,
+such as $24$ decimal digits, and can result in saved calculation time.
 
 ## Testing and Continuous Integration
 
