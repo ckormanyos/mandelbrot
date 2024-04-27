@@ -291,14 +291,34 @@ Details:
 
 ## Deep Dives and Acceleration via Perturbation
 
-Begin with the core functionality of the original formula
+Deep dives are difficult. Even when an interesting point can be found,
+iterative calculations tend to be hampered by the very large floating-point types needed
+to represent the point in the complex plane.
+
+A magnification of $10^{100}$, in classical iteration for instance, requires
+a floating-point type having more than $100$ decimal digits of precision, such as $124$ digits.
+This is the only way to trivially resolve the minute differences
+in the iterations. Huge number calculations are, however, time-consuming
+and weigh heavily on CPU resources.
+
+There are, nonetheless, perturbative schemes that can reduce the width of the
+floating-point types used in iterative caluclations. These can significantly reduce
+the time required for high-precision deep dives.
+One such scheme was contributed by [S-Streulicht](https://github.com/S-Streulicht)
+in the [Speed Gain of PR-100](https://github.com/ckormanyos/mandelbrot/pull/100)
+effort.
+
+### Perturbative Algorithm
+
+For this lower-order perturbation expansion, begin with
+the core functionality of the original formula
 
 $$
 z_{k+1} = z_{k}^2 + c
 $$
 
-and perform a perterbative _delta_ transformation on the coordinates,
-see also [Deep Zoom Theory: Perturbation](https://mathr.co.uk/blog/2021-05-14_deep_zoom_theory_and_practice.html#a2021-05-14_deep_zoom_theory_and_practice_perturbation).
+and perform a perturbative _delta_ transformation on the coordinates.
+See also [Deep Zoom Theory: Perturbation](https://mathr.co.uk/blog/2021-05-14_deep_zoom_theory_and_practice.html#a2021-05-14_deep_zoom_theory_and_practice_perturbation).
 
 In other words
 
@@ -314,19 +334,21 @@ $$
 c~{\rightarrow}~c + d{\mbox{.}}
 $$
 
-Plugging this into the original formula results in:
+Plugging this into the original formula results in
 
 $$
-z_{k+1} + e_{k+1} = z_{k} + c + e_{k}^2 + 2 z_{k} e_{k} + d{\mbox{,}}
+z_{k+1} + e_{k+1} = z_{k} + c + e_{k}^2 + 2 z_{k} e_{k} + d{\mbox{.}}
 $$
 
-thereby replacing the original formula with
+Thereby, we replace the original formula with
 
 $$
 e_{k+1} = e_{k}^2 + 2 z_{k} e_{k} + d{\mbox{.}}
 $$
 
-where $z_{k}$ is the pre-calculated value.
+where $z_{k}$ is the pre-calculated value. The transformed
+coordinates can be iteratied with drastically decreased precision,
+such as $24$ decimal digits, and can result in saved calculation time.
 
 ## Testing and Continuous Integration
 
