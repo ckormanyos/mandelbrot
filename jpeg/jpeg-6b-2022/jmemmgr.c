@@ -741,7 +741,7 @@ realize_virt_arrays(j_common_ptr cinfo)
   {
     if(sptr->mem_buffer == NULL)    /* if not realized yet */
     {
-      minheights = ((long) sptr->rows_in_array - 1L) / sptr->maxaccess + 1L;
+      minheights = ((long) sptr->rows_in_array - 1L) / (long) sptr->maxaccess + 1L;
 
       if(minheights <= max_minheights)
       {
@@ -751,7 +751,7 @@ realize_virt_arrays(j_common_ptr cinfo)
       else
       {
         /* It doesn't fit in memory, create backing store. */
-        sptr->rows_in_mem = (JDIMENSION)(max_minheights * sptr->maxaccess);
+        sptr->rows_in_mem = (JDIMENSION)(max_minheights * (long) sptr->maxaccess);
         jpeg_open_backing_store(cinfo, & sptr->b_s_info,
                                 (long) sptr->rows_in_array *
                                 (long) sptr->samplesperrow *
@@ -772,7 +772,7 @@ realize_virt_arrays(j_common_ptr cinfo)
   {
     if(bptr->mem_buffer == NULL)    /* if not realized yet */
     {
-      minheights = ((long) bptr->rows_in_array - 1L) / bptr->maxaccess + 1L;
+      minheights = ((long) bptr->rows_in_array - 1L) / (long) bptr->maxaccess + 1L;
 
       if(minheights <= max_minheights)
       {
@@ -782,7 +782,7 @@ realize_virt_arrays(j_common_ptr cinfo)
       else
       {
         /* It doesn't fit in memory, create backing store. */
-        bptr->rows_in_mem = (JDIMENSION)(max_minheights * bptr->maxaccess);
+        bptr->rows_in_mem = (JDIMENSION)(max_minheights * (long) bptr->maxaccess);
         jpeg_open_backing_store(cinfo, & bptr->b_s_info,
                                 (long) bptr->rows_in_array *
                                 (long) bptr->blocksperrow *
@@ -808,7 +808,7 @@ do_sarray_io(j_common_ptr cinfo, jvirt_sarray_ptr ptr, boolean writing)
   long bytesperrow, file_offset, byte_count, rows, thisrow, i;
 
   bytesperrow = (long) ((long) ptr->samplesperrow * (long) SIZEOF(JSAMPLE));
-  file_offset = ptr->cur_start_row * bytesperrow;
+  file_offset = (long) ptr->cur_start_row * bytesperrow;
 
   /* Loop to read or write each allocation chunk in mem_buffer */
   for(i = 0; i < (long) ptr->rows_in_mem; i += (long) ptr->rowsperchunk)
@@ -849,7 +849,7 @@ do_barray_io(j_common_ptr cinfo, jvirt_barray_ptr ptr, boolean writing)
   long bytesperrow, file_offset, byte_count, rows, thisrow, i;
 
   bytesperrow = (long) ((long) ptr->blocksperrow * (long) SIZEOF(JBLOCK));
-  file_offset = ptr->cur_start_row * bytesperrow;
+  file_offset = (long) ptr->cur_start_row * bytesperrow;
 
   /* Loop to read or write each allocation chunk in mem_buffer */
   for(i = 0; i < (long) ptr->rows_in_mem; i += (long) ptr->rowsperchunk)

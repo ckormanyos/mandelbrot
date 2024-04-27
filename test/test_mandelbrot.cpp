@@ -56,11 +56,24 @@
 
 // Compile with cpp_dec_float
 // g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++14 -I. -I/mnt/c/boost/boost_1_84_0 -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
-// g++ test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
+// g++ test_mandelbrot.o -Ljpeg/jpeg-6b-2022/obj -lpthread -ljpeg-6b -o test_mandelbrot.exe
 
 // Compile with gmp_float
 // g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++14 -DMANDELBROT_USE_GMP_FLOAT -I. -I/mnt/c/boost/boost_1_84_0 -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
-// g++ test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -lgmp -o test_mandelbrot.exe
+// g++ test_mandelbrot.o -Ljpeg/jpeg-6b-2022/obj -lpthread -ljpeg-6b -lgmp -o test_mandelbrot.exe
+
+// Compile with Multiprecision's float128
+// g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++14 -DMANDELBROT_USE_128_FLOAT -I. -I/mnt/c/boost/boost_1_84_0 -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+// g++ test_mandelbrot.o -Ljpeg/jpeg-6b-2022/obj -lpthread -ljpeg-6b -lquadmath -o test_mandelbrot.exe
+
+// Compile on msys (use ucrt)
+// Start ucrt shell
+// cd C:/Users/User/Documents/Ks/PC_Software/NumericalPrograms/mandelbrot/jpeg
+// make all
+// cd ..
+// g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++14 -I. -I/C:/boost/boost_1_84_0 -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+// g++ test_mandelbrot.o -Ljpeg/jpeg-6b-2022/obj -lpthread -ljpeg-6b -o test_mandelbrot.exe
+
 
 auto main() -> int // NOLINT(bugprone-exception-escape)
 {

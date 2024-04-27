@@ -771,7 +771,7 @@ examine_app14(j_decompress_ptr cinfo, JOCTET* data,
   else
   {
     /* Start of APP14 does not match "Adobe", or too short */
-    TRACEMS1(cinfo, 1, JTRC_APP14, (int)(datalen + remaining));
+    TRACEMS1(cinfo, 1, JTRC_APP14, (int)((INT32_JPEG) datalen + remaining));
   }
 }
 
@@ -807,7 +807,7 @@ get_interesting_appn(j_decompress_ptr cinfo)
     INPUT_BYTE(cinfo, b[i], return FALSE);
   }
 
-  length -= numtoread;
+  length -= (INT32_JPEG) numtoread;
 
   /* process it */
   switch(cinfo->unread_marker)
@@ -944,7 +944,7 @@ save_marker(j_decompress_ptr cinfo)
 
     /* Reset pointer & calc remaining data length */
     data = cur_marker->data;
-    length = cur_marker->original_length - data_length;
+    length = (INT32_JPEG) (cur_marker->original_length - data_length);
   }
 
   /* Reset to initial state for next marker */
@@ -963,7 +963,7 @@ save_marker(j_decompress_ptr cinfo)
 
     default:
       TRACEMS2(cinfo, 1, JTRC_MISC_MARKER, cinfo->unread_marker,
-               (int)(data_length + length));
+               (int)((INT32_JPEG) data_length + length));
       break;
   }
 

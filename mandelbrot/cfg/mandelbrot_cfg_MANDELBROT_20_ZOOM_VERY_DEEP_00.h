@@ -23,7 +23,7 @@
   constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_20_ZOOM_VERY_DEEP_00";
 
   constexpr int  MANDELBROT_COORD_PNT_DIGITS10      =     365;
-  constexpr int  MANDELBROT_ITERATION_DIGITS10      =      20;
+  constexpr int  MANDELBROT_ITERATION_DIGITS10      =      24;
   constexpr int  MANDELBROT_CALCULATION_PIXELS_X    =    2048;
   constexpr int  MANDELBROT_CALCULATION_PIXELS_Y    =    2048;
   constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =   60000;

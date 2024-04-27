@@ -31,21 +31,21 @@
 
   #include <boost/multiprecision/gmp.hpp>
 
-  #define MANDELBROT_NUMBER_TYPE_NAME(mandelbrot_digits10) \
-  boost::multiprecision::number<boost::multiprecision::gmp_float<static_cast<unsigned>(mandelbrot_digits10)>,\
+  #define MANDELBROT_COORD_PNT_NUMBER_TYPE(MB_DIGITS10) /* NOLINT(cppcoreguidelines-macro-usage) */ \
+  boost::multiprecision::number<boost::multiprecision::gmp_float<static_cast<unsigned>(MB_DIGITS10)>,\
                                 boost::multiprecision::et_off>
+
+  #define MANDELBROT_ITERATION_NUMBER_TYPE(MB_DIGITS10) MANDELBROT_COORD_PNT_NUMBER_TYPE(MB_DIGITS10) // NOLINT(cppcoreguidelines-macro-usage)
 
   #else
 
   #include <boost/multiprecision/cpp_dec_float.hpp>
 
-  #define MANDELBROT_NUMBER_TYPE_NAME(MANDELBROT_DIGITS10) /* NOLINT(cppcoreguidelines-macro-usage) */ \
-  boost::multiprecision::number<boost::multiprecision::cpp_dec_float<static_cast<unsigned>(MANDELBROT_DIGITS10)>,\
+  #define MANDELBROT_COORD_PNT_NUMBER_TYPE(MB_DIGITS10) /* NOLINT(cppcoreguidelines-macro-usage) */ \
+  boost::multiprecision::number<boost::multiprecision::cpp_dec_float<static_cast<unsigned>(MB_DIGITS10)>,\
                                 boost::multiprecision::et_off>
 
-  #define MANDELBROT_PRECISION_NUMBER_TYPE_NAME(MANDELBROT_DIGITS10) /* NOLINT(cppcoreguidelines-macro-usage) */ \
-  boost::multiprecision::number<boost::multiprecision::cpp_dec_float<static_cast<unsigned>(MANDELBROT_DIGITS10)>,\
-                                boost::multiprecision::et_off>
+  #define MANDELBROT_ITERATION_NUMBER_TYPE(MB_DIGITS10) MANDELBROT_COORD_PNT_NUMBER_TYPE(MB_DIGITS10) // NOLINT(cppcoreguidelines-macro-usage)
 
   #endif
 
@@ -57,8 +57,8 @@
 
   namespace detail {
 
-  using coord_pnt_numeric_type = MANDELBROT_NUMBER_TYPE_NAME( MANDELBROT_COORD_PNT_DIGITS10 ); // NOLINT(cppcoreguidelines-macro-usage)
-  using iteration_numeric_type = MANDELBROT_NUMBER_TYPE_NAME( MANDELBROT_ITERATION_DIGITS10 ); // NOLINT(cppcoreguidelines-macro-usage)
+  using coord_pnt_numeric_type = MANDELBROT_COORD_PNT_NUMBER_TYPE( MANDELBROT_COORD_PNT_DIGITS10 ); // NOLINT(cppcoreguidelines-macro-usage)
+  using iteration_numeric_type = MANDELBROT_ITERATION_NUMBER_TYPE( MANDELBROT_ITERATION_DIGITS10 ); // NOLINT(cppcoreguidelines-macro-usage)
 
   } // namespace detail
 
