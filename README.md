@@ -292,19 +292,20 @@ Details:
 ## Deep Dives and Acceleration via Perturbation
 
 Deep dives are difficult. Even when an interesting point can be found,
-iterative calculations tend to be hampered by the very large floating-ponit types needed
+iterative calculations tend to be hampered by the very large floating-point types needed
 to represent the point in the complex plane.
 
 A magnification of $10^{100}$, in classical iteration for instance, requires
-a floating-point type having more than $100$ digits, such as $124$ digits.
+a floating-point type having more than $100$ decimal digits of precision, such as $124$ digits.
 This is the only way to trivially resolve the minute differences
 in the iterations. Huge number calculations are, however, time-consuming
 and weigh heavily on CPU resources.
 
-There are, however, perturbative schemes that can reduce the width of the
-floating-point types used in iterative caluclations.
-One such scheme was contributed by @S-Streulicht in the
-[Speed Gain of PR-100](https://github.com/ckormanyos/mandelbrot/pull/100)
+There are, nonetheless, perturbative schemes that can reduce the width of the
+floating-point types used in iterative caluclations. These can significantly reduce
+the time required for high-precision deep dives.
+One such scheme was contributed by [S-Streulicht](https://github.com/S-Streulicht)
+in the [Speed Gain of PR-100](https://github.com/ckormanyos/mandelbrot/pull/100)
 effort.
 
 ### Perturbative Algorithm
