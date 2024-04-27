@@ -196,7 +196,7 @@ This image has the the following features and parameters.
 
 ### A Really Deep Dive
 
-My personal best deep dive has a scale of approximately $10^{-311}$.
+One of my personal best deep dives has a scale of approximately $10^{-311}$.
 This is a huge magnification factor having a scale of approximately
 $1$ followed by $311$ zeros.
 The result of this very deep dive iteration
@@ -206,11 +206,11 @@ is represented by the image below.
 
 This image has the the following features and parameters.
 
-  - The square image has $1536 {\times} 1536$ pixels.
+  - The square image has $2048 {\times} 2048$ pixels.
   - Centered at the point $(0.3602404434376143632361252444495453084{\ldots}-i~0.6413130610648031748603750151793020665{\ldots})$.
   - See the configuration code [`mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h`](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h) for the full precision of the center point provided with slightly more than $1,000$ decimal places.
   - Uses a half-width of $4.4 {\times} 10^{-311}$.
-  - Computed with $60,000$ iteratons using the `gmp_float` type from [`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_84_0/libs/multiprecision/doc/html/index.html) instantiated with $365$ decimal digits of precision.
+  - Computed with $60,000$ iteratons using the `cpp_dec_float` type from [`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_84_0/libs/multiprecision/doc/html/index.html) in combination with low-order perturbative iteration having $24$ decimal digits of precision. The central point of the calculation is instantiated with $365$ decimal digits of precision.
 
 ## Using `ckormanyos/mandelbrot`
 
