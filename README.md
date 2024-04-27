@@ -21,7 +21,9 @@
 The Mandelbrot set consists of the set of points $c$
 in the complex plane for which the iteration
 
-$$z_{n+1} = z_{n}^2 + C$$
+$$
+z_{n+1} = z_{n}^2 + c{\mbox{,}}
+$$
 
 where $z_{0}=0$ and $z~{\in}~{\mathbb{C}}$ remains bounded.
 
@@ -292,7 +294,7 @@ Details:
 Begin with the core functionality of the original formula
 
 $$
-z_{k+1} = z_{k}^2 + C
+z_{k+1} = z_{k}^2 + c
 $$
 
 and perform a perterbative _delta_ transformation on the coordinates,
@@ -315,7 +317,7 @@ $$
 Plugging this into the original formula results in:
 
 $$
-z_{k+1} + e_{k+1} = z_{k} + c + e_{k}^2 + 2 z{k} e_{k} + d{\mbox{,}}
+z_{k+1} + e_{k+1} = z_{k} + c + e_{k}^2 + 2 z_{k} e_{k} + d{\mbox{,}}
 $$
 
 thereby replacing the original formula with

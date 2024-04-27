@@ -376,16 +376,16 @@
                   && (quad_length < four_iteration()))                                                   // NOLINT(altera-id-dependent-backward-branch)
             {
               // The core functionality of the original formula is:
-              //   z_{k+1} = z_{k}^2 + c
+              //   z_{k+1} = z_{k}^2 + C
 
-              // -> delta transformation z_{k+1} -> z_{k+1} + e_{k+1}; z_{k} -> z_{k} + e_{k}; c -> c + d;
+              // -> delta transformation z_{k+1} -> z_{k+1} + e_{k+1}; z_{k} -> z_{k} + e_{k}; C -> c + d;
 
               // Get it in to the formula we end with:
-              //   z_{k+1} + e_{k+1} = z_{k} + c + e_{k}^2 + 2*z{k}*e_{k} + d
+              //   z_{k+1} + e_{k+1} = z_{k} + c + e_{k}^2 + 2*z_{k}*e_{k} + d
 
               // This replaces the original formula, resulting in:
-              //   e_{k+1} = e_{k}^2 + 2*z{k}*e_{k} + d
-              //   where zk is the pre-calculated value.
+              //   e_{k+1} = e_{k}^2 + 2*z_{k}*e_{k} + d
+              //   where z_{k} is the pre-calculated value.
 
               ei *= (er + zkr_temp);
               ei += (zki_temp * er);
@@ -402,10 +402,8 @@
               zei *= (zki_temp * static_cast<unsigned>(UINT8_C(2))) + ei;
               //2*er *t + er *er = er * (2*t + er)
 
-              my_iteration_numeric_type zkr_temp2 { zkr_temp }; zkr_temp2 *= zkr_temp2;
-              my_iteration_numeric_type zki_temp2 { zki_temp }; zki_temp2 *= zki_temp2;
 
-              quad_length = (zer + zkr_temp2) + (zei + zki_temp2);
+              quad_length = (zer + (zkr_temp * zkr_temp)) + (zei + (zki_temp * zki_temp));
 
               // Note: zr2 = zr*zr; zi2 = zi*zi is OK-ish, if four is 400 with some inacuracy.
 
