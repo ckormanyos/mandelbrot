@@ -289,13 +289,16 @@ Details:
 
 ## Deep Dives and Acceleration via Perturbation
 
-Begin with the core functionality of the original formula.
+Begin with the core functionality of the original formula
 
 $$
 z_{k+1} = z_{k}^2 + C
 $$
 
-and perform a perterbative _delta_ transformation on the coordinates.
+and perform a perterbative _delta_ transformation on the coordinates,
+see also [Deep Zoom Theory: Perturbation](https://mathr.co.uk/blog/2021-05-14_deep_zoom_theory_and_practice.html#a2021-05-14_deep_zoom_theory_and_practice_perturbation).
+
+In other words
 
 $$
 z_{k+1}~{\rightarrow}~z_{k+1} + e_{k+1}
@@ -312,13 +315,13 @@ $$
 Plugging this into the original formula results in:
 
 $$
-z_{k+1} + e_{k+1} = z_{k} + c + e_{k}^2 + 2*z{k}*e_{k} + d{\mbox{,}}
+z_{k+1} + e_{k+1} = z_{k} + c + e_{k}^2 + 2 z{k} e_{k} + d{\mbox{,}}
 $$
 
-replacing the original formula with
+thereby replacing the original formula with
 
 $$
-e_{k+1} = e_{k}^2 + 2*z_{k}*e_{k} + d{\mbox{,}}
+e_{k+1} = e_{k}^2 + 2 z_{k} e_{k} + d{\mbox{.}}
 $$
 
 where $z_{k}$ is the pre-calculated value.
