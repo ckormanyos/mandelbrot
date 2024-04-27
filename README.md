@@ -21,7 +21,9 @@
 The Mandelbrot set consists of the set of points $c$
 in the complex plane for which the iteration
 
-$$z_{n+1} = z_{n}^2 + c$$
+$$
+z_{n+1} = z_{n}^2 + c{\mbox{,}}
+$$
 
 where $z_{0}=0$ and $z~{\in}~{\mathbb{C}}$ remains bounded.
 
@@ -286,6 +288,45 @@ Details:
 | `20_ZOOM_VERY_DEEP_00`    | $(+0.360240443437614363236125244449545308482607807958585750488-i~0.641313061064803174860375015179302066579494952282305259556$ | [image](https://github.com/ckormanyos/mandelbrot/tree/main/images/gallery/mandelbrot_MANDELBROT_20_ZOOM_VERY_DEEP_00_magnify51.jpg)     |
 | `30_ZOOM_ANOTHER_00`      | $(-1.740062382579339905220844167065825638296641720436171866880+i~0.028175339779211048992411521144319509687539076742990608570$ | [image](https://github.com/ckormanyos/mandelbrot/tree/main/images/gallery/mandelbrot_MANDELBROT_30_ZOOM_ANOTHER_00_magnify51.jpg)       |
 | `45_SEAHORSE_OTHER_01`    | $(-0.745605122368264995520769522753086369510716449777505626833+i~0.112859495427252849953537572395520089297826357072986239717$ | [image](https://github.com/ckormanyos/mandelbrot/tree/main/images/gallery/mandelbrot_MANDELBROT_45_SEAHORSE_OTHER_01_magnify51.jpg)     |
+
+## Deep Dives and Acceleration via Perturbation
+
+Begin with the core functionality of the original formula
+
+$$
+z_{k+1} = z_{k}^2 + c
+$$
+
+and perform a perterbative _delta_ transformation on the coordinates,
+see also [Deep Zoom Theory: Perturbation](https://mathr.co.uk/blog/2021-05-14_deep_zoom_theory_and_practice.html#a2021-05-14_deep_zoom_theory_and_practice_perturbation).
+
+In other words
+
+$$
+z_{k+1}~{\rightarrow}~z_{k+1} + e_{k+1}
+$$
+
+$$
+z_{k}~{\rightarrow}~z_{k} + e_{k}
+$$
+
+$$
+c~{\rightarrow}~c + d{\mbox{.}}
+$$
+
+Plugging this into the original formula results in:
+
+$$
+z_{k+1} + e_{k+1} = z_{k} + c + e_{k}^2 + 2 z_{k} e_{k} + d{\mbox{,}}
+$$
+
+thereby replacing the original formula with
+
+$$
+e_{k+1} = e_{k}^2 + 2 z_{k} e_{k} + d{\mbox{.}}
+$$
+
+where $z_{k}$ is the pre-calculated value.
 
 ## Testing and Continuous Integration
 
