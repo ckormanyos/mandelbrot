@@ -129,6 +129,12 @@
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_10_ZOOM_WIKI_00_rect.h">
       <Filter>Source Files\mandelbrot\cfg</Filter>
     </ClInclude>
+    <ClInclude Include="mandelbrot\mandelbrot_generator_trivial.h">
+      <Filter>Source Files\mandelbrot</Filter>
+    </ClInclude>
+    <ClInclude Include="mandelbrot\mandelbrot_generator_perturbative.h">
+      <Filter>Source Files\mandelbrot</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-tidy" />

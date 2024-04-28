@@ -15,7 +15,7 @@
   constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_10_ZOOM_WIKI_00";
 
   constexpr int  MANDELBROT_SETUPs_DIGITS10         =      55;
-  constexpr int  MANDELBROT_ITERATION_DIGITS10      =      20;
+  constexpr int  MANDELBROT_ITERATION_DIGITS10      =      55;
   constexpr int  MANDELBROT_CALCULATION_PIXELS_X    =    2048;
   constexpr int  MANDELBROT_CALCULATION_PIXELS_Y    =    2048;
   constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =   20000;
@@ -24,6 +24,8 @@
   constexpr char MANDELBROT_POINT_DY_HALF[]         = "3.1E-25";
   constexpr char MANDELBROT_POINT_CENTER_X[]        = "-0.7436438870371587047521915061147750";
   constexpr char MANDELBROT_POINT_CENTER_Y[]        = "+0.1318259042053119704931320563851375";
+
+  #define MANDELBROT_GENERATOR_TYPE mandelbrot_generator_trivial // NOLINT(cppcoreguidelines-macro-usage)
 
   #include <mandelbrot/cfg/mandelbrot_cfg.h>
 
