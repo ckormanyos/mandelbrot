@@ -42,7 +42,7 @@
   constexpr char MANDELBROT_POINT_CENTER_X[]        = "-0.7453983606667815";  // NOLINT(cppcoreguidelines-avoid-c-arrays,hicpp-avoid-c-arrays,modernize-avoid-c-arrays)
   constexpr char MANDELBROT_POINT_CENTER_Y[]        = "+0.1125046349959942";  // NOLINT(cppcoreguidelines-avoid-c-arrays,hicpp-avoid-c-arrays,modernize-avoid-c-arrays)
 
-  #define MANDELBROT_GENERATOR_TYPE mandelbrot_generator_perturbative
+  #define MANDELBROT_GENERATOR_TYPE mandelbrot_generator_trivial
 
   #include <mandelbrot/cfg/mandelbrot_cfg.h>
 
