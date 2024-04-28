@@ -20,7 +20,8 @@
   #endif
   #endif
 
-  #include <mandelbrot/mandelbrot.h>
+  #include <mandelbrot/mandelbrot_generator_perturbative.h>
+  #include <mandelbrot/mandelbrot_generator_trivial.h>
 
   #include <cstdint>
   #include <string>

@@ -186,17 +186,18 @@
   template<typename CoordPntNumericType,
            typename IterateNumericType,
            const std::uint_fast32_t MaxIterations>
-  class mandelbrot_generator final // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
+  class mandelbrot_generator // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
   {
   public:
     using mandelbrot_config_type = mandelbrot_config_base<CoordPntNumericType, IterateNumericType, MaxIterations>;
 
-  private:
+  protected:
     using my_coord_pnt_numeric_type = typename mandelbrot_config_type::my_coord_pnt_numeric_type;
     using my_iteration_numeric_type = typename mandelbrot_config_type::my_iteration_numeric_type;
 
     static constexpr auto max_iterations = static_cast<std::uint_fast32_t>(mandelbrot_config_type::max_iterations);
 
+  private:
     using boost_gil_x_coord_type = boost::gil::rgb8_image_t::x_coord_t;
     using boost_gil_y_coord_type = boost::gil::rgb8_image_t::y_coord_t;
 
@@ -232,6 +233,10 @@
       return my_four;
     }
 
+    virtual auto generate_mandelbrot_image_engine(std::vector<my_iteration_numeric_type>&,
+                                                  std::vector<my_iteration_numeric_type>&,
+                                                  mandelbrot_text_output_base&) -> void = 0;
+
     auto generate_mandelbrot_image(const std::string&                 str_filename,
                                    const color::color_functions_base& color_functions = color::color_functions_bw(),
                                    const color::color_stretch_base&   color_stretches = color::color_stretch_histogram_method(),
@@ -239,197 +244,10 @@
     {
       // Setup the x-axis and y-axis coordinates.
 
-      std::vector<my_iteration_numeric_type> zkr(mandelbrot_config_object.max_iterations + static_cast<std::uint_fast32_t>(UINT8_C(1)));
-      std::vector<my_iteration_numeric_type> zki(mandelbrot_config_object.max_iterations + static_cast<std::uint_fast32_t>(UINT8_C(1)));
-
-      using std::floor;
-
-      my_coord_pnt_numeric_type
-        x_center
-        {
-          static_cast<my_coord_pnt_numeric_type>
-          (
-              (mandelbrot_config_object.x_lo() + mandelbrot_config_object.x_hi())
-            / static_cast<my_coord_pnt_numeric_type>(UINT8_C(2))
-          )
-        };
-
-      my_coord_pnt_numeric_type
-        y_center
-        {
-          static_cast<my_coord_pnt_numeric_type>
-          (
-              (mandelbrot_config_object.y_lo() + mandelbrot_config_object.y_hi())
-            / static_cast<my_coord_pnt_numeric_type>(UINT8_C(2))
-          )
-        };
-
-      // Initialize the Zk-Components of the central point.
-      // Assumption: The max iterations is reached.
-
-      {
-        zkr.front() = static_cast<my_iteration_numeric_type>(UINT8_C(0));
-        zki.front() = static_cast<my_iteration_numeric_type>(UINT8_C(0));
-
-        my_coord_pnt_numeric_type zr  { static_cast<my_coord_pnt_numeric_type>(UINT8_C(0)) };
-        my_coord_pnt_numeric_type zi  { static_cast<my_coord_pnt_numeric_type>(UINT8_C(0)) };
-        my_coord_pnt_numeric_type zr2 { static_cast<my_coord_pnt_numeric_type>(UINT8_C(0)) };
-        my_coord_pnt_numeric_type zi2 { static_cast<my_coord_pnt_numeric_type>(UINT8_C(0)) };
-
-
-        auto iteration_result = static_cast<std::uint_fast32_t>(UINT8_C(0));
-
-        while ((iteration_result < max_iterations) && ((zr2 + zi2) < four_coord_pnt())) // NOLINT(altera-id-dependent-backward-branch)
-        {
-          // The inner loop performs optimized complex multiply and add.
-          // This is the main work of the fractal iteration scheme.
-
-          zi *= zr;
-
-          zi += (zi + y_center);
-          zr = (zr2 - zi2) + x_center;
-
-          zr2 = zr * zr;
-          zi2 = zi * zi;
-
-          ++iteration_result;
-
-          zkr[static_cast<std::size_t>(iteration_result)] = static_cast<my_iteration_numeric_type>(zr);
-          zki[static_cast<std::size_t>(iteration_result)] = static_cast<my_iteration_numeric_type>(zi);
-        }
-      }
-
       std::vector<my_iteration_numeric_type> x_coord(mandelbrot_config_object.integral_width());  // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
       std::vector<my_iteration_numeric_type> y_coord(mandelbrot_config_object.integral_height()); // NOLINT(hicpp-use-nullptr,altera-id-dependent-backward-branch)
 
-      // Initialize the x-y coordinates.
-      {
-        auto x_val(static_cast<my_iteration_numeric_type>(mandelbrot_config_object.x_lo() - x_center));
-        auto y_val(static_cast<my_iteration_numeric_type>(mandelbrot_config_object.y_hi() - y_center));
-
-        for (auto& x : x_coord) { x = x_val; x_val += static_cast<my_iteration_numeric_type>(mandelbrot_config_object.step_x()); }
-        for (auto& y : y_coord) { y = y_val; y_val -= static_cast<my_iteration_numeric_type>(mandelbrot_config_object.step_y()); }
-      }
-
-      std::atomic_flag mandelbrot_iteration_lock { };
-
-      std::size_t unordered_parallel_row_count { static_cast<std::size_t>(UINT8_C(0)) };
-
-      my_concurrency::parallel_for
-      (
-        static_cast<std::size_t>(UINT8_C(0)),
-        y_coord.size(),
-        [&mandelbrot_iteration_lock, &unordered_parallel_row_count, &text_output, &x_coord, &y_coord, &zkr, &zki, this](std::size_t j_row)
-        {
-          while(mandelbrot_iteration_lock.test_and_set()) { ; }
-
-          {
-            ++unordered_parallel_row_count;
-
-            const auto percent =
-              static_cast<float>
-              (
-                  static_cast<float>(100.0F * static_cast<float>(unordered_parallel_row_count))
-                / static_cast<float>(y_coord.size())
-              );
-
-            std::stringstream strm { };
-
-            strm << "Calculating Mandelbrot image at row "
-                 << unordered_parallel_row_count
-                 << " of "
-                 << y_coord.size()
-                 << ". Total processed so far: "
-                 << std::fixed
-                 << std::setprecision(1)
-                 << percent
-                 << "%. Have patience.\r";
-
-            text_output.write(strm.str());
-          }
-
-          mandelbrot_iteration_lock.clear();
-
-          for(auto   i_col = static_cast<std::size_t>(UINT8_C(0));
-                     i_col < x_coord.size(); // NOLINT(altera-id-dependent-backward-branch)
-                   ++i_col)
-          {
-            my_iteration_numeric_type er          { static_cast<unsigned>(UINT8_C(0)) };
-            my_iteration_numeric_type ei          { static_cast<unsigned>(UINT8_C(0)) };
-            my_iteration_numeric_type quad_length { static_cast<unsigned>(UINT8_C(0)) };
-            my_iteration_numeric_type zer         { static_cast<unsigned>(UINT8_C(0)) };
-            my_iteration_numeric_type zei         { static_cast<unsigned>(UINT8_C(0)) };
-            my_iteration_numeric_type zkr_temp    { static_cast<unsigned>(UINT8_C(0)) };
-            my_iteration_numeric_type zki_temp    { static_cast<unsigned>(UINT8_C(0)) };
-
-            // Use an optimized complex-numbered multiplication scheme.
-            // Thereby reduce the main work of the Mandelbrot iteration to
-            // three real-valued multiplications and several real-valued
-            // addition/subtraction operations.
-
-            auto iteration_result = static_cast<std::uint_fast32_t>(UINT8_C(1));
-
-            // Perform the iteration sequence for generating the Mandelbrot set.
-            // Here is the main work of the program.
-
-            while(   (iteration_result < (max_iterations + static_cast<std::uint_fast32_t>(UINT8_C(1)))) // NOLINT(altera-id-dependent-backward-branch)
-                  && (quad_length < four_iteration()))                                                   // NOLINT(altera-id-dependent-backward-branch)
-            {
-              // The core functionality of the original formula is:
-              //   z_{k+1} = z_{k}^2 + C
-
-              // -> delta transformation z_{k+1} -> z_{k+1} + e_{k+1}; z_{k} -> z_{k} + e_{k}; C -> c + d;
-
-              // Get it in to the formula we end with:
-              //   z_{k+1} + e_{k+1} = z_{k} + c + e_{k}^2 + 2*z_{k}*e_{k} + d
-
-              // This replaces the original formula, resulting in:
-              //   e_{k+1} = e_{k}^2 + 2*z_{k}*e_{k} + d
-              //   where z_{k} is the pre-calculated value.
-
-              ei *= (er + zkr_temp);
-              ei += (zki_temp * er);
-              ei += ei + y_coord[j_row];
-              er  = zer - zei + x_coord[i_col];
-
-              zkr_temp = zkr[static_cast<std::size_t>(iteration_result)];
-              zki_temp = zki[static_cast<std::size_t>(iteration_result)];
-
-              zer  = er;
-              zer *= (zkr_temp * static_cast<unsigned>(UINT8_C(2))) + er;
-
-              zei  = ei;
-              zei *= (zki_temp * static_cast<unsigned>(UINT8_C(2))) + ei;
-              //2*er *t + er *er = er * (2*t + er)
-
-
-              quad_length = (zer + (zkr_temp * zkr_temp)) + (zei + (zki_temp * zki_temp));
-
-              // Note: zr2 = zr*zr; zi2 = zi*zi is OK-ish, if four is 400 with some inacuracy.
-
-              ++iteration_result;
-            }
-
-            // The iterations are shifted by one, and need to be corrected down by one.
-            // In order to achieve the same color scaling we subtract the last one.
-
-            --iteration_result;
-
-            mandelbrot_iteration_matrix[i_col][j_row] = iteration_result;
-
-            std::atomic<std::uint_fast32_t>*
-              ptr_hist
-              {
-                reinterpret_cast<std::atomic<std::uint_fast32_t>*> // NOLINT(cppcoreguidelines-pro-type-reinterpret-cast)
-                (
-                  &mandelbrot_color_histogram[static_cast<std::size_t>(iteration_result)]
-                )
-              };
-
-            std::atomic_fetch_add(ptr_hist, static_cast<std::uint_fast32_t>(UINT8_C(1)));
-          }
-        }
-      );
+      this->generate_mandelbrot_image_engine(x_coord, y_coord, text_output);
 
       std::string str { };
 
@@ -449,15 +267,18 @@
       boost::gil::jpeg_write_view(str_filename, mandelbrot_view);
     }
 
+  protected:
+    const mandelbrot_config_type&                mandelbrot_config_object;    // NOLINT(readability-identifier-naming)
+
   private:
-    const mandelbrot_config_type&                      mandelbrot_config_object;    // NOLINT(readability-identifier-naming)
+    boost::gil::rgb8_image_t                     mandelbrot_image;            // NOLINT(readability-identifier-naming)
+    boost::gil::rgb8_view_t                      mandelbrot_view;             // NOLINT(readability-identifier-naming)
 
-          boost::gil::rgb8_image_t                     mandelbrot_image;            // NOLINT(readability-identifier-naming)
-          boost::gil::rgb8_view_t                      mandelbrot_view;             // NOLINT(readability-identifier-naming)
+  protected:
+    std::vector<std::vector<std::uint_fast32_t>> mandelbrot_iteration_matrix; // NOLINT(readability-identifier-naming)
+    std::vector<std::uint_fast32_t>              mandelbrot_color_histogram;  // NOLINT(readability-identifier-naming)
 
-          std::vector<std::vector<std::uint_fast32_t>> mandelbrot_iteration_matrix; // NOLINT(readability-identifier-naming)
-          std::vector<std::uint_fast32_t>              mandelbrot_color_histogram;  // NOLINT(readability-identifier-naming)
-
+  private:
     static mandelbrot_text_output_cout my_standard_output; // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
 
     auto apply_color_stretches(const std::vector<my_iteration_numeric_type>& x_values,
