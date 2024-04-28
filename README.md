@@ -302,13 +302,6 @@ This is the only way to trivially resolve the minute differences
 in the iterations. Huge number calculations are, however, time-consuming
 and weigh heavily on CPU resources.
 
-There are, nonetheless, perturbative schemes that can reduce the width of the
-floating-point types used in iterative caluclations. These can significantly shorten
-the time required for high-precision deep dives.
-One such scheme was contributed by [S-Streulicht](https://github.com/S-Streulicht)
-in the [Speed Gain of PR-100](https://github.com/ckormanyos/mandelbrot/pull/100)
-effort.
-
 Computation-time of classical iteration (with full precision) scales
 with the computational complexity of multiplication of the
 underlying big-numbers. This is non-linear. Typical multiplication complexities
@@ -317,12 +310,19 @@ around Order $N^{1.6}$ for higher order multiplication schemes
 like Karatsuba. This non-linear increase in complexity is also
 compounded by the fact that deeper dives require higher iteration counts.
 
+There are, nonetheless, perturbative schemes that can reduce the width of the
+floating-point types used in iterative caluclations. These can significantly
+accelerate high-precision deep dives.
+One such scheme was contributed by [S-Streulicht](https://github.com/S-Streulicht)
+in the [Speed Gain of PR-100](https://github.com/ckormanyos/mandelbrot/pull/100)
+effort.
+
 Perturbative schemes are still computationally intensive. But the strong dependence
 on the width of the underlying central point is removed. This is traded
 for a slightly more complicated iteration scheme and a bit more pre-iterative
-preparational effort. The advantages for deep dives are, however, stark.
+preparational effort. The advantages for deep dives can, however, be stark.
 The work for deeper and deeper dives scales more or less linearly
-instead of quadratically and increases with only with iteration count.
+instead of quadratically and increases only with iteration count.
 This is a very equitable trade.
 
 ### Perturbative Algorithm
