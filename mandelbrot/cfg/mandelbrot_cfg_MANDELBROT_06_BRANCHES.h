@@ -13,15 +13,17 @@
   constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_06_BRANCHES";
 
   constexpr int  MANDELBROT_COORD_PNT_DIGITS10      =      31;
-  constexpr int  MANDELBROT_ITERATION_DIGITS10      =      17;
+  constexpr int  MANDELBROT_ITERATION_DIGITS10      =      31;
   constexpr int  MANDELBROT_CALCULATION_PIXELS_X    =    2048;
   constexpr int  MANDELBROT_CALCULATION_PIXELS_Y    =    2048;
   constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =    2000;
 
   constexpr char MANDELBROT_POINT_DX_HALF[]         = "4.2E-12";
   constexpr char MANDELBROT_POINT_DY_HALF[]         = "4.2E-12";
-  constexpr char MANDELBROT_POINT_CENTER_X[]        = "0.3369844464873";
-  constexpr char MANDELBROT_POINT_CENTER_Y[]        = "0.0487782196791";
+  constexpr char MANDELBROT_POINT_CENTER_X[]        = "+0.3369844464873";
+  constexpr char MANDELBROT_POINT_CENTER_Y[]        = "+0.0487782196791";
+
+  #define MANDELBROT_GENERATOR_TYPE mandelbrot_generator_trivial // NOLINT(cppcoreguidelines-macro-usage)
 
   #include <mandelbrot/cfg/mandelbrot_cfg.h>
 

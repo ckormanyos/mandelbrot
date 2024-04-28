@@ -25,12 +25,15 @@
   template<typename CoordPntNumericType,
            typename IterateNumericType,
            const std::uint_fast32_t MaxIterations> class mandelbrot_generator_trivial final // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
-    : public mandelbrot_generator<CoordPntNumericType, IterateNumericType, MaxIterations>
+    : public mandelbrot_generator<CoordPntNumericType, CoordPntNumericType, MaxIterations>
   {
   private:
-    using base_class_type = mandelbrot_generator<CoordPntNumericType, IterateNumericType, MaxIterations>;
+    using base_class_type = mandelbrot_generator<CoordPntNumericType, CoordPntNumericType, MaxIterations>;
 
     using mandelbrot_config_type = typename base_class_type::mandelbrot_config_type;
+
+    static_assert(std::numeric_limits<typename base_class_type::my_iteration_numeric_type>::digits == std::numeric_limits<typename base_class_type::my_coord_pnt_numeric_type>::digits,
+                  "Error: For trivial iteration coordinate and iteration precision must be the same. Check config.");
 
     using my_iteration_numeric_type = typename base_class_type::my_iteration_numeric_type;
 

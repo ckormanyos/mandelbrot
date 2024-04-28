@@ -57,6 +57,7 @@ The following design goals have been incorporated.
   - Support rectangular (including square) images having essentially any size and magnification, provided that the precision of the iteration type is set accordingly.
   - The inner loop that performs the work of fractal iteration uses multiple, parallel CPU cores.
   - C++ template design allows for flexible interchange of any appropriate kind of big-number type in the classes that implement fractal iteration.
+  - The iterative scheme is implemented as a flexible run-time polymorpic function. This allows for the implementation and interchange of multiple kinds of iterative methods, each one optimized for the particular use cas at hand.
   - Visualization of the result uses color-stretching techniques combined with the histogram method.
   - Graphical representation uses [`Boost.Gil`](https://www.boost.org/doc/libs/1_84_0/libs/gil/doc/html/index.html) in combination with the JPEG-6b library (see [below](#Adaptions-of-and-Notes-on-jpeg-6b)).
   - Color schemes can be easily adapted via straightforward creation (or modification) of a skinny derived class.

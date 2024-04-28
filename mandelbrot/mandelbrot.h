@@ -268,15 +268,15 @@
     }
 
   protected:
-    const mandelbrot_config_type&                mandelbrot_config_object;    // NOLINT(readability-identifier-naming)
+    const mandelbrot_config_type&                mandelbrot_config_object;    // NOLINT(readability-identifier-naming,cppcoreguidelines-non-private-member-variables-in-classes,misc-non-private-member-variables-in-classes)
 
   private:
     boost::gil::rgb8_image_t                     mandelbrot_image;            // NOLINT(readability-identifier-naming)
     boost::gil::rgb8_view_t                      mandelbrot_view;             // NOLINT(readability-identifier-naming)
 
   protected:
-    std::vector<std::vector<std::uint_fast32_t>> mandelbrot_iteration_matrix; // NOLINT(readability-identifier-naming)
-    std::vector<std::uint_fast32_t>              mandelbrot_color_histogram;  // NOLINT(readability-identifier-naming)
+    std::vector<std::vector<std::uint_fast32_t>> mandelbrot_iteration_matrix; // NOLINT(readability-identifier-naming,cppcoreguidelines-non-private-member-variables-in-classes,misc-non-private-member-variables-in-classes)
+    std::vector<std::uint_fast32_t>              mandelbrot_color_histogram;  // NOLINT(readability-identifier-naming,cppcoreguidelines-non-private-member-variables-in-classes,misc-non-private-member-variables-in-classes)
 
   private:
     static mandelbrot_text_output_cout my_standard_output; // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
