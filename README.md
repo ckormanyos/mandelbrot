@@ -291,8 +291,9 @@ Details:
 
 ## Deep Dives and Acceleration via Perturbation
 
-Deep dives are difficult. Even when an interesting point can be found,
-iterative calculations tend to be hampered by the very large floating-point types needed
+Deep dives are mathematically challenging and computationally difficult.
+Even when an interesting point can be found, iterative calculations
+tend to be hampered by the very large floating-point types needed
 to represent the point in the complex plane.
 
 A magnification of $10^{100}$, in classical iteration for instance, requires
@@ -302,11 +303,26 @@ in the iterations. Huge number calculations are, however, time-consuming
 and weigh heavily on CPU resources.
 
 There are, nonetheless, perturbative schemes that can reduce the width of the
-floating-point types used in iterative caluclations. These can significantly reduce
+floating-point types used in iterative caluclations. These can significantly shorten
 the time required for high-precision deep dives.
 One such scheme was contributed by [S-Streulicht](https://github.com/S-Streulicht)
 in the [Speed Gain of PR-100](https://github.com/ckormanyos/mandelbrot/pull/100)
 effort.
+
+Classical iteration with full precision scales in terms of computation-time
+with the computational complexity of the multiplication scheme of the
+underlying big-numbers, which are non-linear. Typical multiplication complexity
+is quadratic of Order-$N^{2}$ or (in the case of higher order multiplication schemes
+like Karatsuba of Order-$N^{1.6}$ or so). This non-linearly increasing
+complexity is also compounded by the fact that deeper dives require
+higher iteration counts.
+
+Perturbative schemes are still computationally intensive, but the strong dependence
+on the width of the underlying central point is removed. This is traded
+for a slightly more complicated iteration scheme. But the advantages
+for deep dives are stark. The work for deeper and deeper dives scales
+more or less linearly instead of quadratically and increases with
+iteration count. This is an equitable trade.
 
 ### Perturbative Algorithm
 
@@ -337,7 +353,7 @@ $$
 Plugging this into the original formula results in
 
 $$
-z_{k+1} + e_{k+1} = z_{k} + c + e_{k}^2 + 2 z_{k} e_{k} + d{\mbox{.}}
+z_{k+1} + e_{k+1} = z_{k}^{2} + z_{k} + c + e_{k}^2 + 2 z_{k} e_{k} + d{\mbox{.}}
 $$
 
 Thereby, we replace the original formula with
@@ -349,6 +365,12 @@ $$
 where $z_{k}$ is the pre-calculated value. The transformed
 coordinates can be iteratied with drastically decreased precision,
 such as $24$ decimal digits, and can result in saved calculation time.
+
+Further details of the perturbative calculation are briefly described in the following.
+  - We also evaluate $z_{k+1}+e_{k+1}$ for the escape check. Alternatively it could be sufficient to check only $e_{k}$. If $e_{k}$ escapes at some iteration, then $z_{k}$ are also expected to escape, albeit at a different iteration step.
+  - For clarity, we emphasize that the $z_{k}$ are initially calculated with full precision. But they are iterated with low precision such as $24$ decimal digits.
+  - $z_{k}$ is calculated for one reference point (i.e., the center of the picture) with high precision and used for the transformation.
+  - Constrains on that central point: The number of iterations before the it escapes needs to be higher than those for the orbital points. Interestingly enough, however, the point dosent have to be bound.
 
 ## Testing and Continuous Integration
 
