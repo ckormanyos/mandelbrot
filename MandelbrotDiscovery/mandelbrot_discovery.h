@@ -450,7 +450,7 @@
         }
         else if(str_cmd == "calc")
         {
-          constexpr auto MANDELBROT_CALCULATION_ITERATIONS = static_cast<std::uint_fast32_t>(12000);
+          constexpr auto MANDELBROT_CALCULATION_ITERATIONS = static_cast<std::uint_fast32_t>(50000);
           constexpr auto MANDELBROT_CALCULATION_PIXELS_X   = static_cast<std::uint_fast32_t>(768);
           constexpr auto MANDELBROT_CALCULATION_PIXELS_Y   = static_cast<std::uint_fast32_t>(768);
 

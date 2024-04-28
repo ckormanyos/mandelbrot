@@ -12,8 +12,8 @@
 
 namespace local::cfg
 {
-  constexpr int  MANDELBROT_COORD_PNT_DIGITS10      =      56;
-  constexpr int  MANDELBROT_ITERATION_DIGITS10      =      56;
+  constexpr int  MANDELBROT_COORD_PNT_DIGITS10      =     112;
+  constexpr int  MANDELBROT_ITERATION_DIGITS10      =     112;
   constexpr int  MANDELBROT_CALCULATION_PIXELS_X    =     768;
   constexpr int  MANDELBROT_CALCULATION_PIXELS_Y    =     768;
 
