@@ -309,20 +309,21 @@ One such scheme was contributed by [S-Streulicht](https://github.com/S-Streulich
 in the [Speed Gain of PR-100](https://github.com/ckormanyos/mandelbrot/pull/100)
 effort.
 
-Classical iteration with full precision scales in terms of computation-time
-with the computational complexity of the multiplication scheme of the
-underlying big-numbers, which are non-linear. Typical multiplication complexity
-is quadratic of Order-$N^{2}$ or (in the case of higher order multiplication schemes
-like Karatsuba of Order-$N^{1.6}$ or so). This non-linearly increasing
-complexity is also compounded by the fact that deeper dives require
-higher iteration counts.
+Computation-time of classical iteration (with full precision) scales
+with the computational complexity of multiplication of the
+underlying big-numbers. This is non-linear. Typical multiplication complexities
+are quadratic Order $N^{2}$ for school-multiplciation or
+around Order $N^{1.6}$ for higher order multiplication schemes
+like Karatsuba. This non-linear increase in complexity is also
+compounded by the fact that deeper dives require higher iteration counts.
 
-Perturbative schemes are still computationally intensive, but the strong dependence
+Perturbative schemes are still computationally intensive. But the strong dependence
 on the width of the underlying central point is removed. This is traded
-for a slightly more complicated iteration scheme. But the advantages
-for deep dives are stark. The work for deeper and deeper dives scales
-more or less linearly instead of quadratically and increases with
-iteration count. This is an equitable trade.
+for a slightly more complicated iteration scheme and a bit more pre-iterative
+preparational effort. The advantages for deep dives are, however, stark.
+The work for deeper and deeper dives scales more or less linearly
+instead of quadratically and increases with only with iteration count.
+This is a very equitable trade.
 
 ### Perturbative Algorithm
 
