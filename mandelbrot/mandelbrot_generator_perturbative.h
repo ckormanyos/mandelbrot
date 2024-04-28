@@ -36,6 +36,9 @@
     using my_coord_pnt_numeric_type = typename base_class_type::my_coord_pnt_numeric_type;
     using my_iteration_numeric_type = typename base_class_type::my_iteration_numeric_type;
 
+    static_assert(std::numeric_limits<my_iteration_numeric_type>::digits <= std::numeric_limits<my_coord_pnt_numeric_type>::digits,
+                  "Error: The iteration precision must be less than or equal to the coordinate precision. Check config.");
+
   public:
     explicit mandelbrot_generator_perturbative(const mandelbrot_config_type& config)
       : base_class_type(config) { }
