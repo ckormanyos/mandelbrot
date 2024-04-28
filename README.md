@@ -355,7 +355,7 @@ $$
 Plugging this into the original formula results in
 
 $$
-z_{k+1} + e_{k+1} = z_{k}^{2} + z_{k} + c + e_{k}^2 + 2 z_{k} e_{k} + d{\mbox{.}}
+z_{k+1} + e_{k+1} = z_{k}^{2} + c + e_{k}^2 + 2 z_{k} e_{k} + d{\mbox{.}}
 $$
 
 Thereby, we replace the original formula with
