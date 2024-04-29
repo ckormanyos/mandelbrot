@@ -239,7 +239,8 @@ Consider as a sample, for instance, the relevant content of the configuration fi
 
   constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_01_FULL";
 
-  constexpr int  MANDELBROT_CALCULATION_DIGITS10    =      37;
+  constexpr int  MANDELBROT_COORD_PNT_DIGITS10      =      37;
+  constexpr int  MANDELBROT_ITERATION_DIGITS10      =      37;
   constexpr int  MANDELBROT_CALCULATION_PIXELS_X    =    2048;
   constexpr int  MANDELBROT_CALCULATION_PIXELS_Y    =    2048;
   constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =    2000;
@@ -248,6 +249,8 @@ Consider as a sample, for instance, the relevant content of the configuration fi
   constexpr char MANDELBROT_POINT_DY_HALF[]         = "1.35";
   constexpr char MANDELBROT_POINT_CENTER_X[]        = "-0.75";
   constexpr char MANDELBROT_POINT_CENTER_Y[]        = "+0.00";
+
+  #define MANDELBROT_GENERATOR_TYPE mandelbrot_generator_trivial // NOLINT(cppcoreguidelines-macro-usage)
 
   #include <mandelbrot/cfg/mandelbrot_cfg.h>
 ```
@@ -379,7 +382,7 @@ Further details of the perturbative calculation are briefly described in the fol
 
 A small test program exercises a variety fractal iterations
 that can be selected individually at compile-time.
-The default confuguration uses the
+The default configuration uses the
 relatively quick-to-calculate _seahorse_ image configured in
 [mandelbrot_cfg_MANDELBROT_05_SEAHORSES.h](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_05_SEAHORSES.h).
 
