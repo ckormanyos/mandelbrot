@@ -48,7 +48,7 @@
                            const my_coord_pnt_numeric_type& xh, // NOLINT(bugprone-easily-swappable-parameters)
                            const my_coord_pnt_numeric_type& yl,
                            const my_coord_pnt_numeric_type& yh,
-                           const std::uint32_t              iter)
+                           const std::uint_fast32_t         iter)
       : my_x_lo      (std::move(xl)),
         my_x_hi      (std::move(xh)),
         my_y_lo      (std::move(yl)),
@@ -112,8 +112,8 @@
         );
     }
 
-    auto set_iterations(const std::uint_fast32_t iter) const -> void               { my_iterations = iter; }
-    auto get_iterations() const                              -> std::uint_fast32_t { return my_iterations; }
+    MANDELBROT_NODISCARD auto set_iterations(const std::uint_fast32_t iter) const -> void               { my_iterations = iter; }
+    MANDELBROT_NODISCARD auto get_iterations() const                              -> std::uint_fast32_t { return my_iterations; }
 
   private:
     const my_coord_pnt_numeric_type my_x_lo;
@@ -122,7 +122,7 @@
     const my_coord_pnt_numeric_type my_y_hi;
     const my_coord_pnt_numeric_type my_width;
     const my_coord_pnt_numeric_type my_height;
-    mutable std::uint_fast32_t      my_iterations;
+    mutable std::uint_fast32_t      my_iterations; // NOLINT(readability-identifier-naming)
   };
 
   // Make a template class that represents the Mandelbrot configuration.
@@ -216,8 +216,8 @@
     mandelbrot_generator(const mandelbrot_generator&) = delete;
     mandelbrot_generator(mandelbrot_generator&&) noexcept = delete;
 
-    auto operator=(const mandelbrot_generator&) -> mandelbrot_generator& = delete;
-    auto operator=(mandelbrot_generator&&) noexcept -> mandelbrot_generator& = delete;
+    MANDELBROT_NODISCARD auto operator=(const mandelbrot_generator&) -> mandelbrot_generator& = delete;
+    MANDELBROT_NODISCARD auto operator=(mandelbrot_generator&&) noexcept -> mandelbrot_generator& = delete;
 
     static auto four_coord_pnt() -> const my_coord_pnt_numeric_type&
     {
