@@ -361,12 +361,13 @@ $$
 Thereby, we replace the original formula with
 
 $$
-e_{k+1} = e_{k}^2 + 2 z_{k} e_{k} + d{\mbox{.}}
+e_{k+1} = e_{k}^2 + 2 z_{k} e_{k} + d{\mbox{,}}
 $$
 
-where $z_{k}$ is the pre-calculated value. The transformed
-coordinates can be iterated with drastically decreased precision,
-such as $24$ decimal digits, and can result in saved calculation time.
+where the $z_{k}$ are the pre-calculated values.
+
+The transformed coordinates can be iterated with drastically decreased precision
+such as $24$ decimal digits. This can result in saved calculation time.
 
 Further details of the perturbative calculation are briefly described in the following.
   - We also evaluate $z_{k+1}+e_{k+1}$ for the escape check. Alternatively it could be sufficient to check only $e_{k}$. If a given $e_{k}$ escapes at some iteration, then the $z_{k}$ are also expected to escape, albeit at a different iteration step.
