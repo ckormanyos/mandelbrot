@@ -86,13 +86,13 @@ auto main() -> int // NOLINT(bugprone-exception-escape)
       cfg::center_x() - cfg::dx_half(),
       cfg::center_x() + cfg::dx_half(),
       cfg::center_y() - cfg::dy_half(),
-      cfg::center_y() + cfg::dy_half()
+      cfg::center_y() + cfg::dy_half(),
+      cfg::max_iter()
     );
 
   using mandelbrot_generator_type =
     MANDELBROT_GENERATOR_TYPE<cfg::coord_pnt_numeric_type,
-                              cfg::iteration_numeric_type,
-                              cfg::mandelbrot_config_type::max_iterations>;
+                              cfg::iteration_numeric_type>;
 
         color::color_stretch_histogram_method local_color_stretches;
   const color::color_functions_bw             local_color_functions;

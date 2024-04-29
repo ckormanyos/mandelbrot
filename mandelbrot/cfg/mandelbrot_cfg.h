@@ -76,7 +76,6 @@
   using mandelbrot_config_type  =
     ckormanyos::mandelbrot::mandelbrot_config<detail::coord_pnt_numeric_type,
                                               detail::iteration_numeric_type,
-                                              static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_ITERATIONS),
                                               static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_X),
                                               static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_Y)>;
 
@@ -87,6 +86,7 @@
   inline auto dy_half()  -> coord_pnt_numeric_type { return coord_pnt_numeric_type(MANDELBROT_POINT_DY_HALF); }
   inline auto center_x() -> coord_pnt_numeric_type { return coord_pnt_numeric_type(MANDELBROT_POINT_CENTER_X); }
   inline auto center_y() -> coord_pnt_numeric_type { return coord_pnt_numeric_type(MANDELBROT_POINT_CENTER_Y); }
+  inline auto max_iter() -> std::uint_fast32_t     { return static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_ITERATIONS); }
 
   #if(__cplusplus >= 201703L)
   } // namespace ckormanyos::mandelbrot::cfg
