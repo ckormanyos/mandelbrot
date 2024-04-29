@@ -112,8 +112,9 @@
         );
     }
 
-    MANDELBROT_NODISCARD auto set_iterations(const std::uint_fast32_t iter) const -> void               { my_iterations = iter; }
-    MANDELBROT_NODISCARD auto get_iterations() const                              -> std::uint_fast32_t { return my_iterations; }
+    auto set_iterations(const std::uint_fast32_t iter) noexcept const -> void { my_iterations = iter; }
+
+    MANDELBROT_NODISCARD auto get_iterations() noexcept const -> std::uint_fast32_t { return my_iterations; }
 
   private:
     const my_coord_pnt_numeric_type my_x_lo;
@@ -233,8 +234,9 @@
       return my_four;
     }
 
-    auto set_iterations(const std::uint_fast32_t iter) const -> void               { mandelbrot_config_object.set_iterations(iter); }
-    auto get_iterations() const                              -> std::uint_fast32_t { return mandelbrot_config_object.get_iterations(); }
+    auto set_iterations(const std::uint_fast32_t iter) noexcept const -> void { mandelbrot_config_object.set_iterations(iter); }
+
+    MANDELBROT_NODISCARD auto get_iterations() noexcept const -> std::uint_fast32_t { return mandelbrot_config_object.get_iterations(); }
 
     virtual auto generate_mandelbrot_image_engine(std::vector<my_iteration_numeric_type>&,
                                                   std::vector<my_iteration_numeric_type>&,

@@ -262,7 +262,8 @@ Clearly named definitions are used to specify:
   - the numbers of pixels and iterations,
   - and the coordinate center and half-width of the magnification region,
   - the iterative method (such as `mandelbrot_generator_trivial` or `mandelbrot_generator_perturbative`),
-  - where the dimensions `MANDELBROT_POINT_DX_HALF`, `MANDELBROT_POINT_DY_HALF`, `MANDELBROT_POINT_CENTER_X`, and `MANDELBROT_POINT_CENTER_Y` are provided as character strings, which remain exact even if the magnification scale requires multiple precision.
+  - where the dimensions `MANDELBROT_POINT_DX_HALF`, `MANDELBROT_POINT_DY_HALF`, `MANDELBROT_POINT_CENTER_X`, and `MANDELBROT_POINT_CENTER_Y` are provided as character strings, which remain exact even if the magnification scale requires multiple precision,
+  - and `MANDELBROT_CALCULATION_ITERATIONS` sets the default maximum number of iterations which can be modified at run time (i.e., for the _Mandelbrot_ _Discovery_ program).
 
 ## The $10^{\mbox{\small{51}}}$ Magnification Club
 
@@ -424,7 +425,7 @@ The following adaptions have been performed.
 
 ## Mandelbrot Discovery
 
-The Mandelbrot Discovery program aims to provide semi-automatic assistance
+The _Mandelbrot_ _Discovery_ program aims to provide semi-automatic assistance
 to find interesting points for fractal deep dives.
 
 This project is work in progress which is being undertaken in the
