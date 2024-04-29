@@ -194,7 +194,7 @@
               // -> delta transformation z_{k+1} -> z_{k+1} + e_{k+1}; z_{k} -> z_{k} + e_{k}; C -> c + d;
 
               // Get it in to the formula we end with:
-              //   z_{k+1} + e_{k+1} = z_{k} + c + e_{k}^2 + 2*z_{k}*e_{k} + d
+              //   z_{k+1} + e_{k+1} = z_{k}^2 + c + e_{k}^2 + 2*z_{k}*e_{k} + d
 
               // This replaces the original formula, resulting in:
               //   e_{k+1} = e_{k}^2 + 2*z_{k}*e_{k} + d
@@ -214,7 +214,6 @@
               zei  = ei;
               zei *= (zki_temp * static_cast<unsigned>(UINT8_C(2))) + ei;
               //2*er *t + er *er = er * (2*t + er)
-
 
               quad_length = (zer + (zkr_temp * zkr_temp)) + (zei + (zki_temp * zki_temp));
 
