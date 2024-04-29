@@ -13,6 +13,8 @@
   #include <geometry.h>
   #include <text.h>
 
+  #include <charconv>
+
   #if !defined(MANDELBROT_NODISCARD)
   #if defined(_MSC_VER) && !defined(__GNUC__)
   #define MANDELBROT_NODISCARD
@@ -257,7 +259,7 @@
     static volatile ::LONG           my_thread_did_exit;
     static std::atomic<bool>         my_thread_wait_for_new_set_click;
     static my_coord_pnt_numeric_type my_mandelbrot_zoom_factor;
-
+    static std::uint_fast32_t        my_mandelbrot_iterations;
 
     static constexpr auto window_title() noexcept -> const char* { return WindowTitle; }
     static constexpr auto icon_id() noexcept -> int { return IconId; }
@@ -448,18 +450,39 @@
             std::this_thread::sleep_for(std::chrono::microseconds(static_cast<unsigned>(UINT8_C(20))));
           }
         }
+        else if(   (str_cmd.find("itr", static_cast<std::string::size_type>(UINT8_C(0))) == static_cast<std::string::size_type>(UINT8_C(0)))
+                && (str_cmd.length() > static_cast<std::string::size_type>(UINT8_C(3))))
+        {
+          std::uint_fast32_t iter { };
+
+          const auto result_of_iter_from_chars =
+            std::from_chars
+            (
+              str_cmd.c_str() + static_cast<std::string::size_type>(UINT8_C(3)),
+              str_cmd.c_str() + str_cmd.length(),
+              iter
+            );
+
+          const auto err_code = result_of_iter_from_chars.ec;
+
+          if(err_code == std::errc())
+          {
+            my_mandelbrot_iterations = iter;
+
+            write_string("new max. iterations: " + std::to_string(iter) + "\n");
+          }
+        }
         else if(str_cmd == "calc")
         {
-          constexpr auto MANDELBROT_CALCULATION_ITERATIONS = static_cast<std::uint_fast32_t>(50000);
-          constexpr auto MANDELBROT_CALCULATION_PIXELS_X   = static_cast<std::uint_fast32_t>(768);
-          constexpr auto MANDELBROT_CALCULATION_PIXELS_Y   = static_cast<std::uint_fast32_t>(768);
+          constexpr auto MANDELBROT_CALCULATION_PIXELS_X = static_cast<std::uint_fast32_t>(768);
+          constexpr auto MANDELBROT_CALCULATION_PIXELS_Y = static_cast<std::uint_fast32_t>(768);
 
           // Rescale and re-center the rectangle.
           my_ptr_to_rectangle->operator/=(10);
           my_ptr_to_rectangle->recenter(my_rectangle_center);
 
           using mandelbrot_generator_type =
-            ckormanyos::mandelbrot::mandelbrot_generator_trivial<my_coord_pnt_numeric_type, my_iteration_numeric_type, MANDELBROT_CALCULATION_ITERATIONS>;
+            ckormanyos::mandelbrot::mandelbrot_generator_trivial<my_coord_pnt_numeric_type, my_iteration_numeric_type>;
 
                 ckormanyos::mandelbrot::color::color_stretch_histogram_method local_color_stretches;
           const ckormanyos::mandelbrot::color::color_functions_bw             local_color_functions;
@@ -467,7 +490,6 @@
           using local_mandelbrot_config_type  =
             ckormanyos::mandelbrot::mandelbrot_config<my_coord_pnt_numeric_type,
                                                       my_iteration_numeric_type,
-                                                      static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_ITERATIONS),
                                                       static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_X),
                                                       static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_Y)>;
 
@@ -477,7 +499,8 @@
               my_ptr_to_rectangle->my_center.my_x - my_ptr_to_rectangle->my_dx_half,
               my_ptr_to_rectangle->my_center.my_x + my_ptr_to_rectangle->my_dx_half,
               my_ptr_to_rectangle->my_center.my_y - my_ptr_to_rectangle->my_dy_half,
-              my_ptr_to_rectangle->my_center.my_y + my_ptr_to_rectangle->my_dy_half
+              my_ptr_to_rectangle->my_center.my_y + my_ptr_to_rectangle->my_dy_half,
+              my_mandelbrot_iterations
             );
 
           mandelbrot_generator_type mandelbrot_generator(mandelbrot_config_object);
@@ -499,7 +522,8 @@
 
           const auto zoom_factor_p10 = ilogb(my_mandelbrot_zoom_factor);
 
-          write_string("mandelbrot_zoom: " + std::to_string(zoom_factor_p10) + "\n");
+          write_string("mandelbrot_zoom: " + std::to_string(zoom_factor_p10)          + "\n");
+          write_string("mandelbrot_iter: " + std::to_string(my_mandelbrot_iterations) + "\n");
 
           // Redraw the client window with the new JPEG.
 
@@ -777,5 +801,15 @@
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
   typename mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_coord_pnt_numeric_type mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_mandelbrot_zoom_factor { 1 };
+
+  template<const int   WindowWidth,
+           const int   WindowHeight,
+           typename    MandelbrotCoordPntType,
+           typename    MandelbrotIterationType,
+           const char* WindowTitle,
+           const int   IconId,
+           const int   ScreenCoordinateX,
+           const int   ScreenCoordinateY>
+  std::uint_fast32_t mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_mandelbrot_iterations { static_cast<std::uint_fast32_t>(UINT32_C(2000)) };
 
 #endif // MANDELBROT_DISCOVERY_2024_04_12_H

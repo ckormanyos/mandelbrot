@@ -24,12 +24,11 @@
   // This class generates the rows of the mandelbrot iteration.
   // The coordinates are set up according to the Mandelbrot configuration.
   template<typename CoordPntNumericType,
-           typename IterateNumericType,
-           const std::uint_fast32_t MaxIterations> class mandelbrot_generator_perturbative final // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
-    : public mandelbrot_generator<CoordPntNumericType, IterateNumericType, MaxIterations>
+           typename IterateNumericType> class mandelbrot_generator_perturbative final // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
+    : public mandelbrot_generator<CoordPntNumericType, IterateNumericType>
   {
   private:
-    using base_class_type = mandelbrot_generator<CoordPntNumericType, IterateNumericType, MaxIterations>;
+    using base_class_type = mandelbrot_generator<CoordPntNumericType, IterateNumericType>;
 
     using mandelbrot_config_type = typename base_class_type::mandelbrot_config_type;
 
@@ -55,8 +54,8 @@
                                           std::vector<my_iteration_numeric_type>& y_coord,
                                           mandelbrot_text_output_base& text_output) -> void override
     {
-      std::vector<my_iteration_numeric_type> zkr(base_class_type::mandelbrot_config_object.max_iterations + static_cast<std::uint_fast32_t>(UINT8_C(1)));
-      std::vector<my_iteration_numeric_type> zki(base_class_type::mandelbrot_config_object.max_iterations + static_cast<std::uint_fast32_t>(UINT8_C(1)));
+      std::vector<my_iteration_numeric_type> zkr(base_class_type::get_iterations() + static_cast<std::uint_fast32_t>(UINT8_C(1)));
+      std::vector<my_iteration_numeric_type> zki(base_class_type::get_iterations() + static_cast<std::uint_fast32_t>(UINT8_C(1)));
 
       using std::floor;
 
@@ -95,7 +94,7 @@
 
         auto iteration_result = static_cast<std::uint_fast32_t>(UINT8_C(0));
 
-        while ((iteration_result < base_class_type::max_iterations) && ((zr2 + zi2) < base_class_type::four_coord_pnt())) // NOLINT(altera-id-dependent-backward-branch)
+        while ((iteration_result < base_class_type::get_iterations()) && ((zr2 + zi2) < base_class_type::four_coord_pnt())) // NOLINT(altera-id-dependent-backward-branch)
         {
           // The inner loop performs optimized complex multiply and add.
           // This is the main work of the fractal iteration scheme.
@@ -185,8 +184,8 @@
             // Perform the iteration sequence for generating the Mandelbrot set.
             // Here is the main work of the program.
 
-            while(   (iteration_result < (base_class_type::max_iterations + static_cast<std::uint_fast32_t>(UINT8_C(1)))) // NOLINT(altera-id-dependent-backward-branch)
-                  && (quad_length < base_class_type::four_iteration()))                                                   // NOLINT(altera-id-dependent-backward-branch)
+            while(   (iteration_result < (base_class_type::get_iterations() + static_cast<std::uint_fast32_t>(UINT8_C(1)))) // NOLINT(altera-id-dependent-backward-branch)
+                  && (quad_length < base_class_type::four_iteration()))                                                     // NOLINT(altera-id-dependent-backward-branch)
             {
               // The core functionality of the original formula is:
               //   z_{k+1} = z_{k}^2 + C

@@ -31,15 +31,12 @@
 
   // Declare a base class for the Mandelbrot configuration.
   template<typename CoordPntNumericType,
-           typename IterateNumericType,
-           const std::uint_fast32_t MaxIterations>
+           typename IterateNumericType>
   class mandelbrot_config_base
   {
   public:
     using my_coord_pnt_numeric_type = CoordPntNumericType;
     using my_iteration_numeric_type = IterateNumericType;
-
-    static constexpr auto max_iterations = static_cast<std::uint_fast32_t>(MaxIterations);
 
     mandelbrot_config_base() = delete;
 
@@ -50,13 +47,15 @@
     mandelbrot_config_base(const my_coord_pnt_numeric_type& xl,
                            const my_coord_pnt_numeric_type& xh, // NOLINT(bugprone-easily-swappable-parameters)
                            const my_coord_pnt_numeric_type& yl,
-                           const my_coord_pnt_numeric_type& yh)
-      : my_x_lo  (std::move(xl)),
-        my_x_hi  (std::move(xh)),
-        my_y_lo  (std::move(yl)),
-        my_y_hi  (std::move(yh)),
-        my_width (std::move(my_x_hi - my_x_lo)),
-        my_height(std::move(my_y_hi - my_y_lo)) { }
+                           const my_coord_pnt_numeric_type& yh,
+                           const std::uint32_t              iter)
+      : my_x_lo      (std::move(xl)),
+        my_x_hi      (std::move(xh)),
+        my_y_lo      (std::move(yl)),
+        my_y_hi      (std::move(yh)),
+        my_width     (std::move(my_x_hi - my_x_lo)),
+        my_height    (std::move(my_y_hi - my_y_lo)),
+        my_iterations(iter) { }
 
     virtual ~mandelbrot_config_base() = default;
 
@@ -113,6 +112,9 @@
         );
     }
 
+    auto set_iterations(const std::uint_fast32_t iter) const -> void               { my_iterations = iter; }
+    auto get_iterations() const                              -> std::uint_fast32_t { return my_iterations; }
+
   private:
     const my_coord_pnt_numeric_type my_x_lo;
     const my_coord_pnt_numeric_type my_x_hi;
@@ -120,6 +122,7 @@
     const my_coord_pnt_numeric_type my_y_hi;
     const my_coord_pnt_numeric_type my_width;
     const my_coord_pnt_numeric_type my_height;
+    mutable std::uint_fast32_t      my_iterations;
   };
 
   // Make a template class that represents the Mandelbrot configuration.
@@ -129,13 +132,12 @@
   // method can be modified accordingly.
   template<typename CoordPntNumericType,
            typename IterateNumericType,
-           const std::uint_fast32_t MaxIterations,
            const std::uint_fast32_t PixelCountX,
            const std::uint_fast32_t PixelCountY>
-  class mandelbrot_config final : public mandelbrot_config_base<CoordPntNumericType, IterateNumericType, MaxIterations> // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
+  class mandelbrot_config final : public mandelbrot_config_base<CoordPntNumericType, IterateNumericType> // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
   {
   private:
-    using base_class_type = mandelbrot_config_base<CoordPntNumericType, IterateNumericType, MaxIterations>;
+    using base_class_type = mandelbrot_config_base<CoordPntNumericType, IterateNumericType>;
 
   public:
     using my_coord_pnt_numeric_type = typename base_class_type::my_coord_pnt_numeric_type;
@@ -144,8 +146,9 @@
     mandelbrot_config(const my_coord_pnt_numeric_type& xl,
                       const my_coord_pnt_numeric_type& xh,
                       const my_coord_pnt_numeric_type& yl,
-                      const my_coord_pnt_numeric_type& yh)
-      : base_class_type(xl, xh, yl, yh),
+                      const my_coord_pnt_numeric_type& yh,
+                      const std::uint_fast32_t         iter)
+      : base_class_type(xl, xh, yl, yh, iter),
         my_step_x(base_class_type::get_width()  / PixelCountX),
         my_step_y(base_class_type::get_height() / PixelCountY) { } // NOLINT
 
@@ -174,8 +177,8 @@
     ~mandelbrot_config() override = default; // LCOV_EXCL_LINE
 
   private:
-    my_coord_pnt_numeric_type my_step_x; // NOLINT(readability-identifier-naming)
-    my_coord_pnt_numeric_type my_step_y; // NOLINT(readability-identifier-naming)
+    my_coord_pnt_numeric_type my_step_x;      // NOLINT(readability-identifier-naming)
+    my_coord_pnt_numeric_type my_step_y;      // NOLINT(readability-identifier-naming)
 
     MANDELBROT_NODISCARD auto step_x() const -> const my_coord_pnt_numeric_type & override { return my_step_x; }
     MANDELBROT_NODISCARD auto step_y() const -> const my_coord_pnt_numeric_type & override { return my_step_y; }
@@ -184,18 +187,15 @@
   // This class generates the rows of the mandelbrot iteration.
   // The coordinates are set up according to the Mandelbrot configuration.
   template<typename CoordPntNumericType,
-           typename IterateNumericType,
-           const std::uint_fast32_t MaxIterations>
+           typename IterateNumericType>
   class mandelbrot_generator // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
   {
   public:
-    using mandelbrot_config_type = mandelbrot_config_base<CoordPntNumericType, IterateNumericType, MaxIterations>;
+    using mandelbrot_config_type = mandelbrot_config_base<CoordPntNumericType, IterateNumericType>;
 
   protected:
     using my_coord_pnt_numeric_type = typename mandelbrot_config_type::my_coord_pnt_numeric_type;
     using my_iteration_numeric_type = typename mandelbrot_config_type::my_iteration_numeric_type;
-
-    static constexpr auto max_iterations = static_cast<std::uint_fast32_t>(mandelbrot_config_type::max_iterations);
 
   private:
     using boost_gil_x_coord_type = boost::gil::rgb8_image_t::x_coord_t;
@@ -209,7 +209,7 @@
         mandelbrot_view            (boost::gil::view(mandelbrot_image)),
         mandelbrot_iteration_matrix(config.integral_width(),
                                     std::vector<std::uint_fast32_t>(config.integral_height())),
-        mandelbrot_color_histogram (static_cast<std::size_t>(max_iterations + 1U), static_cast<std::uint_fast32_t>(UINT32_C(0))) { }
+        mandelbrot_color_histogram (static_cast<std::size_t>(config.get_iterations() + 1U), static_cast<std::uint_fast32_t>(UINT32_C(0))) { }
 
     mandelbrot_generator() = delete;
 
@@ -232,6 +232,9 @@
 
       return my_four;
     }
+
+    auto set_iterations(const std::uint_fast32_t iter) const -> void               { mandelbrot_config_object.set_iterations(iter); }
+    auto get_iterations() const                              -> std::uint_fast32_t { return mandelbrot_config_object.get_iterations(); }
 
     virtual auto generate_mandelbrot_image_engine(std::vector<my_iteration_numeric_type>&,
                                                   std::vector<my_iteration_numeric_type>&,
@@ -268,11 +271,11 @@
     }
 
   protected:
-    const mandelbrot_config_type&                mandelbrot_config_object;    // NOLINT(readability-identifier-naming,cppcoreguidelines-non-private-member-variables-in-classes,misc-non-private-member-variables-in-classes)
+    const mandelbrot_config_type&  mandelbrot_config_object;    // NOLINT(readability-identifier-naming,cppcoreguidelines-non-private-member-variables-in-classes,misc-non-private-member-variables-in-classes)
 
   private:
-    boost::gil::rgb8_image_t                     mandelbrot_image;            // NOLINT(readability-identifier-naming)
-    boost::gil::rgb8_view_t                      mandelbrot_view;             // NOLINT(readability-identifier-naming)
+    boost::gil::rgb8_image_t       mandelbrot_image;            // NOLINT(readability-identifier-naming)
+    boost::gil::rgb8_view_t        mandelbrot_view;             // NOLINT(readability-identifier-naming)
 
   protected:
     std::vector<std::vector<std::uint_fast32_t>> mandelbrot_iteration_matrix; // NOLINT(readability-identifier-naming,cppcoreguidelines-non-private-member-variables-in-classes,misc-non-private-member-variables-in-classes)
@@ -347,9 +350,8 @@
   };
 
   template<typename CoordPntNumericType,
-           typename IterateNumericType,
-           const std::uint_fast32_t MaxIterations>
-  mandelbrot_text_output_cout mandelbrot_generator<CoordPntNumericType, IterateNumericType, MaxIterations>::my_standard_output; // NOLINT(cppcoreguidelines-avoid-non-const-global-variables,hicpp-uppercase-literal-suffix,readability-uppercase-literal-suffix)
+           typename IterateNumericType>
+  mandelbrot_text_output_cout mandelbrot_generator<CoordPntNumericType, IterateNumericType>::my_standard_output; // NOLINT(cppcoreguidelines-avoid-non-const-global-variables,hicpp-uppercase-literal-suffix,readability-uppercase-literal-suffix)
 
   #if(__cplusplus >= 201703L)
   } // namespace ckormanyos::mandelbrot
