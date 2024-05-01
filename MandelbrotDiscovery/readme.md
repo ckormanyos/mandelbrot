@@ -9,7 +9,7 @@ into the Mandelbrot set in a guided fashion.
 
 ## Using the Program
 
-Begin by starting MandelbrotDiscovery.exe. It is a Win32-API-based program.
+Begin by starting `MandelbrotDiscovery.exe`. It is a Win32-API-based program.
 Zooming is accomplished with commands entered in the command window
 in combination with mouse-clicks in the client area of the Mandelbrot image window.
 
@@ -53,7 +53,7 @@ The exact command sequence is shown in the image of the console below.
 
 ![](https://github.com/ckormanyos/mandelbrot/blob/main/images/discovery/mandelbrot_discovery_set_calc_commands.jpg)
 
-### The First Magnification
+### Our First Magnification
 
 The result of our first **set** and **calc** command sequence is shown below.
 
@@ -67,20 +67,30 @@ mouse-click (upon the **set** command) in order to continue your Mandelbrot dive
 Fine tuning can be accomplished with additional commands such as
 **itr2000**, **redo** or **out**.
 
-  - The **itrNNN** command sets the maximum number of iterations to the appended number. The command **itr2000**, for insatnce, sets the maximum number of iterations to $2,000$
+  - The **itrNNNN** command sets the maximum number of iterations to the appended number. The command **itr2000**, for instance, sets the maximum number of iterations to $2,000$. Switch $2,000$ for another number like $40,000$ to obtain a maximum iteration count of $40,000$ and so on.
   - The default iteration count at program start is modestly set to $400$. So don't be surprised if higher iteration counts are required for deeper and deeper dives.
-  - The command **redo** simply performs the iteration at the coordinate point already set again. This might be done if, for example, the image was not resolved and the iteration count needs to be increased.
+  - The command **redo** simply performs, yet again, the iteration at the coordinate point that is already set. This might be done if, for example, the image was not resolved and the iteration count needs to be increased. You can also exercise the **set** command one or more times prior to exercising the **redo** command.
   - With **out** you can backstep one single order of magnification at the point that has been set and clicked. This can be done repeatedly if a different zoom pathway is desired even after zooming in to a point.
   - So if you've taken a bit of a wrong turn, just zoom **out** one or more times and refine your coordinate search.
 
-### The Result of a dive
+### The Results of a Completed Dive
 
 The result of a dive is shown in the image below. In this particular dive,
 the iteration ended in a little Mandelbrot figurine at magnification $10^{26}$.
-So I panned **out** one order of magnitude in order to retrieve
-a somewhat interesting image.
+So I panned **out** one order of magnitude in order to retrieve the image.
 
-The final characteristics are:
+The coordinates and iteration count retrieved from `MandelbrotDiscovery`
+can be supplied to the _real_ `ckormanyos/mandelbrot`
+program if a higher resolution image is desired. A special configuration
+specifically intended for trying out newly found points has been supplied in the
+[mandelbrot_cfg_MANDELBROT_99_TRY_POINTS.h](https://github.com/ckormanyos/mandelbrot/blob/main/mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_99_TRY_POINTS.h)
+configuration file. This can be adapted in order to try out a new point.
+
+We did not really penetrate that deep into the complex plane in this particular
+dive. But a potential point for producing somewhat fascinating pictures was,
+nonetheless, characterized.
+
+The final characteristics of this dive ended up being:
 
   - The square image has $768 {\times} 768$ pixels.
   - Centered at the point $(-0.748389448460435356972905199130859375+i~0.164838521607763200186858879533203125)$.
