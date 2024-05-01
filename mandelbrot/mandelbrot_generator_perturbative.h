@@ -47,6 +47,8 @@
     mandelbrot_generator_perturbative(const mandelbrot_generator_perturbative&) = delete;
     mandelbrot_generator_perturbative(mandelbrot_generator_perturbative&&) noexcept = delete;
 
+    ~mandelbrot_generator_perturbative() override = default; // LCOV_EXCL_LINE
+
     auto operator=(const mandelbrot_generator_perturbative&) -> mandelbrot_generator_perturbative& = delete;
     auto operator=(mandelbrot_generator_perturbative&&) noexcept -> mandelbrot_generator_perturbative& = delete;
 

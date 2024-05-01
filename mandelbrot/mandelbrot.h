@@ -85,10 +85,10 @@
       return
         static_cast<std::uint_fast32_t>
         (
-            static_cast<std::uint_fast32_t>
-            (
-              non_rounded_width2 + static_cast<std::uint_fast32_t>(UINT8_C(1))
-            )
+          static_cast<std::uint_fast32_t>
+          (
+            non_rounded_width2 + static_cast<std::uint_fast32_t>(UINT8_C(1))
+          )
           / static_cast<std::uint_fast32_t>(UINT8_C(2))
         );
     }
@@ -187,6 +187,7 @@
 
   // This class generates the rows of the mandelbrot iteration.
   // The coordinates are set up according to the Mandelbrot configuration.
+
   template<typename CoordPntNumericType,
            typename IterateNumericType>
   class mandelbrot_generator // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
@@ -216,6 +217,8 @@
 
     mandelbrot_generator(const mandelbrot_generator&) = delete;
     mandelbrot_generator(mandelbrot_generator&&) noexcept = delete;
+
+    virtual ~mandelbrot_generator() = default; // LCOV_EXCL_LINE
 
     MANDELBROT_NODISCARD auto operator=(const mandelbrot_generator&) -> mandelbrot_generator& = delete;
     MANDELBROT_NODISCARD auto operator=(mandelbrot_generator&&) noexcept -> mandelbrot_generator& = delete;
@@ -276,8 +279,8 @@
     const mandelbrot_config_type&  mandelbrot_config_object;    // NOLINT(readability-identifier-naming,cppcoreguidelines-non-private-member-variables-in-classes,misc-non-private-member-variables-in-classes)
 
   private:
-    boost::gil::rgb8_image_t       mandelbrot_image;            // NOLINT(readability-identifier-naming)
-    boost::gil::rgb8_view_t        mandelbrot_view;             // NOLINT(readability-identifier-naming)
+    boost::gil::rgb8_image_t mandelbrot_image; // NOLINT(readability-identifier-naming)
+    boost::gil::rgb8_view_t  mandelbrot_view;  // NOLINT(readability-identifier-naming)
 
   protected:
     std::vector<std::vector<std::uint_fast32_t>> mandelbrot_iteration_matrix; // NOLINT(readability-identifier-naming,cppcoreguidelines-non-private-member-variables-in-classes,misc-non-private-member-variables-in-classes)
@@ -320,19 +323,16 @@
           // Mix the color from the hue values.
 
           auto color_scaler =
-            [](const std::uint_fast32_t color)
+            [](const std::uint_fast32_t color) -> std::uint8_t
             {
               return
                 static_cast<std::uint8_t>
                 (
                   static_cast<std::uint_fast32_t>
                   (
-                    static_cast<std::uint_fast32_t>
-                    (
-                      static_cast<std::uint_fast32_t>(UINT8_C(255)) * color
-                    )
-                    / static_cast<std::uint_fast32_t>(UINT8_C(255))
+                    static_cast<std::uint_fast32_t>(UINT8_C(255)) * color
                   )
+                  / static_cast<std::uint_fast32_t>(UINT8_C(255))
                 );
             };
 

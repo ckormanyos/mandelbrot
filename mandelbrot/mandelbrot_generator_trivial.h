@@ -45,6 +45,8 @@
     mandelbrot_generator_trivial(const mandelbrot_generator_trivial&) = delete;
     mandelbrot_generator_trivial(mandelbrot_generator_trivial&&) noexcept = delete;
 
+    ~mandelbrot_generator_trivial() override = default; // LCOV_EXCL_LINE
+
     auto operator=(const mandelbrot_generator_trivial&) -> mandelbrot_generator_trivial& = delete;
     auto operator=(mandelbrot_generator_trivial&&) noexcept -> mandelbrot_generator_trivial& = delete;
 
