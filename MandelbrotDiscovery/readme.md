@@ -67,30 +67,32 @@ mouse-click (upon the **set** command) in order to continue your Mandelbrot dive
 Fine tuning can be accomplished with additional commands such as
 **itr2000**, **redo** or **out**.
 
-  - The **itrNNN** command sets the maximum number of iterations to the appended number.\
-    For insatnce, **itr2000** sets the maximum number of iterations to $2,000$.\
-    Don't be surprised if very high iteration counts are required \
-    for deeper and deeper dives. The default iteration count at program start \
-    is modestly set to $400$.
+  - The **itrNNN** command sets the maximum number of iterations to the appended number. The command **itr2000**, for insatnce, sets the maximum number of iterations to $2,000$
+  - The default iteration count at program start is modestly set to $400$. So don't be surprised if higher iteration counts are required for deeper and deeper dives.
+  - The command **redo** simply performs the iteration at the coordinate point already set again. This might be done if, for example, the image was not resolved and the iteration count needs to be increased.
+  - With **out** you can backstep one single order of magnification at the point that has been set and clicked. This can be done repeatedly if a different zoom pathway is desired even after zooming in to a point.
+  - So if you've taken a bit of a wrong turn, just zoom **out** one or more times and refine your coordinate search.
 
-  - The command **redo** simply performs the iteration at the coordinate point already set again.\
-    this might be done if, for example, the image was not resolved and the iteration count needs\
-    to be increased.
+### The Result of a dive
 
-  - With **out** you can backstep one single order of magnification at the point that has been set and clicked.\
-    this can be done repeatedly if a different zoom pathway is desired even after zooming in to a point.\
-    Just zoom **out** one or more times and search anew.
+The result of a dive is shown in the image below. In this particular dive,
+the iteration ended in a little Mandelbrot figurine at magnification $10^{26}$.
+So I panned **out** one order of magnitude in order to retrieve
+a somewhat interesting image.
 
-The result of a dive is TDOD.
+The final characteristics are:
 
-### Additional Commands
+  - The square image has $768 {\times} 768$ pixels.
+  - Centered at the point $(-0.748389448460435356972905199130859375+i~0.164838521607763200186858879533203125)$.
+  - Uses a half-width of $1.1{\times}10^{25}$.
+  - Computed with $6,000$ iteratons using the internals of Mandelbrot Discovery (`cpp_dec_float` type from [`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_84_0/libs/multiprecision/doc/html/index.html) instantiated with $112$ decimal digits of precision).
 
-TODO describe **itr2000**, **redo** and **out** commands.
+![](https://github.com/ckormanyos/mandelbrot/blob/main/images/discovery/mandelbrot_discovery_dive_example.jpg)
 
 ### Changing the Resolution
 
-TODO both in docs as well as in the program.
+This is TODO both in docs as well as in the program.
 
 ## Program Defaults and Dynamic Behavior
 
-TODO
+This is TODO both in docs as well as in the program.
