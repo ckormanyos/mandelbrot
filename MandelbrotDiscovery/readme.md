@@ -1,11 +1,11 @@
-ckormanyos/mandelbrot/MandelbrotDiscovery
+MandelbrotDiscovery
 ==================
 
 The `MandelbrotDiscovery` program allows for semi-automated, mouse and command driven
 dives into the Mandelbrot fractal world. Using simple commands like **set**, **calc**
 and more it is possible so click on a point and calculate the next magnification order
-at that point. In this way it is possible to iteratively dive deeper and deeper
-into the Mandelbrot set.
+at that point. In this way, you can conveniently dive deeper and deeper
+into the Mandelbrot set in a guided fashion.
 
 ## Using the Program
 
@@ -16,9 +16,9 @@ in combination with mouse-clicks in the client area of the Mandelbrot image wind
 ### The Startup Windows
 
 You should see the default Mandelbrot image. It is a square, gray-tone JPEG
-having $768{\times}768$ pixels. The Mandelbrot Mandelbrot image window is
+having $768{\times}768$ pixels. The Mandelbrot image window is
 initially located on the left. A secondary console-based read/write command
-window should appear to the right. These windows can be moed around based
+window should appear to the right. These windows can be moved around based
 on client preference during the course of program operation.
 
 The startup windows are shown in the image below.
@@ -61,8 +61,25 @@ The result of our first **set** and **calc** command sequence is shown below.
 
 ### Continue Your Mandelbrot Dive
 
-Iteratively repeas **set** and **calc** commands in combination with
-mouse-click upon the **set** command in order to continue your Mandelbrot dive.
+Iteratively repeat **set** and **calc** command sequences in combination with
+mouse-click (upon the **set** command) in order to continue your Mandelbrot dive.
+
+Fine tuning can be accomplished with additional commands such as
+**itr2000**, **redo** or **out**.
+
+  - The **itrNNN** command sets the maximum number of iterations to the appended number.\
+    For insatnce, **itr2000** sets the maximum number of iterations to $2,000$.\
+    Don't be surprised if very high iteration counts are required \
+    for deeper and deeper dives. The default iteration count at program start \
+    is modestly set to $400$.
+
+  - The command **redo** simply performs the iteration at the coordinate point already set again.\
+    this might be done if, for example, the image was not resolved and the iteration count needs\
+    to be increased.
+
+  - With **out** you can backstep one single order of magnification at the point that has been set and clicked.\
+    this can be done repeatedly if a different zoom pathway is desired even after zooming in to a point.\
+    Just zoom **out** one or more times and search anew.
 
 The result of a dive is TDOD.
 
