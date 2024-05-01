@@ -76,7 +76,7 @@
         y_coord.size(),
         [&mandelbrot_iteration_lock, &unordered_parallel_row_count, &text_output, &x_coord, &y_coord, this](std::size_t j_row)
         {
-          while(mandelbrot_iteration_lock.test_and_set()) { }
+          while(mandelbrot_iteration_lock.test_and_set()) { ; }
 
           {
             ++unordered_parallel_row_count;
