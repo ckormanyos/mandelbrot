@@ -181,6 +181,16 @@
 
       if(result_alloc_console_is_ok)
       {
+        constexpr ::UINT pos_x =
+          static_cast<::UINT>
+          (
+              screen_coordinate_x
+            + client_width
+            + static_cast<int>(INT8_C(24))
+          );
+
+        ::SetWindowPos(::GetConsoleWindow(), nullptr, pos_x, 64, 768, 512, SWP_NOZORDER);
+
         // Get handles to the standard output and input.
         console_output() = ::GetStdHandle(STD_OUTPUT_HANDLE);
         console_input () = ::GetStdHandle(STD_INPUT_HANDLE);
