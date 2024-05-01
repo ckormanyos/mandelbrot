@@ -283,6 +283,54 @@
       return my_thread_wait_for_new_set_click.load();
     }
 
+    static auto mandelbrot_iterate_engine() -> void
+    {
+      constexpr auto MANDELBROT_CALCULATION_PIXELS_X = static_cast<std::uint_fast32_t>(768);
+      constexpr auto MANDELBROT_CALCULATION_PIXELS_Y = static_cast<std::uint_fast32_t>(768);
+
+      using mandelbrot_generator_type =
+        ckormanyos::mandelbrot::mandelbrot_generator_trivial<my_coord_pnt_numeric_type, my_iteration_numeric_type>;
+
+            ckormanyos::mandelbrot::color::color_stretch_histogram_method local_color_stretches;
+      const ckormanyos::mandelbrot::color::color_functions_bw             local_color_functions;
+
+      using local_mandelbrot_config_type  =
+        ckormanyos::mandelbrot::mandelbrot_config<my_coord_pnt_numeric_type,
+                                                  my_iteration_numeric_type,
+                                                  static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_X),
+                                                  static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_Y)>;
+
+      const local_mandelbrot_config_type
+        mandelbrot_config_object
+        (
+          my_ptr_to_rectangle->my_center.my_x - my_ptr_to_rectangle->my_dx_half,
+          my_ptr_to_rectangle->my_center.my_x + my_ptr_to_rectangle->my_dx_half,
+          my_ptr_to_rectangle->my_center.my_y - my_ptr_to_rectangle->my_dy_half,
+          my_ptr_to_rectangle->my_center.my_y + my_ptr_to_rectangle->my_dy_half,
+          my_mandelbrot_iterations
+        );
+
+      mandelbrot_generator_type mandelbrot_generator(mandelbrot_config_object);
+
+      util::text::text_output_alloc_console text_out(mandelbrot_discovery::write_string);
+
+      using stopwatch_type = ::stopwatch<std::chrono::high_resolution_clock>;
+
+      stopwatch_type my_stopwatch { };
+
+      mandelbrot_generator.generate_mandelbrot_image("mandelbrot_zooming.jpg",
+                                                      local_color_functions,
+                                                      local_color_stretches,
+                                                      text_out);
+
+      const auto execution_time = stopwatch_type::elapsed_time<float>(my_stopwatch);
+
+      const auto zoom_factor_p10 = ilogb(my_mandelbrot_zoom_factor);
+
+      write_string("mandelbrot_zoom: " + std::to_string(zoom_factor_p10)          + "\n");
+      write_string("mandelbrot_iter: " + std::to_string(my_mandelbrot_iterations) + "\n");
+    }
+
     static auto CALLBACK my_window_callback(::HWND   handle_to_window,
                                             ::UINT   message,
                                             ::WPARAM w_param,
@@ -439,6 +487,8 @@
 
         read_string(str_cmd);
 
+        bool do_iterate_and_redraw { };
+
         if(str_cmd == "set")
         {
           write_string("click to set a point\n");
@@ -474,59 +524,43 @@
         }
         else if(str_cmd == "calc")
         {
-          constexpr auto MANDELBROT_CALCULATION_PIXELS_X = static_cast<std::uint_fast32_t>(768);
-          constexpr auto MANDELBROT_CALCULATION_PIXELS_Y = static_cast<std::uint_fast32_t>(768);
-
           // Rescale and re-center the rectangle.
           my_ptr_to_rectangle->operator/=(10);
-          my_ptr_to_rectangle->recenter(my_rectangle_center);
-
-          using mandelbrot_generator_type =
-            ckormanyos::mandelbrot::mandelbrot_generator_trivial<my_coord_pnt_numeric_type, my_iteration_numeric_type>;
-
-                ckormanyos::mandelbrot::color::color_stretch_histogram_method local_color_stretches;
-          const ckormanyos::mandelbrot::color::color_functions_bw             local_color_functions;
-
-          using local_mandelbrot_config_type  =
-            ckormanyos::mandelbrot::mandelbrot_config<my_coord_pnt_numeric_type,
-                                                      my_iteration_numeric_type,
-                                                      static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_X),
-                                                      static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_Y)>;
-
-          const local_mandelbrot_config_type
-            mandelbrot_config_object
-            (
-              my_ptr_to_rectangle->my_center.my_x - my_ptr_to_rectangle->my_dx_half,
-              my_ptr_to_rectangle->my_center.my_x + my_ptr_to_rectangle->my_dx_half,
-              my_ptr_to_rectangle->my_center.my_y - my_ptr_to_rectangle->my_dy_half,
-              my_ptr_to_rectangle->my_center.my_y + my_ptr_to_rectangle->my_dy_half,
-              my_mandelbrot_iterations
-            );
-
-          mandelbrot_generator_type mandelbrot_generator(mandelbrot_config_object);
-
-          util::text::text_output_alloc_console text_out(mandelbrot_discovery::write_string);
-
-          using stopwatch_type = ::stopwatch<std::chrono::high_resolution_clock>;
-
-          stopwatch_type my_stopwatch { };
-
-          mandelbrot_generator.generate_mandelbrot_image("mandelbrot_zooming.jpg",
-                                                         local_color_functions,
-                                                         local_color_stretches,
-                                                         text_out);
-
-          const auto execution_time = stopwatch_type::elapsed_time<float>(my_stopwatch);
 
           my_mandelbrot_zoom_factor *= 10;
 
-          const auto zoom_factor_p10 = ilogb(my_mandelbrot_zoom_factor);
+          my_ptr_to_rectangle->recenter(my_rectangle_center);
 
-          write_string("mandelbrot_zoom: " + std::to_string(zoom_factor_p10)          + "\n");
-          write_string("mandelbrot_iter: " + std::to_string(my_mandelbrot_iterations) + "\n");
+          // Set the flag to redraw the client window with the new JPEG.
+          // The redrawing will occur below.
+          do_iterate_and_redraw = true;
+        }
+        else if(str_cmd == "out")
+        {
+          // Rescale and re-center the rectangle.
+          my_ptr_to_rectangle->operator*=(10);
+
+          my_mandelbrot_zoom_factor /= 10;
+
+          // Set the flag to redraw the client window with the new JPEG.
+          // The redrawing will occur below.
+          do_iterate_and_redraw = true;
+        }
+        else if(str_cmd == "redo")
+        {
+          // Set the flag to redraw the client window with the new JPEG.
+          // The redrawing will occur below.
+          do_iterate_and_redraw = true;
+        }
+
+        if(do_iterate_and_redraw)
+        {
+          do_iterate_and_redraw = false;
+
+          // Perform the mandelbrot iteration with the iterate-engine.
+          mandelbrot_iterate_engine();
 
           // Redraw the client window with the new JPEG.
-
           using local_window_type = mandelbrot_discovery;
 
           ::RECT rect { };
@@ -810,6 +844,6 @@
            const int   IconId,
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
-  std::uint_fast32_t mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_mandelbrot_iterations { static_cast<std::uint_fast32_t>(UINT32_C(2000)) };
+  std::uint_fast32_t mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_mandelbrot_iterations { static_cast<std::uint_fast32_t>(UINT32_C(400)) };
 
 #endif // MANDELBROT_DISCOVERY_2024_04_12_H

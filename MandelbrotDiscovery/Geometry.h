@@ -39,6 +39,16 @@
 
       rectangle_type() = delete;
 
+      auto operator*=(const int n) -> rectangle_type&
+      {
+        my_dx_half *= n;
+        my_dy_half *= n;
+
+        static_cast<void>(set_pixel_assoc(my_pixels_x, my_pixels_y));
+
+        return *this;
+      }
+
       auto operator/=(const int n) -> rectangle_type&
       {
         my_dx_half /= n;
@@ -132,6 +142,14 @@
       int        my_pixels_x { };
       int        my_pixels_y { };
     };
+
+    template<typename PointType>
+    inline auto operator*(const rectangle_type<PointType>& lhs, const int n) -> rectangle_type<PointType>
+    {
+      using local_point_type = PointType;
+
+      return rectangle_type<local_point_type>(lhs) *= n;
+    }
 
     template<typename PointType>
     inline auto operator/(const rectangle_type<PointType>& lhs, const int n) -> rectangle_type<PointType>
