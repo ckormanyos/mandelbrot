@@ -1,10 +1,12 @@
 MandelbrotDiscovery
 ==================
 
-The `MandelbrotDiscovery` program allows for semi-automated, mouse and command driven
+The `MandelbrotDiscovery` program allows for semi-automated, mouse and command-driven
 dives into the Mandelbrot fractal world. Using simple commands like **set**, **calc**
-and more it is possible so click on a point and calculate the next magnification order
-at that point. In this way, you can conveniently dive deeper and deeper
+and more it is possible to click on a point and subsequently
+calculate the next magnification order at that point.
+
+In this way, you can conveniently dive deeper and deeper
 into the Mandelbrot set in a guided fashion.
 
 ## Using the Program
@@ -15,7 +17,7 @@ in combination with mouse-clicks in the client area of the Mandelbrot image wind
 
 ### The Startup Windows
 
-You should see the default Mandelbrot image. It is a square, gray-tone JPEG
+Upon startup, you should see the default Mandelbrot image. It is a square, gray-tone JPEG
 having $768{\times}768$ pixels. The Mandelbrot image window is
 initially located on the left. A secondary console-based read/write command
 window should appear to the right. These windows can be moved around based
@@ -29,22 +31,23 @@ The startup windows are shown in the image below.
 
 The console accepts input with its prompt **cmd:**. To get started diving,
 enter the command **set**. Then navigate with the mouse to any given point
-in the client area of the Mandelbrot image window. Left-click the point
-and the clicked coordinates will be printed in the console.
+in the client area of the Mandelbrot image window. Left-click the point.
+The clicked-on coordinates will be printed in the console.
+The most-recently clicked-on coordinates are expressed as `x_val` and `y_val`.
 
-The clicked-on coordinates are expressed as `x_val` and `y_val`. If a different point
-is desired to be selected, simply click on the console again and enter the command **set**.
+If a different point is desired to be selected,
+simply click on the console again and enter the command **set**.
 Then click in the client area of the Mandelbrot image window again.
-Obtain the coordinates that seem to be the right ones for the upcoming
-magnification and calculation.
+In this way, try to obtain the coordinates that seem to be the right ones
+for the upcoming magnification and calculation.
 
 Once suitable coordinates have been set, it is time to magnify and calculate.
 The upcoming calculation will zoom by a factor of $10$, calculate the new image
 and display it.
 
 Click on the console itself again to select it as the active input window.
-Enter the command **calc**. The Mandelbrot calculation will begin with
-progress reported to the output console. As previously mentioned,
+Enter the command **calc**. The Mandelbrot calculation will begin.
+Progress is reported on the output console. As previously mentioned,
 the **calc** command proceeds to magnify the picture about its center-point
 by a factor of $10$. The center point that is used is the exact point
 previously selected with **set** command and its subsequent mouse-click.
@@ -61,8 +64,9 @@ The result of our first **set** and **calc** command sequence is shown below.
 
 ### Continue Your Mandelbrot Dive
 
-Iteratively repeat **set** and **calc** command sequences in combination with
-mouse-click (upon the **set** command) in order to continue your Mandelbrot dive.
+Iteratively repeat **set** and **calc** command sequences
+in combination with mouse-click (upon the **set** command).
+In doing so, you will continue your Mandelbrot dive.
 
 Fine tuning can be accomplished with additional commands such as
 **itr2000**, **redo** or **out**.
@@ -80,17 +84,19 @@ the iteration ended in a little Mandelbrot figurine at magnification $10^{26}$.
 So I panned **out** one order of magnitude in order to retrieve the image.
 
 The coordinates and iteration count retrieved from `MandelbrotDiscovery`
-can be supplied to the _real_ `ckormanyos/mandelbrot`
-program if a higher resolution image is desired. A special configuration
-specifically intended for trying out newly found points has been supplied in the
-[mandelbrot_cfg_MANDELBROT_99_TRY_POINTS.h](https://github.com/ckormanyos/mandelbrot/blob/main/mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_99_TRY_POINTS.h)
-configuration file. This can be adapted in order to try out a new point.
+can be supplied to the _real_ `ckormanyos/mandelbrot` program.
+Use this program to obtain a higher resolution image once the coordinates
+have been identified with `MandelbrotDiscovery`. A special configuration
+specifically intended for trying out newly found points is available
+in the`ckormanyos/mandelbrot` program. This configuration file is called
+[mandelbrot_cfg_MANDELBROT_99_TRY_POINTS.h](https://github.com/ckormanyos/mandelbrot/blob/main/mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_99_TRY_POINTS.h).
+This file can be adapted to try out the new point.
 
-We did not really penetrate that deep into the complex plane in this particular
-dive. But a potential point for producing somewhat fascinating pictures was,
-nonetheless, characterized.
+We did not really penetrate that deeply into the complex plane
+in this particular dive. But a potential point for producing a somewhat fascinating
+picture was, nonetheless, characterized.
 
-The final characteristics of this dive ended up being:
+The result of this dive ended up being:
 
   - The square image has $768 {\times} 768$ pixels.
   - Centered at the point $(-0.748389448460435356972905199130859375+i~0.164838521607763200186858879533203125)$.
