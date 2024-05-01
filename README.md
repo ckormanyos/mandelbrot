@@ -429,5 +429,5 @@ The _Mandelbrot_ _Discovery_ program aims to provide semi-automatic assistance
 to find interesting points for fractal deep dives.
 
 This project is work in progress which is being undertaken in the
-[`mandelbrot/MandelbrotDiscovery`](https://github.com/ckormanyos/mandelbrot/tree/main/MandelbrotDiscovery)
-directory, where also preliminary documentation can be found.
+[`MandelbrotDiscovery`](https://github.com/ckormanyos/mandelbrot/tree/main/MandelbrotDiscovery)
+directory.
