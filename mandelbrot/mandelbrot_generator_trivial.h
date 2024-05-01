@@ -45,6 +45,8 @@
     mandelbrot_generator_trivial(const mandelbrot_generator_trivial&) = delete;
     mandelbrot_generator_trivial(mandelbrot_generator_trivial&&) noexcept = delete;
 
+    ~mandelbrot_generator_trivial() override = default; // LCOV_EXCL_LINE
+
     auto operator=(const mandelbrot_generator_trivial&) -> mandelbrot_generator_trivial& = delete;
     auto operator=(mandelbrot_generator_trivial&&) noexcept -> mandelbrot_generator_trivial& = delete;
 
@@ -74,7 +76,7 @@
         y_coord.size(),
         [&mandelbrot_iteration_lock, &unordered_parallel_row_count, &text_output, &x_coord, &y_coord, this](std::size_t j_row)
         {
-          while(mandelbrot_iteration_lock.test_and_set()) { ; }
+          while(mandelbrot_iteration_lock.test_and_set()) { }
 
           {
             ++unordered_parallel_row_count;

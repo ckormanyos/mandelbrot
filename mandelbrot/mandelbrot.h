@@ -218,6 +218,8 @@
     mandelbrot_generator(const mandelbrot_generator&) = delete;
     mandelbrot_generator(mandelbrot_generator&&) noexcept = delete;
 
+    virtual ~mandelbrot_generator() = default; // LCOV_EXCL_LINE
+
     MANDELBROT_NODISCARD auto operator=(const mandelbrot_generator&) -> mandelbrot_generator& = delete;
     MANDELBROT_NODISCARD auto operator=(mandelbrot_generator&&) noexcept -> mandelbrot_generator& = delete;
 
