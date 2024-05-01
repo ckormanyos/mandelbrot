@@ -9,6 +9,8 @@ at that point.
 ## Using the Program
 
 Begin by starting MandelbrotDiscovery.exe. It is a Win32-API-based program.
+Command-based click and zoom will be exercised in combination with commands entered in
+the command window and mouse-clicks in the client area of the Mandelbrot image window.
 
 ### The Startup Windows
 
@@ -16,11 +18,7 @@ The startup windows are shown in the image below.
 You should see the default Mandelbrot image in square $768{\times}768$ gray-tones to the left.
 A secondary console-based read/write command window should appear to the right.
 
-Command-based click and zoom will be exercised in combination with commands entered in
-the command window and mouse-clicks in the client area of the Mandelbrot image window.
-
-![](./images/gallery/mandelbrot_discovery_startup.jpg)
-
+![](https://github.com/ckormanyos/mandelbrot/blob/main/images/gallery/mandelbrot_discovery_startup.jpg)
 
 ### Use the Commands **set** and **calc**
 
@@ -44,11 +42,11 @@ and the mouse-click.
 
 The exact command sequence is shown in the image of the console below.
 
-![](./images/gallery/mandelbrot_discovery_set_calc_commands.jpg)
+![](https://github.com/ckormanyos/mandelbrot/blob/main/images/gallery/mandelbrot_discovery_set_calc_commands.jpg)
 
 The result of our first **set** and **calc** command sequence is shown below.
 
-![](./images/gallery/mandelbrot_discovery_calc_result.jpg)
+![](https://github.com/ckormanyos/mandelbrot/blob/main/images/gallery/mandelbrot_discovery_calc_result.jpg)
 
 ### Continue Your Mandelbrot Dive
 
