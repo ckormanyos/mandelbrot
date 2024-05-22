@@ -13,6 +13,7 @@
   #include <mandelbrot/mandelbrot_text_output.h>
 
   #include <boost/gil/extension/io/jpeg/old.hpp>
+//  #include <boost/gil/extension/io/png/old.hpp>
   #include <boost/gil/image.hpp>
   #include <boost/gil/typedefs.hpp>
   #include <boost/lexical_cast.hpp>
@@ -273,6 +274,7 @@
       str = "Write output JPEG file " + str_filename + ".\n";
       text_output.write(str);
       boost::gil::jpeg_write_view(str_filename, mandelbrot_view);
+      //boost::gil::png_write_view(str_filename, mandelbrot_view);
     }
 
   protected:
