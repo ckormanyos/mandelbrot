@@ -17,6 +17,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{EB33566E-DA7F-4D28-9077-88C0B7C77E35}</ProjectGuid>
     <RootNamespace>pnglibconf</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -59,6 +60,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <CustomBuildBeforeTargets>Build</CustomBuildBeforeTargets>
+    <OutDir>$(SolutionDir)png\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)png\$(Platform)\$(Configuration)\tmpConf\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <CustomBuildBeforeTargets>Build</CustomBuildBeforeTargets>
