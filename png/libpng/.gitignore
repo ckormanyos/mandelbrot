@@ -42,7 +42,6 @@
 *.out
 .deps/
 .dirstamp
-/Makefile
 /autom4te.cache/
 /config.guess~
 /config.h.in~
