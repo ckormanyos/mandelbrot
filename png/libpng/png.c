@@ -2956,7 +2956,7 @@ png_ascii_from_fp(png_const_structrp png_ptr, png_charp ascii, size_t size,
              */
             if (exp_b10 < 0 && exp_b10 > -3) /* PLUS 3 TOTAL 4 */
             {
-               czero = 0U-exp_b10; /* PLUS 2 digits: TOTAL 3 */
+               czero = (unsigned int)(0U+(unsigned int)(-1*exp_b10)); /* PLUS 2 digits: TOTAL 3 */
                exp_b10 = 0;      /* Dot added below before first output. */
             }
             else
@@ -3141,11 +3141,11 @@ png_ascii_from_fp(png_const_structrp png_ptr, png_charp ascii, size_t size,
                if (exp_b10 < 0)
                {
                   *ascii++ = 45; --size; /* '-': PLUS 1 TOTAL 3+precision */
-                  uexp_b10 = 0U-exp_b10;
+                  uexp_b10 = (unsigned int)(0U+(unsigned int)(-1*exp_b10));
                }
 
                else
-                  uexp_b10 = 0U+exp_b10;
+                  uexp_b10 = 0U+ (unsigned int)(exp_b10);
 
                cdigits = 0;
 

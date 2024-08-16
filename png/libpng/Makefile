@@ -41,7 +41,7 @@ $(OBJ_DIR)/libpng16.a :
 	mkdir -p $(OBJ_DIR)
 	@echo compile libpng16 source files
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/png.c       -o $(OBJ_DIR)/png.o
-	$(CC) $(CFLAGS) -c $(SRC_DIR)/pngerror.cc -o $(OBJ_DIR)/pngerror.o
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/pngerror.c  -o $(OBJ_DIR)/pngerror.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/pngget.c    -o $(OBJ_DIR)/pngget.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/pngmem.c    -o $(OBJ_DIR)/pngmem.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/pngpread.c  -o $(OBJ_DIR)/pngpread.o

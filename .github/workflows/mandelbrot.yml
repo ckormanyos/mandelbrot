@@ -109,15 +109,18 @@ jobs:
           cd png/libpng
           make all
           cd ../..
+          cd png/zlib
+          make all
+          cd ../..
           if [ "${{ matrix.compiler }}" = "clang++" ]; then
             export EXTRA_FLAGS="-stdlib=libc++"
           else
             export EXTRA_FLAGS=""
           fi
-          echo '${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} $EXTRA_FLAGS -I. -Ijpeg/jpeg-6b-2022 -Ipng/libpng -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
-          ${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} $EXTRA_FLAGS -I. -Ijpeg/jpeg-6b-2022 -Ipng/libpng -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
-          echo '${{ matrix.compiler }} test_mandelbrot.o -lpthread -lgmp -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -lpng16 -Lpng/tmpPng/obj -o test_mandelbrot.exe'
-          ${{ matrix.compiler }} test_mandelbrot.o $EXTRA_FLAGS -lpthread -lgmp -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -lpng16 -Lpng/tmpPng/obj -o test_mandelbrot.exe
+          echo '${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} $EXTRA_FLAGS -I. -Ijpeg/jpeg-6b-2022 -Ipng/libpng -Ipng/zlib -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
+          ${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} $EXTRA_FLAGS -I. -Ijpeg/jpeg-6b-2022 -Ipng/libpng -Ipng/zlib -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          echo '${{ matrix.compiler }} test_mandelbrot.o -lpthread -lgmp -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -lpng16 -Lpng/tmpPng/obj -lz -Lpng/tmpZLib/obj -o test_mandelbrot.exe'
+          ${{ matrix.compiler }} test_mandelbrot.o $EXTRA_FLAGS -lpthread -lgmp -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -lpng16 -Lpng/tmpPng/obj -lz -Lpng/tmpZLib/obj -o test_mandelbrot.exe
           ls -la ./test_mandelbrot.exe
           mkdir -p images/tmp
           ./test_mandelbrot.exe
@@ -519,7 +522,7 @@ jobs:
         shell: cmd
         working-directory: ./
         run: |
-          set INCLUDE=%cd%;%cd%\jpeg\jpeg-6b-2022;%cd%\..\boost-root;%INCLUDE%
+          set INCLUDE=%cd%;%cd%\jpeg\jpeg-6b-2022;%cd%\png\libpng;%cd%\png\zlib;%cd%\..\boost-root;%INCLUDE%
           MSBuild -m mandelbrot.sln -p:useenv=true -p:Configuration=Release -p:Platform=x64 /t:Rebuild
           dir %cd%\x64\Release\mandelbrot.exe
           copy /Y %cd%\x64\Release\mandelbrot.exe .
@@ -574,7 +577,7 @@ jobs:
         shell: cmd
         working-directory: ./
         run: |
-          set INCLUDE=%cd%;%cd%\jpeg\jpeg-6b-2022;%cd%\..\boost-root;%INCLUDE%
+          set INCLUDE=%cd%;%cd%\jpeg\jpeg-6b-2022;%cd%\png\libpng;%cd%\png\zlib;%cd%\..\boost-root;%INCLUDE%
           MSBuild -m mandelbrot_vs2022.sln -p:useenv=true -p:Configuration=Release -p:Platform=x64 /t:Rebuild
           dir %cd%\x64\Release\mandelbrot_vs2022.exe
           copy /Y %cd%\x64\Release\mandelbrot_vs2022.exe .
