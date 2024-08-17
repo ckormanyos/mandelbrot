@@ -805,7 +805,7 @@ png_get_eXIf_1(png_const_structrp png_ptr, png_const_inforp info_ptr,
    if (png_ptr != NULL && info_ptr != NULL &&
        (info_ptr->valid & PNG_INFO_eXIf) != 0 && exif != NULL)
    {
-      *num_exif = info_ptr->num_exif;
+      *num_exif = (unsigned int)(info_ptr->num_exif);
       *exif = info_ptr->exif;
       return PNG_INFO_eXIf;
    }
