@@ -2989,7 +2989,7 @@ png_image_read_and_map(png_voidp argument)
          if (png_ptr->interlaced == PNG_INTERLACE_ADAM7)
          {
             /* The row may be empty for a short image: */
-            if (PNG_PASS_COLS(width, pass) == 0)
+            if (PNG_PASS_COLS(width, pass) == 0U)
                continue;
 
             startx = PNG_PASS_START_COL(pass);
@@ -3306,7 +3306,7 @@ png_image_read_composite(png_voidp argument)
          if (png_ptr->interlaced == PNG_INTERLACE_ADAM7)
          {
             /* The row may be empty for a short image: */
-            if (PNG_PASS_COLS(width, pass) == 0)
+            if (PNG_PASS_COLS(width, pass) == 0U)
                continue;
 
             startx = PNG_PASS_START_COL(pass) * channels;
@@ -3359,7 +3359,7 @@ png_image_read_composite(png_voidp argument)
                          * values correctly.
                          */
                         component *= 257*255; /* =65535 */
-                        component += (255-alpha)*png_sRGB_table[outrow[c]];
+                        component += (png_uint_32)((png_byte)(255-alpha)*png_sRGB_table[outrow[c]]);
 
                         /* So 'component' is scaled by 255*65535 and is
                          * therefore appropriate for the sRGB to linear
@@ -3464,7 +3464,7 @@ png_image_read_background(png_voidp argument)
                if (png_ptr->interlaced == PNG_INTERLACE_ADAM7)
                {
                   /* The row may be empty for a short image: */
-                  if (PNG_PASS_COLS(width, pass) == 0)
+                  if (PNG_PASS_COLS(width, pass) == 0U)
                      continue;
 
                   startx = PNG_PASS_START_COL(pass);
@@ -3509,8 +3509,8 @@ png_image_read_background(png_voidp argument)
                                * function and multiply the alpha out.
                                */
                               component = png_sRGB_table[component] * alpha;
-                              component += png_sRGB_table[outrow[0]] *
-                                 (255-alpha);
+                              component += (png_uint_32)(png_sRGB_table[outrow[0]] *
+                                 (png_byte)(255-alpha));
                               component = PNG_sRGB_FROM_LINEAR(component);
                            }
 
@@ -3550,7 +3550,8 @@ png_image_read_background(png_voidp argument)
                            if (alpha < 255) /* else just use component */
                            {
                               component = png_sRGB_table[component] * alpha;
-                              component += background * (255-alpha);
+                              component += (png_uint_32)(background *
+                                  (png_byte)(255-alpha));
                               component = PNG_sRGB_FROM_LINEAR(component);
                            }
 
@@ -3601,7 +3602,7 @@ png_image_read_background(png_voidp argument)
                if (png_ptr->interlaced == PNG_INTERLACE_ADAM7)
                {
                   /* The row may be empty for a short image: */
-                  if (PNG_PASS_COLS(width, pass) == 0)
+                  if (PNG_PASS_COLS(width, pass) == 0U)
                      continue;
 
                   startx = PNG_PASS_START_COL(pass) * outchannels;

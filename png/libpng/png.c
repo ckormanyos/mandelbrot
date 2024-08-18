@@ -3145,7 +3145,7 @@ png_ascii_from_fp(png_const_structrp png_ptr, png_charp ascii, size_t size,
                }
 
                else
-                  uexp_b10 = 0U+ (unsigned int)(exp_b10);
+                  uexp_b10 = (unsigned int)(0U+ (unsigned int)(exp_b10));
 
                cdigits = 0;
 
