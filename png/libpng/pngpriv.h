@@ -1179,7 +1179,7 @@ PNG_INTERNAL_FUNCTION(void,png_write_sRGB,(png_structrp png_ptr,
 
 #ifdef PNG_WRITE_eXIf_SUPPORTED
 PNG_INTERNAL_FUNCTION(void,png_write_eXIf,(png_structrp png_ptr,
-    png_bytep exif, int num_exif),PNG_EMPTY);
+    png_bytep exif, png_uint_32 num_exif),PNG_EMPTY);
 #endif
 
 #ifdef PNG_WRITE_iCCP_SUPPORTED
