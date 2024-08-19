@@ -3404,7 +3404,7 @@ png_image_read_background(png_voidp argument)
    png_inforp info_ptr = image->opaque->info_ptr;
    png_uint_32 height = image->height;
    png_uint_32 width = image->width;
-   int pass, passes;
+   png_uint_32 pass, passes;
 
    /* Double check the convoluted logic below.  We expect to get here with
     * libpng doing rgb to gray and gamma correction but background processing

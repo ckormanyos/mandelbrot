@@ -218,7 +218,7 @@ png_image_size(png_structrp png_ptr)
          png_uint_32 w = png_ptr->width;
          unsigned int pd = png_ptr->pixel_depth;
          png_alloc_size_t cb_base;
-         int pass;
+         png_uint_32 pass;
 
          for (cb_base=0, pass=0; pass<=6; ++pass)
          {
@@ -2562,7 +2562,7 @@ png_write_find_filter(png_structrp png_ptr, png_row_infop row_info)
    png_debug(1, "in png_write_find_filter");
 
    /* Find out how many bytes offset each pixel is */
-   bpp = (row_info->pixel_depth + 7) >> 3;
+   bpp = ((png_uint_32)(row_info->pixel_depth) + 7U) >> 3U;
 
    row_buf = png_ptr->row_buf;
    mins = PNG_SIZE_MAX - 256/* so we can detect potential overflow of the

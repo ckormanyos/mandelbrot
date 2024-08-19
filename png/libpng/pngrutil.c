@@ -3933,7 +3933,7 @@ png_read_filter_row_sub(png_row_infop row_info, png_bytep row,
 {
    size_t i;
    size_t istop = row_info->rowbytes;
-   unsigned int bpp = (row_info->pixel_depth + 7) >> 3;
+   png_uint_32 bpp = (png_uint_32)((row_info->pixel_depth + 7) >> 3);
    png_bytep rp = row + bpp;
 
    PNG_UNUSED(prev_row)
@@ -3968,7 +3968,7 @@ png_read_filter_row_avg(png_row_infop row_info, png_bytep row,
    size_t i;
    png_bytep rp = row;
    png_const_bytep pp = prev_row;
-   unsigned int bpp = (row_info->pixel_depth + 7) >> 3;
+   png_uint_32 bpp = (png_uint_32)((row_info->pixel_depth + 7) >> 3);
    size_t istop = row_info->rowbytes - bpp;
 
    for (i = 0; i < bpp; i++)
@@ -4043,7 +4043,7 @@ static void
 png_read_filter_row_paeth_multibyte_pixel(png_row_infop row_info, png_bytep row,
     png_const_bytep prev_row)
 {
-   unsigned int bpp = (row_info->pixel_depth + 7) >> 3;
+   png_uint_32 bpp = (png_uint_32)((row_info->pixel_depth + 7) >> 3);
    png_bytep rp_end = row + bpp;
 
    /* Process the first pixel in the row completely (this is the same as 'up'
@@ -4102,7 +4102,7 @@ png_init_filter_functions(png_structrp pp)
     * interlacing causes the actual row width to vary.
     */
 {
-   unsigned int bpp = (pp->pixel_depth + 7) >> 3;
+    png_uint_32 bpp = (png_uint_32)((pp->pixel_depth + 7) >> 3);
 
    pp->read_filter[PNG_FILTER_VALUE_SUB-1] = png_read_filter_row_sub;
    pp->read_filter[PNG_FILTER_VALUE_UP-1] = png_read_filter_row_up;

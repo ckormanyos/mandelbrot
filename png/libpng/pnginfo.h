@@ -186,7 +186,7 @@ defined(PNG_READ_BACKGROUND_SUPPORTED)
 #endif
 
 #ifdef PNG_eXIf_SUPPORTED
-   int num_exif;  /* Added at libpng-1.6.31 */
+   png_uint_32 num_exif;  /* Added at libpng-1.6.31 */
    png_bytep exif;
 # ifdef PNG_READ_eXIf_SUPPORTED
    png_bytep eXIf_buf;  /* Added at libpng-1.6.32 */

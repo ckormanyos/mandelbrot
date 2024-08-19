@@ -1607,8 +1607,8 @@ png_write_image_16bit(png_voidp argument)
           * allows correct rounding by adding .5 before the shift.  'reciprocal'
           * is only initialized when required.
           */
-         if (alpha > 0 && alpha < 65535)
-            reciprocal = ((0xffff<<15)+(alpha>>1))/alpha;
+         if (alpha > 0U && alpha < 65535U)
+            reciprocal = ((0xffffU<<15U)+(alpha>>1U))/alpha;
 
          c = (int)channels;
          do /* always at least one channel */
@@ -1623,16 +1623,16 @@ png_write_image_16bit(png_voidp argument)
              * areas tend not to be 0 intensity.)
              */
             if (component >= alpha)
-               component = 65535;
+               component = 65535U;
 
             /* component<alpha, so component/alpha is less than one and
              * component*reciprocal is less than 2^31.
              */
-            else if (component > 0 && alpha < 65535)
+            else if (component > 0U && alpha < 65535U)
             {
                png_uint_32 calc = component * reciprocal;
-               calc += 16384; /* round to nearest */
-               component = (png_uint_16)(calc >> 15);
+               calc += 16384U; /* round to nearest */
+               component = (png_uint_16)(calc >> 15U);
             }
 
             *out_ptr++ = component;
@@ -1659,7 +1659,7 @@ png_write_image_16bit(png_voidp argument)
  * calculation can be done to 15 bits of accuracy; however, the output needs to
  * be scaled in the range 0..255*65535, so include that scaling here.
  */
-#   define UNP_RECIPROCAL(alpha) ((((0xffff*0xff)<<7)+((alpha)>>1))/(alpha))
+#   define UNP_RECIPROCAL(alpha) ((((0xffffU*0xffU)<<7U)+((alpha)>>1U))/(alpha))
 
 static png_byte
 png_unpremultiply(png_uint_32 component, png_uint_32 alpha,
@@ -1750,13 +1750,13 @@ png_write_image_8bit(png_voidp argument)
          {
             png_uint_16 alpha = in_ptr[aindex];
             png_byte alphabyte = (png_byte)PNG_DIV257(alpha);
-            png_uint_32 reciprocal = 0;
+            png_uint_32 reciprocal = 0U;
             int c;
 
             /* Scale and write the alpha channel. */
             out_ptr[aindex] = alphabyte;
 
-            if (alphabyte > 0 && alphabyte < 255)
+            if (alphabyte > 0U && alphabyte < 255U)
                reciprocal = UNP_RECIPROCAL(alpha);
 
             c = (int)channels;
@@ -1874,8 +1874,8 @@ png_image_set_PLTE(png_image_write_control *display)
              * this is designed to produce a value scaled to 255*65535 when
              * divided by 128 (i.e. asr 7).
              */
-            if (alphabyte > 0 && alphabyte < 255)
-               reciprocal = (((0xffff*0xff)<<7)+(alpha>>1))/alpha;
+            if (alphabyte > 0U && alphabyte < 255U)
+               reciprocal = (((0xffffU*0xffU)<<7U)+(alpha>>1U))/alpha;
 
             tRNS[i] = alphabyte;
             if (alphabyte < 255)
@@ -2115,7 +2115,7 @@ png_image_write_main(png_voidp argument)
       ptrdiff_t row_bytes = display->row_stride;
 
       if (linear != 0)
-         row_bytes *= (sizeof (png_uint_16));
+         row_bytes *= (long unsigned int)(sizeof (png_uint_16));
 
       if (row_bytes < 0)
          row += (image->height-1) * (-row_bytes);
