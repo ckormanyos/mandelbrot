@@ -2459,10 +2459,10 @@ PNG_EXPORT(216, png_uint_32, png_get_io_chunk_type,
  * return non-zero even though the sub-image is empty, because the other
  * dimension may be empty for a small image.
  */
-#define PNG_PASS_ROWS(height, pass) ((((png_uint_32)height)+(((1<<PNG_PASS_ROW_SHIFT(pass))\
-   -1)-PNG_PASS_START_ROW(pass)))>>PNG_PASS_ROW_SHIFT(pass))
-#define PNG_PASS_COLS(width, pass) ((((png_uint_32)width)+(((1<<PNG_PASS_COL_SHIFT(pass))\
-   -1)-PNG_PASS_START_COL(pass)))>>PNG_PASS_COL_SHIFT(pass))
+#define PNG_PASS_ROWS(height, pass) ((((png_uint_32)height)+(((1U<<PNG_PASS_ROW_SHIFT((png_uint_32)pass))\
+   -1)-PNG_PASS_START_ROW((png_uint_32)pass)))>>PNG_PASS_ROW_SHIFT((png_uint_32)pass))
+#define PNG_PASS_COLS(width, pass) ((((png_uint_32)width)+(((1U<<PNG_PASS_COL_SHIFT((png_uint_32)pass))\
+   -1)-PNG_PASS_START_COL((png_uint_32)pass)))>>PNG_PASS_COL_SHIFT((png_uint_32)pass))
 
 /* For the reader row callbacks (both progressive and sequential) it is
  * necessary to find the row in the output image given a row in an interlaced

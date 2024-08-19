@@ -1474,16 +1474,16 @@ png_write_bKGD(png_structrp png_ptr, png_const_color_16p back, int color_type)
 #ifdef PNG_WRITE_eXIf_SUPPORTED
 /* Write the Exif data */
 void /* PRIVATE */
-png_write_eXIf(png_structrp png_ptr, png_bytep exif, int num_exif)
+png_write_eXIf(png_structrp png_ptr, png_bytep exif, png_uint_32 num_exif)
 {
-   int i;
+   png_uint_32 i;
    png_byte buf[1];
 
    png_debug(1, "in png_write_eXIf");
 
    png_write_chunk_header(png_ptr, png_eXIf, (png_uint_32)(num_exif));
 
-   for (i = 0; i < num_exif; i++)
+   for (i = 0U; i < num_exif; i++)
    {
       buf[0] = exif[i];
       png_write_chunk_data(png_ptr, buf, 1);

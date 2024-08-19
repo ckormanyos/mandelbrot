@@ -40,6 +40,7 @@ $(OBJ_DIR)/libz.a :
 	@echo make temporary obj directory
 	mkdir -p $(OBJ_DIR)
 	@echo compile libz source files
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/adler32.c  -o $(OBJ_DIR)/adler32.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/compress.c -o $(OBJ_DIR)/compress.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/crc32.c    -o $(OBJ_DIR)/crc32.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/deflate.c  -o $(OBJ_DIR)/deflate.o
