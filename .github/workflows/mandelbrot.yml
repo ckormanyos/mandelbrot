@@ -498,6 +498,8 @@ jobs:
           cd ..
           echo "build libpng16.a"
           cd png/libpng
+          echo "get pnglibconf.h"
+          cp scripts/pnglibconf.h.prebuilt ./pnglibconf.h
           make all
           cd ../..
           echo "build libz.a"
