@@ -32,6 +32,10 @@ jobs:
           apt-get install --no-install-recommends --quiet --yes libboost-dev
       - name: gnumake-clang-tidy-native
         run: |
+          echo "get pnglibconf.h"
+          cd png/libpng
+          cp scripts/pnglibconf.h.prebuilt ./pnglibconf.h
+          cd ../..
           cd .tidy/make
           echo "running clang-tidy"
           echo "make prepare -f make_tidy_01_generic.gmk MY_CC=${{ matrix.compiler }} MY_STD=${{ matrix.standard }}"
