@@ -27,6 +27,7 @@ CFLAGS     = -x c                              \
              -Wpedantic                        \
              -Wconversion                      \
              -Wsign-conversion                 \
+             -Werror                           \
              -I.
 
 all : clean $(OBJ_DIR)/libpng16.a

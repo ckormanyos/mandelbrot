@@ -53,4 +53,4 @@ $(OBJ_DIR)/libz.a :
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/zutil.c    -o $(OBJ_DIR)/zutil.o
 
 	@echo creating archive libz.a
-	ar rcs -D $(OBJ_DIR)/libz.a $(OBJ_DIR)/*.o
+	ar rcs $(OBJ_DIR)/libz.a $(OBJ_DIR)/*.o
