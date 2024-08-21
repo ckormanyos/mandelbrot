@@ -55,7 +55,9 @@ $(OBJ_DIR)/libpng16.a :
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/pngwrite.c  -o $(OBJ_DIR)/pngwrite.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/pngwtran.c  -o $(OBJ_DIR)/pngwtran.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/pngwutil.c  -o $(OBJ_DIR)/pngwutil.o
-
-
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/arm/arm_init.c                -o $(OBJ_DIR)/arm_init.o
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/arm/filter_neon_intrinsics.c  -o $(OBJ_DIR)/filter_neon_intrinsics.o
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/arm/palette_neon_intrinsics.c -o $(OBJ_DIR)/palette_neon_intrinsics.o
+		
 	@echo creating archive libpng16.a
 	ar rcs $(OBJ_DIR)/libpng16.a $(OBJ_DIR)/*.o
