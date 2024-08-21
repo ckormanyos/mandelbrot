@@ -32,6 +32,10 @@ jobs:
           apt-get install --no-install-recommends --quiet --yes libboost-dev
       - name: gnumake-clang-tidy-native
         run: |
+          echo "get pnglibconf.h"
+          cd png/libpng
+          cp scripts/pnglibconf.h.prebuilt ./pnglibconf.h
+          cd ../..
           cd .tidy/make
           echo "running clang-tidy"
           echo "make prepare -f make_tidy_01_generic.gmk MY_CC=${{ matrix.compiler }} MY_STD=${{ matrix.standard }}"
@@ -105,15 +109,23 @@ jobs:
           cd jpeg
           make all
           cd ..
+          echo "build libpng16.a"
+          cd png/libpng
+          make all
+          cd ../..
+          echo "build libz.a"
+          cd png/zlib
+          make all
+          cd ../..
           if [ "${{ matrix.compiler }}" = "clang++" ]; then
             export EXTRA_FLAGS="-stdlib=libc++"
           else
             export EXTRA_FLAGS=""
           fi
-          echo '${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} $EXTRA_FLAGS -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
-          ${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} $EXTRA_FLAGS -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
-          echo '${{ matrix.compiler }} test_mandelbrot.o -lpthread -lgmp -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe'
-          ${{ matrix.compiler }} test_mandelbrot.o $EXTRA_FLAGS -lpthread -lgmp -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
+          echo '${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} $EXTRA_FLAGS -I. -Ijpeg/jpeg-6b-2022 -Ipng/libpng -Ipng/zlib -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
+          ${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} $EXTRA_FLAGS -I. -Ijpeg/jpeg-6b-2022 -Ipng/libpng -Ipng/zlib -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          echo '${{ matrix.compiler }} test_mandelbrot.o -lpthread -lgmp -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -lpng16 -Lpng/tmpPng/obj -lz -Lpng/tmpZLib/obj -o test_mandelbrot.exe'
+          ${{ matrix.compiler }} test_mandelbrot.o $EXTRA_FLAGS -lpthread -lgmp -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -lpng16 -Lpng/tmpPng/obj -lz -Lpng/tmpZLib/obj -o test_mandelbrot.exe
           ls -la ./test_mandelbrot.exe
           mkdir -p images/tmp
           ./test_mandelbrot.exe
@@ -181,10 +193,18 @@ jobs:
           cd jpeg
           make all
           cd ..
-          echo '${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
-          ${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
-          echo '${{ matrix.compiler }} test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe'
-          ${{ matrix.compiler }} test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
+          echo "build libpng16.a"
+          cd png/libpng
+          make all
+          cd ../..
+          echo "build libz.a"
+          cd png/zlib
+          make all
+          cd ../..
+          echo '${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -Ipng/libpng -Ipng/zlib -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
+          ${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -Ipng/libpng -Ipng/zlib -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          echo '${{ matrix.compiler }} test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -lpng16 -Lpng/tmpPng/obj -lz -Lpng/tmpZLib/obj -o test_mandelbrot.exe'
+          ${{ matrix.compiler }} test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -lpng16 -Lpng/tmpPng/obj -lz -Lpng/tmpZLib/obj -o test_mandelbrot.exe
           ls -la ./test_mandelbrot.exe
           mkdir -p images/tmp
           ./test_mandelbrot.exe
@@ -252,10 +272,18 @@ jobs:
           cd jpeg
           make all
           cd ..
-          echo '${{ matrix.compiler }} -c -finline-functions -fsanitize=address -fsanitize=leak -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
-          ${{ matrix.compiler }} -c -finline-functions -fsanitize=address -fsanitize=leak -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
-          echo '${{ matrix.compiler }} -finline-functions -fsanitize=address -fsanitize=leak -march=native -mtune=native -O3 test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe'
-          ${{ matrix.compiler }} -finline-functions -fsanitize=address -fsanitize=leak -march=native -mtune=native -O3 test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
+          echo "build libpng16.a"
+          cd png/libpng
+          make all
+          cd ../..
+          echo "build libz.a"
+          cd png/zlib
+          make all
+          cd ../..
+          echo '${{ matrix.compiler }} -c -finline-functions -fsanitize=address -fsanitize=leak -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -Ipng/libpng -Ipng/zlib -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
+          ${{ matrix.compiler }} -c -finline-functions -fsanitize=address -fsanitize=leak -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -Ipng/libpng -Ipng/zlib -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          echo '${{ matrix.compiler }} -finline-functions -fsanitize=address -fsanitize=leak -march=native -mtune=native -O3 test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -lpng16 -Lpng/tmpPng/obj -lz -Lpng/tmpZLib/obj -o test_mandelbrot.exe'
+          ${{ matrix.compiler }} -finline-functions -fsanitize=address -fsanitize=leak -march=native -mtune=native -O3 test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -lpng16 -Lpng/tmpPng/obj -lz -Lpng/tmpZLib/obj -o test_mandelbrot.exe
           ls -la ./test_mandelbrot.exe
           mkdir -p images/tmp
           ./test_mandelbrot.exe
@@ -319,10 +347,18 @@ jobs:
           cd jpeg
           make all
           cd ..
-          echo '${{ matrix.compiler }} -c -finline-functions -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -DMANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
-          ${{ matrix.compiler }} -c -finline-functions -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -DMANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
-          echo '${{ matrix.compiler }} -finline-functions -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -march=native -mtune=native -O3 test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe'
-          ${{ matrix.compiler }} -finline-functions -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -march=native -mtune=native -O3 test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
+          echo "build libpng16.a"
+          cd png/libpng
+          make all
+          cd ../..
+          echo "build libz.a"
+          cd png/zlib
+          make all
+          cd ../..
+          echo '${{ matrix.compiler }} -c -finline-functions -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -DMANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH -I. -Ijpeg/jpeg-6b-2022 -Ipng/libpng -Ipng/zlib -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
+          ${{ matrix.compiler }} -c -finline-functions -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -DMANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH -I. -Ijpeg/jpeg-6b-2022 -Ipng/libpng -Ipng/zlib -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          echo '${{ matrix.compiler }} -finline-functions -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -march=native -mtune=native -O3 test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -lpng16 -Lpng/tmpPng/obj -lz -Lpng/tmpZLib/obj -o test_mandelbrot.exe'
+          ${{ matrix.compiler }} -finline-functions -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -march=native -mtune=native -O3 test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -lpng16 -Lpng/tmpPng/obj -lz -Lpng/tmpZLib/obj -o test_mandelbrot.exe
           ls -la ./test_mandelbrot.exe
           mkdir -p images/tmp
           ./test_mandelbrot.exe
@@ -386,10 +422,18 @@ jobs:
           cd jpeg
           make all
           cd ..
-          echo '${{ matrix.compiler }} -c -finline-functions -fsanitize=thread -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
-          ${{ matrix.compiler }} -c -finline-functions -fsanitize=thread -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
-          echo '${{ matrix.compiler }} -finline-functions -fsanitize=thread test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe'
-          ${{ matrix.compiler }} -finline-functions -fsanitize=thread test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
+          echo "build libpng16.a"
+          cd png/libpng
+          make all
+          cd ../..
+          echo "build libz.a"
+          cd png/zlib
+          make all
+          cd ../..
+          echo '${{ matrix.compiler }} -c -finline-functions -fsanitize=thread -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -Ipng/libpng -Ipng/zlib -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
+          ${{ matrix.compiler }} -c -finline-functions -fsanitize=thread -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -Ipng/libpng -Ipng/zlib -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          echo '${{ matrix.compiler }} -finline-functions -fsanitize=thread test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -lpng16 -Lpng/tmpPng/obj -lz -Lpng/tmpZLib/obj -o test_mandelbrot.exe'
+          ${{ matrix.compiler }} -finline-functions -fsanitize=thread test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -lpng16 -Lpng/tmpPng/obj -lz -Lpng/tmpZLib/obj -o test_mandelbrot.exe
           ls -la ./test_mandelbrot.exe
           mkdir -p images/tmp
           ./test_mandelbrot.exe
@@ -456,10 +500,20 @@ jobs:
           cd jpeg
           make all
           cd ..
-          echo '${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
-          ${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
-          echo '${{ matrix.compiler }} test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe'
-          ${{ matrix.compiler }} test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
+          echo "build libpng16.a"
+          cd png/libpng
+          echo "get pnglibconf.h"
+          cp scripts/pnglibconf.h.prebuilt ./pnglibconf.h
+          make all
+          cd ../..
+          echo "build libz.a"
+          cd png/zlib
+          make all
+          cd ../..
+          echo '${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -Ipng/libpng -Ipng/zlib -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
+          ${{ matrix.compiler }} -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wpedantic -Werror -std=${{ matrix.standard }} -I. -Ijpeg/jpeg-6b-2022 -Ipng/libpng -Ipng/zlib -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          echo '${{ matrix.compiler }} test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -lpng16 -Lpng/tmpPng/obj -lz -Lpng/tmpZLib/obj -o test_mandelbrot.exe'
+          ${{ matrix.compiler }} test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -lpng16 -Lpng/tmpPng/obj -lz -Lpng/tmpZLib/obj -o test_mandelbrot.exe
           ls -la ./test_mandelbrot.exe
           mkdir -p images/tmp
           ./test_mandelbrot.exe
@@ -515,7 +569,7 @@ jobs:
         shell: cmd
         working-directory: ./
         run: |
-          set INCLUDE=%cd%;%cd%\jpeg\jpeg-6b-2022;%cd%\..\boost-root;%INCLUDE%
+          set INCLUDE=%cd%;%cd%\jpeg\jpeg-6b-2022;%cd%\png\libpng;%cd%\png\zlib;%cd%\..\boost-root;%INCLUDE%
           MSBuild -m mandelbrot.sln -p:useenv=true -p:Configuration=Release -p:Platform=x64 /t:Rebuild
           dir %cd%\x64\Release\mandelbrot.exe
           copy /Y %cd%\x64\Release\mandelbrot.exe .
@@ -565,12 +619,12 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ilammy/msvc-dev-cmd@v1
         with:
-          toolset: 14.3
+          toolset: 14.4
       - name: msvc-release-x64-vs2022
         shell: cmd
         working-directory: ./
         run: |
-          set INCLUDE=%cd%;%cd%\jpeg\jpeg-6b-2022;%cd%\..\boost-root;%INCLUDE%
+          set INCLUDE=%cd%;%cd%\jpeg\jpeg-6b-2022;%cd%\png\libpng;%cd%\png\zlib;%cd%\..\boost-root;%INCLUDE%
           MSBuild -m mandelbrot_vs2022.sln -p:useenv=true -p:Configuration=Release -p:Platform=x64 /t:Rebuild
           dir %cd%\x64\Release\mandelbrot_vs2022.exe
           copy /Y %cd%\x64\Release\mandelbrot_vs2022.exe .
