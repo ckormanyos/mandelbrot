@@ -41,9 +41,17 @@ jobs:
           cd jpeg
           make all
           cd ..
+          echo "build libpng16.a"
+          cd png/libpng
+          make all
+          cd ../..
+          echo "build libz.a"
+          cd png/zlib
+          make all
+          cd ../..
           echo "build and run gcov/lcov/genhtml"
-          ${{ matrix.compiler }} -x c++ -c -mtune=native -march=native -O2 -Wall -Wextra -std=${{ matrix.standard }} -fno-inline-functions -fprofile-arcs -ftest-coverage -DMANDELBROT_HAS_COVERAGE -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
-          ${{ matrix.compiler }} -mtune=native -march=native -O2 -Wall -Wextra -std=${{ matrix.standard }} -fno-inline-functions -fprofile-arcs -ftest-coverage test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
+          ${{ matrix.compiler }} -x c++ -c -mtune=native -march=native -O2 -Wall -Wextra -std=${{ matrix.standard }} -fno-inline-functions -fprofile-arcs -ftest-coverage -DMANDELBROT_HAS_COVERAGE -I. -Ijpeg/jpeg-6b-2022 -Ipng/libpng -Ipng/zlib -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          ${{ matrix.compiler }} -mtune=native -march=native -O2 -Wall -Wextra -std=${{ matrix.standard }} -fno-inline-functions -fprofile-arcs -ftest-coverage test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -lpng16 -Lpng/tmpPng/obj -lz -Lpng/tmpZLib/obj -o test_mandelbrot.exe
           mkdir -p images/tmp
           ./test_mandelbrot.exe
           gcov --object-directory . --demangled-names ./test_mandelbrot.cpp
