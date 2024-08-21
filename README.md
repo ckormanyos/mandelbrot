@@ -465,7 +465,7 @@ The following adaptations have been performed.
 We use a modified version of zlib
 It is located [here](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/png/zlib)
 The Software is origned from [madler](https://github.com/madler/zlib)
-Please see the original licence agreement [original _LICENCE_](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/png/zlib/LICENSE)
+Please see the original licence agreement [original _LICENSE_](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/png/zlib/LICENSE)
 in its entirety for more information about and licensing terms
 
 The following adaptations have been performed.
