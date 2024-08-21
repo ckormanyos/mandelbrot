@@ -58,7 +58,7 @@ png_riffle_palette_neon(png_structrp png_ptr)
 }
 
 /* Expands a palettized row into RGBA8. */
-int
+png_uint_32
 png_do_expand_palette_rgba8_neon(png_structrp png_ptr, png_row_infop row_info,
     png_const_bytep row, png_bytepp ssp, png_bytepp ddp)
 {
@@ -103,7 +103,7 @@ png_do_expand_palette_rgba8_neon(png_structrp png_ptr, png_row_infop row_info,
 }
 
 /* Expands a palettized row into RGB8. */
-int
+png_uint_32
 png_do_expand_palette_rgb8_neon(png_structrp png_ptr, png_row_infop row_info,
     png_const_bytep row, png_bytepp ssp, png_bytepp ddp)
 {

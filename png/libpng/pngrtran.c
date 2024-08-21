@@ -4316,8 +4316,8 @@ png_do_expand_palette(png_structrp png_ptr, png_row_infop row_info,
                    * but sometimes row_info->bit_depth has been changed to 8.
                    * In these cases, the palette hasn't been riffled.
                    */
-                  i = (png_uint_32)(png_do_expand_palette_rgba8_neon(png_ptr, row_info, row,
-                      &sp, &dp));
+                  i = png_do_expand_palette_rgba8_neon(png_ptr, row_info, row,
+                      &sp, &dp);
                }
 #else
                PNG_UNUSED(png_ptr)
@@ -4347,8 +4347,8 @@ png_do_expand_palette(png_structrp png_ptr, png_row_infop row_info,
                dp = row + (size_t)(row_width * 3) - 1;
                i = 0;
 #ifdef PNG_ARM_NEON_INTRINSICS_AVAILABLE
-               i = (png_uint_32)(png_do_expand_palette_rgb8_neon(png_ptr, row_info, row,
-                   &sp, &dp));
+               i = png_do_expand_palette_rgb8_neon(png_ptr, row_info, row,
+                   &sp, &dp);
 #else
                PNG_UNUSED(png_ptr)
 #endif
