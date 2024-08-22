@@ -37,3 +37,7 @@ mandelbrot_vs2022.vcxproj.user
 images/tmp/
 MandelbrotDiscovery/MandelbrotDiscovery.vcxproj.user
 MandelbrotDiscovery/mandelbrot_zooming.jpg
+jpeg/jpeg_vs2022.vcxproj.user
+png/libpng/projects/vstudio/libpng/libpng_vs2022.vcxproj.user
+png/libpng/projects/vstudio/pnglibconf/pnglibconf_vs2022.vcxproj.user
+png/libpng/projects/vstudio/zlib/zlib_vs2022.vcxproj.user

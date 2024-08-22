@@ -64,7 +64,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)jpeg\$(Platform)\$(Configuration)\jpeg_vs2022.lib;$(SolutionDir)png\$(Platform)\$(Configuration)\zlib.lib;$(SolutionDir)png\$(Platform)\$(Configuration)\libpng16.lib</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)jpeg\$(Platform)\$(Configuration)\jpeg_vs2022.lib;$(SolutionDir)png\$(Platform)\$(Configuration)\zlib_vs2022.lib;$(SolutionDir)png\$(Platform)\$(Configuration)\libpng_vs202216.lib</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>IF NOT EXIST $(SolutionDir)images\tmp mkdir $(SolutionDir)images\tmp</Command>
