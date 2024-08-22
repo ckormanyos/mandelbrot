@@ -69,6 +69,14 @@ jobs:
           cd jpeg
           make all
           cd ..
+          echo "build libpng16.a"
+          cd png/libpng
+          make all
+          cd ../..
+          echo "build libz.a"
+          cd png/zlib
+          make all
+          cd ../..
           mkdir -p images/tmp
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -94,7 +102,7 @@ jobs:
       - name: Run build-wrapper
         run: |
           java -version
-          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++2a -I. -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o && g++ test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
+          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} g++ -x c++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++2a -I. -Ijpeg/jpeg-6b-2022 -Ipng/libpng -Ipng/zlib -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o && g++ -x none test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -lpng16 -Lpng/tmpPng/obj -lz -Lpng/tmpZLib/obj -o test_mandelbrot.exe
       - name: Run sonar-scanner
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
