@@ -69,7 +69,6 @@
       {
           std::string("images/tmp/mandelbrot_")
         + MANDELBROT_FILENAME_STRING // NOLINT(cppcoreguidelines-pro-bounds-array-to-pointer-decay,hicpp-no-array-decay)
-        + std::string(".jpg")
       };
   }
 

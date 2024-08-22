@@ -59,7 +59,7 @@ The following design goals have been incorporated.
   - C++ template design allows for flexible interchange of any appropriate kind of big-number type in the classes that implement fractal iteration.
   - The iterative scheme is implemented as a flexible run-time polymorphic function. This allows for the implementation and interchange of multiple kinds of iterative methods. These can be specifically optimized for the particular iterative case at hand.
   - Visualization of the result uses color-stretching techniques combined with the histogram method.
-  - Graphical representation uses [`Boost.Gil`](https://www.boost.org/doc/libs/1_84_0/libs/gil/doc/html/index.html) in combination with the JPEG-6b library (see [below](#Adaptions-of-and-Notes-on-jpeg-6b)).
+  - Graphical representation uses [`Boost.Gil`](https://www.boost.org/doc/libs/1_84_0/libs/gil/doc/html/index.html) in combination with the JPEG-6b and png library (see [below](#Adaptions-of-and-Notes-on-jpeg-6b)).
   - Color schemes can be easily adapted via straightforward creation (or modification) of a skinny derived class.
 
 ## Building the Project
@@ -69,14 +69,17 @@ The following design goals have been incorporated.
   - Locate the solution file `mandelbrot.sln` in the root dierctory.
   - Open the solution file in Visual Studio.
   - Build the desired configuration and run in the usual way.
-  - The resulting JPEG image will be placed as a temporary file in the `images\tmp` folder.
+  - The resulting JPEG and PNG formated images will be placed as a temporary file in the `images\tmp` folder.
 
 ### Build on `*nix` shell
 
   - Build the JPEG library with GNUmake.
+  - Build the png and zlib Library with GNUmake.
   - Compile, link and run `test_mandelbrot.cpp`.
-  - The resulting JPEG image will be placed as a temporary file in the `images/tmp` folder.
+  - The resulting JPEG and PNG formated images will be placed as a temporary file in the `images\tmp` folder.
   - This build makes and uses its own specialized version of the JPEG-6b library (see [below](#Adaptions-of-and-Notes-on-jpeg-6b)) and does not install or use a standard `*nix` version thereof.
+  - This build makes and uses its own specialized version of the png version 1.6 library (see [below](#Notes-on-png-and-its-adaptions)) and does not install or use a standard png lib.
+  - This build makes and uses its own specialized version of the zlib version 1.3.1 library (see [below](#Notes-on-zlib-and-its-adaptions)) and does not install or use a standard zlib.
 
 Use shell commands such as the following.
 
@@ -87,6 +90,26 @@ directory `mandelbrot/jpeg/jpeg-6b-2022/obj`.
 
 ```sh
 cd mandelbrot/jpeg
+make all
+```
+
+Go to the [`mandelbrot/png/zlib`](https://github.com/ckormanyos/mandelbrot/tree/main/png/zlib)
+directory and make the zlib library. This creates the library file `libz.a`
+which will be subsequently located in the temporarily-created
+directory `mandelbrot/png/tmpZLib/obj`.
+
+```sh
+cd mandelbrot/png/zlib
+make all
+```
+
+Go to the [`mandelbrot/png/libpng`](https://github.com/ckormanyos/mandelbrot/tree/main/png/libpng)
+directory and make the png library. This creates the library file `libpng16.a`
+which will be subsequently located in the temporarily-created
+directory `mandelbrot/png/tmpPng/obj`.
+
+```sh
+cd mandelbrot/png/libpng
 make all
 ```
 
@@ -102,13 +125,13 @@ Otherwise, the location of your Boost C++ library headers needs to be included
 with a `-I` switch on the compiler command line.
 
 ```sh
-g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++14 -I. -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++14 -I. -Ijpeg/jpeg-6b-2022 -Ipng/libpng -Ipng/zlib -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
 ```
 
 Link `test_mandelbrot.o` to `test_mandelbrot.exe`.
 
 ```sh
-g++ test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -o test_mandelbrot.exe
+g++ test_mandelbrot.o -lpthread -ljpeg-6b -Ljpeg/jpeg-6b-2022/obj -lpng16 -Lpng/tmpPng/obj -lz -Lpng/tmpZLib/obj -o test_mandelbrot.exe
 ```
 
 Make the needed output image directory and run `test_mandelbrot.exe`.
@@ -422,6 +445,36 @@ The following adaptions have been performed.
   - Eliminate all uses of `NEED_FAR_POINTERS` and `NEED_SHORT_EXTERNAL_NAMES`.
   - Handle Level-3 warnings found in MSVC.
   - Handle GCC warnings from `-Wall`, `-Wextra`, `-Wpedantic`, `-Wconversion` and `-Wsign-conversion`.
+
+## Notes on png and its adaptions
+We use a modified version of png
+It is located [here](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/png/libpng)
+The Software is origined from [pnggroupe](https://github.com/pnggroup/libpng)
+Please see the original licence agreement [original _LICENCE_](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/png/libpng/LICENSE)
+in its entirety for more information about and licensing terms
+
+The following adaptations have been performed.
+
+  - Test/compile only the subset of functions empirically found to be needed for use with [Boost.Gil](https://www.boost.org/doc/libs/1_84_0/libs/gil/doc/html/index.html).
+  - Adapt to VS compiler and VS solution workspace (when building with MSVC).
+  - Use GNUmake to build the png library (when building on `*nix`).
+  - Handle Level-3 warnings found in MSVC. For debug build ignore specre mirgratin warning with flag /wd5045 
+  - Handle GCC warnings from `-Wall`, `-Wextra`, `-Wpedantic`, `-Wconversion` and `-Wsign-conversion`.
+
+## Notes on zlib and its adaptions
+We use a modified version of zlib
+It is located [here](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/png/zlib)
+The Software is origned from [madler](https://github.com/madler/zlib)
+Please see the original licence agreement [original _LICENSE_](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/png/zlib/LICENSE)
+in its entirety for more information about and licensing terms
+
+The following adaptations have been performed.
+
+  - Test/compile only the subset of functions empirically found to be needed for use with [Boost.Gil](https://www.boost.org/doc/libs/1_84_0/libs/gil/doc/html/index.html).
+  - Adapt to VS compiler and VS solution workspace (when building with MSVC).
+  - Use GNUmake to build the png library (when building on `*nix`).
+  - Handle Level-3 warnings found in MSVC.
+  - Display but ignore GCC warnings from `-Wall`, `-Wextra`, `-Wpedantic`, `-Wconversion` and `-Wsign-conversion`.
 
 ## Mandelbrot Discovery
 
