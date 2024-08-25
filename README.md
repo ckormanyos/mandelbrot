@@ -74,11 +74,11 @@ The following design goals have been incorporated.
 
 ### Build and run in the `*nix` shell
 
-The commands are:
+The commands are as shown below, where you need to specialize `--boost`, `--my_cc_` and `--stdcc` accordingly (if needed):
 
 ```sh
 cd mandlebrot
-./build_all my_path_to_boost
+./build_all --boost=../boost-root --my_cc=g++ --stdcc=c++20
 mkdir -p images/tmp
 ./test_mandelbrot.exe
 ```
