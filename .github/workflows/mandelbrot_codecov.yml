@@ -84,8 +84,8 @@ jobs:
           cd ../..
           mkdir -p images/tmp
           echo "build and run gcov/lcov/genhtml"
-          ${{ matrix.compiler }} -x c++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wmissing-include-dirs -std=c++20 -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -DMANDELBROT_HAS_COVERAGE -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
-          ${{ matrix.compiler }} -x none test_mandelbrot.o ./png/libpng/libpng-1.6.44.git-2024/obj/libpng16.a ./png/zlib/zlib-1.3.1.1-2024/obj/libz.a ./jpeg/jpeg-6b-2022/obj/libjpeg-6b.a -lpthread -o test_mandelbrot.exe
+          ${{ matrix.compiler }} -x c++ -c -finline-functions -march=native -mtune=native -fprofile-arcs -ftest-coverage -O1 -Wall -Wextra -Wmissing-include-dirs -std=c++20 -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -DMANDELBROT_HAS_COVERAGE -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          ${{ matrix.compiler }} -x none -finline-functions -march=native -mtune=native -fprofile-arcs -ftest-coverage -O1 test_mandelbrot.o ./png/libpng/libpng-1.6.44.git-2024/obj/libpng16.a ./png/zlib/zlib-1.3.1.1-2024/obj/libz.a ./jpeg/jpeg-6b-2022/obj/libjpeg-6b.a -lpthread -o test_mandelbrot.exe
           ./test_mandelbrot.exe
           gcov --object-directory . --demangled-names ./test_mandelbrot.cpp
           lcov -c --directory . --output-file coverage_unfiltered.info
