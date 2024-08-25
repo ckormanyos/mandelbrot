@@ -52,12 +52,12 @@
     auto operator=(const mandelbrot_generator_perturbative&) -> mandelbrot_generator_perturbative& = delete;
     auto operator=(mandelbrot_generator_perturbative&&) noexcept -> mandelbrot_generator_perturbative& = delete;
 
-    auto generate_mandelbrot_image_engine(std::vector<my_iteration_numeric_type>& x_coord,
-                                          std::vector<my_iteration_numeric_type>& y_coord,
+    auto generate_mandelbrot_image_engine(std::vector<my_iteration_numeric_type>& x_coord, // NOLINT(misc-unused-parameters)
+                                          std::vector<my_iteration_numeric_type>& y_coord, // NOLINT(misc-unused-parameters)
                                           mandelbrot_text_output_base& text_output) -> void override
     {
-      std::vector<my_iteration_numeric_type> zkr(base_class_type::get_iterations() + static_cast<std::uint_fast32_t>(UINT8_C(1)));
-      std::vector<my_iteration_numeric_type> zki(base_class_type::get_iterations() + static_cast<std::uint_fast32_t>(UINT8_C(1)));
+      std::vector<my_iteration_numeric_type> zkr(base_class_type::get_iterations() + static_cast<std::uint_fast32_t>(UINT8_C(1))); // NOLINT(cppcoreguidelines-init-variables)
+      std::vector<my_iteration_numeric_type> zki(base_class_type::get_iterations() + static_cast<std::uint_fast32_t>(UINT8_C(1))); // NOLINT(cppcoreguidelines-init-variables)
 
       using std::floor;
 
