@@ -176,6 +176,230 @@ jobs:
           sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
           echo 'sha1sum ./images/tmp/sha1sum mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep f3abc4437d97bba945d589aac3d96d8bbb67a035'
           sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep f3abc4437d97bba945d589aac3d96d8bbb67a035
+  gcc-native-cpp_dec_float-asan:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [ g++ ]
+        standard: [ c++20 ]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: '0'
+      - name: clone-submods-bootstrap-headers-boost-develop
+        run: |
+          git clone -b develop --depth 1 https://github.com/boostorg/boost.git ../boost-root
+          cd ../boost-root
+          git submodule update --init tools
+          git submodule update --init libs/array
+          git submodule update --init libs/assert
+          git submodule update --init libs/concept_check
+          git submodule update --init libs/config
+          git submodule update --init libs/container
+          git submodule update --init libs/container_hash
+          git submodule update --init libs/core
+          git submodule update --init libs/describe
+          git submodule update --init libs/detail
+          git submodule update --init libs/filesystem
+          git submodule update --init libs/functional
+          git submodule update --init libs/gil
+          git submodule update --init libs/integer
+          git submodule update --init libs/io
+          git submodule update --init libs/iterator
+          git submodule update --init libs/lexical_cast
+          git submodule update --init libs/move
+          git submodule update --init libs/mp11
+          git submodule update --init libs/mpl
+          git submodule update --init libs/multiprecision
+          git submodule update --init libs/numeric/conversion
+          git submodule update --init libs/preprocessor
+          git submodule update --init libs/range
+          git submodule update --init libs/smart_ptr
+          git submodule update --init libs/static_assert
+          git submodule update --init libs/system
+          git submodule update --init libs/throw_exception
+          git submodule update --init libs/type_traits
+          git submodule update --init libs/utility
+          git submodule update --init libs/variant2
+          ./bootstrap.sh
+          ./b2 headers
+      - name: gcc-native-cpp_dec_float-asan
+        run: |
+          echo "query GCC version"
+          g++ -v
+          echo "build libjpeg-6b.a"
+          cd jpeg
+          make all
+          cd ..
+          echo "build libpng16.a"
+          cd png/libpng
+          make all
+          cd ../..
+          echo "build libz.a"
+          cd png/zlib
+          make all
+          cd ../..
+          mkdir -p images/tmp
+          echo '${{ matrix.compiler }} -x c++ -c -fsanitize=address -fsanitize=leak -finline-functions -march=native -mtune=native -ftest-coverage -O3 -Wall -Wextra -Wmissing-include-dirs -std=c++20 -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
+          ${{ matrix.compiler }} -x c++ -c -fsanitize=address -fsanitize=leak -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wmissing-include-dirs -std=c++20 -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          echo '${{ matrix.compiler }} -x none -fsanitize=address -fsanitize=leak -finline-functions -march=native -mtune=native -O3 test_mandelbrot.o ./png/libpng/libpng-1.6.44.git-2024/obj/libpng16.a ./png/zlib/zlib-1.3.1.1-2024/obj/libz.a ./jpeg/jpeg-6b-2022/obj/libjpeg-6b.a -lpthread -o test_mandelbrot.exe'
+          ${{ matrix.compiler }} -x none -fsanitize=address -fsanitize=leak -finline-functions -march=native -mtune=native -O3 test_mandelbrot.o ./png/libpng/libpng-1.6.44.git-2024/obj/libpng16.a ./png/zlib/zlib-1.3.1.1-2024/obj/libz.a ./jpeg/jpeg-6b-2022/obj/libjpeg-6b.a -lpthread -o test_mandelbrot.exe
+          ls -la ./test_mandelbrot.exe
+          ./test_mandelbrot.exe
+          ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
+  gcc-native-cpp_dec_float-ubsan:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [ g++ ]
+        standard: [ c++20 ]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: '0'
+      - name: clone-submods-bootstrap-headers-boost-develop
+        run: |
+          git clone -b develop --depth 1 https://github.com/boostorg/boost.git ../boost-root
+          cd ../boost-root
+          git submodule update --init tools
+          git submodule update --init libs/array
+          git submodule update --init libs/assert
+          git submodule update --init libs/concept_check
+          git submodule update --init libs/config
+          git submodule update --init libs/container
+          git submodule update --init libs/container_hash
+          git submodule update --init libs/core
+          git submodule update --init libs/describe
+          git submodule update --init libs/detail
+          git submodule update --init libs/filesystem
+          git submodule update --init libs/functional
+          git submodule update --init libs/gil
+          git submodule update --init libs/integer
+          git submodule update --init libs/io
+          git submodule update --init libs/iterator
+          git submodule update --init libs/lexical_cast
+          git submodule update --init libs/move
+          git submodule update --init libs/mp11
+          git submodule update --init libs/mpl
+          git submodule update --init libs/multiprecision
+          git submodule update --init libs/numeric/conversion
+          git submodule update --init libs/preprocessor
+          git submodule update --init libs/range
+          git submodule update --init libs/smart_ptr
+          git submodule update --init libs/static_assert
+          git submodule update --init libs/system
+          git submodule update --init libs/throw_exception
+          git submodule update --init libs/type_traits
+          git submodule update --init libs/utility
+          git submodule update --init libs/variant2
+          ./bootstrap.sh
+          ./b2 headers
+      - name: gcc-native-cpp_dec_float-ubsan
+        run: |
+          echo "query GCC version"
+          g++ -v
+          echo "build libjpeg-6b.a"
+          cd jpeg
+          make all
+          cd ..
+          echo "build libpng16.a"
+          cd png/libpng
+          make all
+          cd ../..
+          echo "build libz.a"
+          cd png/zlib
+          make all
+          cd ../..
+          mkdir -p images/tmp
+          echo '${{ matrix.compiler }} -x c++ -c -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -finline-functions -march=native -mtune=native -ftest-coverage -O3 -Wall -Wextra -Wmissing-include-dirs -std=c++20 -DMANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
+          ${{ matrix.compiler }} -x c++ -c -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wmissing-include-dirs -std=c++20 -DMANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          echo '${{ matrix.compiler }} -x none -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -finline-functions -finline-functions -march=native -mtune=native -O3 test_mandelbrot.o ./png/libpng/libpng-1.6.44.git-2024/obj/libpng16.a ./png/zlib/zlib-1.3.1.1-2024/obj/libz.a ./jpeg/jpeg-6b-2022/obj/libjpeg-6b.a -lpthread -o test_mandelbrot.exe'
+          ${{ matrix.compiler }} -x none -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -finline-functions -finline-functions -march=native -mtune=native -O3 test_mandelbrot.o ./png/libpng/libpng-1.6.44.git-2024/obj/libpng16.a ./png/zlib/zlib-1.3.1.1-2024/obj/libz.a ./jpeg/jpeg-6b-2022/obj/libjpeg-6b.a -lpthread -o test_mandelbrot.exe
+          ls -la ./test_mandelbrot.exe
+          ./test_mandelbrot.exe
+          ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
+  gcc-native-cpp_dec_float-tsan:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [ g++ ]
+        standard: [ c++20 ]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: '0'
+      - name: clone-submods-bootstrap-headers-boost-develop
+        run: |
+          git clone -b develop --depth 1 https://github.com/boostorg/boost.git ../boost-root
+          cd ../boost-root
+          git submodule update --init tools
+          git submodule update --init libs/array
+          git submodule update --init libs/assert
+          git submodule update --init libs/concept_check
+          git submodule update --init libs/config
+          git submodule update --init libs/container
+          git submodule update --init libs/container_hash
+          git submodule update --init libs/core
+          git submodule update --init libs/describe
+          git submodule update --init libs/detail
+          git submodule update --init libs/filesystem
+          git submodule update --init libs/functional
+          git submodule update --init libs/gil
+          git submodule update --init libs/integer
+          git submodule update --init libs/io
+          git submodule update --init libs/iterator
+          git submodule update --init libs/lexical_cast
+          git submodule update --init libs/move
+          git submodule update --init libs/mp11
+          git submodule update --init libs/mpl
+          git submodule update --init libs/multiprecision
+          git submodule update --init libs/numeric/conversion
+          git submodule update --init libs/preprocessor
+          git submodule update --init libs/range
+          git submodule update --init libs/smart_ptr
+          git submodule update --init libs/static_assert
+          git submodule update --init libs/system
+          git submodule update --init libs/throw_exception
+          git submodule update --init libs/type_traits
+          git submodule update --init libs/utility
+          git submodule update --init libs/variant2
+          ./bootstrap.sh
+          ./b2 headers
+      - name: gcc-native-cpp_dec_float-tsan
+        run: |
+          echo "query GCC version"
+          g++ -v
+          echo "build libjpeg-6b.a"
+          cd jpeg
+          make all
+          cd ..
+          echo "build libpng16.a"
+          cd png/libpng
+          make all
+          cd ../..
+          echo "build libz.a"
+          cd png/zlib
+          make all
+          cd ../..
+          mkdir -p images/tmp
+          echo '${{ matrix.compiler }} -x c++ -c -fsanitize=thread -O3 -Wall -Wextra -Wmissing-include-dirs -std=c++20 -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
+          ${{ matrix.compiler }} -x c++ -c -fsanitize=thread -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wmissing-include-dirs -std=c++20 -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          echo '${{ matrix.compiler }} -x none -fsanitize=thread -finline-functions -march=native -mtune=native -fprofile-arcs -ftest-coverage -O3 test_mandelbrot.o ./png/libpng/libpng-1.6.44.git-2024/obj/libpng16.a ./png/zlib/zlib-1.3.1.1-2024/obj/libz.a ./jpeg/jpeg-6b-2022/obj/libjpeg-6b.a -lpthread -o test_mandelbrot.exe'
+          ${{ matrix.compiler }} -x none -fsanitize=thread -finline-functions -march=native -mtune=native -fprofile-arcs -ftest-coverage -O3 test_mandelbrot.o ./png/libpng/libpng-1.6.44.git-2024/obj/libpng16.a ./png/zlib/zlib-1.3.1.1-2024/obj/libz.a ./jpeg/jpeg-6b-2022/obj/libjpeg-6b.a -lpthread -o test_mandelbrot.exe
+          ./test_mandelbrot.exe
+          ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
   macos-native-cpp_dec_float:
     runs-on: macos-latest
     defaults:
