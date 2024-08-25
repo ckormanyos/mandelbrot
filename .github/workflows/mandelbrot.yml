@@ -32,10 +32,6 @@ jobs:
           apt-get install --no-install-recommends --quiet --yes libboost-dev
       - name: gnumake-clang-tidy-native
         run: |
-          echo "get pnglibconf.h"
-          cd png/libpng
-          cp scripts/pnglibconf.h.prebuilt ./pnglibconf.h
-          cd ../..
           cd .tidy/make
           echo "running clang-tidy"
           echo "make prepare -f make_tidy_01_generic.gmk MY_CC=${{ matrix.compiler }} MY_STD=${{ matrix.standard }}"
@@ -295,7 +291,7 @@ jobs:
         shell: cmd
         working-directory: ./
         run: |
-          set INCLUDE=%cd%;%cd%\jpeg\jpeg-6b-2022;%cd%\png\libpng;%cd%\png\zlib;%cd%\..\boost-root;%INCLUDE%
+          set INCLUDE=%cd%;%cd%\png\zlib\zlib-1.3.1.1-2024;%cd%\png\libpng\libpng-1.6.44.git-2024;%cd%\jpeg\jpeg-6b-2022;%cd%\..\boost-root;%INCLUDE%
           MSBuild -m mandelbrot_vs2022.sln -p:useenv=true -p:Configuration=Release -p:Platform=x64 /t:Rebuild
           dir %cd%\x64\Release\mandelbrot_vs2022.exe
           copy /Y %cd%\x64\Release\mandelbrot_vs2022.exe .
