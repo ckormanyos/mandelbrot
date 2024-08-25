@@ -60,6 +60,7 @@ The following design goals have been incorporated.
   - The iterative scheme is implemented as a flexible run-time polymorphic function. This allows for the implementation and interchange of multiple kinds of iterative methods. These can be specifically optimized for the particular iterative case at hand.
   - Visualization of the result uses color-stretching techniques combined with the histogram method.
   - Graphical representation uses [`Boost.Gil`](https://www.boost.org/doc/libs/1_84_0/libs/gil/doc/html/index.html) in combination with the JPEG-6b library (see [below](#Adaptions-of-and-Notes-on-jpeg-6b)).
+  - Imaging also uses specialized versions of the libpng-1.6.44 library and the zlib-1.3.1.1 library, with further notes still pending.
   - Color schemes can be easily adapted via straightforward creation (or modification) of a skinny derived class.
 
 ## Building the Project
@@ -73,6 +74,15 @@ The following design goals have been incorporated.
 
 ### Build and run in the `*nix` shell
 
+The commands are as shown below, where you need to specialize `--boost`, `--my_cc_` and `--stdcc` accordingly (if needed):
+
+```sh
+cd mandlebrot
+./build_all --boost=../boost-root --my_cc=g++ --stdcc=c++20
+mkdir -p images/tmp
+./test_mandelbrot.exe
+```
+
 The script [`build_all.sh`](./build_all.sh) is used to:
   - Build the JPEG, ZLIB and PNG libraries with GNUmake.
   - Compile and link [`test_mandelbrot.cpp`](https://github.com/ckormanyos/mandelbrot/blob/main/test/test_mandelbrot.cpp) to obtain the test program `test_mandelbrot.exe`.
@@ -81,17 +91,10 @@ The script [`build_all.sh`](./build_all.sh) is used to:
   - This build also makes and uses specialized versions of the libpng-1.6.44 library and the zlib-1.3.1.1 library.
 
 Simply go to the [`mandelbrot`](https://github.com/ckormanyos/mandelbrot/tree/main)
-directory and run the build shell script `build_all.sh`. You may need
-to supply your system's (or your desired local) path to boost.
+directory and run the build shell script [`build_all.sh`](./build_all.sh).
+You may need to supply your system's (or your desired local) path to boost.
 
 Make the needed output image directory and run `test_mandelbrot.exe`.
-
-```sh
-cd mandlebrot
-./build_all my_path_to_boost
-mkdir -p images/tmp
-./test_mandelbrot.exe
-```
 
 To optionally use GMP (instead of Boost's header-only `cpp_dec_float`),
 simply use [`build_all_gmp.sh`](./build_all_gmp.sh)
