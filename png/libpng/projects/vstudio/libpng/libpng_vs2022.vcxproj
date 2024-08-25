@@ -10,6 +10,32 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\png.c" />
+    <ClCompile Include="..\..\..\pngerror.c" />
+    <ClCompile Include="..\..\..\pngget.c" />
+    <ClCompile Include="..\..\..\pngmem.c" />
+    <ClCompile Include="..\..\..\pngpread.c" />
+    <ClCompile Include="..\..\..\pngread.c" />
+    <ClCompile Include="..\..\..\pngrio.c" />
+    <ClCompile Include="..\..\..\pngrtran.c" />
+    <ClCompile Include="..\..\..\pngrutil.c" />
+    <ClCompile Include="..\..\..\pngset.c" />
+    <ClCompile Include="..\..\..\pngtrans.c" />
+    <ClCompile Include="..\..\..\pngwio.c" />
+    <ClCompile Include="..\..\..\pngwrite.c" />
+    <ClCompile Include="..\..\..\pngwtran.c" />
+    <ClCompile Include="..\..\..\pngwutil.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\png.h" />
+    <ClInclude Include="..\..\..\pngconf.h" />
+    <ClInclude Include="..\..\..\pngdebug.h" />
+    <ClInclude Include="..\..\..\pnginfo.h" />
+    <ClInclude Include="..\..\..\pnglibconf.h" />
+    <ClInclude Include="..\..\..\pngpriv.h" />
+    <ClInclude Include="..\..\..\pngstruct.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D6973076-9317-4EF2-A0B8-B7A18AC0713E}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -20,14 +46,12 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -46,7 +70,7 @@
     <TargetName>$(ProjectName)16</TargetName>
     <IncludePath>$(SolutionDir)png\libpng;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)png\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)png\$(Platform)\$(Configuration)\tempPng\</IntDir>
+    <IntDir>$(OutDir)\tempPng\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -54,7 +78,7 @@
     <TargetName>$(ProjectName)16</TargetName>
     <IncludePath>$(SolutionDir)png\libpng;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)png\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)png\$(Platform)\$(Configuration)\tempPng\</IntDir>
+    <IntDir>$(OutDir)\tempPng\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -78,7 +102,6 @@
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalOptions>/wd5045 %(AdditionalOptions)</AdditionalOptions>
-      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -107,8 +130,6 @@
       <AdditionalIncludeDirectories>$(ZLibSrcDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
       <Optimization>Full</Optimization>
-      <WholeProgramOptimization>true</WholeProgramOptimization>
-      <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeaderFile>pngpriv.h</PrecompiledHeaderFile>
       <CallingConvention>FastCall</CallingConvention>
     </ClCompile>
@@ -122,44 +143,6 @@
       <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
     </Lib>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\arm\arm_init.c">
-      <DeploymentContent>true</DeploymentContent>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\..\..\arm\filter_neon_intrinsics.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\..\..\arm\palette_neon_intrinsics.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\..\..\png.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\..\..\pngerror.c" />
-    <ClCompile Include="..\..\..\pngget.c" />
-    <ClCompile Include="..\..\..\pngmem.c" />
-    <ClCompile Include="..\..\..\pngpread.c" />
-    <ClCompile Include="..\..\..\pngread.c" />
-    <ClCompile Include="..\..\..\pngrio.c" />
-    <ClCompile Include="..\..\..\pngrtran.c" />
-    <ClCompile Include="..\..\..\pngrutil.c" />
-    <ClCompile Include="..\..\..\pngset.c" />
-    <ClCompile Include="..\..\..\pngtrans.c" />
-    <ClCompile Include="..\..\..\pngwio.c" />
-    <ClCompile Include="..\..\..\pngwrite.c" />
-    <ClCompile Include="..\..\..\pngwtran.c" />
-    <ClCompile Include="..\..\..\pngwutil.c" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="..\..\..\scripts\pngwin.rc">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ResourceCompile>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

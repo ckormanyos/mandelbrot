@@ -258,23 +258,18 @@
 
       this->generate_mandelbrot_image_engine(x_coord, y_coord, text_output);
 
-      std::string str { };
+      text_output.write("\n");
 
-      str = "\n";
-      text_output.write(str);
-
-      str = "Perform color stretching.\n";
-      text_output.write(str);
+      text_output.write("Perform color stretching.\n");
       apply_color_stretches(x_coord, y_coord, color_stretches);
 
-      str = "Apply color functions.\n";
-      text_output.write(str);
+      text_output.write("Apply color functions.\n");
       apply_color_functions(x_coord, y_coord, color_functions);
 
-      str = "Write output JPEG file " + str_filename + ".\n";
-      text_output.write(str);
+      text_output.write("Write output JPEG file " + str_filename + ".\n");
+
       boost::gil::jpeg_write_view(str_filename + std::string(".jpg"), mandelbrot_view);
-      boost::gil::png_write_view(str_filename + std::string(".png"), mandelbrot_view);
+      boost::gil::png_write_view (str_filename + std::string(".png"), mandelbrot_view);
     }
 
   protected:

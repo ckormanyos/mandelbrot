@@ -84,15 +84,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -108,15 +105,17 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)jpeg\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)png\$(Platform)\$(Configuration)\</OutDir>
     <IncludePath>$(IncludePath)</IncludePath>
     <ExternalIncludePath>$(IncludePath)</ExternalIncludePath>
+    <IntDir>$(OutDir)\tempJpeg\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)jpeg\$(Platform)\$(Configuration)\</OutDir>
     <IncludePath>$(IncludePath)</IncludePath>
     <ExternalIncludePath>$(IncludePath)</ExternalIncludePath>
+    <IntDir>$(OutDir)\tempJpeg\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
