@@ -11,60 +11,30 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="jpeg-6b-2022\jcapimin.c" />
-    <ClCompile Include="jpeg-6b-2022\jcapistd.c" />
-    <ClCompile Include="jpeg-6b-2022\jccoefct.c" />
-    <ClCompile Include="jpeg-6b-2022\jccolor.c" />
-    <ClCompile Include="jpeg-6b-2022\jcdctmgr.c" />
-    <ClCompile Include="jpeg-6b-2022\jchuff.c" />
-    <ClCompile Include="jpeg-6b-2022\jcinit.c" />
-    <ClCompile Include="jpeg-6b-2022\jcmainct.c" />
-    <ClCompile Include="jpeg-6b-2022\jcmarker.c" />
-    <ClCompile Include="jpeg-6b-2022\jcmaster.c" />
-    <ClCompile Include="jpeg-6b-2022\jcomapi.c" />
-    <ClCompile Include="jpeg-6b-2022\jcparam.c" />
-    <ClCompile Include="jpeg-6b-2022\jcphuff.c" />
-    <ClCompile Include="jpeg-6b-2022\jcprepct.c" />
-    <ClCompile Include="jpeg-6b-2022\jcsample.c" />
-    <ClCompile Include="jpeg-6b-2022\jctrans.c" />
-    <ClCompile Include="jpeg-6b-2022\jdapimin.c" />
-    <ClCompile Include="jpeg-6b-2022\jdatadst.c" />
-    <ClCompile Include="jpeg-6b-2022\jdcoefct.c" />
-    <ClCompile Include="jpeg-6b-2022\jdcolor.c" />
-    <ClCompile Include="jpeg-6b-2022\jddctmgr.c" />
-    <ClCompile Include="jpeg-6b-2022\jdhuff.c" />
-    <ClCompile Include="jpeg-6b-2022\jdinput.c" />
-    <ClCompile Include="jpeg-6b-2022\jdmainct.c" />
-    <ClCompile Include="jpeg-6b-2022\jdmarker.c" />
-    <ClCompile Include="jpeg-6b-2022\jdmerge.c" />
-    <ClCompile Include="jpeg-6b-2022\jdpostct.c" />
-    <ClCompile Include="jpeg-6b-2022\jdsample.c" />
-    <ClCompile Include="jpeg-6b-2022\jerror.c" />
-    <ClCompile Include="jpeg-6b-2022\jfdctflt.c" />
-    <ClCompile Include="jpeg-6b-2022\jfdctfst.c" />
-    <ClCompile Include="jpeg-6b-2022\jfdctint.c" />
-    <ClCompile Include="jpeg-6b-2022\jidctflt.c" />
-    <ClCompile Include="jpeg-6b-2022\jidctfst.c" />
-    <ClCompile Include="jpeg-6b-2022\jidctint.c" />
-    <ClCompile Include="jpeg-6b-2022\jidctred.c" />
-    <ClCompile Include="jpeg-6b-2022\jmemansi.c" />
-    <ClCompile Include="jpeg-6b-2022\jmemmgr.c" />
-    <ClCompile Include="jpeg-6b-2022\jquant1.c" />
-    <ClCompile Include="jpeg-6b-2022\jquant2.c" />
-    <ClCompile Include="jpeg-6b-2022\jutils.c" />
+    <ClCompile Include="libpng-1.6.44.git-2024\png.c" />
+    <ClCompile Include="libpng-1.6.44.git-2024\pngerror.c" />
+    <ClCompile Include="libpng-1.6.44.git-2024\pngget.c" />
+    <ClCompile Include="libpng-1.6.44.git-2024\pngmem.c" />
+    <ClCompile Include="libpng-1.6.44.git-2024\pngpread.c" />
+    <ClCompile Include="libpng-1.6.44.git-2024\pngread.c" />
+    <ClCompile Include="libpng-1.6.44.git-2024\pngrio.c" />
+    <ClCompile Include="libpng-1.6.44.git-2024\pngrtran.c" />
+    <ClCompile Include="libpng-1.6.44.git-2024\pngrutil.c" />
+    <ClCompile Include="libpng-1.6.44.git-2024\pngset.c" />
+    <ClCompile Include="libpng-1.6.44.git-2024\pngtrans.c" />
+    <ClCompile Include="libpng-1.6.44.git-2024\pngwio.c" />
+    <ClCompile Include="libpng-1.6.44.git-2024\pngwrite.c" />
+    <ClCompile Include="libpng-1.6.44.git-2024\pngwtran.c" />
+    <ClCompile Include="libpng-1.6.44.git-2024\pngwutil.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="jpeg-6b-2022\jchuff.h" />
-    <ClInclude Include="jpeg-6b-2022\jconfig.h" />
-    <ClInclude Include="jpeg-6b-2022\jdct.h" />
-    <ClInclude Include="jpeg-6b-2022\jdhuff.h" />
-    <ClInclude Include="jpeg-6b-2022\jerror.h" />
-    <ClInclude Include="jpeg-6b-2022\jinclude.h" />
-    <ClInclude Include="jpeg-6b-2022\jmemsys.h" />
-    <ClInclude Include="jpeg-6b-2022\jmorecfg.h" />
-    <ClInclude Include="jpeg-6b-2022\jpegint.h" />
-    <ClInclude Include="jpeg-6b-2022\jpeglib.h" />
-    <ClInclude Include="jpeg-6b-2022\jversion.h" />
+    <ClInclude Include="libpng-1.6.44.git-2024\png.h" />
+    <ClInclude Include="libpng-1.6.44.git-2024\pngconf.h" />
+    <ClInclude Include="libpng-1.6.44.git-2024\pngdebug.h" />
+    <ClInclude Include="libpng-1.6.44.git-2024\pnginfo.h" />
+    <ClInclude Include="libpng-1.6.44.git-2024\pnglibconf.h" />
+    <ClInclude Include="libpng-1.6.44.git-2024\pngpriv.h" />
+    <ClInclude Include="libpng-1.6.44.git-2024\pngstruct.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile">
@@ -73,12 +43,11 @@
     </None>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>16.0</VCProjectVersion>
+    <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{357a1110-b0ba-4c68-a331-4afa6037f6f3}</ProjectGuid>
-    <RootNamespace>jpeg</RootNamespace>
+    <ProjectGuid>{ada3c1bc-fe9c-4ba9-9325-f435f3c73a5c}</ProjectGuid>
+    <RootNamespace>libpngvs2022</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>jpeg_vs2022</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -107,16 +76,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)jpeg\$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>$(IncludePath)</IncludePath>
-    <ExternalIncludePath>$(IncludePath)</ExternalIncludePath>
+    <OutDir>$(SolutionDir)png\libpng\$(Platform)\$(Configuration)\</OutDir>
+    <IncludePath>$(ProjectDir)..\..\png\zlib\zlib-1.3.1.1-2024;$(IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)jpeg\$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>$(IncludePath)</IncludePath>
-    <ExternalIncludePath>$(IncludePath)</ExternalIncludePath>
+    <OutDir>$(SolutionDir)png\libpng\$(Platform)\$(Configuration)\</OutDir>
+    <IncludePath>$(ProjectDir)..\..\png\zlib\zlib-1.3.1.1-2024;$(IncludePath);</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -128,8 +93,8 @@
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile />
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -149,8 +114,8 @@
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile />
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>
