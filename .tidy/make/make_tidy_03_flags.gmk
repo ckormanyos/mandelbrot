@@ -35,8 +35,8 @@ C_DEFINES    =
 
 C_INCLUDES   = $(PATH_SRC)                                                        \
                $(PATH_SRC)/jpeg/jpeg-6b-2022                                      \
-               $(PATH_SRC)/png/libpng                                             \
-               $(PATH_SRC)/png/zlib                                               \
+               $(PATH_SRC)/png/libpng/libpng-1.6.44.git-2024                      \
+               $(PATH_SRC)/png/zlib/zlib-1.3.1.1-2024                             \
                $(BOOST_ROOT_FOR_TIDY)
 
 ifneq ($(BOOST_ROOT_FOR_TIDY),)

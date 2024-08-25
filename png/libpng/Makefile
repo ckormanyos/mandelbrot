@@ -10,11 +10,11 @@
 # cd png/libpng
 # make all
 
-# The result should be png/tmpPng/obj/libpng16.a
+# The result should be png/libpng/obj/libpng16.a
 # Link this library to your project needing PNG.
 
-SRC_DIR    = $(CURDIR)
-OBJ_DIR    = $(SRC_DIR)/../tmpPng/obj
+SRC_DIR    = $(CURDIR)/libpng-1.6.44.git-2024
+OBJ_DIR    = $(SRC_DIR)/obj
 
 CC         = g++
 
@@ -28,7 +28,9 @@ CFLAGS     = -x c                              \
              -Wconversion                      \
              -Wsign-conversion                 \
              -Werror                           \
-             -I.
+             -DZ_SOLO                          \
+             -I.                               \
+             -I../zlib/zlib-1.3.1.1-2024
 
 all : clean $(OBJ_DIR)/libpng16.a
 
@@ -37,9 +39,10 @@ clean:
 	rm -rf $(OBJ_DIR)/libpng16.a
 
 $(OBJ_DIR)/libpng16.a :
-	@echo make temporary obj directory
+	@echo 'make temporary obj directory'
 	mkdir -p $(OBJ_DIR)
-	@echo compile libpng16 source files
+	@echo
+	@echo 'compile libpng-1.6.44.git-2024 source files'
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/png.c       -o $(OBJ_DIR)/png.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/pngerror.c  -o $(OBJ_DIR)/pngerror.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/pngget.c    -o $(OBJ_DIR)/pngget.o
@@ -55,9 +58,6 @@ $(OBJ_DIR)/libpng16.a :
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/pngwrite.c  -o $(OBJ_DIR)/pngwrite.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/pngwtran.c  -o $(OBJ_DIR)/pngwtran.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/pngwutil.c  -o $(OBJ_DIR)/pngwutil.o
-	$(CC) $(CFLAGS) -c $(SRC_DIR)/arm/arm_init.c                -o $(OBJ_DIR)/arm_init.o
-	$(CC) $(CFLAGS) -c $(SRC_DIR)/arm/filter_neon_intrinsics.c  -o $(OBJ_DIR)/filter_neon_intrinsics.o
-	$(CC) $(CFLAGS) -c $(SRC_DIR)/arm/palette_neon_intrinsics.c -o $(OBJ_DIR)/palette_neon_intrinsics.o
-		
-	@echo creating archive libpng16.a
+	@echo
+	@echo 'creating archive libpng16.a'
 	ar rcs $(OBJ_DIR)/libpng16.a $(OBJ_DIR)/*.o

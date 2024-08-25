@@ -43,11 +43,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)png\libpng;$(SolutionDir)png\zlib;$(SolutionDir)jpeg\jpeg-6b-2022;$(SolutionDir);C:\boost\boost_1_85_0;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)png\zlib\zlib-1.3.1.1-2024;$(SolutionDir)png\libpng\libpng-1.6.44.git-2024;$(SolutionDir)jpeg\jpeg-6b-2022;$(SolutionDir);C:\boost\boost_1_85_0;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)png\libpng;$(SolutionDir)png\zlib;$(SolutionDir)jpeg\jpeg-6b-2022;$(SolutionDir);C:\boost\boost_1_85_0;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)png\zlib\zlib-1.3.1.1-2024;$(SolutionDir)png\libpng\libpng-1.6.44.git-2024;$(SolutionDir)jpeg\jpeg-6b-2022;$(SolutionDir);C:\boost\boost_1_85_0;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -64,7 +64,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)jpeg\$(Platform)\$(Configuration)\jpeg_vs2022.lib;$(SolutionDir)png\$(Platform)\$(Configuration)\zlib.lib;$(SolutionDir)png\$(Platform)\$(Configuration)\libpng16.lib</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)jpeg\$(Platform)\$(Configuration)\jpeg_vs2022.lib;$(SolutionDir)png\libpng\$(Platform)\$(Configuration)\libpng_vs2022.lib;$(SolutionDir)png\zlib\$(Platform)\$(Configuration)\zlib_vs2022.lib</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>IF NOT EXIST $(SolutionDir)images\tmp mkdir $(SolutionDir)images\tmp</Command>
@@ -89,7 +89,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>$(SolutionDir)jpeg\$(Platform)\$(Configuration)\jpeg_vs2022.lib;$(SolutionDir)png\$(Platform)\$(Configuration)\zlib_vs2022.lib;$(SolutionDir)png\$(Platform)\$(Configuration)\libpng_vs202216.lib</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)jpeg\$(Platform)\$(Configuration)\jpeg_vs2022.lib;$(SolutionDir)png\libpng\$(Platform)\$(Configuration)\libpng_vs2022.lib;$(SolutionDir)png\zlib\$(Platform)\$(Configuration)\zlib_vs2022.lib</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>IF NOT EXIST $(SolutionDir)images\tmp mkdir $(SolutionDir)images\tmp</Command>
@@ -142,6 +142,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-tidy" />
+    <None Include="build_all.sh" />
+    <None Include="build_all_gmp.sh" />
     <None Include="codecov.yml" />
     <None Include="lgtm.yml" />
     <None Include="sonar-project.properties" />

@@ -1,9 +1,9 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
-//      Copyright Sebastian Streubel 2024.
-//     Copyright Christopher Kormanyos 2024.
-// Distributed under the Boost Software License, Version 1.0.
-//    (See accompanying file LICENSE_1_0.txt or copy at
-//          http://www.boost.org/LICENSE_1_0.txt)
+// Copyright Sebastian Streubel 2024.
+// Copyright Christopher Kormanyos 2024.
+// Distributed under the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt
+// or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
 #ifndef MANDELBROT_GENERATOR_PERTURBATIVE_2024_04_28_H // NOLINT(llvm-header-guard)
@@ -52,12 +52,12 @@
     auto operator=(const mandelbrot_generator_perturbative&) -> mandelbrot_generator_perturbative& = delete;
     auto operator=(mandelbrot_generator_perturbative&&) noexcept -> mandelbrot_generator_perturbative& = delete;
 
-    auto generate_mandelbrot_image_engine(std::vector<my_iteration_numeric_type>& x_coord,
-                                          std::vector<my_iteration_numeric_type>& y_coord,
+    auto generate_mandelbrot_image_engine(std::vector<my_iteration_numeric_type>& x_coord, // NOLINT(misc-unused-parameters)
+                                          std::vector<my_iteration_numeric_type>& y_coord, // NOLINT(misc-unused-parameters)
                                           mandelbrot_text_output_base& text_output) -> void override
     {
-      std::vector<my_iteration_numeric_type> zkr(base_class_type::get_iterations() + static_cast<std::uint_fast32_t>(UINT8_C(1)));
-      std::vector<my_iteration_numeric_type> zki(base_class_type::get_iterations() + static_cast<std::uint_fast32_t>(UINT8_C(1)));
+      std::vector<my_iteration_numeric_type> zkr(base_class_type::get_iterations() + static_cast<std::uint_fast32_t>(UINT8_C(1))); // NOLINT(cppcoreguidelines-init-variables)
+      std::vector<my_iteration_numeric_type> zki(base_class_type::get_iterations() + static_cast<std::uint_fast32_t>(UINT8_C(1))); // NOLINT(cppcoreguidelines-init-variables)
 
       using std::floor;
 

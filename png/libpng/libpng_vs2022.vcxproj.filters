@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="libpng-1.6.44.git-2024">
+      <UniqueIdentifier>{5df21f10-1f35-4576-a167-6f9ba1bd2e76}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="libpng-1.6.44.git-2024\png.c">
+      <Filter>libpng-1.6.44.git-2024</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng-1.6.44.git-2024\pngerror.c">
+      <Filter>libpng-1.6.44.git-2024</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng-1.6.44.git-2024\pngget.c">
+      <Filter>libpng-1.6.44.git-2024</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng-1.6.44.git-2024\pngmem.c">
+      <Filter>libpng-1.6.44.git-2024</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng-1.6.44.git-2024\pngpread.c">
+      <Filter>libpng-1.6.44.git-2024</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng-1.6.44.git-2024\pngread.c">
+      <Filter>libpng-1.6.44.git-2024</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng-1.6.44.git-2024\pngrio.c">
+      <Filter>libpng-1.6.44.git-2024</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng-1.6.44.git-2024\pngrtran.c">
+      <Filter>libpng-1.6.44.git-2024</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng-1.6.44.git-2024\pngrutil.c">
+      <Filter>libpng-1.6.44.git-2024</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng-1.6.44.git-2024\pngset.c">
+      <Filter>libpng-1.6.44.git-2024</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng-1.6.44.git-2024\pngtrans.c">
+      <Filter>libpng-1.6.44.git-2024</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng-1.6.44.git-2024\pngwio.c">
+      <Filter>libpng-1.6.44.git-2024</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng-1.6.44.git-2024\pngwrite.c">
+      <Filter>libpng-1.6.44.git-2024</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng-1.6.44.git-2024\pngwtran.c">
+      <Filter>libpng-1.6.44.git-2024</Filter>
+    </ClCompile>
+    <ClCompile Include="libpng-1.6.44.git-2024\pngwutil.c">
+      <Filter>libpng-1.6.44.git-2024</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="libpng-1.6.44.git-2024\png.h">
+      <Filter>libpng-1.6.44.git-2024</Filter>
+    </ClInclude>
+    <ClInclude Include="libpng-1.6.44.git-2024\pngconf.h">
+      <Filter>libpng-1.6.44.git-2024</Filter>
+    </ClInclude>
+    <ClInclude Include="libpng-1.6.44.git-2024\pngdebug.h">
+      <Filter>libpng-1.6.44.git-2024</Filter>
+    </ClInclude>
+    <ClInclude Include="libpng-1.6.44.git-2024\pnginfo.h">
+      <Filter>libpng-1.6.44.git-2024</Filter>
+    </ClInclude>
+    <ClInclude Include="libpng-1.6.44.git-2024\pnglibconf.h">
+      <Filter>libpng-1.6.44.git-2024</Filter>
+    </ClInclude>
+    <ClInclude Include="libpng-1.6.44.git-2024\pngpriv.h">
+      <Filter>libpng-1.6.44.git-2024</Filter>
+    </ClInclude>
+    <ClInclude Include="libpng-1.6.44.git-2024\pngstruct.h">
+      <Filter>libpng-1.6.44.git-2024</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
+  </ItemGroup>
+</Project>

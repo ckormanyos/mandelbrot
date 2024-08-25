@@ -1,8 +1,8 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
-//      Copyright Christopher Kormanyos 2015 - 2024.
-// Distributed under the Boost Software License, Version 1.0.
-//    (See accompanying file LICENSE_1_0.txt or copy at
-//          http://www.boost.org/LICENSE_1_0.txt)
+// Copyright Christopher Kormanyos 2015 - 2024.
+// Distributed under the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt
+// or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
 #include <concurrency/stopwatch.h>
@@ -51,31 +51,21 @@
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_99_TRY_POINTS.h>
 
 // Provide instructions for simple build on WSL.
-// cd /mnt/c/Users/User/Documents/Ks/PC_Software/NumericalPrograms/mandelbrot/jpeg
-// make all
-
-// cd ..
+// cd /mnt/c/Users/ckorm/Documents/Ks/PC_Software/NumericalPrograms/mandelbrot
 
 // Compile with cpp_dec_float
-// g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++14 -I. -I/mnt/c/boost/boost_1_84_0 -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
-// g++ test_mandelbrot.o -Ljpeg/jpeg-6b-2022/obj -lpthread -ljpeg-6b -o test_mandelbrot.exe
+// ./build_all.sh
 
 // Compile with gmp_float
-// g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++14 -DMANDELBROT_USE_GMP_FLOAT -I. -I/mnt/c/boost/boost_1_84_0 -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
-// g++ test_mandelbrot.o -Ljpeg/jpeg-6b-2022/obj -lpthread -ljpeg-6b -lgmp -o test_mandelbrot.exe
+// ./build_all_gmp.sh
 
 // Compile with Multiprecision's float128
-// g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++14 -DMANDELBROT_USE_128_FLOAT -I. -I/mnt/c/boost/boost_1_84_0 -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
-// g++ test_mandelbrot.o -Ljpeg/jpeg-6b-2022/obj -lpthread -ljpeg-6b -lquadmath -o test_mandelbrot.exe
+// Not yet suppported in shell script.
 
 // Compile on msys (use ucrt)
 // Start ucrt shell
-// cd C:/Users/User/Documents/Ks/PC_Software/NumericalPrograms/mandelbrot/jpeg
-// make all
-// cd ..
-// g++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -std=c++14 -I. -I/C:/boost/boost_1_84_0 -Ijpeg/jpeg-6b-2022 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
-// g++ test_mandelbrot.o -Ljpeg/jpeg-6b-2022/obj -lpthread -ljpeg-6b -o test_mandelbrot.exe
-
+// cd C:/Users/User/Documents/Ks/PC_Software/NumericalPrograms/mandelbrot
+// ./build_all.sh
 
 auto main() -> int // NOLINT(bugprone-exception-escape)
 {
