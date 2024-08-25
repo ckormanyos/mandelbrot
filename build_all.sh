@@ -75,7 +75,7 @@ $MY_GCC -x c++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wext
 echo
 
 echo 'link test_mandelbrot.o with libraries to create test_mandelbrot.exe'
-$MY_GCC -x none test_mandelbrot.o ./png/libpng/libpng-1.6.44.git-2024/obj/libpng16.a ./png/zlib/zlib-1.3.1.1-2024/obj/libz.a ./jpeg/jpeg-6b-2022/obj/libjpeg-6b.a -lpthread -o test_mandelbrot.exe
+$MY_GCC -x none -march=native -mtune=native $EXTRA_FLAGS test_mandelbrot.o ./png/libpng/libpng-1.6.44.git-2024/obj/libpng16.a ./png/zlib/zlib-1.3.1.1-2024/obj/libz.a ./jpeg/jpeg-6b-2022/obj/libjpeg-6b.a -lpthread -o test_mandelbrot.exe
 echo
 
 echo 'verify existence of test_mandelbrot.exe'
