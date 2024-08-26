@@ -1,0 +1,106 @@
+# ------------------------------------------------------------------------------
+#  Copyright Christopher Kormanyos 2024.
+#  Distributed under the Boost Software License,
+#  Version 1.0. (See accompanying file LICENSE_1_0.txt
+#  or copy at http://www.boost.org/LICENSE_1_0.txt)
+# ------------------------------------------------------------------------------
+
+name: CodeQL
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [cpp]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: clone-submods-bootstrap-headers-boost-develop
+        run: |
+          git clone -b develop --depth 1 https://github.com/boostorg/boost.git ../boost-root
+          cd ../boost-root
+          git submodule update --init tools
+          git submodule update --init libs/array
+          git submodule update --init libs/assert
+          git submodule update --init libs/concept_check
+          git submodule update --init libs/config
+          git submodule update --init libs/container
+          git submodule update --init libs/container_hash
+          git submodule update --init libs/core
+          git submodule update --init libs/describe
+          git submodule update --init libs/detail
+          git submodule update --init libs/filesystem
+          git submodule update --init libs/functional
+          git submodule update --init libs/gil
+          git submodule update --init libs/integer
+          git submodule update --init libs/io
+          git submodule update --init libs/iterator
+          git submodule update --init libs/lexical_cast
+          git submodule update --init libs/move
+          git submodule update --init libs/mp11
+          git submodule update --init libs/mpl
+          git submodule update --init libs/multiprecision
+          git submodule update --init libs/numeric/conversion
+          git submodule update --init libs/preprocessor
+          git submodule update --init libs/range
+          git submodule update --init libs/smart_ptr
+          git submodule update --init libs/static_assert
+          git submodule update --init libs/system
+          git submodule update --init libs/throw_exception
+          git submodule update --init libs/type_traits
+          git submodule update --init libs/utility
+          git submodule update --init libs/variant2
+          ./bootstrap.sh
+          ./b2 headers
+
+      - name: build-libs
+        run: |
+          echo "query GCC version"
+          g++ -v
+          echo
+          echo "build libjpeg"
+          cd jpeg
+          make all
+          cd ..
+          echo "build libpng"
+          cd png/libpng
+          make all
+          cd ../..
+          echo "build libz"
+          cd png/zlib
+          make all
+          cd ../..
+
+      - name: Configure (cpp)
+        if: ${{ matrix.language == 'cpp' }}
+        run: echo configure_command_empty
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          queries: +security-and-quality
+
+      - name: Build cpp
+        if: ${{ matrix.language == 'cpp' }}
+        run: |
+          g++ -x c++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wmissing-include-dirs -std=c++20 -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o && g++ -x none -finline-functions -march=native -mtune=native -O3 test_mandelbrot.o ./png/libpng/libpng-1.6.44.git-2024/obj/libpng16.a ./png/zlib/zlib-1.3.1.1-2024/obj/libz.a ./jpeg/jpeg-6b-2022/obj/libjpeg-6b.a -lpthread -o test_mandelbrot.exe && ls -la ./test_mandelbrot.exe
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"
