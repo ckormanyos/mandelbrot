@@ -1,33 +1,21 @@
-# For most projects, this workflow file will not need changing; you simply need
-# to commit it to your repository.
-#
-# You may wish to alter this file to override the set of languages analyzed,
-# or to provide custom queries or build logic.
-#
-# ******** NOTE ********
-# We have attempted to detect the languages in your repository. Please check
-# the `language` matrix defined below to confirm you have the correct set of
-# supported CodeQL languages.
-#
-name: "CodeQL"
+# ------------------------------------------------------------------------------
+#  Copyright Christopher Kormanyos 2022 - 2024.
+#  Distributed under the Boost Software License,
+#  Version 1.0. (See accompanying file LICENSE_1_0.txt
+#  or copy at http://www.boost.org/LICENSE_1_0.txt)
+# ------------------------------------------------------------------------------
 
+name: CodeQL
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - '**'
   pull_request:
-    branches: [ "main" ]
-  schedule:
-    - cron: '24 16 * * 5'
-
+    types: [opened, synchronize, reopened]
 jobs:
   analyze:
-    name: Analyze (${{ matrix.language }})
-    # Runner size impacts CodeQL analysis time. To learn more, please see:
-    #   - https://gh.io/recommended-hardware-resources-for-running-codeql
-    #   - https://gh.io/supported-runners-and-hardware-resources
-    #   - https://gh.io/using-larger-runners (GitHub.com only)
-    # Consider using larger runners or machines with greater resources for possible analysis time improvements.
-    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    name: Analyze
+    runs-on: ubuntu-latest
     permissions:
       # required for all workflows
       security-events: write
@@ -44,49 +32,85 @@ jobs:
       matrix:
         include:
         - language: c-cpp
-          build-mode: autobuild
-        # CodeQL supports the following values keywords for 'language': 'c-cpp', 'csharp', 'go', 'java-kotlin', 'javascript-typescript', 'python', 'ruby', 'swift'
-        # Use `c-cpp` to analyze code written in C, C++ or both
-        # Use 'java-kotlin' to analyze code written in Java, Kotlin or both
-        # Use 'javascript-typescript' to analyze code written in JavaScript, TypeScript or both
-        # To learn more about changing the languages that are analyzed or customizing the build mode for your analysis,
-        # see https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/customizing-your-advanced-setup-for-code-scanning.
-        # If you are analyzing a compiled language, you can modify the 'build-mode' for that language to customize how
-        # your codebase is analyzed, see https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/codeql-code-scanning-for-compiled-languages
+
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: clone-submods-bootstrap-headers-boost-develop
+        run: |
+          git clone -b develop --depth 1 https://github.com/boostorg/boost.git ../boost-root
+          cd ../boost-root
+          git submodule update --init tools
+          git submodule update --init libs/array
+          git submodule update --init libs/assert
+          git submodule update --init libs/concept_check
+          git submodule update --init libs/config
+          git submodule update --init libs/container
+          git submodule update --init libs/container_hash
+          git submodule update --init libs/core
+          git submodule update --init libs/describe
+          git submodule update --init libs/detail
+          git submodule update --init libs/filesystem
+          git submodule update --init libs/functional
+          git submodule update --init libs/gil
+          git submodule update --init libs/integer
+          git submodule update --init libs/io
+          git submodule update --init libs/iterator
+          git submodule update --init libs/lexical_cast
+          git submodule update --init libs/move
+          git submodule update --init libs/mp11
+          git submodule update --init libs/mpl
+          git submodule update --init libs/multiprecision
+          git submodule update --init libs/numeric/conversion
+          git submodule update --init libs/preprocessor
+          git submodule update --init libs/range
+          git submodule update --init libs/smart_ptr
+          git submodule update --init libs/static_assert
+          git submodule update --init libs/system
+          git submodule update --init libs/throw_exception
+          git submodule update --init libs/type_traits
+          git submodule update --init libs/utility
+          git submodule update --init libs/variant2
+          ./bootstrap.sh
+          ./b2 headers
+
+      - name: build-libs
+        run: |
+          echo "query GCC version"
+          g++ -v
+          echo
+          echo "build libjpeg"
+          cd jpeg
+          make all
+          cd ..
+          echo "build libpng"
+          cd png/libpng
+          make all
+          cd ../..
+          echo "build libz"
+          cd png/zlib
+          make all
+          cd ../..
 
     # Initializes the CodeQL tools for scanning.
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v3
-      with:
-        languages: ${{ matrix.language }}
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
         build-mode: ${{ matrix.build-mode }}
-        # If you wish to specify custom queries, you can do so here or in a config file.
-        # By default, queries listed here will override any specified in a config file.
-        # Prefix the list here with "+" to use these queries and those in the config file.
 
-        # For more details on CodeQL's query packs, refer to: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
-        # queries: security-extended,security-and-quality
-
-    # If the analyze step fails for one of the languages you are analyzing with
-    # "We were unable to automatically build your code", modify the matrix above
-    # to set the build mode to "manual" for that language. Then modify this step
-    # to build your code.
-    # ℹ️ Command-line programs to run using the OS shell.
-    # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
     - if: matrix.build-mode == 'manual'
       shell: bash
-      run: |
-        echo 'If you are using a "manual" build mode for one or more of the' \
-          'languages you are analyzing, replace this with the commands to build' \
-          'your code, for example:'
-        echo '  make bootstrap'
-        echo '  make release'
-        exit 1
+        run: |
+          echo "query GCC version"
+          echo
+          echo "build and run test_mandelbrot"
+          g++ -x c++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wmissing-include-dirs -std=c++20 -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          g++ -x none -finline-functions -march=native -mtune=native -O3 test_mandelbrot.o ./png/libpng/libpng-1.6.44.git-2024/obj/libpng16.a ./png/zlib/zlib-1.3.1.1-2024/obj/libz.a ./jpeg/jpeg-6b-2022/obj/libjpeg-6b.a -lpthread -o test_mandelbrot.exe
+          ls -la ./test_mandelbrot.exe
 
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v3
-      with:
-        category: "/language:${{matrix.language}}"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"
