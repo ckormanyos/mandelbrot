@@ -1,0 +1,64 @@
+﻿# ------------------------------------------------------------------------------
+#  Copyright Christopher Kormanyos 2022 - 2024.
+#  Distributed under the Boost Software License,
+#  Version 1.0. (See accompanying file LICENSE_1_0.txt
+#  or copy at http://www.boost.org/LICENSE_1_0.txt)
+# ------------------------------------------------------------------------------
+
+name: mandelbrot_discovery
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+jobs:
+  msvc-release-x64-discovery:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: '0'
+      - name: clone-submods-bootstrap-headers-boost-develop
+        run: |
+          git clone -b develop --depth 1 https://github.com/boostorg/boost.git ../boost-root
+          cd ../boost-root
+          git submodule update --init tools
+          git submodule update --init libs/array
+          git submodule update --init libs/assert
+          git submodule update --init libs/concept_check
+          git submodule update --init libs/config
+          git submodule update --init libs/container
+          git submodule update --init libs/container_hash
+          git submodule update --init libs/core
+          git submodule update --init libs/describe
+          git submodule update --init libs/detail
+          git submodule update --init libs/functional
+          git submodule update --init libs/gil
+          git submodule update --init libs/integer
+          git submodule update --init libs/iterator
+          git submodule update --init libs/lexical_cast
+          git submodule update --init libs/move
+          git submodule update --init libs/mp11
+          git submodule update --init libs/mpl
+          git submodule update --init libs/multiprecision
+          git submodule update --init libs/numeric/conversion
+          git submodule update --init libs/preprocessor
+          git submodule update --init libs/range
+          git submodule update --init libs/static_assert
+          git submodule update --init libs/throw_exception
+          git submodule update --init libs/type_traits
+          git submodule update --init libs/utility
+          git submodule update --init libs/variant2
+          ./bootstrap.bat
+          ./b2 headers
+      - uses: actions/checkout@v4
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          toolset: 14.4
+      - name: msvc-release-x64-discovery
+        shell: cmd
+        working-directory: ./MandelbrotDiscovery
+        run: |
+          set INCLUDE=%cd%\..;%cd%;%cd%\..\png\zlib\zlib-1.3.1.1-2024;%cd%\..\png\libpng\libpng-1.6.44.git-2024;%cd%\..\jpeg\jpeg-6b-2022;%cd%\..\..\boost-root;%INCLUDE%
+          MSBuild -m MandelbrotDiscovery.sln -p:useenv=true -p:Configuration=Release -p:Platform=x64 /t:Rebuild
+          dir %cd%\x64\Release\MandelbrotDiscovery.exe

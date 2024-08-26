@@ -273,10 +273,10 @@ Details:
 
 | Name                      | Point $(x + iy)$ | Image |
 | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ---------------- |
-| `08_DEEP_DIVE_01`         | $(-1.295189082147777457017064177185681926706566460884888469217+i~0.440936982678320138880903678356262612113214627431396203682$ | [image](https://github.com/ckormanyos/mandelbrot/tree/main/images/gallery/mandelbrot_MANDELBROT_08_DEEP_DIVE_01_magnify51.jpg)          |
-| `20_ZOOM_VERY_DEEP_00`    | $(+0.360240443437614363236125244449545308482607807958585750488-i~0.641313061064803174860375015179302066579494952282305259556$ | [image](https://github.com/ckormanyos/mandelbrot/tree/main/images/gallery/mandelbrot_MANDELBROT_20_ZOOM_VERY_DEEP_00_magnify51.jpg)     |
-| `30_ZOOM_ANOTHER_00`      | $(-1.740062382579339905220844167065825638296641720436171866880+i~0.028175339779211048992411521144319509687539076742990608570$ | [image](https://github.com/ckormanyos/mandelbrot/tree/main/images/gallery/mandelbrot_MANDELBROT_30_ZOOM_ANOTHER_00_magnify51.jpg)       |
-| `45_SEAHORSE_OTHER_01`    | $(-0.745605122368264995520769522753086369510716449777505626833+i~0.112859495427252849953537572395520089297826357072986239717$ | [image](https://github.com/ckormanyos/mandelbrot/tree/main/images/gallery/mandelbrot_MANDELBROT_45_SEAHORSE_OTHER_01_magnify51.jpg)     |
+| `08_DEEP_DIVE_01`         | $(-1.295189082147777457017064177185681926706566460884888469217{+i 0.440936982678320138880903678356262612113214627431396203682}$ | [image](https://github.com/ckormanyos/mandelbrot/tree/main/images/gallery/mandelbrot_MANDELBROT_08_DEEP_DIVE_01_magnify51.jpg)          |
+| `20_ZOOM_VERY_DEEP_00`    | $(+0.360240443437614363236125244449545308482607807958585750488{-i 0.641313061064803174860375015179302066579494952282305259556}$ | [image](https://github.com/ckormanyos/mandelbrot/tree/main/images/gallery/mandelbrot_MANDELBROT_20_ZOOM_VERY_DEEP_00_magnify51.jpg)     |
+| `30_ZOOM_ANOTHER_00`      | $(-1.740062382579339905220844167065825638296641720436171866880{+i 0.028175339779211048992411521144319509687539076742990608570}$ | [image](https://github.com/ckormanyos/mandelbrot/tree/main/images/gallery/mandelbrot_MANDELBROT_30_ZOOM_ANOTHER_00_magnify51.jpg)       |
+| `45_SEAHORSE_OTHER_01`    | $(-0.745605122368264995520769522753086369510716449777505626833{+i 0.112859495427252849953537572395520089297826357072986239717}$ | [image](https://github.com/ckormanyos/mandelbrot/tree/main/images/gallery/mandelbrot_MANDELBROT_45_SEAHORSE_OTHER_01_magnify51.jpg)     |
 
 ## Deep Dives and Acceleration via Perturbation
 
