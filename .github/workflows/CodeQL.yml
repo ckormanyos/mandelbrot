@@ -95,10 +95,6 @@ jobs:
           languages: ${{ matrix.language }}
           queries: +security-and-quality
 
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v3
-        run: echo configure_command_empty
-
       - name: Build cpp
         if: ${{ matrix.language == 'cpp' }}
         run: |
