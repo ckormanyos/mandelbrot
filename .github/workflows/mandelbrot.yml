@@ -93,10 +93,6 @@ jobs:
           git submodule update --init libs/variant2
           ./bootstrap.sh
           ./b2 headers
-      - name: install gmp
-        run: |
-          sudo apt-get update --quiet
-          sudo apt-get install --no-install-recommends --quiet --yes libgmp-dev
       - name: gcc-native
         run: |
           echo "query GCC version"
@@ -107,10 +103,14 @@ jobs:
           mkdir -p images/tmp
           ./test_mandelbrot.exe
           ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
-          echo 'sha1sum ./images/tmp/sha1sum mandelbrot_MANDELBROT_05_SEAHORSES.jpg'
+          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.jpg'
           sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
-          echo 'sha1sum ./images/tmp/sha1sum mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep f3abc4437d97bba945d589aac3d96d8bbb67a035'
+          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep f3abc4437d97bba945d589aac3d96d8bbb67a035'
           sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep f3abc4437d97bba945d589aac3d96d8bbb67a035
+          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.png'
+          sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png
+          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.png | grep 1991efd74deaab5a8f59a68967fa6f098d713e79'
+          sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png | grep 1991efd74deaab5a8f59a68967fa6f098d713e79
   gcc-native-cpp_dec_float:
     runs-on: ubuntu-latest
     defaults:
@@ -172,10 +172,14 @@ jobs:
           mkdir -p images/tmp
           ./test_mandelbrot.exe
           ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
-          echo 'sha1sum ./images/tmp/sha1sum mandelbrot_MANDELBROT_05_SEAHORSES.jpg'
+          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.jpg'
           sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
-          echo 'sha1sum ./images/tmp/sha1sum mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep f3abc4437d97bba945d589aac3d96d8bbb67a035'
+          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep f3abc4437d97bba945d589aac3d96d8bbb67a035'
           sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep f3abc4437d97bba945d589aac3d96d8bbb67a035
+          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.png'
+          sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png
+          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.png | grep 1991efd74deaab5a8f59a68967fa6f098d713e79'
+          sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png | grep 1991efd74deaab5a8f59a68967fa6f098d713e79
   gcc-native-cpp_dec_float-asan:
     runs-on: ubuntu-latest
     defaults:
@@ -464,10 +468,14 @@ jobs:
           mkdir -p images/tmp
           ./test_mandelbrot.exe
           ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
-          echo 'sha1sum ./images/tmp/sha1sum mandelbrot_MANDELBROT_05_SEAHORSES.jpg'
+          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.jpg'
           sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
-          echo 'sha1sum ./images/tmp/sha1sum mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep f3abc4437d97bba945d589aac3d96d8bbb67a035'
+          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep f3abc4437d97bba945d589aac3d96d8bbb67a035'
           sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep f3abc4437d97bba945d589aac3d96d8bbb67a035
+          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.png'
+          sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png
+          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.png | grep 1991efd74deaab5a8f59a68967fa6f098d713e79'
+          sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png | grep 1991efd74deaab5a8f59a68967fa6f098d713e79
   msvc-release-x64-vs2022:
     runs-on: windows-latest
     steps:
@@ -523,3 +531,5 @@ jobs:
           .\mandelbrot_vs2022.exe
           dir .\images\tmp\mandelbrot_MANDELBROT_05_SEAHORSES.jpg
           certutil -hashfile ".\images\tmp\mandelbrot_MANDELBROT_05_SEAHORSES.jpg" SHA1 | findstr "f3abc4437d97bba945d589aac3d96d8bbb67a035"
+          dir .\images\tmp\mandelbrot_MANDELBROT_05_SEAHORSES.png
+          certutil -hashfile ".\images\tmp\mandelbrot_MANDELBROT_05_SEAHORSES.png" SHA1 | findstr "1991efd74deaab5a8f59a68967fa6f098d713e79"

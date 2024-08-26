@@ -39,10 +39,10 @@ clean:
 	rm -rf $(OBJ_DIR)/libpng16.a
 
 $(OBJ_DIR)/libpng16.a :
-	@echo 'make temporary obj directory'
-	mkdir -p $(OBJ_DIR)
-	@echo
-	@echo 'compile libpng-1.6.44.git-2024 source files'
+	@-echo 'make temporary obj directory'
+	@-mkdir -p $(OBJ_DIR)
+	@-echo
+	@-echo 'compile libpng-1.6.44.git-2024 source files'
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/png.c       -o $(OBJ_DIR)/png.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/pngerror.c  -o $(OBJ_DIR)/pngerror.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/pngget.c    -o $(OBJ_DIR)/pngget.o
@@ -58,6 +58,6 @@ $(OBJ_DIR)/libpng16.a :
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/pngwrite.c  -o $(OBJ_DIR)/pngwrite.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/pngwtran.c  -o $(OBJ_DIR)/pngwtran.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/pngwutil.c  -o $(OBJ_DIR)/pngwutil.o
-	@echo
-	@echo 'creating archive libpng16.a'
-	ar rcs $(OBJ_DIR)/libpng16.a $(OBJ_DIR)/*.o
+	@-echo
+	@-echo 'creating archive libpng16.a'
+	@-ar rcs $(OBJ_DIR)/libpng16.a $(OBJ_DIR)/*.o

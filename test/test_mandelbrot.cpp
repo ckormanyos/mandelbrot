@@ -54,10 +54,10 @@
 // cd /mnt/c/Users/ckorm/Documents/Ks/PC_Software/NumericalPrograms/mandelbrot
 
 // Compile with cpp_dec_float
-// ./build_all.sh
+// ./build_all.sh --boost=/mnt/c/boost/boost_1_85_0 --my_cc=g++ --stdcc=c++20
 
 // Compile with gmp_float
-// ./build_all_gmp.sh
+// ./build_all_gmp.sh --boost=/mnt/c/boost/boost_1_85_0 --my_cc=g++ --stdcc=c++20
 
 // Compile with Multiprecision's float128
 // Not yet suppported in shell script.

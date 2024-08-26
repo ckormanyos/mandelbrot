@@ -147,11 +147,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-tidy" />
+    <None Include=".gitignore" />
+    <None Include="build_all.sh" />
+    <None Include="build_all_gmp.sh" />
     <None Include="codecov.yml" />
     <None Include="lgtm.yml" />
     <None Include="sonar-project.properties" />
-    <None Include="build_all.sh" />
-    <None Include="build_all_gmp.sh" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="LICENSE_1_0.txt" />
