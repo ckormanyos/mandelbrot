@@ -1,6 +1,13 @@
 MandelbrotDiscovery
 ==================
 
+<p align="left">
+    <a href="https://github.com/ckormanyos/mandelbrot/actions">
+        <img src="https://github.com/ckormanyos/mandelbrot/actions/workflows/mandelbrot_discovery.yml/badge.svg" alt="Build Status"></a>
+    <a href="https://github.com/ckormanyos/mandelbrot/blob/master/LICENSE_1_0.txt">
+        <img src="https://img.shields.io/badge/license-BSL%201.0-blue.svg" alt="Boost Software License 1.0"></a>
+</p>
+
 The `MandelbrotDiscovery` program allows for semi-automated, mouse and command-driven
 dives into the Mandelbrot fractal world. Using simple commands like **set**, **calc**
 and more it is possible to click on a point and subsequently
@@ -107,8 +114,8 @@ The result of this dive ended up being:
 
 ### Changing the Resolution
 
-This is TODO both in docs as well as in the program.
+This feature is TODO both in docs as well as in the program.
 
 ## Program Defaults and Dynamic Behavior
 
-This is TODO both in docs as well as in the program.
+This feature is TODO both in docs as well as in the program.
