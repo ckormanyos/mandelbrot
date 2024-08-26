@@ -1,9 +1,29 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.34601.136
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MandelbrotDiscovery", "MandelbrotDiscovery.vcxproj", "{7A64B037-0443-48AD-BF63-D92EA62E0591}"
+	ProjectSection(ProjectDependencies) = postProject
+		{357A1110-B0BA-4C68-A331-4AFA6037F6F3} = {357A1110-B0BA-4C68-A331-4AFA6037F6F3}
+		{ADA3C1BC-FE9C-4BA9-9325-F435F3C73A5C} = {ADA3C1BC-FE9C-4BA9-9325-F435F3C73A5C}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "jpeg_vs2022", "..\jpeg\jpeg_vs2022.vcxproj", "{357A1110-B0BA-4C68-A331-4AFA6037F6F3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libpng_vs2022", "..\png\libpng\libpng_vs2022.vcxproj", "{ADA3C1BC-FE9C-4BA9-9325-F435F3C73A5C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{465B1E91-F370-4D6D-BB38-F6F8E9F39563} = {465B1E91-F370-4D6D-BB38-F6F8E9F39563}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlib_vs2022", "..\png\zlib\zlib_vs2022.vcxproj", "{465B1E91-F370-4D6D-BB38-F6F8E9F39563}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{2DB91CE9-55AC-4066-A2B8-AEB7CB55E570}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{65CFC663-6DE8-4BA6-96E3-049A34021455}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\workflows\mandelbrot_discovery.yml = ..\.github\workflows\mandelbrot_discovery.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +35,24 @@ Global
 		{7A64B037-0443-48AD-BF63-D92EA62E0591}.Debug|x64.Build.0 = Debug|x64
 		{7A64B037-0443-48AD-BF63-D92EA62E0591}.Release|x64.ActiveCfg = Release|x64
 		{7A64B037-0443-48AD-BF63-D92EA62E0591}.Release|x64.Build.0 = Release|x64
+		{357A1110-B0BA-4C68-A331-4AFA6037F6F3}.Debug|x64.ActiveCfg = Debug|x64
+		{357A1110-B0BA-4C68-A331-4AFA6037F6F3}.Debug|x64.Build.0 = Debug|x64
+		{357A1110-B0BA-4C68-A331-4AFA6037F6F3}.Release|x64.ActiveCfg = Release|x64
+		{357A1110-B0BA-4C68-A331-4AFA6037F6F3}.Release|x64.Build.0 = Release|x64
+		{ADA3C1BC-FE9C-4BA9-9325-F435F3C73A5C}.Debug|x64.ActiveCfg = Debug|x64
+		{ADA3C1BC-FE9C-4BA9-9325-F435F3C73A5C}.Debug|x64.Build.0 = Debug|x64
+		{ADA3C1BC-FE9C-4BA9-9325-F435F3C73A5C}.Release|x64.ActiveCfg = Release|x64
+		{ADA3C1BC-FE9C-4BA9-9325-F435F3C73A5C}.Release|x64.Build.0 = Release|x64
+		{465B1E91-F370-4D6D-BB38-F6F8E9F39563}.Debug|x64.ActiveCfg = Debug|x64
+		{465B1E91-F370-4D6D-BB38-F6F8E9F39563}.Debug|x64.Build.0 = Debug|x64
+		{465B1E91-F370-4D6D-BB38-F6F8E9F39563}.Release|x64.ActiveCfg = Release|x64
+		{465B1E91-F370-4D6D-BB38-F6F8E9F39563}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{65CFC663-6DE8-4BA6-96E3-049A34021455} = {2DB91CE9-55AC-4066-A2B8-AEB7CB55E570}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {32820086-194F-42C3-BAC7-7DA4FD224738}
