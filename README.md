@@ -4,6 +4,8 @@
 <p align="center">
     <a href="https://github.com/ckormanyos/mandelbrot/actions">
         <img src="https://github.com/ckormanyos/mandelbrot/actions/workflows/mandelbrot.yml/badge.svg" alt="Build Status"></a>
+    <a href="https://github.com/ckormanyos/mandelbrot/actions?query=workflow%3ACodeQL">
+        <img src="https://github.com/ckormanyos/mandelbrot/actions/workflows/CodeQL.yml/badge.svg" alt="CodeQL"></a>
     <a href="https://github.com/ckormanyos/mandelbrot/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc">
         <img src="https://custom-icon-badges.herokuapp.com/github/issues-raw/ckormanyos/mandelbrot?logo=github" alt="Open Issues" /></a>
     <a href="https://sonarcloud.io/summary/new_code?id=ckormanyos_mandelbrot">
