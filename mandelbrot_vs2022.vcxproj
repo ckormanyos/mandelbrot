@@ -142,6 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-tidy" />
+    <None Include=".gitignore" />
     <None Include="build_all.sh" />
     <None Include="build_all_gmp.sh" />
     <None Include="codecov.yml" />

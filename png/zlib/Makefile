@@ -35,10 +35,10 @@ clean:
 	rm -rf $(OBJ_DIR)/libz.a
 
 $(OBJ_DIR)/libz.a :
-	@echo 'make temporary obj directory'
-	mkdir -p $(OBJ_DIR)
-	@echo
-	@echo 'compile libzlib-1.3.1.1-2024 source files'
+	@-echo 'make temporary obj directory'
+	@-mkdir -p $(OBJ_DIR)
+	@-echo
+	@-echo 'compile libzlib-1.3.1.1-2024 source files'
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/adler32.c  -o $(OBJ_DIR)/adler32.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/compress.c -o $(OBJ_DIR)/compress.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/crc32.c    -o $(OBJ_DIR)/crc32.o
@@ -50,6 +50,6 @@ $(OBJ_DIR)/libz.a :
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/trees.c    -o $(OBJ_DIR)/trees.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/uncompr.c  -o $(OBJ_DIR)/uncompr.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/zutil.c    -o $(OBJ_DIR)/zutil.o
-	@echo
-	@echo 'creating archive libz.a'
-	ar rcs $(OBJ_DIR)/libz.a $(OBJ_DIR)/*.o
+	@-echo
+	@-echo 'creating archive libz.a'
+	@-ar rcs $(OBJ_DIR)/libz.a $(OBJ_DIR)/*.o

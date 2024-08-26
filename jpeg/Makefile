@@ -37,10 +37,10 @@ clean:
 	rm -rf $(OBJ_DIR)/libjpeg-6b.a
 
 $(OBJ_DIR)/libjpeg-6b.a :
-	@echo 'make temporary obj directory'
-	mkdir -p $(OBJ_DIR)
-	@echo
-	@echo 'compile libjpeg-6b source files'
+	@-echo 'make temporary obj directory'
+	@-mkdir -p $(OBJ_DIR)
+	@-echo
+	@-echo 'compile libjpeg-6b source files'
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/jcapimin.c -o $(OBJ_DIR)/jcapimin.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/jcapistd.c -o $(OBJ_DIR)/jcapistd.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/jccoefct.c -o $(OBJ_DIR)/jccoefct.o
@@ -81,6 +81,6 @@ $(OBJ_DIR)/libjpeg-6b.a :
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/jquant1.c  -o $(OBJ_DIR)/jquant1.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/jquant2.c  -o $(OBJ_DIR)/jquant2.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/jutils.c   -o $(OBJ_DIR)/jutils.o
-	@echo
-	@echo 'creating archive libjpeg-6b.a'
-	ar rcs $(OBJ_DIR)/libjpeg-6b.a $(OBJ_DIR)/*.o
+	@-echo
+	@-echo 'creating archive libjpeg-6b.a'
+	@-ar rcs $(OBJ_DIR)/libjpeg-6b.a $(OBJ_DIR)/*.o
