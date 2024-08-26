@@ -7,6 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{CABF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{054377E5-7DA0-4101-8BA3-1BE0C0DE51B0}"
 	ProjectSection(SolutionItems) = preProject
+		.github\workflows\CodeQL.yml = .github\workflows\CodeQL.yml
 		.github\workflows\mandelbrot.yml = .github\workflows\mandelbrot.yml
 		.github\workflows\mandelbrot_codecov.yml = .github\workflows\mandelbrot_codecov.yml
 		.github\workflows\mandelbrot_discovery.yml = .github\workflows\mandelbrot_discovery.yml
