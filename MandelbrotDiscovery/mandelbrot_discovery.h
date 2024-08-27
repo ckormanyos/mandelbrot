@@ -199,9 +199,6 @@
       // Start the thread process.
       my_thread = std::thread(thread_process);
 
-      // Detach this process from its spawning thread object.
-      my_thread.detach();
-
       bool get_message_is_ok { true };
 
       // Enter the Windows message loop.
@@ -246,7 +243,10 @@
 
       if(result_alloc_console_is_ok)
       {
-        static_cast<void>(FreeConsole());
+        static_cast<void>(::FreeConsole());
+
+        static_cast<void>(::CloseHandle(console_input()));
+        static_cast<void>(::CloseHandle(console_output()));
       }
 
       return static_cast<int>(INT8_C(0));
@@ -459,6 +459,8 @@
         // Exit the process thread.
         static_cast<void>(::InterlockedExchange(&my_thread_wants_exit, static_cast<::LONG>(INT8_C(1))));
 
+        my_thread.join();
+
         for(auto   i = static_cast<unsigned>(UINT8_C(0));
                    i < static_cast<unsigned>(UINT8_C(200));
                  ++i)
@@ -568,6 +570,17 @@
         else if((str_cmd == "help") || (str_cmd == "?"))
         {
           static_cast<void>(print_commands());
+        }
+        else if(str_cmd == "exit")
+        {
+          static_cast<void>(::InterlockedExchange(&my_thread_wants_exit, static_cast<::LONG>(INT8_C(1))));
+
+          using local_window_type = mandelbrot_discovery;
+
+          static_cast<void>
+          (
+            ::PostMessage(local_window_type::instance().get_handle_to_window(), WM_CLOSE, 0, 0)
+          );
         }
 
         if(do_iterate_and_redraw)
