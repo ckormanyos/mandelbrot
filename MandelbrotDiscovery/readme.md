@@ -8,17 +8,30 @@ MandelbrotDiscovery
         <img src="https://img.shields.io/badge/license-BSL%201.0-blue.svg" alt="Boost Software License 1.0"></a>
 </p>
 
-The `MandelbrotDiscovery` program allows for semi-automated, mouse and command-driven
-dives into the Mandelbrot fractal world. Using simple commands like **set**, **calc**
+[`ckormanyos/mandelbrot/MandelbrotDiscovery`](https://github.com/ckormanyos/mandelbrot/tree/main/MandelbrotDiscovery)
+allows for semi-automated, mouse and command-driven
+searches and dives into the Mandelbrot fractal world.
+
+Using simple commands like **set**, **calc**
 and more it is possible to click on a point and subsequently
 calculate the next magnification order at that point.
-
 In this way, you can conveniently dive deeper and deeper
 into the Mandelbrot set in a guided fashion.
 
+At the moment, the run-time performance of the program could do with
+a bit of improvement. The program, nonetheless, can provide keen insight
+into the fascinating intricacies and potentially interesting (for deep dives, etc.)
+coordinate points of the Mandelbrot set.
+
 ## Using the Program
 
-Begin by starting `MandelbrotDiscovery.exe`. It is a Win32-API-based program.
+Build `MandelbrotDiscovery.exe` from the Microsoft(R) VisualStudio(R)
+solution, `MandelbrotDiscovery.sln` located
+[here](https://github.com/ckormanyos/mandelbrot/tree/main/MandelbrotDiscovery).
+The program written in classic Win32-API style.
+
+The program is mouse-and-command-driven.
+Begin a search by starting `MandelbrotDiscovery.exe`.
 Zooming is accomplished with commands entered in the command window
 in combination with mouse-clicks in the client area of the Mandelbrot image window.
 

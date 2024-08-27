@@ -328,7 +328,10 @@
 
       stopwatch_type my_stopwatch { };
 
-      mandelbrot_generator.generate_mandelbrot_image("mandelbrot_zooming.jpg",
+      // Generate the Mandelbrot image. Note: The filename suffix
+      // will be provided by the interface.
+
+      mandelbrot_generator.generate_mandelbrot_image("mandelbrot_zooming",
                                                       local_color_functions,
                                                       local_color_stretches,
                                                       text_out);
