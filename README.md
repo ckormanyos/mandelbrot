@@ -80,12 +80,12 @@ The commands are as shown below, where you need to specialize `--boost`, `--my_c
 
 ```sh
 cd mandlebrot
-./build_all --boost=../boost-root --my_cc=g++ --stdcc=c++20
+./build_all.sh --boost=../boost-root --my_cc=g++ --stdcc=c++20
 mkdir -p images/tmp
 ./test_mandelbrot.exe
 ```
 
-The script [`build_all.sh`](./build_all.sh) is used to:
+In summary, the script [`build_all.sh`](./build_all.sh) is used to:
   - Build the JPEG, ZLIB and PNG libraries with GNUmake.
   - Compile and link [`test_mandelbrot.cpp`](https://github.com/ckormanyos/mandelbrot/blob/main/test/test_mandelbrot.cpp) to obtain the test program `test_mandelbrot.exe`.
   - Execute the test program via `./test_mandelbrot.exe`. The resulting JPEG and PNG images will be placed as a temporary file in the `images/tmp` folder.
@@ -97,6 +97,8 @@ directory and run the build shell script [`build_all.sh`](./build_all.sh).
 You may need to supply your system's (or your desired local) path to boost.
 
 Make the needed output image directory and run `test_mandelbrot.exe`.
+
+### Optionally Use `gmp_float`
 
 To optionally use `gmp_float`, the [GMP](https://gmplib.org) big-number backend,
 instead of `cpp_dec_float`, where both backends are from
