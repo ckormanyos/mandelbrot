@@ -40,14 +40,14 @@ in combination with mouse-clicks in the client area of the Mandelbrot image wind
 
 ### Command Summary
 
-The following commands are supported at the moment.
+The following commands are supported at the moment (with more planned for the future).
 
-  - <strong><code>help   </code></strong> Print the command list.
-  - <strong><code>set    </code></strong> Enter the <strong><code>set</code></strong> command prior to pointing and clicking to select now coordinates with the mouse.
-  - <strong><code>calc   </code></strong> The <strong><code>calc</code></strong> command calculated the Mandelbrot image at the currently set coordinate point. It subsequently displays the image after the calculation.</code>
+  - <strong><code>help</code></strong> (or <strong><code>?</code></strong>) Print the command list.
+  - <strong><code>set</code></strong> Enter the <strong><code>set</code></strong> command prior to pointing and clicking to select now coordinates with the mouse.
+  - <strong><code>calc</code></strong> The <strong><code>calc</code></strong> command calculated the Mandelbrot image at the currently set coordinate point. It subsequently displays the image after the calculation.</code>
   - <strong><code>itrNNNN</code></strong> Using <strong><code>itrNNNN</code></strong> sets the maximum number of iterations to the appended number. The command <strong><code>itr2000</code></strong>, for instance, sets the maximum number of iterations to $2,000$. Switch $2,000$ for another number like $40,000$ to obtain a maximum iteration count of $40,000$ and so on. The default iteration count at program start is modestly set to $400$. So don't be surprised if higher iteration counts are required for deeper and deeper dives.
-  - <strong><code>redo   </code></strong> The command <strong><code>redo</code></strong> simply performs, yet again, the iteration at the coordinate point that is already set. This might be done if, for example, the image was not resolved and the iteration count needs to be increased. You can also exercise the <strong><code>set</code></strong> command one or more times prior to exercising the <strong><code>redo</code></strong> command.
-  - <strong><code>out    </code></strong> With <strong><code>out</code></strong> you can backstep one single order of magnification at the point that has been set and clicked. This can be done repeatedly if a different zoom pathway is desired even after zooming in to a point. So if you've taken a bit of a wrong turn, just zoom <strong><code>out</code></strong> one or more times and refine your coordinate search.
+  - <strong><code>redo</code></strong> The command <strong><code>redo</code></strong> simply performs, yet again, the iteration at the coordinate point that is already set. This might be done if, for example, the image was not resolved and the iteration count needs to be increased. You can also exercise the <strong><code>set</code></strong> command one or more times prior to exercising the <strong><code>redo</code></strong> command.
+  - <strong><code>out</code></strong> With <strong><code>out</code></strong> you can backstep one single order of magnification at the point that has been set and clicked. This can be done repeatedly if a different zoom pathway is desired even after zooming in to a point. So if you've taken a bit of a wrong turn, just zoom <strong><code>out</code></strong> one or more times and refine your coordinate search.
 
 
 ### The Startup Windows
