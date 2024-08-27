@@ -48,6 +48,7 @@ The following commands are supported at the moment (with more planned for the fu
   - <strong><code>itrNNNN</code></strong> Using <strong><code>itrNNNN</code></strong> sets the maximum number of iterations to the appended number. The command <strong><code>itr2000</code></strong>, for instance, sets the maximum number of iterations to $2,000$. Switch $2,000$ for another number like $40,000$ to obtain a maximum iteration count of $40,000$ and so on. The default iteration count at program start is modestly set to $400$. So don't be surprised if higher iteration counts are required for deeper and deeper dives.
   - <strong><code>redo</code></strong> The command <strong><code>redo</code></strong> simply performs, yet again, the iteration at the coordinate point that is already set. This might be done if, for example, the image was not resolved and the iteration count needs to be increased. You can also exercise the <strong><code>set</code></strong> command one or more times prior to exercising the <strong><code>redo</code></strong> command.
   - <strong><code>out</code></strong> With <strong><code>out</code></strong> you can backstep one single order of magnification at the point that has been set and clicked. This can be done repeatedly if a different zoom pathway is desired even after zooming in to a point. So if you've taken a bit of a wrong turn, just zoom <strong><code>out</code></strong> one or more times and refine your coordinate search.
+  - <strong><code>exit</code></strong> Quits the program and closes the image window.
 
 
 ### The Startup Windows
@@ -139,6 +140,10 @@ The result of this dive ended up being:
 ### Changing the Resolution
 
 This feature is TODO both in docs as well as in the program.
+
+### Saving and Restoring Previous Work
+
+These features are TODO both in docs as well as in the program.
 
 ## Program Defaults and Dynamic Behavior
 
