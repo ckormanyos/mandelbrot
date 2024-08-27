@@ -8,19 +8,47 @@ MandelbrotDiscovery
         <img src="https://img.shields.io/badge/license-BSL%201.0-blue.svg" alt="Boost Software License 1.0"></a>
 </p>
 
-The `MandelbrotDiscovery` program allows for semi-automated, mouse and command-driven
-dives into the Mandelbrot fractal world. Using simple commands like **set**, **calc**
+[`ckormanyos/mandelbrot/MandelbrotDiscovery`](https://github.com/ckormanyos/mandelbrot/tree/main/MandelbrotDiscovery)
+allows for semi-automated, mouse and command-driven
+searches and dives into the Mandelbrot fractal world.
+This project is work-in-progress.
+
+Using simple commands like <strong><code>set</code></strong>, <strong><code>calc</code></strong>
 and more it is possible to click on a point and subsequently
 calculate the next magnification order at that point.
-
 In this way, you can conveniently dive deeper and deeper
 into the Mandelbrot set in a guided fashion.
 
+At the moment, the run-time performance of the program could do with
+a bit of improvement. The program, nonetheless, can provide keen insight
+into the fascinating intricacies and potentially interesting (for deep dives, etc.)
+coordinate points of the Mandelbrot set.
+
 ## Using the Program
 
-Begin by starting `MandelbrotDiscovery.exe`. It is a Win32-API-based program.
+Build `MandelbrotDiscovery.exe` from the Microsoft(R) VisualStudio(R)
+solution, `MandelbrotDiscovery.sln` located
+[here](https://github.com/ckormanyos/mandelbrot/tree/main/MandelbrotDiscovery).
+The program written in classic Win32-API style. Aside from some
+geometrical and coordinate-related artifacts and setting up the
+main Window, the program is written in convenient, lightweight header-only.
+
+The program is mouse-and-command-driven.
+Begin a search by starting `MandelbrotDiscovery.exe`.
 Zooming is accomplished with commands entered in the command window
 in combination with mouse-clicks in the client area of the Mandelbrot image window.
+
+### Command Summary
+
+The following commands are supported at the moment (with more planned for the future).
+
+  - <strong><code>help</code></strong> (or <strong><code>?</code></strong>) Print the command list.
+  - <strong><code>set</code></strong> Enter the <strong><code>set</code></strong> command prior to pointing and clicking to select now coordinates with the mouse.
+  - <strong><code>calc</code></strong> The <strong><code>calc</code></strong> command calculated the Mandelbrot image at the currently set coordinate point. It subsequently displays the image after the calculation.</code>
+  - <strong><code>itrNNNN</code></strong> Using <strong><code>itrNNNN</code></strong> sets the maximum number of iterations to the appended number. The command <strong><code>itr2000</code></strong>, for instance, sets the maximum number of iterations to $2,000$. Switch $2,000$ for another number like $40,000$ to obtain a maximum iteration count of $40,000$ and so on. The default iteration count at program start is modestly set to $400$. So don't be surprised if higher iteration counts are required for deeper and deeper dives.
+  - <strong><code>redo</code></strong> The command <strong><code>redo</code></strong> simply performs, yet again, the iteration at the coordinate point that is already set. This might be done if, for example, the image was not resolved and the iteration count needs to be increased. You can also exercise the <strong><code>set</code></strong> command one or more times prior to exercising the <strong><code>redo</code></strong> command.
+  - <strong><code>out</code></strong> With <strong><code>out</code></strong> you can backstep one single order of magnification at the point that has been set and clicked. This can be done repeatedly if a different zoom pathway is desired even after zooming in to a point. So if you've taken a bit of a wrong turn, just zoom <strong><code>out</code></strong> one or more times and refine your coordinate search.
+
 
 ### The Startup Windows
 
@@ -34,16 +62,16 @@ The startup windows are shown in the image below.
 
 ![](https://github.com/ckormanyos/mandelbrot/blob/main/images/discovery/mandelbrot_discovery_startup.jpg)
 
-### Use the Commands **set** and **calc**
+### Use the Commands <strong><code>set</code></strong> and <strong><code>calc</code></strong>
 
-The console accepts input with its prompt **cmd:**. To get started diving,
-enter the command **set**. Then navigate with the mouse to any given point
+The console accepts input with its prompt <strong><code>cmd:</code></strong>. To get started diving,
+enter the command <strong><code>set</code></strong>. Then navigate with the mouse to any given point
 in the client area of the Mandelbrot image window. Left-click the point.
 The clicked-on coordinates will be printed in the console.
 The most-recently clicked-on coordinates are expressed as `x_val` and `y_val`.
 
 If a different point is desired to be selected,
-simply click on the console again and enter the command **set**.
+simply click on the console again and enter the command <strong><code>set</code></strong>.
 Then click in the client area of the Mandelbrot image window again.
 In this way, try to obtain the coordinates that seem to be the right ones
 for the upcoming magnification and calculation.
@@ -53,11 +81,11 @@ The upcoming calculation will zoom by a factor of $10$, calculate the new image
 and display it.
 
 Click on the console itself again to select it as the active input window.
-Enter the command **calc**. The Mandelbrot calculation will begin.
+Enter the command <strong><code>calc</code></strong>. The Mandelbrot calculation will begin.
 Progress is reported on the output console. As previously mentioned,
-the **calc** command proceeds to magnify the picture about its center-point
+the <strong><code>calc</code></strong> command proceeds to magnify the picture about its center-point
 by a factor of $10$. The center point that is used is the exact point
-previously selected with **set** command and its subsequent mouse-click.
+previously selected with <strong><code>set</code></strong> command and its subsequent mouse-click.
 
 The exact command sequence is shown in the image of the console below.
 
@@ -65,30 +93,26 @@ The exact command sequence is shown in the image of the console below.
 
 ### Our First Magnification
 
-The result of our first **set** and **calc** command sequence is shown below.
+The result of our first <strong><code>set</code></strong> and <strong><code>calc</code></strong> command sequence is shown below.
 
 ![](https://github.com/ckormanyos/mandelbrot/blob/main/images/discovery/mandelbrot_discovery_calc_result.jpg)
 
 ### Continue Your Mandelbrot Dive
 
-Iteratively repeat **set** and **calc** command sequences
-in combination with mouse-click (upon the **set** command).
+Iteratively repeat <strong><code>set</code></strong> and <strong><code>calc</code></strong> command sequences
+in combination with mouse-click (upon the <strong><code>set</code></strong> command).
 In doing so, you will continue your Mandelbrot dive.
 
 Fine tuning can be accomplished with additional commands such as
-**itr2000**, **redo** or **out**.
-
-  - The **itrNNNN** command sets the maximum number of iterations to the appended number. The command **itr2000**, for instance, sets the maximum number of iterations to $2,000$. Switch $2,000$ for another number like $40,000$ to obtain a maximum iteration count of $40,000$ and so on.
-  - The default iteration count at program start is modestly set to $400$. So don't be surprised if higher iteration counts are required for deeper and deeper dives.
-  - The command **redo** simply performs, yet again, the iteration at the coordinate point that is already set. This might be done if, for example, the image was not resolved and the iteration count needs to be increased. You can also exercise the **set** command one or more times prior to exercising the **redo** command.
-  - With **out** you can backstep one single order of magnification at the point that has been set and clicked. This can be done repeatedly if a different zoom pathway is desired even after zooming in to a point.
-  - So if you've taken a bit of a wrong turn, just zoom **out** one or more times and refine your coordinate search.
+<strong><code>itr2000</code></strong>,
+<strong><code>redo</code></strong>
+or <strong><code>out</code></strong>.
 
 ### The Results of a Completed Dive
 
 The result of a dive is shown in the image below. In this particular dive,
 the iteration ended in a little Mandelbrot figurine at magnification $10^{26}$.
-So I panned **out** one order of magnitude in order to retrieve the image.
+So I panned <strong><code>out</code></strong> one order of magnitude in order to retrieve the image.
 
 The coordinates and iteration count retrieved from `MandelbrotDiscovery`
 can be supplied to the _real_ `ckormanyos/mandelbrot` program.

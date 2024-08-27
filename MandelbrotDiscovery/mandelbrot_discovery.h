@@ -328,7 +328,10 @@
 
       stopwatch_type my_stopwatch { };
 
-      mandelbrot_generator.generate_mandelbrot_image("mandelbrot_zooming.jpg",
+      // Generate the Mandelbrot image. Note: The filename suffix
+      // will be provided by the interface.
+
+      mandelbrot_generator.generate_mandelbrot_image("mandelbrot_zooming",
                                                       local_color_functions,
                                                       local_color_stretches,
                                                       text_out);
@@ -562,6 +565,10 @@
           // The redrawing will occur below.
           do_iterate_and_redraw = true;
         }
+        else if((str_cmd == "help") || (str_cmd == "?"))
+        {
+          static_cast<void>(print_commands());
+        }
 
         if(do_iterate_and_redraw)
         {
@@ -696,6 +703,22 @@
       }
 
       return result_read_is_ok;
+    }
+
+    static auto print_commands() -> bool
+    {
+      const bool result_write_is_ok =
+      (
+           write_string("MandelbrotDiscovery (C) 2024 Christopher Kormanyos.\n")
+        && write_string("  help (or ?) - Print this text.\n")
+        && write_string("  set         - Select new coordinates with the mouse.\n")
+        && write_string("  calc**      - Iterate at the current coordinates and display.\n")
+        && write_string("  itrNNNN     - Set max.-iterations, where NNNN is something like 1000\n")
+        && write_string("  redo        - Iterate at the current coordinates and scale.\n")
+        && write_string("  out         - Backstep one single order of magnification.\n")
+      );
+
+      return result_write_is_ok;
     }
 
     static auto write_string(const std::string& str_to_write) -> bool
