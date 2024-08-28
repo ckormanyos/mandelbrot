@@ -8,19 +8,17 @@
     <Filter Include="_doc">
       <UniqueIdentifier>{034a081b-19d0-421d-bc9e-64f78778af4c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="mandelbrot">
+      <UniqueIdentifier>{de0d8cae-70cf-4e55-9cc5-911309601a15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="concurrency">
+      <UniqueIdentifier>{dda69a90-a29e-43eb-96e8-d844de4988d2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mandelbrot_discovery.cpp">
       <Filter>MandelbrotDiscovery</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="MandelbrotDiscovery.ico">
-      <Filter>MandelbrotDiscovery</Filter>
-    </Image>
-    <Image Include="small.ico">
-      <Filter>MandelbrotDiscovery</Filter>
-    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mandelbrot_discovery.h">
@@ -32,7 +30,28 @@
     <ClInclude Include="utility.h">
       <Filter>MandelbrotDiscovery</Filter>
     </ClInclude>
-    <ClInclude Include="text.h">
+    <ClInclude Include="..\mandelbrot\mandelbrot.h">
+      <Filter>mandelbrot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\mandelbrot_color.h">
+      <Filter>mandelbrot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\mandelbrot_generator_perturbative.h">
+      <Filter>mandelbrot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\mandelbrot_generator_trivial.h">
+      <Filter>mandelbrot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\text_output.h">
+      <Filter>mandelbrot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\concurrency\stopwatch.h">
+      <Filter>concurrency</Filter>
+    </ClInclude>
+    <ClInclude Include="..\concurrency\parallel_for.h">
+      <Filter>concurrency</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
       <Filter>MandelbrotDiscovery</Filter>
     </ClInclude>
   </ItemGroup>
@@ -45,5 +64,10 @@
     <None Include="readme.md">
       <Filter>_doc</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="MandelbrotDiscovery.ico">
+      <Filter>MandelbrotDiscovery</Filter>
+    </Image>
   </ItemGroup>
 </Project>

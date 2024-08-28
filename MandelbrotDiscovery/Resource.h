@@ -5,4 +5,4 @@
 //  or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#define IDI_CIRCLE_CYAN   101
+#define IDI_MANDELBROT_DISCO   101

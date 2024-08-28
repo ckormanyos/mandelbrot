@@ -90,9 +90,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\concurrency\parallel_for.h" />
+    <ClInclude Include="..\concurrency\stopwatch.h" />
+    <ClInclude Include="..\mandelbrot\mandelbrot.h" />
+    <ClInclude Include="..\mandelbrot\mandelbrot_color.h" />
+    <ClInclude Include="..\mandelbrot\mandelbrot_generator_perturbative.h" />
+    <ClInclude Include="..\mandelbrot\mandelbrot_generator_trivial.h" />
+    <ClInclude Include="..\mandelbrot\text_output.h" />
     <ClInclude Include="geometry.h" />
     <ClInclude Include="mandelbrot_discovery.h" />
-    <ClInclude Include="text.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="utility.h" />
   </ItemGroup>
   <ItemGroup>
@@ -102,11 +109,10 @@
     <ResourceCompile Include="MandelbrotDiscovery.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="MandelbrotDiscovery.ico" />
-    <Image Include="small.ico" />
+    <None Include="readme.md" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="readme.md" />
+    <Image Include="MandelbrotDiscovery.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

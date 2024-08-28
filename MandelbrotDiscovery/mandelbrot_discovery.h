@@ -1,8 +1,8 @@
 ///////////////////////////////////////////////////////////////////////////////
-//      Copyright Christopher Kormanyos 2024.
-// Distributed under the Boost Software License, Version 1.0.
-//    (See accompanying file LICENSE_1_0.txt or copy at
-//          http://www.boost.org/LICENSE_1_0.txt)
+// Copyright Christopher Kormanyos 2024.
+// Distributed under the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt
+// or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
 #ifndef MANDELBROT_DISCOVERY_2024_04_12_H
@@ -11,29 +11,16 @@
   #define NOMINMAX
 
   #include <geometry.h>
-  #include <text.h>
-
-  #include <charconv>
-
-  #if !defined(MANDELBROT_NODISCARD)
-  #if defined(_MSC_VER) && !defined(__GNUC__)
-  #define MANDELBROT_NODISCARD
-  #else
-  #if (defined(__cplusplus) && (__cplusplus >= 201703L))
-  #define MANDELBROT_NODISCARD  [[nodiscard]] // NOLINT(cppcoreguidelines-macro-usage)
-  #else
-  #define MANDELBROT_NODISCARD
-  #endif
-  #endif
-  #endif
+  #include <utility.h>
 
   #include <concurrency/stopwatch.h>
   #include <mandelbrot/mandelbrot_generator_trivial.h>
 
-  #include <windows.h>
   #include <wincodec.h>
+  #include <windows.h>
 
   #include <atomic>
+  #include <charconv>
   #include <chrono>
   #include <cstdint>
   #include <cstring>
@@ -53,7 +40,7 @@
            const int   WindowHeight,
            typename    MandelbrotCoordPntType,
            typename    MandelbrotIterationType,
-           const char* WindowTitle       = mandelbrot_discovery_detail::WindowTitleDefault,
+           const char* WindowTitle,
            const int   IconId            = static_cast<int>(INT8_C(0)),
            const int   ScreenCoordinateX = static_cast<int>(UINT16_C(32)),
            const int   ScreenCoordinateY = static_cast<int>(UINT16_C(8))>
@@ -189,7 +176,7 @@
             + static_cast<int>(INT8_C(24))
           );
 
-        ::SetWindowPos(::GetConsoleWindow(), nullptr, pos_x, 64, 768, 512, SWP_NOZORDER);
+        ::SetWindowPos(::GetConsoleWindow(), nullptr, pos_x, 64, 896, 512, SWP_NOZORDER);
 
         // Get handles to the standard output and input.
         console_output() = ::GetStdHandle(STD_OUTPUT_HANDLE);
@@ -265,8 +252,8 @@
     static rectangle_type* my_ptr_to_rectangle;
 
     static std::thread               my_thread;
-    static volatile ::LONG           my_thread_wants_exit;
-    static volatile ::LONG           my_thread_did_exit;
+    static std::atomic<bool>         my_thread_wants_exit;
+    static std::atomic<bool>         my_thread_did_exit;
     static std::atomic<bool>         my_thread_wait_for_new_set_click;
     static my_coord_pnt_numeric_type my_mandelbrot_zoom_factor;
     static std::uint_fast32_t        my_mandelbrot_iterations;
@@ -281,14 +268,14 @@
 
     static auto console_sync_mtx() -> std::mutex&;
 
-    static auto set_wait_for_click_response(const bool set_on) -> bool
+    static auto set_wait_for_click_response(const bool set_on) noexcept -> bool
     {
       my_thread_wait_for_new_set_click.store(set_on);
 
       return (get_wait_for_click_response() == set_on);
     }
 
-    static auto get_wait_for_click_response() -> bool
+    static auto get_wait_for_click_response() noexcept -> bool
     {
       return my_thread_wait_for_new_set_click.load();
     }
@@ -437,9 +424,10 @@
 
           if(result_is_ok)
           {
-            result_is_ok = (write_number("x_val: ", my_rectangle_center.my_x) && result_is_ok);
-            result_is_ok = (write_number("y_val: ", my_rectangle_center.my_y) && result_is_ok);
-            result_is_ok = (write_string("\n")                                && result_is_ok);
+            result_is_ok = (write_number("x_val  : ", my_rectangle_center.my_x)          && result_is_ok);
+            result_is_ok = (write_number("y_val  : ", my_rectangle_center.my_y)          && result_is_ok);
+            result_is_ok = (write_number("dx_half: ", my_ptr_to_rectangle->dx_half(), 3) && result_is_ok);
+            result_is_ok = (write_string("\n")                                           && result_is_ok);
           }
 
           const auto lresult =
@@ -457,7 +445,7 @@
       if(message == static_cast<::UINT>(WM_DESTROY))
       {
         // Exit the process thread.
-        static_cast<void>(::InterlockedExchange(&my_thread_wants_exit, static_cast<::LONG>(INT8_C(1))));
+        my_thread_wants_exit.store(true);
 
         my_thread.join();
 
@@ -465,7 +453,7 @@
                    i < static_cast<unsigned>(UINT8_C(200));
                  ++i)
         {
-          if(my_thread_did_exit == static_cast<::LONG>(INT8_C(1)))
+          if(my_thread_did_exit.load())
           {
             break;
           }
@@ -492,7 +480,7 @@
 
     static auto thread_process() -> void
     {
-      while(my_thread_wants_exit == static_cast<::LONG>(INT8_C(0)))
+      while(my_thread_wants_exit.load() == static_cast<::LONG>(INT8_C(0)))
       {
         std::this_thread::sleep_for(std::chrono::microseconds(static_cast<unsigned>(UINT8_C(20))));
 
@@ -573,7 +561,7 @@
         }
         else if(str_cmd == "exit")
         {
-          static_cast<void>(::InterlockedExchange(&my_thread_wants_exit, static_cast<::LONG>(INT8_C(1))));
+          my_thread_wants_exit.store(true);
 
           using local_window_type = mandelbrot_discovery;
 
@@ -601,7 +589,7 @@
         }
       }
 
-      static_cast<void>(::InterlockedExchange(&my_thread_did_exit, static_cast<::LONG>(INT8_C(1))));
+      my_thread_did_exit.store(true);
     }
 
     static auto load_jpeg_image(const wchar_t* filename) -> HBITMAP
@@ -753,13 +741,19 @@
       return result_write_is_ok;
     }
 
-    static auto write_number(const std::string& str_prefix, const typename point_type::value_type& val) -> bool
+    static auto write_number(const std::string& str_prefix, const typename point_type::value_type& val, const int prec = -1) -> bool
     {
       using local_value_type = typename point_type::value_type;
 
       std::stringstream strm { };
 
-      strm << std::setprecision(std::numeric_limits<local_value_type>::digits10) << std::showpos << val;
+      const std::streamsize my_prec =
+        static_cast<std::streamsize>
+        (
+          (prec == -1) ? std::numeric_limits<local_value_type>::digits10 : prec
+        );
+
+      strm << std::setprecision(my_prec) << std::showpos << val;
 
       const std::string str_val { str_prefix + strm.str() + "\n" };
 
@@ -830,7 +824,7 @@
            const int   IconId,
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
-  volatile ::LONG mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_thread_wants_exit;
+  std::atomic<bool> mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_thread_wants_exit { false };
 
   template<const int   WindowWidth,
            const int   WindowHeight,
@@ -840,7 +834,7 @@
            const int   IconId,
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
-  volatile ::LONG mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_thread_did_exit;
+  std::atomic<bool> mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_thread_did_exit { false };
 
   template<const int   WindowWidth,
            const int   WindowHeight,

@@ -11,7 +11,7 @@
 
   #include <concurrency/parallel_for.h>
   #include <mandelbrot/mandelbrot_color.h>
-  #include <mandelbrot/mandelbrot_text_output.h>
+  #include <mandelbrot/text_output.h>
 
   #include <boost/gil/extension/io/jpeg/old.hpp>
   #include <boost/gil/extension/io/png/old.hpp>
@@ -245,12 +245,12 @@
 
     virtual auto generate_mandelbrot_image_engine(std::vector<my_iteration_numeric_type>&,
                                                   std::vector<my_iteration_numeric_type>&,
-                                                  mandelbrot_text_output_base&) -> void = 0;
+                                                  text_output_base&) -> void = 0;
 
     auto generate_mandelbrot_image(const std::string&                 str_filename,
                                    const color::color_functions_base& color_functions = color::color_functions_bw(),
                                    const color::color_stretch_base&   color_stretches = color::color_stretch_histogram_method(),
-                                         mandelbrot_text_output_base& text_output     = my_standard_output) -> void
+                                         text_output_base& text_output     = my_standard_output) -> void
     {
       // Setup the x-axis and y-axis coordinates.
 
@@ -277,7 +277,7 @@
     const mandelbrot_config_type&  mandelbrot_config_object;    // NOLINT(readability-identifier-naming,cppcoreguidelines-non-private-member-variables-in-classes,misc-non-private-member-variables-in-classes)
 
   private:
-    static mandelbrot_text_output_cout my_standard_output; // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
+    static text_output_cout my_standard_output; // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
 
     boost::gil::rgb8_image_t mandelbrot_image { }; // NOLINT(readability-identifier-naming)
     boost::gil::rgb8_view_t  mandelbrot_view { };  // NOLINT(readability-identifier-naming)
@@ -351,7 +351,7 @@
 
   template<typename CoordPntNumericType,
            typename IterateNumericType>
-  mandelbrot_text_output_cout mandelbrot_generator<CoordPntNumericType, IterateNumericType>::my_standard_output; // NOLINT(cppcoreguidelines-avoid-non-const-global-variables,hicpp-uppercase-literal-suffix,readability-uppercase-literal-suffix)
+  text_output_cout mandelbrot_generator<CoordPntNumericType, IterateNumericType>::my_standard_output; // NOLINT(cppcoreguidelines-avoid-non-const-global-variables,hicpp-uppercase-literal-suffix,readability-uppercase-literal-suffix)
 
   #if(__cplusplus >= 201703L)
   } // namespace ckormanyos::mandelbrot
