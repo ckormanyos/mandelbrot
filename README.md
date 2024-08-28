@@ -76,7 +76,7 @@ The following design goals have been incorporated.
 
 ### Build and run in the `*nix` shell
 
-The commands are as shown below, where you need to specialize `--boost`, `--my_cc_` and `--stdcc` accordingly (if needed):
+The commands are as shown below, where you need to specialize `--boost`, `--my_cc` and `--stdcc` accordingly (if needed):
 
 ```sh
 cd mandlebrot
@@ -88,15 +88,16 @@ mkdir -p images/tmp
 In summary, the script [`build_all.sh`](./build_all.sh) is used to:
   - Build the JPEG, ZLIB and PNG libraries with GNUmake.
   - Compile and link [`test_mandelbrot.cpp`](https://github.com/ckormanyos/mandelbrot/blob/main/test/test_mandelbrot.cpp) to obtain the test program `test_mandelbrot.exe`.
-  - Execute the test program via `./test_mandelbrot.exe`. The resulting JPEG and PNG images will be placed as a temporary file in the `images/tmp` folder.
   - This build makes and uses its own specialized version of the JPEG-6b library (see [below](#Adaptions-of-and-Notes-on-jpeg-6b)) and does not install or use a standard `*nix` version thereof.
-  - This build also makes and uses specialized versions of the libpng-1.6.44 library and the zlib-1.3.1.1 library.
+  - This build also makes and uses specialized versions of the [libpng](http://www.libpng.org/pub/png) and the [zlib](https://www.zlib.net) libraries.
 
 Simply go to the [`mandelbrot`](https://github.com/ckormanyos/mandelbrot/tree/main)
 directory and run the build shell script [`build_all.sh`](./build_all.sh).
 You may need to supply your system's (or your desired local) path to boost.
 
-Make the needed output image directory and run `test_mandelbrot.exe`.
+The build script does not execute the test program (i.e., via `./test_mandelbrot.exe`).
+Test program execution must be performed manually. In order to do this,
+make the needed output image directory and run `test_mandelbrot.exe` as shown above.
 
 ### Optionally Use `gmp_float`
 
@@ -104,6 +105,13 @@ To optionally use `gmp_float`, the [GMP](https://gmplib.org) big-number backend,
 instead of `cpp_dec_float`, where both backends are from
 [`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_86_0/libs/multiprecision/doc/html/index.html),
 simply use [`build_all_gmp.sh`](./build_all_gmp.sh)
+
+```sh
+cd mandlebrot
+./build_all_gmp.sh --boost=../boost-root --my_cc=g++ --stdcc=c++20
+mkdir -p images/tmp
+./test_mandelbrot.exe
+```
 
 In other words, in `*nix`, it is also possible to optionally
 make straightforward use of GMP via `Boost.Multiprecision`'s `gmp_float` backend

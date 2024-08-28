@@ -138,7 +138,7 @@
     <ClInclude Include="mandelbrot\mandelbrot_color.h" />
     <ClInclude Include="mandelbrot\mandelbrot_generator_perturbative.h" />
     <ClInclude Include="mandelbrot\mandelbrot_generator_trivial.h" />
-    <ClInclude Include="mandelbrot\mandelbrot_text_output.h" />
+    <ClInclude Include="mandelbrot\text_output.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-tidy" />
@@ -146,7 +146,6 @@
     <None Include="build_all.sh" />
     <None Include="build_all_gmp.sh" />
     <None Include="codecov.yml" />
-    <None Include="lgtm.yml" />
     <None Include="sonar-project.properties" />
   </ItemGroup>
   <ItemGroup>

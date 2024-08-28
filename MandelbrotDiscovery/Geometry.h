@@ -1,8 +1,8 @@
 ///////////////////////////////////////////////////////////////////////////////
-//      Copyright Christopher Kormanyos 2024.
-// Distributed under the Boost Software License, Version 1.0.
-//    (See accompanying file LICENSE_1_0.txt or copy at
-//          http://www.boost.org/LICENSE_1_0.txt)
+// Copyright Christopher Kormanyos 2024.
+// Distributed under the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt
+// or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
 #ifndef GEOMETRY_2024_04_13_H
@@ -15,8 +15,8 @@
     {
       using value_type = T;
 
-      point_type(const value_type& x_val = value_type(),
-                 const value_type& y_val = value_type())
+      explicit point_type(const value_type& x_val = value_type(),
+                          const value_type& y_val = value_type())
         : my_x(x_val),
           my_y(y_val) { }
 
@@ -32,7 +32,7 @@
 
       explicit rectangle_type(const point_type& center,
                               const value_type& dx_half,
-                              const value_type& dy_half = dx_half)
+                              const value_type& dy_half = dx_half) noexcept
         : my_center (center),
           my_dx_half(dx_half),
           my_dy_half(dy_half) { }
@@ -41,8 +41,8 @@
 
       auto operator*=(const int n) -> rectangle_type&
       {
-        my_dx_half *= n;
-        my_dy_half *= n;
+        static_cast<void>(my_dx_half *= n);
+        static_cast<void>(my_dy_half *= n);
 
         static_cast<void>(set_pixel_assoc(my_pixels_x, my_pixels_y));
 
@@ -51,38 +51,45 @@
 
       auto operator/=(const int n) -> rectangle_type&
       {
-        my_dx_half /= n;
-        my_dy_half /= n;
+        static_cast<void>(my_dx_half /= n);
+        static_cast<void>(my_dy_half /= n);
 
         static_cast<void>(set_pixel_assoc(my_pixels_x, my_pixels_y));
 
         return *this;
       }
 
-      auto upper_left() const -> point_type
+      auto upper_left() const noexcept -> point_type
       {
         return
-          {
+          point_type
+          (
             my_center.my_x - my_dx_half,
             my_center.my_y + my_dy_half
-          };
+          );
       }
 
-      auto lower_right() const -> point_type
+      auto lower_right() const noexcept -> point_type
       {
         return
-          {
+          point_type
+          (
             my_center.my_x + my_dx_half,
             my_center.my_y - my_dy_half
-          };
+          );
       }
 
-      auto recenter(const point_type& new_center) -> void
+      auto dx_half() const noexcept -> value_type
+      {
+        return my_dx_half;
+      }
+
+      auto recenter(const point_type& new_center) noexcept -> void
       {
         my_center = new_center;
       }
 
-      auto set_pixel_assoc(const int pa_x, const int pa_y) -> bool
+      auto set_pixel_assoc(const int pa_x, const int pa_y) noexcept -> bool
       {
         bool result_is_ok { };
 
@@ -103,7 +110,7 @@
         return result_is_ok;
       }
 
-      auto pixel_to_point(const int pa_x, const int pa_y, point_type& pt_val) const -> bool
+      auto pixel_to_point(const int pa_x, const int pa_y, point_type& pt_val) const noexcept -> bool
       {
         bool result_is_ok { };
 

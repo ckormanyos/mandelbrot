@@ -52,7 +52,7 @@
 
     auto generate_mandelbrot_image_engine(std::vector<my_iteration_numeric_type>& x_coord,
                                           std::vector<my_iteration_numeric_type>& y_coord,
-                                          mandelbrot_text_output_base& text_output) -> void override
+                                          text_output_base& text_output) -> void override
     {
       // Initialize the x-y coordinates.
       {
@@ -165,4 +165,4 @@
   } // namespace ckormanyos
   #endif
 
-#endif // MANDELBROT_2015_06_15_H
+#endif // MANDELBROT_GENERATOR_TRIVIAL_2024_04_28_H
