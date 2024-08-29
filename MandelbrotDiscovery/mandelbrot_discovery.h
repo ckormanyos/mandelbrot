@@ -77,7 +77,7 @@
 
     static constexpr auto default_style() noexcept -> ::DWORD
     {
-      return static_cast<::DWORD>(WS_CAPTION | WS_POPUP | WS_SYSMENU);
+      return static_cast<::DWORD>(WS_MINIMIZEBOX | WS_CAPTION | WS_POPUP | WS_SYSMENU);
     }
 
     auto get_handle_to_window() const noexcept -> const HWND { return my_handle_to_window; }
@@ -185,7 +185,7 @@
             )
           };
 
-        ::SetWindowPos(::GetConsoleWindow(), nullptr, pos_x, 64, 896, 512, SWP_NOZORDER);
+        ::SetWindowPos(::GetConsoleWindow(), nullptr, pos_x, 64, 768, 512, SWP_NOZORDER);
 
         // Get handles to the standard output and input.
         console_output() = ::GetStdHandle(STD_OUTPUT_HANDLE);
