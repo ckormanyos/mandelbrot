@@ -45,6 +45,8 @@
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_45_SEAHORSE_OTHER_01_magnify51.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_50_TENDRIL_AREA_01.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_60_SATELITE_REGION_01.h>
+//#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_61_SATELITE_REGION_02.h>
+//#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_62_SATELITE_REGION_03.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_70_DOUADY_RABBIT_01.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_70_DOUADY_RABBIT_03.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_80_SEARCH_HALO_01.h>

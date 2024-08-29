@@ -1,8 +1,8 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
-//      Copyright Christopher Kormanyos 2022 - 2024.
-// Distributed under the Boost Software License, Version 1.0.
-//    (See accompanying file LICENSE_1_0.txt or copy at
-//          http://www.boost.org/LICENSE_1_0.txt)
+// Copyright Christopher Kormanyos 22022 - 024.
+// Distributed under the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt
+// or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
 #ifndef MANDELBROT_CFG_MANDELBROT_99_TRY_POINTS_2024_04_30_H

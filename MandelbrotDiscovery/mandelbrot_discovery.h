@@ -8,7 +8,9 @@
 #ifndef MANDELBROT_DISCOVERY_2024_04_12_H
   #define MANDELBROT_DISCOVERY_2024_04_12_H
 
+  #if !defined(NOMINMAX)
   #define NOMINMAX
+  #endif
 
   #include <geometry.h>
   #include <utility.h>
@@ -75,7 +77,7 @@
 
     static constexpr auto default_style() noexcept -> ::DWORD
     {
-      return static_cast<::DWORD>(WS_CAPTION | WS_POPUP | WS_SYSMENU);
+      return static_cast<::DWORD>(WS_MINIMIZEBOX | WS_CAPTION | WS_POPUP | WS_SYSMENU);
     }
 
     auto get_handle_to_window() const noexcept -> const HWND { return my_handle_to_window; }
@@ -120,34 +122,40 @@
                                              my_handle_to_instance,
                                              nullptr);
 
-      auto create_window_is_ok = (my_handle_to_window != nullptr);
+      bool create_window_is_ok { my_handle_to_window != nullptr };
 
       if(create_window_is_ok)
       {
         // Show the window.
-        const auto redraw_window_is_ok =
-          (::RedrawWindow(my_handle_to_window, nullptr, nullptr, static_cast<::UINT>(UINT8_C(0))) == TRUE);
+        const bool
+          redraw_window_is_ok
+          {
+            ::RedrawWindow(my_handle_to_window, nullptr, nullptr, static_cast<::UINT>(UINT8_C(0))) == TRUE
+          };
 
         create_window_is_ok = (redraw_window_is_ok && create_window_is_ok);
 
-        const auto show_window_result_is_ok =
-          (::ShowWindow(my_handle_to_window, SW_SHOW) == TRUE);
+        const bool show_window_result_is_ok { ::ShowWindow(my_handle_to_window, SW_SHOW) == TRUE };
 
         create_window_is_ok = (show_window_result_is_ok && create_window_is_ok);
       }
 
-      const auto handle_to_active_window = ::GetActiveWindow();
+      const ::HWND handle_to_active_window { ::GetActiveWindow() };
 
-      const auto create_window_result = (    create_window_is_ok
+      const bool
+        create_window_result
+        {
+             create_window_is_ok
                                          && (handle_to_active_window != nullptr)
-                                         && (my_handle_to_window == handle_to_active_window));
+          && (my_handle_to_window == handle_to_active_window)
+        };
 
       return create_window_result;
     }
 
     static auto instance() -> mandelbrot_discovery&
     {
-      static mandelbrot_discovery mandelbrot_discovery_instance;
+      static mandelbrot_discovery mandelbrot_discovery_instance { };
 
       return mandelbrot_discovery_instance;
     }
@@ -168,15 +176,16 @@
 
       if(result_alloc_console_is_ok)
       {
-        constexpr ::UINT pos_x =
+        constexpr ::UINT
+          pos_x
+          {
           static_cast<::UINT>
           (
-              screen_coordinate_x
-            + client_width
-            + static_cast<int>(INT8_C(24))
-          );
+              (screen_coordinate_x + client_width) + static_cast<int>(INT8_C(24))
+            )
+          };
 
-        ::SetWindowPos(::GetConsoleWindow(), nullptr, pos_x, 64, 896, 512, SWP_NOZORDER);
+        ::SetWindowPos(::GetConsoleWindow(), nullptr, pos_x, 64, 768, 512, SWP_NOZORDER);
 
         // Get handles to the standard output and input.
         console_output() = ::GetStdHandle(STD_OUTPUT_HANDLE);
@@ -210,8 +219,11 @@
         {
           ::Sleep(static_cast<::DWORD>(UINT8_C(0)));
 
-          const auto get_message_result =
-            ::GetMessage(&message, nullptr, static_cast<::UINT>(UINT8_C(0)), static_cast<::UINT>(UINT8_C(0)));
+          const ::BOOL
+            get_message_result
+            {
+              ::GetMessage(&message, nullptr, static_cast<::UINT>(UINT8_C(0)), static_cast<::UINT>(UINT8_C(0)))
+            };
 
           get_message_is_ok = (get_message_result == TRUE);
 
@@ -219,8 +231,8 @@
           {
             // Process Win32 API messages (via standard Windows message pump).
 
-            const bool translate_message_is_ok { (::TranslateMessage(&message) == TRUE) };
-            const bool dispatch_message_is_ok  { (::DispatchMessage (&message) == TRUE) };
+            const bool translate_message_is_ok { ::TranslateMessage(&message) == TRUE };
+            const bool dispatch_message_is_ok  { ::DispatchMessage (&message) == TRUE };
 
             static_cast<void>(translate_message_is_ok);
             static_cast<void>(dispatch_message_is_ok);
@@ -323,12 +335,26 @@
                                                       local_color_stretches,
                                                       text_out);
 
-      const auto execution_time = stopwatch_type::elapsed_time<float>(my_stopwatch);
+      const float iteration_time { stopwatch_type::elapsed_time<float>(my_stopwatch) };
+
+      const std::string
+        str_iteration_time
+        {
+          [&iteration_time]()
+          {
+            std::stringstream strm { };
+
+            strm << std::fixed << std::setprecision(1) << iteration_time;
+
+            return strm.str();
+          }()
+        };
 
       const auto zoom_factor_p10 = ilogb(my_mandelbrot_zoom_factor);
 
       write_string("mandelbrot_zoom: " + std::to_string(zoom_factor_p10)          + "\n");
       write_string("mandelbrot_iter: " + std::to_string(my_mandelbrot_iterations) + "\n");
+      write_string("iteration_time : " + str_iteration_time                       + "s\n");
     }
 
     static auto CALLBACK my_window_callback(::HWND   handle_to_window,
