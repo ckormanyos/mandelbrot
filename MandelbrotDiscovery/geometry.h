@@ -30,12 +30,12 @@
       using point_type = PointType;
       using value_type = typename point_type::value_type;
 
-      explicit rectangle_type(const point_type& center,
-                              const value_type& dx_half,
-                              const value_type& dy_half = dx_half) noexcept
-        : my_center (center),
-          my_dx_half(dx_half),
-          my_dy_half(dy_half) { }
+      explicit rectangle_type(const point_type& ctr,
+                              const value_type& dxh,
+                              const value_type& dyh = dxh) noexcept
+        : my_center (ctr),
+          my_dx_half(dxh),
+          my_dy_half(dyh) { }
 
       rectangle_type() = delete;
 
@@ -79,10 +79,8 @@
           );
       }
 
-      auto dx_half() const noexcept -> value_type
-      {
-        return my_dx_half;
-      }
+      auto dx_half() const noexcept -> value_type { return my_dx_half; }
+      auto dy_half() const noexcept -> value_type { return my_dy_half; }
 
       auto recenter(const point_type& new_center) noexcept -> void
       {

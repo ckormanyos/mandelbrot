@@ -275,6 +275,8 @@
 
     auto get_handle_to_instance() const noexcept -> const ::HINSTANCE { return my_handle_to_instance; }
 
+    static auto default_rectangle() noexcept -> rectangle_type&;
+
     static auto console_input () -> ::HANDLE&;
     static auto console_output() -> ::HANDLE&;
 
@@ -354,7 +356,7 @@
 
       write_string("mandelbrot_zoom: " + std::to_string(zoom_factor_p10)          + "\n");
       write_string("mandelbrot_iter: " + std::to_string(my_mandelbrot_iterations) + "\n");
-      write_string("iteration_time : " + str_iteration_time                       + "s\n");
+      write_string("iteration_time : " + str_iteration_time                       + "s\n\n");
     }
 
     static auto CALLBACK my_window_callback(::HWND   handle_to_window,
@@ -786,6 +788,29 @@
       return write_string(str_val);
     }
   };
+
+  template<const int   WindowWidth,
+           const int   WindowHeight,
+           typename    MandelbrotCoordPntType,
+           typename    MandelbrotIterationType,
+           const char* WindowTitle,
+           const int   IconId,
+           const int   ScreenCoordinateX,
+           const int   ScreenCoordinateY>
+  auto mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::default_rectangle() noexcept -> typename mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::rectangle_type&
+  {
+    using local_value_type = typename point_type::value_type;
+
+    static rectangle_type
+      my_default_rect
+      {
+        point_type("-0.75", "0.00"),
+        local_value_type("1.35"),
+        local_value_type("1.35")
+      };
+
+    return my_default_rect;
+  }
 
   template<const int   WindowWidth,
            const int   WindowHeight,
