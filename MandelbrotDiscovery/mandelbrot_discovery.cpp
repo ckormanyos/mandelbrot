@@ -50,7 +50,7 @@ using local_window_type = mandelbrot_discovery<static_cast<int>(INT16_C(800)),
 using point_type     = typename local_window_type::point_type;
 using rectangle_type = typename local_window_type::rectangle_type;
 
-auto rectangle() -> rectangle_type*
+auto rectangle() -> rectangle_type&
 {
   static rectangle_type my_rect
   {
@@ -63,7 +63,7 @@ auto rectangle() -> rectangle_type*
 
   static_cast<void>(result_pixel_assoc_is_ok);
 
-  return &my_rect;
+  return my_rect;
 }
 
 auto WINAPI WinMain(_In_ ::HINSTANCE h_wnd, _In_opt_ ::HINSTANCE, _In_ LPSTR, _In_ int) -> int

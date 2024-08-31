@@ -26,6 +26,7 @@
   #include <chrono>
   #include <cstdint>
   #include <cstring>
+  #include <functional>
   #include <iomanip>
   #include <limits>
   #include <mutex>
@@ -62,8 +63,9 @@
     static constexpr int window_height       = static_cast<int>(client_height + 42);   // Total window height
 
   public:
-    using point_type     = typename geometry::point_type<my_coord_pnt_numeric_type>;
-    using rectangle_type = geometry::rectangle_type<point_type>;
+    using rectangle_type     = geometry::rectangle_type<typename geometry::point_type<my_coord_pnt_numeric_type>>;
+    using point_type         = typename rectangle_type::point_type;
+    using rectangle_ref_type = std::reference_wrapper<rectangle_type>;
 
     mandelbrot_discovery() = default;
 
@@ -251,9 +253,9 @@
       return static_cast<int>(INT8_C(0));
     }
 
-    static auto set_rectangle(rectangle_type* p_rectangle) noexcept -> void
+    static auto set_rectangle(rectangle_type& ref_to_rectangle) noexcept -> void
     {
-      my_ptr_to_rectangle = p_rectangle;
+      my_ref_to_rectangle = ref_to_rectangle;
     }
 
   private:
@@ -261,7 +263,7 @@
     ::HINSTANCE my_handle_to_instance { nullptr };
 
     static point_type      my_rectangle_center;
-    static rectangle_type* my_ptr_to_rectangle;
+    static rectangle_ref_type my_ref_to_rectangle;
 
     static std::thread               my_thread;
     static std::atomic<bool>         my_thread_wants_exit;
@@ -314,10 +316,10 @@
       const local_mandelbrot_config_type
         mandelbrot_config_object
         (
-          my_ptr_to_rectangle->my_center.my_x - my_ptr_to_rectangle->my_dx_half,
-          my_ptr_to_rectangle->my_center.my_x + my_ptr_to_rectangle->my_dx_half,
-          my_ptr_to_rectangle->my_center.my_y - my_ptr_to_rectangle->my_dy_half,
-          my_ptr_to_rectangle->my_center.my_y + my_ptr_to_rectangle->my_dy_half,
+          my_ref_to_rectangle.get().my_center.my_x - my_ref_to_rectangle.get().my_dx_half,
+          my_ref_to_rectangle.get().my_center.my_x + my_ref_to_rectangle.get().my_dx_half,
+          my_ref_to_rectangle.get().my_center.my_y - my_ref_to_rectangle.get().my_dy_half,
+          my_ref_to_rectangle.get().my_center.my_y + my_ref_to_rectangle.get().my_dy_half,
           my_mandelbrot_iterations
         );
 
@@ -448,13 +450,13 @@
             static_cast<int>(static_cast<::WORD>(static_cast<::DWORD>(l_param) >> static_cast<unsigned>(UINT8_C(16))))
           };
 
-          auto result_is_ok = my_ptr_to_rectangle->pixel_to_point(pixel_x, pixel_y, my_rectangle_center);
+          auto result_is_ok = my_ref_to_rectangle.get().pixel_to_point(pixel_x, pixel_y, my_rectangle_center);
 
           if(result_is_ok)
           {
             result_is_ok = (write_number("x_val  : ", my_rectangle_center.my_x)          && result_is_ok);
             result_is_ok = (write_number("y_val  : ", my_rectangle_center.my_y)          && result_is_ok);
-            result_is_ok = (write_number("dx_half: ", my_ptr_to_rectangle->dx_half(), 3) && result_is_ok);
+            result_is_ok = (write_number("dx_half: ", my_ref_to_rectangle.get().dx_half(), 3) && result_is_ok);
             result_is_ok = (write_string("\n")                                           && result_is_ok);
           }
 
@@ -556,11 +558,11 @@
         else if(str_cmd == "calc")
         {
           // Rescale and re-center the rectangle.
-          my_ptr_to_rectangle->operator/=(10);
+          my_ref_to_rectangle.get() /= 10;
 
           my_mandelbrot_zoom_factor *= 10;
 
-          my_ptr_to_rectangle->recenter(my_rectangle_center);
+          my_ref_to_rectangle.get().recenter(my_rectangle_center);
 
           // Set the flag to redraw the client window with the new JPEG.
           // The redrawing will occur below.
@@ -569,7 +571,7 @@
         else if(str_cmd == "out")
         {
           // Rescale and re-center the rectangle.
-          my_ptr_to_rectangle->operator*=(10);
+          my_ref_to_rectangle.get() *= 10;
 
           my_mandelbrot_zoom_factor /= 10;
 
@@ -804,9 +806,13 @@
     static rectangle_type
       my_default_rect
       {
-        point_type("-0.75", "0.00"),
-        local_value_type("1.35"),
-        local_value_type("1.35")
+        point_type
+        {
+          local_value_type { "-0.75" },
+          local_value_type { "+0.00" }
+        },
+        local_value_type { "+1.35" },
+        local_value_type { "+1.35" }
       };
 
     return my_default_rect;
@@ -915,7 +921,7 @@
            const int   IconId,
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
-  typename mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::rectangle_type* mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_ptr_to_rectangle { nullptr };
+  typename mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::rectangle_ref_type mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_ref_to_rectangle { default_rectangle() };
 
   template<const int   WindowWidth,
            const int   WindowHeight,
