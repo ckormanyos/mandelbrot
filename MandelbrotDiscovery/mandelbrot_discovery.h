@@ -262,7 +262,7 @@
     ::HWND      my_handle_to_window   { nullptr };
     ::HINSTANCE my_handle_to_instance { nullptr };
 
-    static point_type      my_rectangle_center;
+    static point_type         my_rectangle_center;
     static rectangle_ref_type my_ref_to_rectangle;
 
     static std::thread               my_thread;
@@ -316,10 +316,10 @@
       const local_mandelbrot_config_type
         mandelbrot_config_object
         (
-          my_ref_to_rectangle.get().my_center.my_x - my_ref_to_rectangle.get().my_dx_half,
-          my_ref_to_rectangle.get().my_center.my_x + my_ref_to_rectangle.get().my_dx_half,
-          my_ref_to_rectangle.get().my_center.my_y - my_ref_to_rectangle.get().my_dy_half,
-          my_ref_to_rectangle.get().my_center.my_y + my_ref_to_rectangle.get().my_dy_half,
+          my_ref_to_rectangle.get().center().get_x() - my_ref_to_rectangle.get().dx_half(),
+          my_ref_to_rectangle.get().center().get_x() + my_ref_to_rectangle.get().dx_half(),
+          my_ref_to_rectangle.get().center().get_y() - my_ref_to_rectangle.get().dy_half(),
+          my_ref_to_rectangle.get().center().get_y() + my_ref_to_rectangle.get().dy_half(),
           my_mandelbrot_iterations
         );
 
@@ -454,10 +454,10 @@
 
           if(result_is_ok)
           {
-            result_is_ok = (write_number("x_val  : ", my_rectangle_center.my_x)          && result_is_ok);
-            result_is_ok = (write_number("y_val  : ", my_rectangle_center.my_y)          && result_is_ok);
+            result_is_ok = (write_number("x_val  : ", my_rectangle_center.get_x())            && result_is_ok);
+            result_is_ok = (write_number("y_val  : ", my_rectangle_center.get_y())            && result_is_ok);
             result_is_ok = (write_number("dx_half: ", my_ref_to_rectangle.get().dx_half(), 3) && result_is_ok);
-            result_is_ok = (write_string("\n")                                           && result_is_ok);
+            result_is_ok = (write_string("\n")                                                && result_is_ok);
           }
 
           const auto lresult =

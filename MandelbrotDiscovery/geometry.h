@@ -13,6 +13,7 @@
     template<typename T>
     struct point_type
     {
+    public:
       using value_type = T;
 
       explicit point_type(const value_type& x_val = value_type(),
@@ -20,6 +21,13 @@
         : my_x(x_val),
           my_y(y_val) { }
 
+      auto get_x() const noexcept -> const value_type& { return my_x; }
+      auto get_y() const noexcept -> const value_type& { return my_y; }
+
+      auto set_x(const value_type& new_x) noexcept -> void { my_x = new_x; }
+      auto set_y(const value_type& new_y) noexcept -> void { my_y = new_y; }
+
+    private:
       value_type my_x { };
       value_type my_y { };
     };
@@ -27,6 +35,7 @@
     template<typename PointType>
     struct rectangle_type
     {
+    public:
       using point_type = PointType;
       using value_type = typename point_type::value_type;
 
@@ -64,8 +73,8 @@
         return
           point_type
           (
-            my_center.my_x - my_dx_half,
-            my_center.my_y + my_dy_half
+            my_center.get_x() - my_dx_half,
+            my_center.get_y() + my_dy_half
           );
       }
 
@@ -74,13 +83,15 @@
         return
           point_type
           (
-            my_center.my_x + my_dx_half,
-            my_center.my_y - my_dy_half
+            my_center.get_x() + my_dx_half,
+            my_center.get_y() - my_dy_half
           );
       }
 
       auto dx_half() const noexcept -> value_type { return my_dx_half; }
       auto dy_half() const noexcept -> value_type { return my_dy_half; }
+
+      auto center() const noexcept -> point_type { return my_center; }
 
       auto recenter(const point_type& new_center) noexcept -> void
       {
@@ -98,11 +109,11 @@
           my_pixels_x = pa_x;
           my_pixels_y = pa_y;
 
-          const auto lo_right = lower_right();
-          const auto up_left  = upper_left ();
+          const auto& lo_right = lower_right();
+          const auto& up_left  = upper_left ();
 
-          my_dx_pixel = (lo_right.my_x - up_left.my_x ) / my_pixels_x;
-          my_dy_pixel = (up_left.my_y  - lo_right.my_y) / my_pixels_y;
+          my_dx_pixel = (lo_right.get_x() - up_left.get_x() ) / my_pixels_x;
+          my_dy_pixel = (up_left.get_y()  - lo_right.get_y()) / my_pixels_y;
         }
 
         return result_is_ok;
@@ -132,13 +143,14 @@
 
           const auto up_left = upper_left();
 
-          pt_val.my_x = up_left.my_x + delta_x;
-          pt_val.my_y = up_left.my_y - delta_y;
+          pt_val.set_x(up_left.get_x() + delta_x);
+          pt_val.set_y(up_left.get_y() - delta_y);
         }
 
         return result_is_ok;
       }
 
+    private:
       point_type my_center   { };
       value_type my_dx_half  { };
       value_type my_dy_half  { };
