@@ -55,7 +55,7 @@
 
   private:
     using my_coord_pnt_numeric_type = typename rectangle_type::point_type::value_type;
-    using my_iteration_numeric_type = my_coord_pnt_numeric_type;
+    //using my_iteration_numeric_type = my_coord_pnt_numeric_type;
 
     static constexpr int screen_coordinate_x = static_cast<int>(ScreenCoordinateX);    // Screen coordinate X
     static constexpr int screen_coordinate_y = static_cast<int>(ScreenCoordinateY);    // Screen coordinate Y
@@ -305,14 +305,14 @@
       constexpr auto MANDELBROT_CALCULATION_PIXELS_Y = static_cast<std::uint_fast32_t>(768);
 
       using mandelbrot_generator_type =
-        ckormanyos::mandelbrot::mandelbrot_generator_trivial<my_coord_pnt_numeric_type, my_iteration_numeric_type>;
+        ckormanyos::mandelbrot::mandelbrot_generator_trivial<my_coord_pnt_numeric_type>;
 
             ckormanyos::mandelbrot::color::color_stretch_histogram_method local_color_stretches;
       const ckormanyos::mandelbrot::color::color_functions_bw             local_color_functions;
 
       using local_mandelbrot_config_type  =
         ckormanyos::mandelbrot::mandelbrot_config<my_coord_pnt_numeric_type,
-                                                  my_iteration_numeric_type,
+                                                  typename mandelbrot_generator_type::my_iteration_numeric_type,
                                                   static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_X),
                                                   static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_Y)>;
 

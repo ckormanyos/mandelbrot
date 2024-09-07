@@ -61,14 +61,6 @@
 // Compile with gmp_float
 // ./build_all_gmp.sh --boost=/mnt/c/boost/boost_1_85_0 --my_cc=g++ --stdcc=c++20
 
-// Compile with Multiprecision's float128
-// Not yet suppported in shell script.
-
-// Compile on msys (use ucrt)
-// Start ucrt shell
-// cd C:/Users/User/Documents/Ks/PC_Software/NumericalPrograms/mandelbrot
-// ./build_all.sh
-
 auto main() -> int // NOLINT(bugprone-exception-escape)
 {
   using namespace ckormanyos::mandelbrot; // NOLINT(google-build-using-namespace)

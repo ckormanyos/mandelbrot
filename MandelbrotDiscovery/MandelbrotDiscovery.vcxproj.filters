@@ -57,6 +57,9 @@
     <ClInclude Include="mandelbrot_discovery_type.h">
       <Filter>MandelbrotDiscovery</Filter>
     </ClInclude>
+    <ClInclude Include="..\mandelbrot\mandelbrot_multiprecision_backend_traits.h">
+      <Filter>mandelbrot</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MandelbrotDiscovery.rc">

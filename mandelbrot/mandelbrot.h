@@ -11,6 +11,7 @@
 
   #include <concurrency/parallel_for.h>
   #include <mandelbrot/mandelbrot_color.h>
+  #include <mandelbrot/mandelbrot_multiprecision_backend_traits.h>
   #include <mandelbrot/text_output.h>
 
   #include <boost/gil/extension/io/jpeg/old.hpp>

@@ -23,10 +23,13 @@
   // This class generates the rows of the mandelbrot iteration.
   // The coordinates are set up according to the Mandelbrot configuration.
   template<typename CoordPntNumericType,
-           typename IterateNumericType> class mandelbrot_generator_trivial final // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
-    : public mandelbrot_generator<CoordPntNumericType, CoordPntNumericType>
+           typename IterateNumericType = CoordPntNumericType> class mandelbrot_generator_trivial final // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
+    : public mandelbrot_generator<CoordPntNumericType, IterateNumericType>
   {
   private:
+    static_assert(std::is_same<CoordPntNumericType, IterateNumericType>::value,
+                  "Error: The trivial Mandelbrot generator must have equivalent coordinate and iteration types");
+
     using base_class_type = mandelbrot_generator<CoordPntNumericType, CoordPntNumericType>;
 
     using mandelbrot_config_type = typename base_class_type::mandelbrot_config_type;
@@ -34,9 +37,9 @@
     static_assert(std::numeric_limits<typename base_class_type::my_iteration_numeric_type>::digits == std::numeric_limits<typename base_class_type::my_coord_pnt_numeric_type>::digits,
                   "Error: For trivial iteration coordinate and iteration precision must be the same. Check config.");
 
+  public:
     using my_iteration_numeric_type = typename base_class_type::my_iteration_numeric_type;
 
-  public:
     explicit mandelbrot_generator_trivial(const mandelbrot_config_type& config)
       : base_class_type(config) { }
 
