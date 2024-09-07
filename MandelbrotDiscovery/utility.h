@@ -30,7 +30,7 @@
     }
 
     template<typename input_iterator1,
-              typename input_iterator2>
+             typename input_iterator2>
     constexpr auto equal(input_iterator1 first1, input_iterator1 last1, input_iterator2 first2) -> bool
     {
       while((first1 != last1) && (*first1 == *first2))
@@ -83,32 +83,6 @@
         for_each_in_tuple<tuple_elem_index + 1>(tuple_pack, std::forward<Func>(func));
       }
     }
-
-    #if 0
-    // Use-case example:
-    auto main() -> int
-    {
-      // Create a tuple of different class instances
-      std::tuple<A, B, C> t { A { }, B { }, C { } };
-
-      // The parameter to pass to the method.
-      int param = 10;
-
-      static_cast<void>(index);
-
-      // Call `some_method` with parameter `param` on each element of the tuple.
-      for_each_in_tuple
-      (
-        t,
-        [param](auto& obj)
-        {
-          // Call the method with the parameter.
-          obj.operator*=(param);
-        }
-      );
-    }
-    #endif
-
   } // namespace util::caller
 
 #endif // UTILITY_2024_04_14_H
