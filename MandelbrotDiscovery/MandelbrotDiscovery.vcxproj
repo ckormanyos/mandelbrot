@@ -99,6 +99,7 @@
     <ClInclude Include="..\mandelbrot\text_output.h" />
     <ClInclude Include="geometry.h" />
     <ClInclude Include="mandelbrot_discovery.h" />
+    <ClInclude Include="mandelbrot_discovery_type.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="utility.h" />
   </ItemGroup>

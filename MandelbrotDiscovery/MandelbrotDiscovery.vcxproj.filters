@@ -54,6 +54,9 @@
     <ClInclude Include="resource.h">
       <Filter>MandelbrotDiscovery</Filter>
     </ClInclude>
+    <ClInclude Include="mandelbrot_discovery_type.h">
+      <Filter>MandelbrotDiscovery</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MandelbrotDiscovery.rc">

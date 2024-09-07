@@ -10,63 +10,57 @@
 
   #include <mandelbrot/text_output.h>
 
-  #if(__cplusplus >= 201703L)
-  namespace util::utility {
-  #else
-  namespace util { namespace utility { // NOLINT(modernize-concat-nested-namespaces)
-  #endif
+  #include <cstddef>
 
-  template<typename input_iterator1,
-            typename input_iterator2>
-  constexpr auto equal(input_iterator1 first1, input_iterator1 last1, input_iterator2 first2) -> bool
+  namespace util::utility
   {
-    while((first1 != last1) && (*first1 == *first2))
+    constexpr std::size_t strlen(const char* start)
     {
-      ++first1;
-      ++first2;
+      const char* end = start;
+
+      while (*end != '\0')
+      {
+        ++end;
+      }
+
+      return end - start;
     }
 
-    return { first1 == last1 };
-  }
+    template<typename input_iterator1,
+              typename input_iterator2>
+    constexpr auto equal(input_iterator1 first1, input_iterator1 last1, input_iterator2 first2) -> bool
+    {
+      while((first1 != last1) && (*first1 == *first2))
+      {
+        ++first1;
+        ++first2;
+      }
 
-  #if(__cplusplus >= 201703L)
+      return { first1 == last1 };
+    }
   } // namespace util::utility
-  #else
-  } // namespace utility
-  } // namespace util
-  #endif
 
-  #if(__cplusplus >= 201703L)
-  namespace util::text {
-  #else
-  namespace util { namespace text { // NOLINT(modernize-concat-nested-namespaces)
-  #endif
-
-  class text_output_alloc_console : public ckormanyos::mandelbrot::text_output_base // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
+  namespace util::text
   {
-  public:
-    explicit text_output_alloc_console(callback_function_type cbk) : my_callback { cbk } { }
-
-    text_output_alloc_console() = delete;
-
-    ~text_output_alloc_console() override = default;
-
-    auto write(const std::string& str_to_write) -> bool override
+    class text_output_alloc_console : public ckormanyos::mandelbrot::text_output_base // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
     {
-      my_callback(str_to_write);
+    public:
+      explicit text_output_alloc_console(callback_function_type cbk) : my_callback { cbk } { }
 
-      return true;
-    }
+      text_output_alloc_console() = delete;
 
-  private:
-    callback_function_type my_callback { nullptr };
-  };
+      ~text_output_alloc_console() override = default;
 
-  #if(__cplusplus >= 201703L)
+      auto write(const std::string& str_to_write) -> bool override
+      {
+        my_callback(str_to_write);
+
+        return true;
+      }
+
+    private:
+      callback_function_type my_callback { nullptr };
+    };
   } // namespace util::text
-  #else
-  } // namespace text
-  } // namespace util
-  #endif
 
 #endif // UTILITY_2024_04_14_H

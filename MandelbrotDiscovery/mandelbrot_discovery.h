@@ -8,8 +8,10 @@
 #ifndef MANDELBROT_DISCOVERY_2024_04_12_H
   #define MANDELBROT_DISCOVERY_2024_04_12_H
 
+  #if (defined(_MSC_VER) && (_MSC_VER < 1930))
   #if !defined(NOMINMAX)
   #define NOMINMAX
+  #endif
   #endif
 
   #include <geometry.h>
@@ -41,17 +43,19 @@
 
   template<const int   WindowWidth,
            const int   WindowHeight,
-           typename    MandelbrotCoordPntType,
-           typename    MandelbrotIterationType,
+           typename    MandelbrotRectangleType,
            const char* WindowTitle,
            const int   IconId            = static_cast<int>(INT8_C(0)),
            const int   ScreenCoordinateX = static_cast<int>(UINT16_C(32)),
            const int   ScreenCoordinateY = static_cast<int>(UINT16_C(8))>
   class mandelbrot_discovery final
   {
+  public:
+    using rectangle_type = MandelbrotRectangleType;
+
   private:
-    using my_coord_pnt_numeric_type = MandelbrotCoordPntType;
-    using my_iteration_numeric_type = MandelbrotIterationType;
+    using my_coord_pnt_numeric_type = typename rectangle_type::point_type::value_type;
+    using my_iteration_numeric_type = my_coord_pnt_numeric_type;
 
     static constexpr int screen_coordinate_x = static_cast<int>(ScreenCoordinateX);    // Screen coordinate X
     static constexpr int screen_coordinate_y = static_cast<int>(ScreenCoordinateY);    // Screen coordinate Y
@@ -63,7 +67,6 @@
     static constexpr int window_height       = static_cast<int>(client_height + 42);   // Total window height
 
   public:
-    using rectangle_type     = geometry::rectangle_type<typename geometry::point_type<my_coord_pnt_numeric_type>>;
     using point_type         = typename rectangle_type::point_type;
     using rectangle_ref_type = std::reference_wrapper<rectangle_type>;
 
@@ -147,8 +150,8 @@
       const bool
         create_window_result
         {
-             create_window_is_ok
-                                         && (handle_to_active_window != nullptr)
+              create_window_is_ok
+          && (handle_to_active_window != nullptr)
           && (my_handle_to_window == handle_to_active_window)
         };
 
@@ -181,9 +184,9 @@
         constexpr ::UINT
           pos_x
           {
-          static_cast<::UINT>
-          (
-              (screen_coordinate_x + client_width) + static_cast<int>(INT8_C(24))
+            static_cast<::UINT>
+            (
+                (screen_coordinate_x + client_width) + static_cast<int>(INT8_C(24))
             )
           };
 
@@ -231,7 +234,7 @@
 
           if(get_message_is_ok)
           {
-            // Process Win32 API messages (via standard Windows message pump).
+            // Process all incoming Win32 API messages (via standard Windows message pump).
 
             const bool translate_message_is_ok { ::TranslateMessage(&message) == TRUE };
             const bool dispatch_message_is_ok  { ::DispatchMessage (&message) == TRUE };
@@ -389,6 +392,7 @@
         SelectObject(hdcMem, hBitmap);
 
         ::BITMAP bitmap { };
+
         static_cast<void>(::GetObject(hBitmap, static_cast<int>(sizeof(bitmap)), &bitmap));
 
         const auto result_stretch =
@@ -712,7 +716,7 @@
 
       char* input_buffer = new char[input_buffer_size];
 
-      DWORD bytes_read { };
+      ::DWORD bytes_read { };
 
       const auto result_read =
         ::ReadConsole(console_input(), input_buffer, input_buffer_size, &bytes_read, nullptr);
@@ -754,7 +758,7 @@
 
     static auto write_string(const std::string& str_to_write) -> bool
     {
-      DWORD bytes_written { };
+      ::DWORD bytes_written { };
 
       const auto result_write =
         ::WriteConsole
@@ -793,13 +797,12 @@
 
   template<const int   WindowWidth,
            const int   WindowHeight,
-           typename    MandelbrotCoordPntType,
-           typename    MandelbrotIterationType,
+           typename    MandelbrotRectangleType,
            const char* WindowTitle,
            const int   IconId,
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
-  auto mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::default_rectangle() noexcept -> typename mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::rectangle_type&
+  auto mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::default_rectangle() noexcept -> typename mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::rectangle_type&
   {
     using local_value_type = typename point_type::value_type;
 
@@ -820,13 +823,12 @@
 
   template<const int   WindowWidth,
            const int   WindowHeight,
-           typename    MandelbrotCoordPntType,
-           typename    MandelbrotIterationType,
+           typename    MandelbrotRectangleType,
            const char* WindowTitle,
            const int   IconId,
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
-  auto mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::console_input() -> HANDLE&
+  auto mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::console_input() -> HANDLE&
   {
     static ::HANDLE my_handle { };
 
@@ -835,13 +837,12 @@
 
   template<const int   WindowWidth,
            const int   WindowHeight,
-           typename    MandelbrotCoordPntType,
-           typename    MandelbrotIterationType,
+           typename    MandelbrotRectangleType,
            const char* WindowTitle,
            const int   IconId,
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
-  auto mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::console_output() -> HANDLE&
+  auto mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::console_output() -> HANDLE&
   {
     static ::HANDLE my_handle { };
 
@@ -850,13 +851,12 @@
 
   template<const int   WindowWidth,
            const int   WindowHeight,
-           typename    MandelbrotCoordPntType,
-           typename    MandelbrotIterationType,
+           typename    MandelbrotRectangleType,
            const char* WindowTitle,
            const int   IconId,
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
-  auto mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::console_sync_mtx() -> std::mutex&
+  auto mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::console_sync_mtx() -> std::mutex&
   {
     static std::mutex my_mtx { };
 
@@ -865,82 +865,74 @@
 
   template<const int   WindowWidth,
            const int   WindowHeight,
-           typename    MandelbrotCoordPntType,
-           typename    MandelbrotIterationType,
+           typename    MandelbrotRectangleType,
            const char* WindowTitle,
            const int   IconId,
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
-  std::thread mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_thread;
+  std::thread mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_thread;
 
   template<const int   WindowWidth,
            const int   WindowHeight,
-           typename    MandelbrotCoordPntType,
-           typename    MandelbrotIterationType,
+           typename    MandelbrotRectangleType,
            const char* WindowTitle,
            const int   IconId,
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
-  std::atomic<bool> mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_thread_wants_exit { false };
+  std::atomic<bool> mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_thread_wants_exit { false };
 
   template<const int   WindowWidth,
            const int   WindowHeight,
-           typename    MandelbrotCoordPntType,
-           typename    MandelbrotIterationType,
+           typename    MandelbrotRectangleType,
            const char* WindowTitle,
            const int   IconId,
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
-  std::atomic<bool> mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_thread_did_exit { false };
+  std::atomic<bool> mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_thread_did_exit { false };
 
   template<const int   WindowWidth,
            const int   WindowHeight,
-           typename    MandelbrotCoordPntType,
-           typename    MandelbrotIterationType,
+           typename    MandelbrotRectangleType,
            const char* WindowTitle,
            const int   IconId,
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
-  std::atomic<bool> mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_thread_wait_for_new_set_click;
+  std::atomic<bool> mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_thread_wait_for_new_set_click;
 
   template<const int   WindowWidth,
            const int   WindowHeight,
-           typename    MandelbrotCoordPntType,
-           typename    MandelbrotIterationType,
+           typename    MandelbrotRectangleType,
            const char* WindowTitle,
            const int   IconId,
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
-  typename mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::point_type mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_rectangle_center { };
+  typename mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::point_type mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_rectangle_center { };
 
   template<const int   WindowWidth,
            const int   WindowHeight,
-           typename    MandelbrotCoordPntType,
-           typename    MandelbrotIterationType,
+           typename    MandelbrotRectangleType,
            const char* WindowTitle,
            const int   IconId,
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
-  typename mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::rectangle_ref_type mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_ref_to_rectangle { default_rectangle() };
+  typename mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::rectangle_ref_type mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_ref_to_rectangle { default_rectangle() };
 
   template<const int   WindowWidth,
            const int   WindowHeight,
-           typename    MandelbrotCoordPntType,
-           typename    MandelbrotIterationType,
+           typename    MandelbrotRectangleType,
            const char* WindowTitle,
            const int   IconId,
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
-  typename mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_coord_pnt_numeric_type mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_mandelbrot_zoom_factor { 1 };
+  typename mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_coord_pnt_numeric_type mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_mandelbrot_zoom_factor { 1 };
 
   template<const int   WindowWidth,
            const int   WindowHeight,
-           typename    MandelbrotCoordPntType,
-           typename    MandelbrotIterationType,
+           typename    MandelbrotRectangleType,
            const char* WindowTitle,
            const int   IconId,
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
-  std::uint_fast32_t mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotCoordPntType, MandelbrotIterationType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_mandelbrot_iterations { static_cast<std::uint_fast32_t>(UINT32_C(400)) };
+  std::uint_fast32_t mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_mandelbrot_iterations { static_cast<std::uint_fast32_t>(UINT32_C(400)) };
 
 #endif // MANDELBROT_DISCOVERY_2024_04_12_H
