@@ -45,7 +45,7 @@
   #endif
 
   // Define a number with cpp_dec_float backend (100 digits)
-  using cpp_dec_test_100_type = boost::multiprecision::number<boost::multiprecision::cpp_dec_float<100>, boost::multiprecision::et_off>;
+  using cpp_dec_test_100_type = boost::multiprecision::number<boost::multiprecision::cpp_dec_float<unsigned { UINT8_C(100) }>, boost::multiprecision::et_off>;
 
   static_assert(is_cpp_dec_float_number<cpp_dec_test_100_type>::value, "Error: Wrong instantiation of backend type");
 

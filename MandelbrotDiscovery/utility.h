@@ -11,6 +11,9 @@
   #include <mandelbrot/text_output.h>
 
   #include <cstddef>
+  #include <functional>
+  #include <tuple>
+  #include <utility>
 
   namespace util::utility
   {
@@ -62,5 +65,53 @@
       callback_function_type my_callback { nullptr };
     };
   } // namespace util::text
+
+  namespace util::caller
+  {
+    // Helper function to call a function on each element of a tuple.
+    // See also: https://godbolt.org/z/bxYdsc7W6
+
+    template <std::size_t tuple_elem_index = 0, typename Func, typename... Ts>
+    void for_each_in_tuple(std::tuple<Ts...>& tuple_pack, Func&& func)
+    {
+      if constexpr (tuple_elem_index < sizeof...(Ts))
+      {
+        // Call the function with the current tuple element.
+        func(std::get<tuple_elem_index>(tuple_pack));
+
+        // Use a recursive call for the next element.
+        for_each_in_tuple<tuple_elem_index + 1>(tuple_pack, std::forward<Func>(func));
+      }
+    }
+
+    #if 0
+    // Use-case example:
+    auto main() -> int
+    {
+      // Create a tuple of different class instances
+      std::tuple<A, B, C> t { A { }, B { }, C { } };
+
+      // The parameter to pass to the method.
+      int param = 10;
+
+      for(auto index = 0; index < 3; ++index)
+      {
+        static_cast<void>(index);
+
+        // Call `some_method` with parameter `param` on each element of the tuple.
+        for_each_in_tuple
+        (
+          t,
+          [param](auto& obj)
+          {
+            // Call the method with the parameter.
+            obj.operator*=(param);
+          }
+        );
+      }
+    }
+    #endif
+
+  } // namespace util::caller
 
 #endif // UTILITY_2024_04_14_H

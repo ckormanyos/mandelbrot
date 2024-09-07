@@ -26,13 +26,13 @@
   template<typename CoordPntNumericType,
            typename IterateNumericType =
            #if !defined(MANDELBROT_USE_GMP_FLOAT)
-           boost::multiprecision::number<boost::multiprecision::cpp_dec_float<24U>, boost::multiprecision::et_off>
+           boost::multiprecision::number<boost::multiprecision::cpp_dec_float<unsigned { UINT8_C(24) }>, boost::multiprecision::et_off>
            #else
            typename std::conditional
            <
              is_gmp_float_backend<CoordPntNumericType>::value,
-             boost::multiprecision::number<boost::multiprecision::gmp_float    <24U>, boost::multiprecision::et_off>,
-             boost::multiprecision::number<boost::multiprecision::cpp_dec_float<24U>, boost::multiprecision::et_off>
+             boost::multiprecision::number<boost::multiprecision::gmp_float    <unsigned { UINT8_C(24) }>, boost::multiprecision::et_off>,
+             boost::multiprecision::number<boost::multiprecision::cpp_dec_float<unsigned { UINT8_C(24) }>, boost::multiprecision::et_off>
            >::type
            #endif
            > class mandelbrot_generator_perturbative final // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)

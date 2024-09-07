@@ -10,6 +10,8 @@
 #include <resource.h>
 #include <utility.h>
 
+#include <tuple>
+
 namespace local
 {
   template<const unsigned Digits10>
@@ -45,18 +47,20 @@ using rectangle_from_digits_type = geometry::rectangle_type<typename geometry::p
 
 constexpr inline auto default_digits10() -> unsigned { return 132U; }
 
+using rectangle_tuple_type   = std::tuple<rectangle_from_digits_type<default_digits10()>&>;
+using rectangle_ref_00_type  = typename std::tuple_element<0, rectangle_tuple_type>::type;
+using rectangle_00_type      = typename std::remove_reference<rectangle_ref_00_type>::type;
+using point_type             = typename rectangle_00_type::point_type;
+
 using local_window_type = mandelbrot_discovery<static_cast<int>(INT16_C(800)),
                                                static_cast<int>(INT16_C(800)),
-                                               rectangle_from_digits_type<default_digits10()>,
+                                               rectangle_tuple_type,
                                                mandelbrot_discovery_detail::WindowTitleDefault,
                                                IDI_MANDELBROT_DISCO>;
 
-using rectangle_type = rectangle_from_digits_type<default_digits10()>;
-using point_type     = typename rectangle_type::point_type;
-
-auto rectangle() -> rectangle_type&
+auto rectangle() -> rectangle_00_type&
 {
-  static rectangle_type my_rect
+  static rectangle_00_type my_rect
   {
     point_type { center_x<default_digits10()>(), center_y<default_digits10()>() },
     dx_half<default_digits10()>(),
@@ -72,7 +76,9 @@ auto rectangle() -> rectangle_type&
 
 auto WINAPI WinMain(_In_ ::HINSTANCE h_wnd, _In_opt_ ::HINSTANCE, _In_ LPSTR, _In_ int) -> int
 {
-  local_window_type::set_rectangle(rectangle());
+  rectangle_tuple_type rectangle_tuple(rectangle());
+
+  local_window_type::set_rectangle_tuple(rectangle_tuple);
 
   const auto result_win_main = local_window_type::win_main(h_wnd);
 
