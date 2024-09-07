@@ -24,7 +24,18 @@
   // This class generates the rows of the mandelbrot iteration.
   // The coordinates are set up according to the Mandelbrot configuration.
   template<typename CoordPntNumericType,
-           typename IterateNumericType> class mandelbrot_generator_perturbative final // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
+           typename IterateNumericType =
+           #if !defined(MANDELBROT_USE_GMP_FLOAT)
+           boost::multiprecision::number<boost::multiprecision::cpp_dec_float<unsigned { UINT8_C(24) }>, boost::multiprecision::et_off>
+           #else
+           typename std::conditional
+           <
+             is_gmp_float_backend<CoordPntNumericType>::value,
+             boost::multiprecision::number<boost::multiprecision::gmp_float    <unsigned { UINT8_C(24) }>, boost::multiprecision::et_off>,
+             boost::multiprecision::number<boost::multiprecision::cpp_dec_float<unsigned { UINT8_C(24) }>, boost::multiprecision::et_off>
+           >::type
+           #endif
+           > class mandelbrot_generator_perturbative final // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
     : public mandelbrot_generator<CoordPntNumericType, IterateNumericType>
   {
   private:
@@ -33,12 +44,13 @@
     using mandelbrot_config_type = typename base_class_type::mandelbrot_config_type;
 
     using my_coord_pnt_numeric_type = typename base_class_type::my_coord_pnt_numeric_type;
+
+  public:
     using my_iteration_numeric_type = typename base_class_type::my_iteration_numeric_type;
 
     static_assert(std::numeric_limits<my_iteration_numeric_type>::digits <= std::numeric_limits<my_coord_pnt_numeric_type>::digits,
                   "Error: The iteration precision must be less than or equal to the coordinate precision. Check config.");
 
-  public:
     explicit mandelbrot_generator_perturbative(const mandelbrot_config_type& config)
       : base_class_type(config) { }
 

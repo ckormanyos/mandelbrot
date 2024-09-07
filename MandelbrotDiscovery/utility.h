@@ -10,63 +10,108 @@
 
   #include <mandelbrot/text_output.h>
 
-  #if(__cplusplus >= 201703L)
-  namespace util::utility {
-  #else
-  namespace util { namespace utility { // NOLINT(modernize-concat-nested-namespaces)
-  #endif
+  #include <cstddef>
+  #include <functional>
+  #include <tuple>
+  #include <utility>
 
-  template<typename input_iterator1,
-            typename input_iterator2>
-  constexpr auto equal(input_iterator1 first1, input_iterator1 last1, input_iterator2 first2) -> bool
+  namespace util::utility
   {
-    while((first1 != last1) && (*first1 == *first2))
+    constexpr std::size_t strlen(const char* start)
     {
-      ++first1;
-      ++first2;
+      const char* end = start;
+
+      while (*end != '\0')
+      {
+        ++end;
+      }
+
+      return end - start;
     }
 
-    return { first1 == last1 };
-  }
+    template<typename input_iterator1,
+              typename input_iterator2>
+    constexpr auto equal(input_iterator1 first1, input_iterator1 last1, input_iterator2 first2) -> bool
+    {
+      while((first1 != last1) && (*first1 == *first2))
+      {
+        ++first1;
+        ++first2;
+      }
 
-  #if(__cplusplus >= 201703L)
+      return { first1 == last1 };
+    }
   } // namespace util::utility
-  #else
-  } // namespace utility
-  } // namespace util
-  #endif
 
-  #if(__cplusplus >= 201703L)
-  namespace util::text {
-  #else
-  namespace util { namespace text { // NOLINT(modernize-concat-nested-namespaces)
-  #endif
-
-  class text_output_alloc_console : public ckormanyos::mandelbrot::text_output_base // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
+  namespace util::text
   {
-  public:
-    explicit text_output_alloc_console(callback_function_type cbk) : my_callback { cbk } { }
-
-    text_output_alloc_console() = delete;
-
-    ~text_output_alloc_console() override = default;
-
-    auto write(const std::string& str_to_write) -> bool override
+    class text_output_alloc_console : public ckormanyos::mandelbrot::text_output_base // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
     {
-      my_callback(str_to_write);
+    public:
+      explicit text_output_alloc_console(callback_function_type cbk) : my_callback { cbk } { }
 
-      return true;
+      text_output_alloc_console() = delete;
+
+      ~text_output_alloc_console() override = default;
+
+      auto write(const std::string& str_to_write) -> bool override
+      {
+        my_callback(str_to_write);
+
+        return true;
+      }
+
+    private:
+      callback_function_type my_callback { nullptr };
+    };
+  } // namespace util::text
+
+  namespace util::caller
+  {
+    // Helper function to call a function on each element of a tuple.
+    // See also: https://godbolt.org/z/bxYdsc7W6
+
+    template <std::size_t tuple_elem_index = 0, typename Func, typename... Ts>
+    void for_each_in_tuple(std::tuple<Ts...>& tuple_pack, Func&& func)
+    {
+      if constexpr (tuple_elem_index < sizeof...(Ts))
+      {
+        // Call the function with the current tuple element.
+        func(std::get<tuple_elem_index>(tuple_pack));
+
+        // Use a recursive call for the next element.
+        for_each_in_tuple<tuple_elem_index + 1>(tuple_pack, std::forward<Func>(func));
+      }
     }
 
-  private:
-    callback_function_type my_callback { nullptr };
-  };
+    #if 0
+    // Use-case example:
+    auto main() -> int
+    {
+      // Create a tuple of different class instances
+      std::tuple<A, B, C> t { A { }, B { }, C { } };
 
-  #if(__cplusplus >= 201703L)
-  } // namespace util::text
-  #else
-  } // namespace text
-  } // namespace util
-  #endif
+      // The parameter to pass to the method.
+      int param = 10;
+
+      for(auto index = 0; index < 3; ++index)
+      {
+        static_cast<void>(index);
+
+        // Call `some_method` with parameter `param` on each element of the tuple.
+        for_each_in_tuple
+        (
+          t,
+          [param](auto& obj)
+          {
+            // Call the method with the parameter.
+            obj.operator*=(param);
+          }
+        );
+      }
+    }
+    #endif
+
+  } // namespace util::caller
 
 #endif // UTILITY_2024_04_14_H

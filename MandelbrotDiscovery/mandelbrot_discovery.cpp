@@ -6,69 +6,79 @@
 //
 
 #include <mandelbrot_discovery.h>
+#include <mandelbrot_discovery_type.h>
 #include <resource.h>
 #include <utility.h>
 
-#include <boost/multiprecision/cpp_dec_float.hpp>
+#include <tuple>
 
-namespace local::cfg
+namespace local
 {
-  constexpr int  MANDELBROT_COORD_PNT_DIGITS10      =     132;
-  constexpr int  MANDELBROT_ITERATION_DIGITS10      =     132;
-  constexpr int  MANDELBROT_CALCULATION_PIXELS_X    =     768;
-  constexpr int  MANDELBROT_CALCULATION_PIXELS_Y    =     768;
+  template<const unsigned Digits10>
+  struct cfg_type
+  {
+    static constexpr auto my_digits10() noexcept -> unsigned { return Digits10; }
 
-  constexpr char MANDELBROT_POINT_DX_HALF[]         = "1.35";
-  constexpr char MANDELBROT_POINT_DY_HALF[]         = "1.35";
-  constexpr char MANDELBROT_POINT_CENTER_X[]        = "-0.75";
-  constexpr char MANDELBROT_POINT_CENTER_Y[]        = "+0.00";
-} // namespace local::cfg
+    using mandelbrot_coord_pnt_type = boost::multiprecision::number<boost::multiprecision::cpp_dec_float<my_digits10()>, boost::multiprecision::et_off>;
+    using mandelbrot_iteration_type = boost::multiprecision::number<boost::multiprecision::cpp_dec_float<my_digits10()>, boost::multiprecision::et_off>;
+  };
 
-static_assert(local::cfg::MANDELBROT_CALCULATION_PIXELS_X == local::cfg::MANDELBROT_CALCULATION_PIXELS_Y,
-              "Error: This program is only compilable for square geometry");
+  static constexpr char str_mandelbrot_point_dx_half [] = "+1.35";
+  static constexpr char str_mandelbrot_point_dy_half [] = "+1.35";
+  static constexpr char str_mandelbrot_point_center_x[] = "-0.75";
+  static constexpr char str_mandelbrot_point_center_y[] = "+0.00";
+} // namespace local
 
-static_assert(util::utility::equal(local::cfg::MANDELBROT_POINT_DX_HALF,
-                                   local::cfg::MANDELBROT_POINT_DX_HALF + sizeof(local::cfg::MANDELBROT_POINT_DX_HALF),
-                                   local::cfg::MANDELBROT_POINT_DY_HALF),
-              "Error: This program is only compilable for square geometry");
+//static_assert(local::mandelbrot_calculation_pixels_x == local::mandelbrot_calculation_pixels_y,
+//              "Error: This program is only compilable for square geometry");
 
-using mandelbrot_coord_pnt_type = boost::multiprecision::number<boost::multiprecision::cpp_dec_float<local::cfg::MANDELBROT_COORD_PNT_DIGITS10>, boost::multiprecision::et_off>;
-using mandelbrot_iteration_type = boost::multiprecision::number<boost::multiprecision::cpp_dec_float<local::cfg::MANDELBROT_ITERATION_DIGITS10>, boost::multiprecision::et_off>;
+//static_assert(util::utility::equal(local::mandelbrot_point_dx_half(),
+//                                   local::mandelbrot_point_dx_half() + util::utility::strlen(local::cfg_type_0::mandelbrot_point_dx_half()),
+//                                   local::mandelbrot_point_dy_half()),
+//              "Error: This program is only compilable for square geometry");
 
-inline auto dx_half()  -> mandelbrot_coord_pnt_type { return mandelbrot_coord_pnt_type(local::cfg::MANDELBROT_POINT_DX_HALF); }
-inline auto dy_half()  -> mandelbrot_coord_pnt_type { return mandelbrot_coord_pnt_type(local::cfg::MANDELBROT_POINT_DY_HALF); }
-inline auto center_x() -> mandelbrot_coord_pnt_type { return mandelbrot_coord_pnt_type(local::cfg::MANDELBROT_POINT_CENTER_X); }
-inline auto center_y() -> mandelbrot_coord_pnt_type { return mandelbrot_coord_pnt_type(local::cfg::MANDELBROT_POINT_CENTER_Y); }
+template<const unsigned Digits10> auto dx_half () -> typename local::cfg_type<Digits10>::mandelbrot_coord_pnt_type { using local_coord_pnt_type = typename local::cfg_type<Digits10>::mandelbrot_coord_pnt_type; return local_coord_pnt_type { local::str_mandelbrot_point_dx_half  }; }
+template<const unsigned Digits10> auto dy_half () -> typename local::cfg_type<Digits10>::mandelbrot_coord_pnt_type { using local_coord_pnt_type = typename local::cfg_type<Digits10>::mandelbrot_coord_pnt_type; return local_coord_pnt_type { local::str_mandelbrot_point_dy_half  }; }
+template<const unsigned Digits10> auto center_x() -> typename local::cfg_type<Digits10>::mandelbrot_coord_pnt_type { using local_coord_pnt_type = typename local::cfg_type<Digits10>::mandelbrot_coord_pnt_type; return local_coord_pnt_type { local::str_mandelbrot_point_center_x }; }
+template<const unsigned Digits10> auto center_y() -> typename local::cfg_type<Digits10>::mandelbrot_coord_pnt_type { using local_coord_pnt_type = typename local::cfg_type<Digits10>::mandelbrot_coord_pnt_type; return local_coord_pnt_type { local::str_mandelbrot_point_center_y }; }
+
+template<const unsigned Digits10>
+using rectangle_from_digits_type = geometry::rectangle_type<typename geometry::point_type<typename local::cfg_type<Digits10>::mandelbrot_coord_pnt_type>>;
+
+constexpr inline auto default_digits10() -> unsigned { return 132U; }
+
+using rectangle_tuple_type   = std::tuple<rectangle_from_digits_type<default_digits10()>&>;
+using rectangle_ref_00_type  = typename std::tuple_element<0, rectangle_tuple_type>::type;
+using rectangle_00_type      = typename std::remove_reference<rectangle_ref_00_type>::type;
+using point_type             = typename rectangle_00_type::point_type;
 
 using local_window_type = mandelbrot_discovery<static_cast<int>(INT16_C(800)),
                                                static_cast<int>(INT16_C(800)),
-                                               mandelbrot_coord_pnt_type,
-                                               mandelbrot_iteration_type,
+                                               rectangle_tuple_type,
                                                mandelbrot_discovery_detail::WindowTitleDefault,
                                                IDI_MANDELBROT_DISCO>;
 
-using point_type     = typename local_window_type::point_type;
-using rectangle_type = typename local_window_type::rectangle_type;
-
-auto rectangle() -> rectangle_type*
+auto rectangle() -> rectangle_00_type&
 {
-  static rectangle_type my_rect
+  static rectangle_00_type my_rect
   {
-    point_type { center_x(), center_y() },
-    dx_half(),
-    dy_half()
+    point_type { center_x<default_digits10()>(), center_y<default_digits10()>() },
+    dx_half<default_digits10()>(),
+    dy_half<default_digits10()>()
   };
 
   static const bool result_pixel_assoc_is_ok { my_rect.set_pixel_assoc(768, 768) };
 
   static_cast<void>(result_pixel_assoc_is_ok);
 
-  return &my_rect;
+  return my_rect;
 }
 
 auto WINAPI WinMain(_In_ ::HINSTANCE h_wnd, _In_opt_ ::HINSTANCE, _In_ LPSTR, _In_ int) -> int
 {
-  local_window_type::set_rectangle(rectangle());
+  rectangle_tuple_type rectangle_tuple(rectangle());
+
+  local_window_type::set_rectangle_tuple(rectangle_tuple);
 
   const auto result_win_main = local_window_type::win_main(h_wnd);
 
