@@ -29,14 +29,12 @@
   #include <chrono>
   #include <cstdint>
   #include <cstring>
-  #include <functional>
   #include <iomanip>
   #include <limits>
   #include <mutex>
   #include <sstream>
   #include <string>
   #include <thread>
-  #include <tuple>
 
   namespace mandelbrot_discovery_detail
   {
@@ -54,14 +52,17 @@
   {
   public:
     using rectangle_tuple_type = MandelbrotRectangleTupleType;
-    using rectangle_00_type    = typename std::remove_reference<typename std::tuple_element<0, rectangle_tuple_type>::type>::type;
-    using rectangle_01_type    = typename std::remove_reference<typename std::tuple_element<1, rectangle_tuple_type>::type>::type;
-    using rectangle_02_type    = typename std::remove_reference<typename std::tuple_element<2, rectangle_tuple_type>::type>::type;
+
+    using rectangle_00_type    = typename std::remove_reference<typename std::tuple_element<0x00, rectangle_tuple_type>::type>::type;
+    using rectangle_01_type    = typename std::remove_reference<typename std::tuple_element<0x01, rectangle_tuple_type>::type>::type;
+    using rectangle_02_type    = typename std::remove_reference<typename std::tuple_element<0x02, rectangle_tuple_type>::type>::type;
+    using rectangle_03_type    = typename std::remove_reference<typename std::tuple_element<0x03, rectangle_tuple_type>::type>::type;
 
   private:
     using value_00_type = typename rectangle_00_type::point_type::value_type;
     using value_01_type = typename rectangle_01_type::point_type::value_type;
     using value_02_type = typename rectangle_02_type::point_type::value_type;
+    using value_03_type = typename rectangle_03_type::point_type::value_type;
 
     static constexpr int screen_coordinate_x = static_cast<int>(ScreenCoordinateX);    // Screen coordinate X
     static constexpr int screen_coordinate_y = static_cast<int>(ScreenCoordinateY);    // Screen coordinate Y
@@ -76,6 +77,7 @@
     using point_00_type            = typename rectangle_00_type::point_type;
     using point_01_type            = typename rectangle_01_type::point_type;
     using point_02_type            = typename rectangle_02_type::point_type;
+    using point_03_type            = typename rectangle_03_type::point_type;
     using rectangle_tuple_ref_type = std::reference_wrapper<rectangle_tuple_type>;
 
     mandelbrot_discovery() = default;
@@ -276,6 +278,7 @@
     static point_00_type            my_rectangle_center_00;
     static point_01_type            my_rectangle_center_01;
     static point_02_type            my_rectangle_center_02;
+    static point_03_type            my_rectangle_center_03;
     static rectangle_tuple_ref_type my_ref_to_rectangle_tuple;
 
     static std::thread              my_thread;
@@ -285,6 +288,7 @@
     static value_00_type            my_mandelbrot_zoom_factor_00;
     static value_01_type            my_mandelbrot_zoom_factor_01;
     static value_02_type            my_mandelbrot_zoom_factor_02;
+    static value_03_type            my_mandelbrot_zoom_factor_03;
     static std::uint_fast32_t       my_mandelbrot_iterations;
 
     static constexpr auto window_title() noexcept -> const char* { return WindowTitle; }
@@ -311,13 +315,19 @@
       return my_thread_wait_for_new_set_click.load();
     }
 
-    static auto zoom_factor_p10() -> int { return ilogb(my_mandelbrot_zoom_factor_02); };
+    static auto zoom_factor_p10() -> int { using std::ilogb; return ilogb(my_mandelbrot_zoom_factor_03); };
 
     static auto rectangle_tuple_index() -> int
     {
       const int zoom { zoom_factor_p10() };
 
-      return ((zoom <= 20) ? 0 : (zoom <= 80) ? 1 : 2);
+      return
+      {
+        (zoom <= 20) ? 0 :
+        (zoom <= 40) ? 1 :
+        (zoom <= 80) ? 2 :
+                       3
+      };
     };
 
     template<typename MandelbrotGeneratorType>
@@ -374,7 +384,7 @@
                                                   static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_X),
                                                   static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_Y)>;
 
-      const rectangle_00_type& local_rectangle_00_ref { std::get<0>(my_ref_to_rectangle_tuple.get()) };
+      const rectangle_00_type& local_rectangle_00_ref { std::get<0x00>(my_ref_to_rectangle_tuple.get()) };
 
       local_mandelbrot_config_00_type
         mandelbrot_config_object_00
@@ -405,7 +415,7 @@
                                                   static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_X),
                                                   static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_Y)>;
 
-      const rectangle_01_type& local_rectangle_01_ref { std::get<1>(my_ref_to_rectangle_tuple.get()) };
+      const rectangle_01_type& local_rectangle_01_ref { std::get<0x01>(my_ref_to_rectangle_tuple.get()) };
 
       local_mandelbrot_config_01_type
         mandelbrot_config_object_01
@@ -428,10 +438,7 @@
       constexpr auto MANDELBROT_CALCULATION_PIXELS_Y = static_cast<std::uint_fast32_t>(768);
 
       using mandelbrot_generator_02_type =
-        ckormanyos::mandelbrot::mandelbrot_generator_perturbative<value_02_type>;
-
-            ckormanyos::mandelbrot::color::color_stretch_histogram_method local_color_stretches;
-      const ckormanyos::mandelbrot::color::color_functions_bw             local_color_functions;
+        ckormanyos::mandelbrot::mandelbrot_generator_trivial<value_02_type>;
 
       using local_mandelbrot_config_02_type =
         ckormanyos::mandelbrot::mandelbrot_config<value_02_type,
@@ -439,7 +446,7 @@
                                                   static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_X),
                                                   static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_Y)>;
 
-      const rectangle_02_type& local_rectangle_02_ref { std::get<2>(my_ref_to_rectangle_tuple.get()) };
+      const rectangle_02_type& local_rectangle_02_ref { std::get<0x02>(my_ref_to_rectangle_tuple.get()) };
 
       local_mandelbrot_config_02_type
         mandelbrot_config_object_02
@@ -454,6 +461,40 @@
       mandelbrot_generator_02_type gen_02 { mandelbrot_config_object_02 };
 
       mandelbrot_iterate_engine_worker(gen_02);
+    }
+
+    static auto mandelbrot_iterate_engine_03() -> void
+    {
+      constexpr auto MANDELBROT_CALCULATION_PIXELS_X = static_cast<std::uint_fast32_t>(768);
+      constexpr auto MANDELBROT_CALCULATION_PIXELS_Y = static_cast<std::uint_fast32_t>(768);
+
+      using mandelbrot_generator_03_type =
+        ckormanyos::mandelbrot::mandelbrot_generator_perturbative<value_03_type>;
+
+            ckormanyos::mandelbrot::color::color_stretch_histogram_method local_color_stretches;
+      const ckormanyos::mandelbrot::color::color_functions_bw             local_color_functions;
+
+      using local_mandelbrot_config_03_type =
+        ckormanyos::mandelbrot::mandelbrot_config<value_03_type,
+                                                  typename mandelbrot_generator_03_type::my_iteration_numeric_type,
+                                                  static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_X),
+                                                  static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_Y)>;
+
+      const rectangle_03_type& local_rectangle_03_ref { std::get<0x03>(my_ref_to_rectangle_tuple.get()) };
+
+      local_mandelbrot_config_03_type
+        mandelbrot_config_object_03
+        (
+          local_rectangle_03_ref.center().get_x() - local_rectangle_03_ref.dx_half(),
+          local_rectangle_03_ref.center().get_x() + local_rectangle_03_ref.dx_half(),
+          local_rectangle_03_ref.center().get_y() - local_rectangle_03_ref.dy_half(),
+          local_rectangle_03_ref.center().get_y() + local_rectangle_03_ref.dy_half(),
+          my_mandelbrot_iterations
+        );
+
+      mandelbrot_generator_03_type gen_03 { mandelbrot_config_object_03 };
+
+      mandelbrot_iterate_engine_worker(gen_03);
     }
 
     static auto CALLBACK my_window_callback(::HWND   handle_to_window,
@@ -548,36 +589,42 @@
 
           bool result_is_ok { true };
 
-          result_is_ok = { std::get<0>(my_ref_to_rectangle_tuple.get()).pixel_to_point(pixel_x, pixel_y, my_rectangle_center_00) && result_is_ok };
-          result_is_ok = { std::get<1>(my_ref_to_rectangle_tuple.get()).pixel_to_point(pixel_x, pixel_y, my_rectangle_center_01) && result_is_ok };
-          result_is_ok = { std::get<2>(my_ref_to_rectangle_tuple.get()).pixel_to_point(pixel_x, pixel_y, my_rectangle_center_02) && result_is_ok };
+          result_is_ok = { std::get<0x00>(my_ref_to_rectangle_tuple.get()).pixel_to_point(pixel_x, pixel_y, my_rectangle_center_00) && result_is_ok };
+          result_is_ok = { std::get<0x01>(my_ref_to_rectangle_tuple.get()).pixel_to_point(pixel_x, pixel_y, my_rectangle_center_01) && result_is_ok };
+          result_is_ok = { std::get<0x02>(my_ref_to_rectangle_tuple.get()).pixel_to_point(pixel_x, pixel_y, my_rectangle_center_02) && result_is_ok };
+          result_is_ok = { std::get<0x03>(my_ref_to_rectangle_tuple.get()).pixel_to_point(pixel_x, pixel_y, my_rectangle_center_03) && result_is_ok };
 
           if(result_is_ok)
           {
             switch(rectangle_tuple_index())
             {
-              case 0:
-                result_is_ok = (write_number("x_val  : ", my_rectangle_center_00.get_x())                            && result_is_ok);
-                result_is_ok = (write_number("y_val  : ", my_rectangle_center_00.get_y())                            && result_is_ok);
-                result_is_ok = (write_number("dx_half: ", std::get<0>(my_ref_to_rectangle_tuple.get()).dx_half(), 3) && result_is_ok);
-                result_is_ok = (write_string("\n")                                                                   && result_is_ok);
+              case 0x00:
+                result_is_ok = (write_number("x_val  : ", my_rectangle_center_00.get_x())                               && result_is_ok);
+                result_is_ok = (write_number("y_val  : ", my_rectangle_center_00.get_y())                               && result_is_ok);
+                result_is_ok = (write_number("dx_half: ", std::get<0x00>(my_ref_to_rectangle_tuple.get()).dx_half(), 3) && result_is_ok);
                 break;
 
-            case 1:
-              result_is_ok = (write_number("x_val  : ", my_rectangle_center_01.get_x())                            && result_is_ok);
-              result_is_ok = (write_number("y_val  : ", my_rectangle_center_01.get_y())                            && result_is_ok);
-              result_is_ok = (write_number("dx_half: ", std::get<1>(my_ref_to_rectangle_tuple.get()).dx_half(), 3) && result_is_ok);
-              result_is_ok = (write_string("\n")                                                                   && result_is_ok);
+            case 0x01:
+              result_is_ok = (write_number("x_val  : ", my_rectangle_center_01.get_x())                               && result_is_ok);
+              result_is_ok = (write_number("y_val  : ", my_rectangle_center_01.get_y())                               && result_is_ok);
+              result_is_ok = (write_number("dx_half: ", std::get<0x01>(my_ref_to_rectangle_tuple.get()).dx_half(), 3) && result_is_ok);
               break;
 
-            case 2:
+            case 0x02:
+              result_is_ok = (write_number("x_val  : ", my_rectangle_center_02.get_x())                               && result_is_ok);
+              result_is_ok = (write_number("y_val  : ", my_rectangle_center_02.get_y())                               && result_is_ok);
+              result_is_ok = (write_number("dx_half: ", std::get<0x02>(my_ref_to_rectangle_tuple.get()).dx_half(), 3) && result_is_ok);
+              break;
+
+            case 0x03:
             default:
-              result_is_ok = (write_number("x_val  : ", my_rectangle_center_02.get_x())                            && result_is_ok);
-              result_is_ok = (write_number("y_val  : ", my_rectangle_center_02.get_y())                            && result_is_ok);
-              result_is_ok = (write_number("dx_half: ", std::get<2>(my_ref_to_rectangle_tuple.get()).dx_half(), 3) && result_is_ok);
-              result_is_ok = (write_string("\n")                                                                   && result_is_ok);
+              result_is_ok = (write_number("x_val  : ", my_rectangle_center_03.get_x())                               && result_is_ok);
+              result_is_ok = (write_number("y_val  : ", my_rectangle_center_03.get_y())                               && result_is_ok);
+              result_is_ok = (write_number("dx_half: ", std::get<0x03>(my_ref_to_rectangle_tuple.get()).dx_half(), 3) && result_is_ok);
               break;
             }
+
+            result_is_ok = (write_string("\n") && result_is_ok);
           }
 
           const auto lresult =
@@ -691,10 +738,12 @@
           my_mandelbrot_zoom_factor_00 *= 10;
           my_mandelbrot_zoom_factor_01 *= 10;
           my_mandelbrot_zoom_factor_02 *= 10;
+          my_mandelbrot_zoom_factor_03 *= 10;
 
-          std::get<0>(my_ref_to_rectangle_tuple.get()).recenter(my_rectangle_center_00);
-          std::get<1>(my_ref_to_rectangle_tuple.get()).recenter(my_rectangle_center_01);
-          std::get<2>(my_ref_to_rectangle_tuple.get()).recenter(my_rectangle_center_02);
+          std::get<0x00>(my_ref_to_rectangle_tuple.get()).recenter(my_rectangle_center_00);
+          std::get<0x01>(my_ref_to_rectangle_tuple.get()).recenter(my_rectangle_center_01);
+          std::get<0x02>(my_ref_to_rectangle_tuple.get()).recenter(my_rectangle_center_02);
+          std::get<0x03>(my_ref_to_rectangle_tuple.get()).recenter(my_rectangle_center_03);
 
           // Set the flag to redraw the client window with the new JPEG.
           // The redrawing will occur below.
@@ -716,6 +765,7 @@
           my_mandelbrot_zoom_factor_00 /= 10;
           my_mandelbrot_zoom_factor_01 /= 10;
           my_mandelbrot_zoom_factor_02 /= 10;
+          my_mandelbrot_zoom_factor_03 /= 10;
 
           // Set the flag to redraw the client window with the new JPEG.
           // The redrawing will occur below.
@@ -751,9 +801,10 @@
 
           const int local_rectangle_tuple_index { rectangle_tuple_index() };
 
-          if     (local_rectangle_tuple_index == 0) { mandelbrot_iterate_engine_00(); }
-          else if(local_rectangle_tuple_index == 1) { mandelbrot_iterate_engine_01(); }
-          else                                      { mandelbrot_iterate_engine_02(); }
+          if     (local_rectangle_tuple_index == 0x00) { mandelbrot_iterate_engine_00(); }
+          else if(local_rectangle_tuple_index == 0x01) { mandelbrot_iterate_engine_01(); }
+          else if(local_rectangle_tuple_index == 0x02) { mandelbrot_iterate_engine_02(); }
+          else                                         { mandelbrot_iterate_engine_03(); }
 
           // Redraw the client window with the new JPEG.
           using local_window_type = mandelbrot_discovery;
@@ -984,7 +1035,26 @@
         value_02_type { "+1.35" }
       };
 
-    static rectangle_tuple_type my_default_rectangle_tuple(my_default_rect_00, my_default_rect_01, my_default_rect_02);
+    static rectangle_03_type
+      my_default_rect_03
+      {
+        point_03_type
+        {
+          value_03_type { "-0.75" },
+          value_03_type { "+0.00" }
+        },
+        value_03_type { "+1.35" },
+        value_03_type { "+1.35" }
+      };
+
+    static rectangle_tuple_type
+      my_default_rectangle_tuple
+      {
+        my_default_rect_00,
+        my_default_rect_01,
+        my_default_rect_02,
+        my_default_rect_03
+      };
 
     return my_default_rectangle_tuple;
   }
@@ -1101,6 +1171,15 @@
            const int   IconId,
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
+  typename mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleTupleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::point_03_type mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleTupleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_rectangle_center_03 { };
+
+  template<const int   WindowWidth,
+           const int   WindowHeight,
+           typename    MandelbrotRectangleTupleType,
+           const char* WindowTitle,
+           const int   IconId,
+           const int   ScreenCoordinateX,
+           const int   ScreenCoordinateY>
   typename mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleTupleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::rectangle_tuple_ref_type mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleTupleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_ref_to_rectangle_tuple { default_rectangle_tuple() };
 
   template<const int   WindowWidth,
@@ -1129,6 +1208,15 @@
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
   typename mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleTupleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::value_02_type mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleTupleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_mandelbrot_zoom_factor_02 { 1 };
+
+  template<const int   WindowWidth,
+           const int   WindowHeight,
+           typename    MandelbrotRectangleTupleType,
+           const char* WindowTitle,
+           const int   IconId,
+           const int   ScreenCoordinateX,
+           const int   ScreenCoordinateY>
+  typename mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleTupleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::value_03_type mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleTupleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_mandelbrot_zoom_factor_03 { 1 };
 
   template<const int   WindowWidth,
            const int   WindowHeight,
