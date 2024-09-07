@@ -94,21 +94,18 @@
       // The parameter to pass to the method.
       int param = 10;
 
-      for(auto index = 0; index < 3; ++index)
-      {
-        static_cast<void>(index);
+      static_cast<void>(index);
 
-        // Call `some_method` with parameter `param` on each element of the tuple.
-        for_each_in_tuple
-        (
-          t,
-          [param](auto& obj)
-          {
-            // Call the method with the parameter.
-            obj.operator*=(param);
-          }
-        );
-      }
+      // Call `some_method` with parameter `param` on each element of the tuple.
+      for_each_in_tuple
+      (
+        t,
+        [param](auto& obj)
+        {
+          // Call the method with the parameter.
+          obj.operator*=(param);
+        }
+      );
     }
     #endif
 
