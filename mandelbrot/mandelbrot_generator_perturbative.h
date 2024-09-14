@@ -203,14 +203,16 @@
               // The core functionality of the original formula is:
               //   z_{k+1} = z_{k}^2 + C
 
-              // -> delta transformation z_{k+1} -> z_{k+1} + e_{k+1}; z_{k} -> z_{k} + e_{k}; C -> c + d;
+              // -> delta transformation:
+              //   z_{k+1} -> z_{k+1} + e_{k+1}; z_{k} -> z_{k} + e_{k},
+              //   with C -> c + d;
 
-              // Inser this into to the above-mentioned equation(s)
+              // Insert this into to the above-mentioned equation(s).
               // The result is:
               //   z_{k+1} + e_{k+1} = z_{k}^2 + c + e_{k}^2 + 2*z_{k}*e_{k} + d
 
               // This replaces the original formula, resulting in:
-              //   e_{k+1} = e_{k}^2 + 2*z_{k}*e_{k} + d
+              //   e_{k+1} = e_{k}^2 + 2*z_{k}*e_{k} + d,
               //   where z_{k} is the pre-calculated value.
 
               ei *= (er + zkr_temp);
