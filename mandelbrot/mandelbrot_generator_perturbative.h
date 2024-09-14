@@ -93,26 +93,25 @@
           )
         };
 
-      // Initialize the Zk-Components of the central point.
-      // Assumption: The max iterations is reached.
-
       {
+      // Initialize the Zk-Components of the central point.
+
         zkr.front() = static_cast<my_iteration_numeric_type>(UINT8_C(0));
         zki.front() = static_cast<my_iteration_numeric_type>(UINT8_C(0));
 
-        my_coord_pnt_numeric_type zr  { static_cast<my_coord_pnt_numeric_type>(UINT8_C(0)) };
-        my_coord_pnt_numeric_type zi  { static_cast<my_coord_pnt_numeric_type>(UINT8_C(0)) };
-        my_coord_pnt_numeric_type zr2 { static_cast<my_coord_pnt_numeric_type>(UINT8_C(0)) };
-        my_coord_pnt_numeric_type zi2 { static_cast<my_coord_pnt_numeric_type>(UINT8_C(0)) };
-
+        my_coord_pnt_numeric_type zr  { static_cast<unsigned>(UINT8_C(0)) };
+        my_coord_pnt_numeric_type zi  { static_cast<unsigned>(UINT8_C(0)) };
+        my_coord_pnt_numeric_type zr2 { static_cast<unsigned>(UINT8_C(0)) };
+        my_coord_pnt_numeric_type zi2 { static_cast<unsigned>(UINT8_C(0)) };
 
         auto iteration_result = static_cast<std::uint_fast32_t>(UINT8_C(0));
 
+        // Perform the iteration sequence for generating the Mandelbrot set.
+        // Use a perturbative iteration scheme.
+        // Here is the main work of the program.
+
         while ((iteration_result < base_class_type::get_iterations()) && ((zr2 + zi2) < base_class_type::four_coord_pnt())) // NOLINT(altera-id-dependent-backward-branch)
         {
-          // The inner loop performs optimized complex multiply and add.
-          // This is the main work of the fractal iteration scheme.
-
           zi *= zr;
 
           zi += (zi + y_center);
@@ -204,13 +203,16 @@
               // The core functionality of the original formula is:
               //   z_{k+1} = z_{k}^2 + C
 
-              // -> delta transformation z_{k+1} -> z_{k+1} + e_{k+1}; z_{k} -> z_{k} + e_{k}; C -> c + d;
+              // -> delta transformation:
+              //   z_{k+1} -> z_{k+1} + e_{k+1}; z_{k} -> z_{k} + e_{k},
+              //   with C -> c + d;
 
-              // Get it in to the formula we end with:
+              // Insert this into to the above-mentioned equation(s).
+              // The result is:
               //   z_{k+1} + e_{k+1} = z_{k}^2 + c + e_{k}^2 + 2*z_{k}*e_{k} + d
 
               // This replaces the original formula, resulting in:
-              //   e_{k+1} = e_{k}^2 + 2*z_{k}*e_{k} + d
+              //   e_{k+1} = e_{k}^2 + 2*z_{k}*e_{k} + d,
               //   where z_{k} is the pre-calculated value.
 
               ei *= (er + zkr_temp);
@@ -226,7 +228,6 @@
 
               zei  = ei;
               zei *= (zki_temp * static_cast<unsigned>(UINT8_C(2))) + ei;
-              //2*er *t + er *er = er * (2*t + er)
 
               quad_length = (zer + (zkr_temp * zkr_temp)) + (zei + (zki_temp * zki_temp));
 
