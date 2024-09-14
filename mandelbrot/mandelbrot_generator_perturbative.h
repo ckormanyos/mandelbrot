@@ -93,25 +93,25 @@
           )
         };
 
-      // Initialize the Zk-Components of the central point.
-      // Assumption: The max iterations is reached.
-
       {
+      // Initialize the Zk-Components of the central point.
+
         zkr.front() = static_cast<my_iteration_numeric_type>(UINT8_C(0));
         zki.front() = static_cast<my_iteration_numeric_type>(UINT8_C(0));
 
-        my_coord_pnt_numeric_type zr  { static_cast<my_coord_pnt_numeric_type>(UINT8_C(0)) };
-        my_coord_pnt_numeric_type zi  { static_cast<my_coord_pnt_numeric_type>(UINT8_C(0)) };
-        my_coord_pnt_numeric_type zr2 { static_cast<my_coord_pnt_numeric_type>(UINT8_C(0)) };
-        my_coord_pnt_numeric_type zi2 { static_cast<my_coord_pnt_numeric_type>(UINT8_C(0)) };
+        my_coord_pnt_numeric_type zr  { static_cast<unsigned>(UINT8_C(0)) };
+        my_coord_pnt_numeric_type zi  { static_cast<unsigned>(UINT8_C(0)) };
+        my_coord_pnt_numeric_type zr2 { static_cast<unsigned>(UINT8_C(0)) };
+        my_coord_pnt_numeric_type zi2 { static_cast<unsigned>(UINT8_C(0)) };
 
         auto iteration_result = static_cast<std::uint_fast32_t>(UINT8_C(0));
 
+        // Perform the iteration sequence for generating the Mandelbrot set.
+        // Use a perturbative iteration scheme.
+        // Here is the main work of the program.
+
         while ((iteration_result < base_class_type::get_iterations()) && ((zr2 + zi2) < base_class_type::four_coord_pnt())) // NOLINT(altera-id-dependent-backward-branch)
         {
-          // The inner loop performs optimized complex multiply and add.
-          // This is the main work of the fractal iteration scheme.
-
           zi *= zr;
 
           zi += (zi + y_center);
@@ -179,13 +179,13 @@
                      i_col < x_coord.size(); // NOLINT(altera-id-dependent-backward-branch)
                    ++i_col)
           {
-            my_iteration_numeric_type er          { };
-            my_iteration_numeric_type ei          { };
-            my_iteration_numeric_type quad_length { };
-            my_iteration_numeric_type zer         { };
-            my_iteration_numeric_type zei         { };
-            my_iteration_numeric_type zkr_temp    { };
-            my_iteration_numeric_type zki_temp    { };
+            my_iteration_numeric_type er          { static_cast<unsigned>(UINT8_C(0)) };
+            my_iteration_numeric_type ei          { static_cast<unsigned>(UINT8_C(0)) };
+            my_iteration_numeric_type quad_length { static_cast<unsigned>(UINT8_C(0)) };
+            my_iteration_numeric_type zer         { static_cast<unsigned>(UINT8_C(0)) };
+            my_iteration_numeric_type zei         { static_cast<unsigned>(UINT8_C(0)) };
+            my_iteration_numeric_type zkr_temp    { static_cast<unsigned>(UINT8_C(0)) };
+            my_iteration_numeric_type zki_temp    { static_cast<unsigned>(UINT8_C(0)) };
 
             // Use an optimized complex-numbered multiplication scheme.
             // Thereby reduce the main work of the Mandelbrot iteration to
@@ -205,7 +205,8 @@
 
               // -> delta transformation z_{k+1} -> z_{k+1} + e_{k+1}; z_{k} -> z_{k} + e_{k}; C -> c + d;
 
-              // Get it in to the formula we end with:
+              // Inser this into to the above-mentioned equation(s)
+              // The result is:
               //   z_{k+1} + e_{k+1} = z_{k}^2 + c + e_{k}^2 + 2*z_{k}*e_{k} + d
 
               // This replaces the original formula, resulting in:
@@ -225,7 +226,6 @@
 
               zei  = ei;
               zei *= (zki_temp * static_cast<unsigned>(UINT8_C(2))) + ei;
-              //2*er *t + er *er = er * (2*t + er)
 
               quad_length = (zer + (zkr_temp * zkr_temp)) + (zei + (zki_temp * zki_temp));
 
