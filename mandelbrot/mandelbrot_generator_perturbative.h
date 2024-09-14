@@ -179,13 +179,13 @@
                      i_col < x_coord.size(); // NOLINT(altera-id-dependent-backward-branch)
                    ++i_col)
           {
-            my_iteration_numeric_type er          { static_cast<unsigned>(UINT8_C(0)) };
-            my_iteration_numeric_type ei          { static_cast<unsigned>(UINT8_C(0)) };
-            my_iteration_numeric_type quad_length { static_cast<unsigned>(UINT8_C(0)) };
-            my_iteration_numeric_type zer         { static_cast<unsigned>(UINT8_C(0)) };
-            my_iteration_numeric_type zei         { static_cast<unsigned>(UINT8_C(0)) };
-            my_iteration_numeric_type zkr_temp    { static_cast<unsigned>(UINT8_C(0)) };
-            my_iteration_numeric_type zki_temp    { static_cast<unsigned>(UINT8_C(0)) };
+            my_iteration_numeric_type er          { };
+            my_iteration_numeric_type ei          { };
+            my_iteration_numeric_type quad_length { };
+            my_iteration_numeric_type zer         { };
+            my_iteration_numeric_type zei         { };
+            my_iteration_numeric_type zkr_temp    { };
+            my_iteration_numeric_type zki_temp    { };
 
             // Use an optimized complex-numbered multiplication scheme.
             // Thereby reduce the main work of the Mandelbrot iteration to
