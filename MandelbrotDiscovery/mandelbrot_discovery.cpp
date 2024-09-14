@@ -29,14 +29,6 @@ namespace local
   static constexpr char str_mandelbrot_point_center_y[] = "+0.00";
 } // namespace local
 
-//static_assert(local::mandelbrot_calculation_pixels_x == local::mandelbrot_calculation_pixels_y,
-//              "Error: This program is only compilable for square geometry");
-
-//static_assert(util::utility::equal(local::mandelbrot_point_dx_half(),
-//                                   local::mandelbrot_point_dx_half() + util::utility::strlen(local::cfg_type_0::mandelbrot_point_dx_half()),
-//                                   local::mandelbrot_point_dy_half()),
-//              "Error: This program is only compilable for square geometry");
-
 template<const unsigned Digits10> auto dx_half () -> typename local::cfg_type<Digits10>::mandelbrot_coord_pnt_type { using local_coord_pnt_type = typename local::cfg_type<Digits10>::mandelbrot_coord_pnt_type; return local_coord_pnt_type { local::str_mandelbrot_point_dx_half  }; }
 template<const unsigned Digits10> auto dy_half () -> typename local::cfg_type<Digits10>::mandelbrot_coord_pnt_type { using local_coord_pnt_type = typename local::cfg_type<Digits10>::mandelbrot_coord_pnt_type; return local_coord_pnt_type { local::str_mandelbrot_point_dy_half  }; }
 template<const unsigned Digits10> auto center_x() -> typename local::cfg_type<Digits10>::mandelbrot_coord_pnt_type { using local_coord_pnt_type = typename local::cfg_type<Digits10>::mandelbrot_coord_pnt_type; return local_coord_pnt_type { local::str_mandelbrot_point_center_x }; }
@@ -62,10 +54,10 @@ using rectangle_ref_01_type  = typename std::tuple_element<0x01, rectangle_tuple
 using rectangle_ref_02_type  = typename std::tuple_element<0x02, rectangle_tuple_type>::type;
 using rectangle_ref_03_type  = typename std::tuple_element<0x03, rectangle_tuple_type>::type;
 
-using point_00_type          = typename rectangle_00_type::point_type;
-using point_01_type          = typename rectangle_01_type::point_type;
-using point_02_type          = typename rectangle_02_type::point_type;
-using point_03_type          = typename rectangle_03_type::point_type;
+using point_00_type = typename rectangle_00_type::point_type;
+using point_01_type = typename rectangle_01_type::point_type;
+using point_02_type = typename rectangle_02_type::point_type;
+using point_03_type = typename rectangle_03_type::point_type;
 
 using local_window_type = mandelbrot_discovery<static_cast<int>(INT16_C(800)),
                                                static_cast<int>(INT16_C(800)),

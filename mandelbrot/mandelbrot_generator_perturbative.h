@@ -105,7 +105,6 @@
         my_coord_pnt_numeric_type zr2 { static_cast<my_coord_pnt_numeric_type>(UINT8_C(0)) };
         my_coord_pnt_numeric_type zi2 { static_cast<my_coord_pnt_numeric_type>(UINT8_C(0)) };
 
-
         auto iteration_result = static_cast<std::uint_fast32_t>(UINT8_C(0));
 
         while ((iteration_result < base_class_type::get_iterations()) && ((zr2 + zi2) < base_class_type::four_coord_pnt())) // NOLINT(altera-id-dependent-backward-branch)

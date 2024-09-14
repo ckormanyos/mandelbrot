@@ -137,6 +137,10 @@ The result of this dive ended up being:
 
 ![](https://github.com/ckormanyos/mandelbrot/blob/main/images/discovery/mandelbrot_discovery_dive_example.jpg)
 
+## Additional Program Dynamic Behavior
+
+The following features (and probably a few more) are TODO both in docs as well as in the program.
+
 ### Changing the Resolution
 
 This feature is TODO both in docs as well as in the program.
@@ -144,7 +148,3 @@ This feature is TODO both in docs as well as in the program.
 ### Saving and Restoring Previous Work
 
 These features are TODO both in docs as well as in the program.
-
-## Program Defaults and Dynamic Behavior
-
-This feature is TODO both in docs as well as in the program.
