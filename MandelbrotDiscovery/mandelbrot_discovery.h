@@ -65,10 +65,10 @@
     using point_02_type            = typename rectangle_02_type::point_type;
     using point_03_type            = typename rectangle_03_type::point_type;
 
-    using value_00_type            = typename rectangle_00_type::point_type::value_type;
-    using value_01_type            = typename rectangle_01_type::point_type::value_type;
-    using value_02_type            = typename rectangle_02_type::point_type::value_type;
-    using value_03_type            = typename rectangle_03_type::point_type::value_type;
+    using value_00_type            = typename point_00_type::value_type;
+    using value_01_type            = typename point_01_type::value_type;
+    using value_02_type            = typename point_02_type::value_type;
+    using value_03_type            = typename point_03_type::value_type;
 
     using point_tuple_type = std::tuple<point_00_type, point_01_type, point_02_type, point_03_type>;
     using value_tuple_type = std::tuple<value_00_type, value_01_type, value_02_type, value_03_type>;
@@ -284,10 +284,7 @@
     static std::atomic<bool>        my_thread_wants_exit;
     static std::atomic<bool>        my_thread_did_exit;
     static std::atomic<bool>        my_thread_wait_for_new_set_click;
-    static value_00_type            my_mandelbrot_zoom_factor_00;
-    static value_01_type            my_mandelbrot_zoom_factor_01;
-    static value_02_type            my_mandelbrot_zoom_factor_02;
-    static value_03_type            my_mandelbrot_zoom_factor_03;
+    static value_tuple_type         my_mandelbrot_zoom_factor_tuple;
     static std::uint_fast32_t       my_mandelbrot_iterations;
 
     static constexpr auto window_title() noexcept -> const char* { return WindowTitle; }
@@ -314,7 +311,7 @@
       return my_thread_wait_for_new_set_click.load();
     }
 
-    static auto zoom_factor_p10() -> int { using std::ilogb; return ilogb(my_mandelbrot_zoom_factor_03); };
+    static auto zoom_factor_p10() -> int { using std::ilogb; return ilogb(std::get<0x03>(my_mandelbrot_zoom_factor_tuple)); };
 
     static auto rectangle_tuple_index() -> int
     {
@@ -369,131 +366,42 @@
       write_string("iteration_time : " + str_iteration_time                       + "s\n\n");
     }
 
-    static auto mandelbrot_iterate_engine_00() -> void
+    template<const int TupleIndex>
+    static auto mandelbrot_iterate_engine() -> void
     {
       constexpr auto MANDELBROT_CALCULATION_PIXELS_X = static_cast<std::uint_fast32_t>(768);
       constexpr auto MANDELBROT_CALCULATION_PIXELS_Y = static_cast<std::uint_fast32_t>(768);
 
-      using mandelbrot_generator_00_type =
-        ckormanyos::mandelbrot::mandelbrot_generator_trivial<value_00_type>;
+      using local_value_type = std::tuple_element_t<TupleIndex, value_tuple_type>;
 
-      using local_mandelbrot_config_00_type =
-        ckormanyos::mandelbrot::mandelbrot_config<value_00_type,
-                                                  typename mandelbrot_generator_00_type::my_iteration_numeric_type,
+      using mandelbrot_generator_type =
+        std::conditional_t<TupleIndex < 3,
+                           ckormanyos::mandelbrot::mandelbrot_generator_trivial     <local_value_type>,
+                           ckormanyos::mandelbrot::mandelbrot_generator_perturbative<local_value_type>>;
+
+      using local_mandelbrot_config_type =
+        ckormanyos::mandelbrot::mandelbrot_config<local_value_type,
+                                                  typename mandelbrot_generator_type::my_iteration_numeric_type,
                                                   static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_X),
                                                   static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_Y)>;
 
-      const rectangle_00_type& local_rectangle_00_ref { std::get<0x00>(my_ref_to_rectangle_tuple.get()) };
+      using local_rectangle_type = std::tuple_element_t<TupleIndex, rectangle_tuple_type>;
 
-      local_mandelbrot_config_00_type
-        mandelbrot_config_object_00
+      const local_rectangle_type& local_rectangle_ref { std::get<TupleIndex>(my_ref_to_rectangle_tuple.get()) };
+
+      local_mandelbrot_config_type
+        mandelbrot_config_object
         (
-          local_rectangle_00_ref.center().get_x() - local_rectangle_00_ref.dx_half(),
-          local_rectangle_00_ref.center().get_x() + local_rectangle_00_ref.dx_half(),
-          local_rectangle_00_ref.center().get_y() - local_rectangle_00_ref.dy_half(),
-          local_rectangle_00_ref.center().get_y() + local_rectangle_00_ref.dy_half(),
+          local_rectangle_ref.center().get_x() - local_rectangle_ref.dx_half(),
+          local_rectangle_ref.center().get_x() + local_rectangle_ref.dx_half(),
+          local_rectangle_ref.center().get_y() - local_rectangle_ref.dy_half(),
+          local_rectangle_ref.center().get_y() + local_rectangle_ref.dy_half(),
           my_mandelbrot_iterations
         );
 
-      mandelbrot_generator_00_type gen_00 { mandelbrot_config_object_00 };
+      mandelbrot_generator_type gen { mandelbrot_config_object };
 
-      mandelbrot_iterate_engine_worker(gen_00);
-    }
-
-    static auto mandelbrot_iterate_engine_01() -> void
-    {
-      constexpr auto MANDELBROT_CALCULATION_PIXELS_X = static_cast<std::uint_fast32_t>(768);
-      constexpr auto MANDELBROT_CALCULATION_PIXELS_Y = static_cast<std::uint_fast32_t>(768);
-
-      using mandelbrot_generator_01_type =
-        ckormanyos::mandelbrot::mandelbrot_generator_trivial<value_01_type>;
-
-      using local_mandelbrot_config_01_type =
-        ckormanyos::mandelbrot::mandelbrot_config<value_01_type,
-                                                  typename mandelbrot_generator_01_type::my_iteration_numeric_type,
-                                                  static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_X),
-                                                  static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_Y)>;
-
-      const rectangle_01_type& local_rectangle_01_ref { std::get<0x01>(my_ref_to_rectangle_tuple.get()) };
-
-      local_mandelbrot_config_01_type
-        mandelbrot_config_object_01
-        (
-          local_rectangle_01_ref.center().get_x() - local_rectangle_01_ref.dx_half(),
-          local_rectangle_01_ref.center().get_x() + local_rectangle_01_ref.dx_half(),
-          local_rectangle_01_ref.center().get_y() - local_rectangle_01_ref.dy_half(),
-          local_rectangle_01_ref.center().get_y() + local_rectangle_01_ref.dy_half(),
-          my_mandelbrot_iterations
-        );
-
-      mandelbrot_generator_01_type gen_01 { mandelbrot_config_object_01 };
-
-      mandelbrot_iterate_engine_worker(gen_01);
-    }
-
-    static auto mandelbrot_iterate_engine_02() -> void
-    {
-      constexpr auto MANDELBROT_CALCULATION_PIXELS_X = static_cast<std::uint_fast32_t>(768);
-      constexpr auto MANDELBROT_CALCULATION_PIXELS_Y = static_cast<std::uint_fast32_t>(768);
-
-      using mandelbrot_generator_02_type =
-        ckormanyos::mandelbrot::mandelbrot_generator_trivial<value_02_type>;
-
-      using local_mandelbrot_config_02_type =
-        ckormanyos::mandelbrot::mandelbrot_config<value_02_type,
-                                                  typename mandelbrot_generator_02_type::my_iteration_numeric_type,
-                                                  static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_X),
-                                                  static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_Y)>;
-
-      const rectangle_02_type& local_rectangle_02_ref { std::get<0x02>(my_ref_to_rectangle_tuple.get()) };
-
-      local_mandelbrot_config_02_type
-        mandelbrot_config_object_02
-        (
-          local_rectangle_02_ref.center().get_x() - local_rectangle_02_ref.dx_half(),
-          local_rectangle_02_ref.center().get_x() + local_rectangle_02_ref.dx_half(),
-          local_rectangle_02_ref.center().get_y() - local_rectangle_02_ref.dy_half(),
-          local_rectangle_02_ref.center().get_y() + local_rectangle_02_ref.dy_half(),
-          my_mandelbrot_iterations
-        );
-
-      mandelbrot_generator_02_type gen_02 { mandelbrot_config_object_02 };
-
-      mandelbrot_iterate_engine_worker(gen_02);
-    }
-
-    static auto mandelbrot_iterate_engine_03() -> void
-    {
-      constexpr auto MANDELBROT_CALCULATION_PIXELS_X = static_cast<std::uint_fast32_t>(768);
-      constexpr auto MANDELBROT_CALCULATION_PIXELS_Y = static_cast<std::uint_fast32_t>(768);
-
-      using mandelbrot_generator_03_type =
-        ckormanyos::mandelbrot::mandelbrot_generator_perturbative<value_03_type>;
-
-            ckormanyos::mandelbrot::color::color_stretch_histogram_method local_color_stretches;
-      const ckormanyos::mandelbrot::color::color_functions_bw             local_color_functions;
-
-      using local_mandelbrot_config_03_type =
-        ckormanyos::mandelbrot::mandelbrot_config<value_03_type,
-                                                  typename mandelbrot_generator_03_type::my_iteration_numeric_type,
-                                                  static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_X),
-                                                  static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_Y)>;
-
-      const rectangle_03_type& local_rectangle_03_ref { std::get<0x03>(my_ref_to_rectangle_tuple.get()) };
-
-      local_mandelbrot_config_03_type
-        mandelbrot_config_object_03
-        (
-          local_rectangle_03_ref.center().get_x() - local_rectangle_03_ref.dx_half(),
-          local_rectangle_03_ref.center().get_x() + local_rectangle_03_ref.dx_half(),
-          local_rectangle_03_ref.center().get_y() - local_rectangle_03_ref.dy_half(),
-          local_rectangle_03_ref.center().get_y() + local_rectangle_03_ref.dy_half(),
-          my_mandelbrot_iterations
-        );
-
-      mandelbrot_generator_03_type gen_03 { mandelbrot_config_object_03 };
-
-      mandelbrot_iterate_engine_worker(gen_03);
+      mandelbrot_iterate_engine_worker(gen);
     }
 
     template<const int TupleIndex>
@@ -526,7 +434,7 @@
         {
           load_jpeg_image
           (
-            (my_mandelbrot_zoom_factor_00 > 1) ? L"mandelbrot_zooming.jpg"
+            (std::get<0x00>(my_mandelbrot_zoom_factor_tuple) > 1) ? L"mandelbrot_zooming.jpg"
                                                : L"mandelbrot_MANDELBROT_01_FULL.jpg"
           )
         };
@@ -725,10 +633,14 @@
             }
           );
 
-          my_mandelbrot_zoom_factor_00 *= 10;
-          my_mandelbrot_zoom_factor_01 *= 10;
-          my_mandelbrot_zoom_factor_02 *= 10;
-          my_mandelbrot_zoom_factor_03 *= 10;
+          util::caller::for_each_in_tuple
+          (
+            my_mandelbrot_zoom_factor_tuple,
+            [](auto& obj)
+            {
+              obj.operator*=(10);
+            }
+          );
 
           std::get<0x00>(my_ref_to_rectangle_tuple.get()).recenter(std::get<0x00>(my_ref_to_rectangle_tuple.get()).center());
           std::get<0x01>(my_ref_to_rectangle_tuple.get()).recenter(std::get<0x01>(my_ref_to_rectangle_tuple.get()).center());
@@ -752,10 +664,14 @@
             }
           );
 
-          my_mandelbrot_zoom_factor_00 /= 10;
-          my_mandelbrot_zoom_factor_01 /= 10;
-          my_mandelbrot_zoom_factor_02 /= 10;
-          my_mandelbrot_zoom_factor_03 /= 10;
+          util::caller::for_each_in_tuple
+          (
+            my_mandelbrot_zoom_factor_tuple,
+            [](auto& obj)
+            {
+              obj.operator/=(10);
+            }
+          );
 
           // Set the flag to redraw the client window with the new JPEG.
           // The redrawing will occur below.
@@ -791,10 +707,10 @@
 
           const int local_rectangle_tuple_index { rectangle_tuple_index() };
 
-          if     (local_rectangle_tuple_index == 0x00) { mandelbrot_iterate_engine_00(); }
-          else if(local_rectangle_tuple_index == 0x01) { mandelbrot_iterate_engine_01(); }
-          else if(local_rectangle_tuple_index == 0x02) { mandelbrot_iterate_engine_02(); }
-          else                                         { mandelbrot_iterate_engine_03(); }
+          if     (local_rectangle_tuple_index == 0x00) { mandelbrot_iterate_engine<0x00>(); }
+          else if(local_rectangle_tuple_index == 0x01) { mandelbrot_iterate_engine<0x01>(); }
+          else if(local_rectangle_tuple_index == 0x02) { mandelbrot_iterate_engine<0x02>(); }
+          else                                         { mandelbrot_iterate_engine<0x03>(); }
 
           // Redraw the client window with the new JPEG.
           using local_window_type = mandelbrot_discovery;
@@ -1143,34 +1059,7 @@
            const int   IconId,
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
-  typename mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleTupleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::value_00_type mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleTupleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_mandelbrot_zoom_factor_00 { 1 };
-
-  template<const int   WindowWidth,
-           const int   WindowHeight,
-           typename    MandelbrotRectangleTupleType,
-           const char* WindowTitle,
-           const int   IconId,
-           const int   ScreenCoordinateX,
-           const int   ScreenCoordinateY>
-  typename mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleTupleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::value_01_type mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleTupleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_mandelbrot_zoom_factor_01 { 1 };
-
-  template<const int   WindowWidth,
-           const int   WindowHeight,
-           typename    MandelbrotRectangleTupleType,
-           const char* WindowTitle,
-           const int   IconId,
-           const int   ScreenCoordinateX,
-           const int   ScreenCoordinateY>
-  typename mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleTupleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::value_02_type mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleTupleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_mandelbrot_zoom_factor_02 { 1 };
-
-  template<const int   WindowWidth,
-           const int   WindowHeight,
-           typename    MandelbrotRectangleTupleType,
-           const char* WindowTitle,
-           const int   IconId,
-           const int   ScreenCoordinateX,
-           const int   ScreenCoordinateY>
-  typename mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleTupleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::value_03_type mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleTupleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_mandelbrot_zoom_factor_03 { 1 };
+  typename mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleTupleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::value_tuple_type mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleTupleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_mandelbrot_zoom_factor_tuple { value_00_type { 1 }, value_01_type { 1 }, value_02_type { 1 }, value_03_type { 1 }  };
 
   template<const int   WindowWidth,
            const int   WindowHeight,
