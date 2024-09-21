@@ -29,9 +29,9 @@ coordinate points of the Mandelbrot set.
 Build `MandelbrotDiscovery.exe` from the Microsoft(R) VisualStudio(R)
 solution, `MandelbrotDiscovery.sln` located
 [here](https://github.com/ckormanyos/mandelbrot/tree/main/MandelbrotDiscovery).
-The program written in classic Win32-API style. Aside from some
-geometrical and coordinate-related artifacts and setting up the
-main Window, the program is written in convenient, lightweight header-only.
+The program uses the classic Win32-API style. Aside from
+the JPEG and PNG libraries and image-rescaling, the program
+is written in a convenient, lightweight header-only fashion.
 
 The program is mouse-and-command-driven.
 Begin a search by starting `MandelbrotDiscovery.exe`.

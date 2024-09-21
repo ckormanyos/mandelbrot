@@ -124,6 +124,15 @@
     <ClCompile Include="jpeg-6b-2022\jutils.c">
       <Filter>jpeg-6b-2022</Filter>
     </ClCompile>
+    <ClCompile Include="jpeg-6b-2022\jdapistd.c">
+      <Filter>jpeg-6b-2022</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg-6b-2022\jdmaster.c">
+      <Filter>jpeg-6b-2022</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg-6b-2022\jdphuff.c">
+      <Filter>jpeg-6b-2022</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="jpeg-6b-2022\jchuff.h">

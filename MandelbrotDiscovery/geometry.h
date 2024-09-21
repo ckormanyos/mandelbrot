@@ -32,9 +32,23 @@
       value_type my_y { };
     };
 
-    template<typename PointType>
-    struct rectangle_type
+    struct rectangle_base
     {
+    public:
+      static constexpr auto default_pixels() noexcept -> int { return 768; }
+
+      virtual ~rectangle_base() = default;
+
+    protected:
+      rectangle_base() = default;
+    };
+
+    template<typename PointType>
+    struct rectangle_type : public rectangle_base
+    {
+    private:
+      using base_class_type = rectangle_base;
+
     public:
       using point_type = PointType;
       using value_type = typename point_type::value_type;
@@ -47,6 +61,8 @@
           my_dy_half(dyh) { }
 
       rectangle_type() = delete;
+
+      ~rectangle_type() override = default;
 
       auto operator*=(const int n) -> rectangle_type&
       {
@@ -99,7 +115,8 @@
         my_center = new_center;
       }
 
-      auto set_pixel_assoc(const int pa_x, const int pa_y) noexcept -> bool
+      auto set_pixel_assoc(const int pa_x = base_class_type::default_pixels(),
+                           const int pa_y = base_class_type::default_pixels()) noexcept -> bool
       {
         bool result_is_ok { };
 

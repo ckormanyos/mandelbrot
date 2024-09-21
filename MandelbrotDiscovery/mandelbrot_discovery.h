@@ -32,13 +32,18 @@
   #include <iomanip>
   #include <limits>
   #include <mutex>
+  #include <regex>
   #include <sstream>
   #include <string>
   #include <thread>
 
+  extern auto mandelbrot_discovery_rescale() -> void;
+
   namespace mandelbrot_discovery_detail
   {
     constexpr char WindowTitleDefault[] = "Mandelbrot Discovery";
+
+    constexpr inline auto default_pixels() noexcept -> int { return geometry::rectangle_base::default_pixels(); }
   }
 
   template<const int   WindowWidth,
@@ -70,8 +75,8 @@
     using value_02_type            = typename point_02_type::value_type;
     using value_03_type            = typename point_03_type::value_type;
 
-    using point_tuple_type = std::tuple<point_00_type, point_01_type, point_02_type, point_03_type>;
-    using value_tuple_type = std::tuple<value_00_type, value_01_type, value_02_type, value_03_type>;
+    using point_tuple_type         = std::tuple<point_00_type, point_01_type, point_02_type, point_03_type>;
+    using value_tuple_type         = std::tuple<value_00_type, value_01_type, value_02_type, value_03_type>;
 
     static constexpr int screen_coordinate_x = static_cast<int>(ScreenCoordinateX);    // Screen coordinate X
     static constexpr int screen_coordinate_y = static_cast<int>(ScreenCoordinateY);    // Screen coordinate Y
@@ -286,6 +291,7 @@
     static std::atomic<bool>        my_thread_wait_for_new_set_click;
     static value_tuple_type         my_mandelbrot_zoom_factor_tuple;
     static std::uint_fast32_t       my_mandelbrot_iterations;
+    static unsigned                 my_mandelbrot_frac2_denominator;
 
     static constexpr auto window_title() noexcept -> const char* { return WindowTitle; }
     static constexpr auto icon_id     () noexcept -> int         { return IconId; }
@@ -335,11 +341,12 @@
 
       stopwatch_type my_stopwatch { };
 
-      // Generate the Mandelbrot image. Note: The filename suffix
-      // will be provided by the interface.
+      // Generate the Mandelbrot image.
 
             ckormanyos::mandelbrot::color::color_stretch_histogram_method local_color_stretches;
       const ckormanyos::mandelbrot::color::color_functions_bw             local_color_functions;
+
+      // Note: The filename suffix of the JPEG/PNG will be provided by the interface.
 
       mandelbrot_generator.generate_mandelbrot_image("mandelbrot_zooming",
                                                       local_color_functions,
@@ -361,16 +368,20 @@
           }()
         };
 
+      // Rescale the JPEG/PNG files.
+      ::mandelbrot_discovery_rescale();
+
       write_string("mandelbrot_zoom: " + std::to_string(zoom_factor_p10())        + "\n");
       write_string("mandelbrot_iter: " + std::to_string(my_mandelbrot_iterations) + "\n");
       write_string("iteration_time : " + str_iteration_time                       + "s\n\n");
     }
 
-    template<const int TupleIndex>
+    template<const int TupleIndex,
+             const int ResFrac2Denominator>
     static auto mandelbrot_iterate_engine() -> void
     {
-      constexpr auto MANDELBROT_CALCULATION_PIXELS_X = static_cast<std::uint_fast32_t>(768);
-      constexpr auto MANDELBROT_CALCULATION_PIXELS_Y = static_cast<std::uint_fast32_t>(768);
+      constexpr auto MANDELBROT_CALCULATION_PIXELS_X = static_cast<std::uint_fast32_t>(unsigned { mandelbrot_discovery_detail::default_pixels() } / ResFrac2Denominator);
+      constexpr auto MANDELBROT_CALCULATION_PIXELS_Y = static_cast<std::uint_fast32_t>(unsigned { mandelbrot_discovery_detail::default_pixels() } / ResFrac2Denominator);
 
       using local_value_type = std::tuple_element_t<TupleIndex, value_tuple_type>;
 
@@ -435,7 +446,7 @@
           load_jpeg_image
           (
             (std::get<0x00>(my_mandelbrot_zoom_factor_tuple) > 1) ? L"mandelbrot_zooming.jpg"
-                                               : L"mandelbrot_MANDELBROT_01_FULL.jpg"
+                                                                  : L"mandelbrot_MANDELBROT_01_FULL.jpg"
           )
         };
 
@@ -620,6 +631,15 @@
             write_string("new max. iterations: " + std::to_string(iter) + "\n");
           }
         }
+        else if(   (str_cmd.find("res", static_cast<std::string::size_type>(UINT8_C(0))) == static_cast<std::string::size_type>(UINT8_C(0)))
+                && (str_cmd.length() > static_cast<std::string::size_type>(UINT8_C(3))))
+        {
+          // TODO ckormanyos Parse strings of the form:
+          //   res, res1, res1/2, res1/4, res1/8, res1/16, ...
+          // ... and use this resolution information accordingly.
+
+          // See also code at GodBolt at: https://godbolt.org/z/Wh6x37cMM
+        }
         else if(str_cmd == "calc")
         {
           // Rescale and re-center the rectangles.
@@ -707,10 +727,38 @@
 
           const int local_rectangle_tuple_index { rectangle_tuple_index() };
 
-          if     (local_rectangle_tuple_index == 0x00) { mandelbrot_iterate_engine<0x00>(); }
-          else if(local_rectangle_tuple_index == 0x01) { mandelbrot_iterate_engine<0x01>(); }
-          else if(local_rectangle_tuple_index == 0x02) { mandelbrot_iterate_engine<0x02>(); }
-          else                                         { mandelbrot_iterate_engine<0x03>(); }
+          if(local_rectangle_tuple_index == 0x00)
+          {
+            if     (my_mandelbrot_frac2_denominator == 16) { mandelbrot_iterate_engine<0x00, 16>(); }
+            else if(my_mandelbrot_frac2_denominator ==  8) { mandelbrot_iterate_engine<0x00,  8>(); }
+            else if(my_mandelbrot_frac2_denominator ==  4) { mandelbrot_iterate_engine<0x00,  4>(); }
+            else if(my_mandelbrot_frac2_denominator ==  2) { mandelbrot_iterate_engine<0x00,  2>(); }
+            else                                           { mandelbrot_iterate_engine<0x00,  1>(); }
+          }
+          else if(local_rectangle_tuple_index == 0x01)
+          {
+            if     (my_mandelbrot_frac2_denominator == 16) { mandelbrot_iterate_engine<0x01, 16>(); }
+            else if(my_mandelbrot_frac2_denominator ==  8) { mandelbrot_iterate_engine<0x01,  8>(); }
+            else if(my_mandelbrot_frac2_denominator ==  4) { mandelbrot_iterate_engine<0x01,  4>(); }
+            else if(my_mandelbrot_frac2_denominator ==  2) { mandelbrot_iterate_engine<0x01,  2>(); }
+            else                                           { mandelbrot_iterate_engine<0x01,  1>(); }
+          }
+          else if(local_rectangle_tuple_index == 0x02)
+          {
+            if     (my_mandelbrot_frac2_denominator == 16) { mandelbrot_iterate_engine<0x02, 16>(); }
+            else if(my_mandelbrot_frac2_denominator ==  8) { mandelbrot_iterate_engine<0x02,  8>(); }
+            else if(my_mandelbrot_frac2_denominator ==  4) { mandelbrot_iterate_engine<0x02,  4>(); }
+            else if(my_mandelbrot_frac2_denominator ==  2) { mandelbrot_iterate_engine<0x02,  2>(); }
+            else                                           { mandelbrot_iterate_engine<0x02,  1>(); }
+          }
+          else
+          {
+            if     (my_mandelbrot_frac2_denominator == 16) { mandelbrot_iterate_engine<0x03, 16>(); }
+            else if(my_mandelbrot_frac2_denominator ==  8) { mandelbrot_iterate_engine<0x03,  8>(); }
+            else if(my_mandelbrot_frac2_denominator ==  4) { mandelbrot_iterate_engine<0x03,  4>(); }
+            else if(my_mandelbrot_frac2_denominator ==  2) { mandelbrot_iterate_engine<0x03,  2>(); }
+            else                                           { mandelbrot_iterate_engine<0x03,  1>(); }
+          }
 
           // Redraw the client window with the new JPEG.
           using local_window_type = mandelbrot_discovery;
@@ -1069,5 +1117,14 @@
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
   std::uint_fast32_t mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleTupleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_mandelbrot_iterations { static_cast<std::uint_fast32_t>(UINT32_C(400)) };
+
+  template<const int   WindowWidth,
+           const int   WindowHeight,
+           typename    MandelbrotRectangleTupleType,
+           const char* WindowTitle,
+           const int   IconId,
+           const int   ScreenCoordinateX,
+           const int   ScreenCoordinateY>
+  unsigned mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleTupleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_mandelbrot_frac2_denominator { 1U };
 
 #endif // MANDELBROT_DISCOVERY_2024_04_12_H
