@@ -75,7 +75,7 @@ auto rectangle_00() -> rectangle_00_type&
   };
 
   {
-    static const bool result_pixel_assoc_is_ok { my_rect.set_pixel_assoc() };
+    static const bool result_pixel_assoc_is_ok { my_rect.set_pixel_assoc(geometry::rectangle_base::default_pixels(), geometry::rectangle_base::default_pixels()) };
 
     static_cast<void>(result_pixel_assoc_is_ok);
   }
@@ -93,7 +93,7 @@ auto rectangle_01() -> rectangle_01_type&
   };
 
   {
-    static const bool result_pixel_assoc_is_ok { my_rect.set_pixel_assoc() };
+    static const bool result_pixel_assoc_is_ok { my_rect.set_pixel_assoc(geometry::rectangle_base::default_pixels(), geometry::rectangle_base::default_pixels()) };
 
     static_cast<void>(result_pixel_assoc_is_ok);
   }
@@ -111,7 +111,7 @@ auto rectangle_02() -> rectangle_02_type&
   };
 
   {
-    static const bool result_pixel_assoc_is_ok { my_rect.set_pixel_assoc() };
+    static const bool result_pixel_assoc_is_ok { my_rect.set_pixel_assoc(geometry::rectangle_base::default_pixels(), geometry::rectangle_base::default_pixels()) };
 
     static_cast<void>(result_pixel_assoc_is_ok);
   }
@@ -129,7 +129,7 @@ auto rectangle_03() -> rectangle_03_type&
   };
 
   {
-    static const bool result_pixel_assoc_is_ok { my_rect.set_pixel_assoc() };
+    static const bool result_pixel_assoc_is_ok { my_rect.set_pixel_assoc(geometry::rectangle_base::default_pixels(), geometry::rectangle_base::default_pixels()) };
 
     static_cast<void>(result_pixel_assoc_is_ok);
   }

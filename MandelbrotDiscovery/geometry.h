@@ -107,16 +107,14 @@
       auto dx_half() const noexcept -> value_type { return my_dx_half; }
       auto dy_half() const noexcept -> value_type { return my_dy_half; }
 
-      auto center() const noexcept -> const point_type& { return my_center; }
-      auto center() noexcept -> point_type& { return my_center; }
+      auto center() const noexcept -> const point_type { return my_center; }
 
       auto recenter(const point_type& new_center) noexcept -> void
       {
         my_center = new_center;
       }
 
-      auto set_pixel_assoc(const int pa_x = base_class_type::default_pixels(),
-                           const int pa_y = base_class_type::default_pixels()) noexcept -> bool
+      auto set_pixel_assoc(const int pa_x, const int pa_y) noexcept -> bool
       {
         bool result_is_ok { };
 
