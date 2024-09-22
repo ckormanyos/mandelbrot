@@ -32,9 +32,23 @@
       value_type my_y { };
     };
 
-    template<typename PointType>
-    struct rectangle_type
+    struct rectangle_base
     {
+    public:
+      static constexpr auto default_pixels() noexcept -> int { return 768; }
+
+      virtual ~rectangle_base() = default;
+
+    protected:
+      rectangle_base() = default;
+    };
+
+    template<typename PointType>
+    struct rectangle_type : public rectangle_base
+    {
+    private:
+      using base_class_type = rectangle_base;
+
     public:
       using point_type = PointType;
       using value_type = typename point_type::value_type;
@@ -47,6 +61,8 @@
           my_dy_half(dyh) { }
 
       rectangle_type() = delete;
+
+      ~rectangle_type() override = default;
 
       auto operator*=(const int n) -> rectangle_type&
       {
@@ -91,8 +107,7 @@
       auto dx_half() const noexcept -> value_type { return my_dx_half; }
       auto dy_half() const noexcept -> value_type { return my_dy_half; }
 
-      auto center() const noexcept -> const point_type& { return my_center; }
-      auto center() noexcept -> point_type& { return my_center; }
+      auto center() const noexcept -> const point_type { return my_center; }
 
       auto recenter(const point_type& new_center) noexcept -> void
       {

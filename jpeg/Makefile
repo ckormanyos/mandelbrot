@@ -58,6 +58,7 @@ $(OBJ_DIR)/libjpeg-6b.a :
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/jcsample.c -o $(OBJ_DIR)/jcsample.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/jctrans.c  -o $(OBJ_DIR)/jctrans.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/jdapimin.c -o $(OBJ_DIR)/jdapimin.o
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/jdapistd.c -o $(OBJ_DIR)/jdapistd.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/jdatadst.c -o $(OBJ_DIR)/jdatadst.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/jdcoefct.c -o $(OBJ_DIR)/jdcoefct.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/jdcolor.c  -o $(OBJ_DIR)/jdcolor.o
@@ -65,7 +66,9 @@ $(OBJ_DIR)/libjpeg-6b.a :
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/jdinput.c  -o $(OBJ_DIR)/jdinput.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/jdmainct.c -o $(OBJ_DIR)/jdmainct.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/jdmarker.c -o $(OBJ_DIR)/jdmarker.o
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/jdmaster.c -o $(OBJ_DIR)/jdmaster.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/jdmerge.c  -o $(OBJ_DIR)/jdmerge.o
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/jdphuff.c  -o $(OBJ_DIR)/jdphuff.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/jdpostct.c -o $(OBJ_DIR)/jdpostct.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/jdsample.c -o $(OBJ_DIR)/jdsample.o
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/jerror.c   -o $(OBJ_DIR)/jerror.o

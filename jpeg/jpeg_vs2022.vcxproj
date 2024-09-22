@@ -28,6 +28,7 @@
     <ClCompile Include="jpeg-6b-2022\jcsample.c" />
     <ClCompile Include="jpeg-6b-2022\jctrans.c" />
     <ClCompile Include="jpeg-6b-2022\jdapimin.c" />
+    <ClCompile Include="jpeg-6b-2022\jdapistd.c" />
     <ClCompile Include="jpeg-6b-2022\jdatadst.c" />
     <ClCompile Include="jpeg-6b-2022\jdcoefct.c" />
     <ClCompile Include="jpeg-6b-2022\jdcolor.c" />
@@ -36,7 +37,9 @@
     <ClCompile Include="jpeg-6b-2022\jdinput.c" />
     <ClCompile Include="jpeg-6b-2022\jdmainct.c" />
     <ClCompile Include="jpeg-6b-2022\jdmarker.c" />
+    <ClCompile Include="jpeg-6b-2022\jdmaster.c" />
     <ClCompile Include="jpeg-6b-2022\jdmerge.c" />
+    <ClCompile Include="jpeg-6b-2022\jdphuff.c" />
     <ClCompile Include="jpeg-6b-2022\jdpostct.c" />
     <ClCompile Include="jpeg-6b-2022\jdsample.c" />
     <ClCompile Include="jpeg-6b-2022\jerror.c" />

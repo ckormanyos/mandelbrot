@@ -19,6 +19,9 @@
     <ClCompile Include="mandelbrot_discovery.cpp">
       <Filter>MandelbrotDiscovery</Filter>
     </ClCompile>
+    <ClCompile Include="mandelbrot_discovery_rescale.cpp">
+      <Filter>MandelbrotDiscovery</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mandelbrot_discovery.h">
