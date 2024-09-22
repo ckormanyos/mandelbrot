@@ -266,9 +266,6 @@
       if(result_alloc_console_is_ok)
       {
         static_cast<void>(::FreeConsole());
-
-        static_cast<void>(::CloseHandle(console_input()));
-        static_cast<void>(::CloseHandle(console_output()));
       }
 
       return static_cast<int>(INT8_C(0));
@@ -638,7 +635,49 @@
           //   res, res1, res1/2, res1/4, res1/8, res1/16, ...
           // ... and use this resolution information accordingly.
 
-          // See also code at GodBolt at: https://godbolt.org/z/Wh6x37cMM
+          // See also code at GodBolt at: https://godbolt.org/z/Wq5nran4o
+
+          if((str_cmd == "res") || (str_cmd == "res1"))
+          {
+            my_mandelbrot_frac2_denominator = 1;
+
+            write_string("new resolution having fraction: 1/1\n");
+          }
+          else
+          {
+            // Regex pattern to match the required strings.
+            std::string pattern_str = "res(1)?(/(2|4|8|16))?";
+            std::regex pattern(pattern_str);
+
+            std::smatch match;
+
+            if (std::regex_match(str_cmd, match, pattern))
+            {
+              if((match[1].matched) && (match[3].matched))
+              {
+                const std::string str_frac { match[3].str() };
+
+                int frac2 { };
+
+                const auto result_of_iter_from_chars =
+                  std::from_chars
+                  (
+                    str_frac.data(),
+                    str_frac.data() + str_frac.length(),
+                    frac2
+                  );
+
+                const auto err_code = result_of_iter_from_chars.ec;
+
+                if(err_code == std::errc())
+                {
+                  my_mandelbrot_frac2_denominator = frac2;
+
+                  write_string("new resolution having fraction: 1/" + std::to_string(frac2) + "\n");
+                }
+              }
+            }
+          }
         }
         else if(str_cmd == "calc")
         {
