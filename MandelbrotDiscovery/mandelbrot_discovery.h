@@ -946,10 +946,12 @@
            write_string("MandelbrotDiscovery (C) 2024 Christopher Kormanyos.\n")
         && write_string("  help (or ?) - Print this text.\n")
         && write_string("  set         - Select new coordinates with the mouse.\n")
-        && write_string("  calc**      - Iterate at the current coordinates and display.\n")
+        && write_string("  calc        - Iterate at the current coordinates and display.\n")
         && write_string("  itrNNNN     - Set max.-iterations, where NNNN is something like 1000\n")
+        && write_string("  res1/F      - Set resultion, where F can be 1, 2, 4, 8 or 16\n")
         && write_string("  redo        - Iterate at the current coordinates and scale.\n")
         && write_string("  out         - Backstep one single order of magnification.\n")
+        && write_string("  exit        - Exit the program.\n")
       );
 
       return result_write_is_ok;
