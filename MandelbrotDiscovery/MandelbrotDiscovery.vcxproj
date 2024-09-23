@@ -106,6 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mandelbrot_discovery.cpp" />
+    <ClCompile Include="mandelbrot_discovery_cmd.cpp" />
     <ClCompile Include="mandelbrot_discovery_rescale.cpp" />
   </ItemGroup>
   <ItemGroup>

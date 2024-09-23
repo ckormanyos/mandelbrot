@@ -29,28 +29,14 @@ coordinate points of the Mandelbrot set.
 Build `MandelbrotDiscovery.exe` from the Microsoft(R) VisualStudio(R)
 solution, `MandelbrotDiscovery.sln` located
 [here](https://github.com/ckormanyos/mandelbrot/tree/main/MandelbrotDiscovery).
-The program uses the classic Win32-API style. Aside from
-the JPEG and PNG libraries and image-rescaling, the program
-is written in a convenient, lightweight header-only fashion.
+Aside from the JPEG/PNG libraries and image-rescaling,
+the program is written in a convenient, lightweight
+classic Win32-API style.
 
 The program is mouse-and-command-driven.
 Begin a search by starting `MandelbrotDiscovery.exe`.
 Zooming is accomplished with commands entered in the command window
 in combination with mouse-clicks in the client area of the Mandelbrot image window.
-
-### Command Summary
-
-The following commands are supported at the moment (with more planned for the future).
-
-  - <strong><code>help</code></strong> (or <strong><code>?</code></strong>) - Print the command list.
-  - <strong><code>set</code></strong> - Enter the <strong><code>set</code></strong> command prior to pointing and clicking to select now coordinates with the mouse.
-  - <strong><code>calc</code></strong> - The <strong><code>calc</code></strong> command calculated the Mandelbrot image at the currently set coordinate point. It subsequently displays the image after the calculation.</code>
-  - <strong><code>itrNNNN</code></strong> - Using <strong><code>itrNNNN</code></strong> sets the maximum number of iterations to the appended number. The command <strong><code>itr2000</code></strong>, for instance, sets the maximum number of iterations to $2,000$. Switch $2,000$ for another number like $40,000$ to obtain a maximum iteration count of $40,000$ and so on. The default iteration count at program start is modestly set to $400$. So don't be surprised if higher iteration counts are required for deeper and deeper dives.
-  - <strong><code>res1/F</code></strong> - Using <strong><code>res1/F</code></strong> sets the fractional resolution based on the default of $768{\times}768$ pixels. The command <strong><code>res1/2</code></strong>, for example, sets the resolution to $384{\times}384$ pixels. The fractions $1/1$, $1/2$, $1/4$, $1/8$ and $1/16$ are supported. The command <strong><code>res</code></strong> (or <strong><code>res1</code></strong>) restores the default resolution. Reduced resolution can significantly decrease computation time when searching via deep diving.
-  - <strong><code>redo</code></strong> - The command <strong><code>redo</code></strong> simply performs, yet again, the iteration at the coordinate point that is already set. This might be done if, for example, the image was not resolved and the iteration count needs to be increased. You can also exercise the <strong><code>set</code></strong> command one or more times prior to exercising the <strong><code>redo</code></strong> command.
-  - <strong><code>out</code></strong> - With <strong><code>out</code></strong> you can backstep one single order of magnification at the point that has been set and clicked. This can be done repeatedly if a different zoom pathway is desired even after zooming in to a point. So if you've taken a bit of a wrong turn, just zoom <strong><code>out</code></strong> one or more times and refine your coordinate search.
-  - <strong><code>exit</code></strong> - Quits the program and closes the image window.
-
 
 ### The Startup Windows
 
@@ -138,13 +124,18 @@ The result of this dive ended up being:
 
 ![](https://github.com/ckormanyos/mandelbrot/blob/main/images/discovery/mandelbrot_discovery_dive_example.jpg)
 
-## Additional Program Dynamic Behavior
+### Command Summary
 
-The following features (and probably a few more) are TODO both in docs as well as in the program.
+The following commands are supported at the moment (with more planned for the future).
 
-### Changing the Resolution
-
-This feature is TODO both in docs as well as in the program.
+  - <strong><code>help</code></strong> (or <strong><code>?</code></strong>) - Print the command list.
+  - <strong><code>set</code></strong> - Enter the <strong><code>set</code></strong> command prior to pointing and clicking to select now coordinates with the mouse.
+  - <strong><code>calc</code></strong> - The <strong><code>calc</code></strong> command calculated the Mandelbrot image at the currently set coordinate point. It subsequently displays the image after the calculation.</code>
+  - <strong><code>itrNNNN</code></strong> - Using <strong><code>itrNNNN</code></strong> sets the maximum number of iterations to the appended number. The command <strong><code>itr2000</code></strong>, for instance, sets the maximum number of iterations to $2,000$. Switch $2,000$ for another number like $40,000$ to obtain a maximum iteration count of $40,000$ and so on. The default iteration count at program start is modestly set to $400$. So don't be surprised if higher iteration counts are required for deeper and deeper dives.
+  - <strong><code>res1/F</code></strong> - Using <strong><code>res1/F</code></strong> sets the fractional resolution based on the default of $768{\times}768$ pixels. The command <strong><code>res1/2</code></strong>, for example, sets the resolution to $384{\times}384$ pixels. The fractions $1/1$, $1/2$, $1/4$, $1/8$ and $1/16$ are supported. The command <strong><code>res</code></strong> (or <strong><code>res1</code></strong>) restores the default resolution. Reduced resolution can significantly decrease computation time when searching via deep diving.
+  - <strong><code>redo</code></strong> - The command <strong><code>redo</code></strong> simply performs, yet again, the iteration at the coordinate point that is already set. This might be done if, for example, the image was not resolved and the iteration count needs to be increased. You can also exercise the <strong><code>set</code></strong> command one or more times prior to exercising the <strong><code>redo</code></strong> command.
+  - <strong><code>out</code></strong> - With <strong><code>out</code></strong> you can backstep one single order of magnification at the point that has been set and clicked. This can be done repeatedly if a different zoom pathway is desired even after zooming in to a point. So if you've taken a bit of a wrong turn, just zoom <strong><code>out</code></strong> one or more times and refine your coordinate search.
+  - <strong><code>exit</code></strong> - Quits the program and closes the image window.
 
 ### Saving and Restoring Previous Work
 
