@@ -38,6 +38,8 @@
   #include <thread>
 
   extern auto mandelbrot_discovery_rescale() -> void;
+  extern auto mandelbrot_discovery_cmd_res(const std::string& str_cmd, int& frac, std::string& str_cmd_result) -> bool;
+  extern auto mandelbrot_discovery_cmd_itr(const std::string& str_cmd, unsigned& iter, std::string& str_cmd_result) -> bool;
 
   namespace mandelbrot_discovery_detail
   {
@@ -405,7 +407,7 @@
           local_rectangle_ref.center().get_x() + local_rectangle_ref.dx_half(),
           local_rectangle_ref.center().get_y() - local_rectangle_ref.dy_half(),
           local_rectangle_ref.center().get_y() + local_rectangle_ref.dy_half(),
-          my_mandelbrot_iterations
+          std::uint_fast32_t { my_mandelbrot_iterations }
         );
 
       mandelbrot_generator_type gen { mandelbrot_config_object };
@@ -601,11 +603,13 @@
 
         write_string("cmd: ");
 
-        std::string str_cmd { };
+        std::string str_cmd               { };
+        std::string str_cmd_result        { };
+        bool        do_iterate_and_redraw { };
+        int         frac2                 { };
+        unsigned    iter                  { };
 
         read_string(str_cmd);
-
-        bool do_iterate_and_redraw { };
 
         if(str_cmd == "set")
         {
@@ -618,78 +622,17 @@
             std::this_thread::sleep_for(std::chrono::microseconds(static_cast<unsigned>(UINT8_C(20))));
           }
         }
-        else if(   (str_cmd.find("itr", static_cast<std::string::size_type>(UINT8_C(0))) == static_cast<std::string::size_type>(UINT8_C(0)))
-                && (str_cmd.length() > static_cast<std::string::size_type>(UINT8_C(3))))
+        else if(::mandelbrot_discovery_cmd_itr(str_cmd, iter, str_cmd_result))
         {
-          std::uint_fast32_t iter { };
+          my_mandelbrot_iterations = iter;
 
-          const auto result_of_iter_from_chars =
-            std::from_chars
-            (
-              str_cmd.c_str() + static_cast<std::string::size_type>(UINT8_C(3)),
-              str_cmd.c_str() + str_cmd.length(),
-              iter
-            );
-
-          const auto err_code = result_of_iter_from_chars.ec;
-
-          if(err_code == std::errc())
-          {
-            my_mandelbrot_iterations = iter;
-
-            write_string("new max. iterations: " + std::to_string(iter) + "\n");
-          }
+          write_string(str_cmd_result);
         }
-        else if(   (str_cmd.find("res", static_cast<std::string::size_type>(UINT8_C(0))) == static_cast<std::string::size_type>(UINT8_C(0)))
-                && (str_cmd.length() > static_cast<std::string::size_type>(UINT8_C(3))))
+        else if(::mandelbrot_discovery_cmd_res(str_cmd, frac2, str_cmd_result))
         {
-          // TODO ckormanyos Parse strings of the form:
-          //   res, res1, res1/2, res1/4, res1/8, res1/16, ...
-          // ... and use this resolution information accordingly.
+          my_mandelbrot_frac2_denominator = frac2;
 
-          // See also code at GodBolt at: https://godbolt.org/z/Wq5nran4o
-
-          if((str_cmd == "res") || (str_cmd == "res1"))
-          {
-            my_mandelbrot_frac2_denominator = 1;
-
-            write_string("new resolution having fraction: 1/1\n");
-          }
-          else
-          {
-            // Regex pattern to match the required strings.
-            std::string pattern_str = "res(1)?(/(2|4|8|16))?";
-            std::regex pattern(pattern_str);
-
-            std::smatch match;
-
-            if (std::regex_match(str_cmd, match, pattern))
-            {
-              if((match[1].matched) && (match[3].matched))
-              {
-                const std::string str_frac { match[3].str() };
-
-                int frac2 { };
-
-                const auto result_of_iter_from_chars =
-                  std::from_chars
-                  (
-                    str_frac.data(),
-                    str_frac.data() + str_frac.length(),
-                    frac2
-                  );
-
-                const auto err_code = result_of_iter_from_chars.ec;
-
-                if(err_code == std::errc())
-                {
-                  my_mandelbrot_frac2_denominator = frac2;
-
-                  write_string("new resolution having fraction: 1/" + std::to_string(frac2) + "\n");
-                }
-              }
-            }
-          }
+          write_string(str_cmd_result);
         }
         else if(str_cmd == "calc")
         {
@@ -1178,7 +1121,7 @@
            const int   IconId,
            const int   ScreenCoordinateX,
            const int   ScreenCoordinateY>
-  std::uint_fast32_t mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleTupleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_mandelbrot_iterations { static_cast<std::uint_fast32_t>(UINT32_C(400)) };
+  unsigned mandelbrot_discovery<WindowWidth, WindowHeight, MandelbrotRectangleTupleType, WindowTitle, IconId, ScreenCoordinateX, ScreenCoordinateY>::my_mandelbrot_iterations { static_cast<unsigned>(UINT16_C(400)) };
 
   template<const int   WindowWidth,
            const int   WindowHeight,
