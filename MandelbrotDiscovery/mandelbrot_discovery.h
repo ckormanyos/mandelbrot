@@ -516,32 +516,29 @@
           {
             const int tuple_index { rectangle_tuple_index() };
 
-            switch(tuple_index)
+            if(tuple_index == 0)
             {
-              case 0x00:
-                result_is_ok = (write_number("x_val  : ", std::get<0x00>(my_rectangle_centers).get_x())                               && result_is_ok);
-                result_is_ok = (write_number("y_val  : ", std::get<0x00>(my_rectangle_centers).get_y())                               && result_is_ok);
-                result_is_ok = (write_number("dx_half: ", std::get<0x00>(my_ref_to_rectangle_tuple.get()).dx_half(), 3) && result_is_ok);
-                break;
-
-            case 0x01:
-              result_is_ok = (write_number("x_val  : ", std::get<0x01>(my_rectangle_centers).get_x())                               && result_is_ok);
-              result_is_ok = (write_number("y_val  : ", std::get<0x01>(my_rectangle_centers).get_y())                               && result_is_ok);
+              result_is_ok = (write_number("x_val  : ", std::get<0x00>(my_rectangle_centers).get_x())                 && result_is_ok);
+              result_is_ok = (write_number("y_val  : ", std::get<0x00>(my_rectangle_centers).get_y())                 && result_is_ok);
+              result_is_ok = (write_number("dx_half: ", std::get<0x00>(my_ref_to_rectangle_tuple.get()).dx_half(), 3) && result_is_ok);
+            }
+            else if(tuple_index == 1)
+            {
+              result_is_ok = (write_number("x_val  : ", std::get<0x01>(my_rectangle_centers).get_x())                 && result_is_ok);
+              result_is_ok = (write_number("y_val  : ", std::get<0x01>(my_rectangle_centers).get_y())                 && result_is_ok);
               result_is_ok = (write_number("dx_half: ", std::get<0x01>(my_ref_to_rectangle_tuple.get()).dx_half(), 3) && result_is_ok);
-              break;
-
-            case 0x02:
-              result_is_ok = (write_number("x_val  : ", std::get<0x02>(my_rectangle_centers).get_x())                               && result_is_ok);
-              result_is_ok = (write_number("y_val  : ", std::get<0x02>(my_rectangle_centers).get_y())                               && result_is_ok);
+            }
+            else if(tuple_index == 2)
+            {
+              result_is_ok = (write_number("x_val  : ", std::get<0x02>(my_rectangle_centers).get_x())                 && result_is_ok);
+              result_is_ok = (write_number("y_val  : ", std::get<0x02>(my_rectangle_centers).get_y())                 && result_is_ok);
               result_is_ok = (write_number("dx_half: ", std::get<0x02>(my_ref_to_rectangle_tuple.get()).dx_half(), 3) && result_is_ok);
-              break;
-
-            case 0x03:
-            default:
-              result_is_ok = (write_number("x_val  : ", std::get<0x03>(my_rectangle_centers).get_x())                               && result_is_ok);
-              result_is_ok = (write_number("y_val  : ", std::get<0x03>(my_rectangle_centers).get_y())                               && result_is_ok);
+            }
+            else
+            {
+              result_is_ok = (write_number("x_val  : ", std::get<0x03>(my_rectangle_centers).get_x())                 && result_is_ok);
+              result_is_ok = (write_number("y_val  : ", std::get<0x03>(my_rectangle_centers).get_y())                 && result_is_ok);
               result_is_ok = (write_number("dx_half: ", std::get<0x03>(my_ref_to_rectangle_tuple.get()).dx_half(), 3) && result_is_ok);
-              break;
             }
 
             result_is_ok = (write_string("\n") && result_is_ok);
@@ -723,35 +720,35 @@
 
           if(local_rectangle_tuple_index == 0x00)
           {
-            if     (my_mandelbrot_frac2_denominator == 16) { mandelbrot_iterate_engine<0x00, 16>(); }
-            else if(my_mandelbrot_frac2_denominator ==  8) { mandelbrot_iterate_engine<0x00,  8>(); }
-            else if(my_mandelbrot_frac2_denominator ==  4) { mandelbrot_iterate_engine<0x00,  4>(); }
-            else if(my_mandelbrot_frac2_denominator ==  2) { mandelbrot_iterate_engine<0x00,  2>(); }
-            else                                           { mandelbrot_iterate_engine<0x00,  1>(); }
+              (my_mandelbrot_frac2_denominator == 1) ? mandelbrot_iterate_engine<0x00,  1>()
+            : (my_mandelbrot_frac2_denominator == 2) ? mandelbrot_iterate_engine<0x00,  2>()
+            : (my_mandelbrot_frac2_denominator == 4) ? mandelbrot_iterate_engine<0x00,  4>()
+            : (my_mandelbrot_frac2_denominator == 8) ? mandelbrot_iterate_engine<0x00,  8>()
+            :                                          mandelbrot_iterate_engine<0x00, 16>();
           }
           else if(local_rectangle_tuple_index == 0x01)
           {
-            if     (my_mandelbrot_frac2_denominator == 16) { mandelbrot_iterate_engine<0x01, 16>(); }
-            else if(my_mandelbrot_frac2_denominator ==  8) { mandelbrot_iterate_engine<0x01,  8>(); }
-            else if(my_mandelbrot_frac2_denominator ==  4) { mandelbrot_iterate_engine<0x01,  4>(); }
-            else if(my_mandelbrot_frac2_denominator ==  2) { mandelbrot_iterate_engine<0x01,  2>(); }
-            else                                           { mandelbrot_iterate_engine<0x01,  1>(); }
+              (my_mandelbrot_frac2_denominator == 1) ? mandelbrot_iterate_engine<0x01,  1>()
+            : (my_mandelbrot_frac2_denominator == 2) ? mandelbrot_iterate_engine<0x01,  2>()
+            : (my_mandelbrot_frac2_denominator == 4) ? mandelbrot_iterate_engine<0x01,  4>()
+            : (my_mandelbrot_frac2_denominator == 8) ? mandelbrot_iterate_engine<0x01,  8>()
+            :                                          mandelbrot_iterate_engine<0x01, 16>();
           }
           else if(local_rectangle_tuple_index == 0x02)
           {
-            if     (my_mandelbrot_frac2_denominator == 16) { mandelbrot_iterate_engine<0x02, 16>(); }
-            else if(my_mandelbrot_frac2_denominator ==  8) { mandelbrot_iterate_engine<0x02,  8>(); }
-            else if(my_mandelbrot_frac2_denominator ==  4) { mandelbrot_iterate_engine<0x02,  4>(); }
-            else if(my_mandelbrot_frac2_denominator ==  2) { mandelbrot_iterate_engine<0x02,  2>(); }
-            else                                           { mandelbrot_iterate_engine<0x02,  1>(); }
+              (my_mandelbrot_frac2_denominator == 1) ? mandelbrot_iterate_engine<0x02,  1>()
+            : (my_mandelbrot_frac2_denominator == 2) ? mandelbrot_iterate_engine<0x02,  2>()
+            : (my_mandelbrot_frac2_denominator == 4) ? mandelbrot_iterate_engine<0x02,  4>()
+            : (my_mandelbrot_frac2_denominator == 8) ? mandelbrot_iterate_engine<0x02,  8>()
+            :                                          mandelbrot_iterate_engine<0x02, 16>();
           }
           else
           {
-            if     (my_mandelbrot_frac2_denominator == 16) { mandelbrot_iterate_engine<0x03, 16>(); }
-            else if(my_mandelbrot_frac2_denominator ==  8) { mandelbrot_iterate_engine<0x03,  8>(); }
-            else if(my_mandelbrot_frac2_denominator ==  4) { mandelbrot_iterate_engine<0x03,  4>(); }
-            else if(my_mandelbrot_frac2_denominator ==  2) { mandelbrot_iterate_engine<0x03,  2>(); }
-            else                                           { mandelbrot_iterate_engine<0x03,  1>(); }
+              (my_mandelbrot_frac2_denominator == 1) ? mandelbrot_iterate_engine<0x03,  1>()
+            : (my_mandelbrot_frac2_denominator == 2) ? mandelbrot_iterate_engine<0x03,  2>()
+            : (my_mandelbrot_frac2_denominator == 4) ? mandelbrot_iterate_engine<0x03,  4>()
+            : (my_mandelbrot_frac2_denominator == 8) ? mandelbrot_iterate_engine<0x03,  8>()
+            :                                          mandelbrot_iterate_engine<0x03, 16>();
           }
 
           // Redraw the client window with the new JPEG.
