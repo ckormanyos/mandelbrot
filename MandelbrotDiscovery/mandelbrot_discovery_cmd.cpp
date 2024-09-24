@@ -49,12 +49,16 @@ auto mandelbrot_discovery_cmd_itr(const std::string& str_cmd, unsigned& iter, st
 
 auto mandelbrot_discovery_cmd_res(const std::string& str_cmd, int& frac2, std::string& str_cmd_result) -> bool
 {
+  const bool cmd_is_res_exact { (str_cmd == "res") };
+
   const bool
-    cmd_is_res
+    cmd_is_res_maybe
     {
          (str_cmd.find("res", static_cast<std::string::size_type>(UINT8_C(0))) == static_cast<std::string::size_type>(UINT8_C(0)))
       && (str_cmd.length() > static_cast<std::string::size_type>(UINT8_C(3)))
     };
+
+  const bool cmd_is_res { cmd_is_res_exact || cmd_is_res_maybe };
 
   bool result_cmd_res_is_ok { false };
 
@@ -100,6 +104,8 @@ auto mandelbrot_discovery_cmd_res(const std::string& str_cmd, int& frac2, std::s
           if(err_code == std::errc())
           {
             frac2 = local_frac2;
+
+            str_cmd_result = "new resolution having fraction: 1/" + str_frac + "\n";
 
             result_cmd_res_is_ok = true;
           }
