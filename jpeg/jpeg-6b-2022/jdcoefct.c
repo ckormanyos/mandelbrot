@@ -211,7 +211,7 @@ decompress_onepass(j_decompress_ptr cinfo, JSAMPIMAGE output_buf)
         useful_width = (MCU_col_num < last_MCU_col) ? compptr->MCU_width
                        : compptr->last_col_width;
         output_ptr = output_buf[compptr->component_index] +
-                     (JDIMENSION) ((JDIMENSION) yoffset * (JDIMENSION) compptr->DCT_scaled_size);
+                     (JDIMENSION)((JDIMENSION) yoffset * (JDIMENSION) compptr->DCT_scaled_size);
         start_col = MCU_col_num * (JDIMENSION) compptr->MCU_sample_width;
 
         for(yindex = 0; yindex < compptr->MCU_height; yindex++)
@@ -635,7 +635,7 @@ decompress_smooth_data(j_decompress_ptr cinfo, JSAMPIMAGE output_buf)
       access_rows += compptr->v_samp_factor; /* prior iMCU row too */
       buffer = (*cinfo->mem->access_virt_barray)
                ((j_common_ptr) cinfo, coef->whole_image[ci],
-                (JDIMENSION) (cinfo->output_iMCU_row - 1) * (JDIMENSION) compptr->v_samp_factor,
+                (JDIMENSION)(cinfo->output_iMCU_row - 1) * (JDIMENSION) compptr->v_samp_factor,
                 (JDIMENSION) access_rows, FALSE);
       buffer += compptr->v_samp_factor;  /* point to current iMCU row */
       first_row = FALSE;

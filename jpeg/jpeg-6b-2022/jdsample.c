@@ -145,8 +145,8 @@ sep_upsample(j_decompress_ptr cinfo,
 
   /* Adjust counts */
   *out_row_ctr += num_rows;
-  upsample->rows_to_go   =       ((JDIMENSION) upsample->rows_to_go   - (JDIMENSION) num_rows);
-  upsample->next_row_out = (int) ((JDIMENSION) upsample->next_row_out + (JDIMENSION) num_rows);
+  upsample->rows_to_go   = ((JDIMENSION) upsample->rows_to_go   - (JDIMENSION) num_rows);
+  upsample->next_row_out = (int)((JDIMENSION) upsample->next_row_out + (JDIMENSION) num_rows);
 
   /* When the buffer is emptied, declare this input row group consumed */
   if(upsample->next_row_out >= cinfo->max_v_samp_factor)

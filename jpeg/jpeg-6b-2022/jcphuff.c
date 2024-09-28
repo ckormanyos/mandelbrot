@@ -370,7 +370,7 @@ emit_eobrun(phuff_entropy_ptr entropy)
     unsigned int temp = entropy->EOBRUN;
     int nbits = 0;
 
-    while((unsigned int) (temp >>= 1U) != 0U)
+    while((unsigned int)(temp >>= 1U) != 0U)
     {
       nbits++;
     }
