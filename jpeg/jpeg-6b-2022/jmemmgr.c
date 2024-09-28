@@ -460,8 +460,8 @@ alloc_sarray(j_common_ptr cinfo, int pool_id,
   long ltemp;
 
   /* Calculate max # of rows allowed in one allocation chunk */
-  ltemp = (long) (((long) MAX_ALLOC_CHUNK - (long) SIZEOF(large_pool_hdr)) /
-                  ((long) samplesperrow   * (long) SIZEOF(JSAMPLE)));
+  ltemp = (long)(((long) MAX_ALLOC_CHUNK - (long) SIZEOF(large_pool_hdr)) /
+                 ((long) samplesperrow   * (long) SIZEOF(JSAMPLE)));
 
   if(ltemp <= 0)
   {
@@ -521,8 +521,8 @@ alloc_barray(j_common_ptr cinfo, int pool_id,
   long ltemp;
 
   /* Calculate max # of rows allowed in one allocation chunk */
-  ltemp = (long) (((long) MAX_ALLOC_CHUNK - (long) SIZEOF(large_pool_hdr)) /
-                  ((long) blocksperrow    * (long) SIZEOF(JBLOCK)));
+  ltemp = (long)(((long) MAX_ALLOC_CHUNK - (long) SIZEOF(large_pool_hdr)) /
+                 ((long) blocksperrow    * (long) SIZEOF(JBLOCK)));
 
   if(ltemp <= 0)
   {
@@ -807,7 +807,7 @@ do_sarray_io(j_common_ptr cinfo, jvirt_sarray_ptr ptr, boolean writing)
 {
   long bytesperrow, file_offset, byte_count, rows, thisrow, i;
 
-  bytesperrow = (long) ((long) ptr->samplesperrow * (long) SIZEOF(JSAMPLE));
+  bytesperrow = (long)((long) ptr->samplesperrow * (long) SIZEOF(JSAMPLE));
   file_offset = (long) ptr->cur_start_row * bytesperrow;
 
   /* Loop to read or write each allocation chunk in mem_buffer */
@@ -848,7 +848,7 @@ do_barray_io(j_common_ptr cinfo, jvirt_barray_ptr ptr, boolean writing)
 {
   long bytesperrow, file_offset, byte_count, rows, thisrow, i;
 
-  bytesperrow = (long) ((long) ptr->blocksperrow * (long) SIZEOF(JBLOCK));
+  bytesperrow = (long)((long) ptr->blocksperrow * (long) SIZEOF(JBLOCK));
   file_offset = (long) ptr->cur_start_row * bytesperrow;
 
   /* Loop to read or write each allocation chunk in mem_buffer */
@@ -933,7 +933,7 @@ access_virt_sarray(j_common_ptr cinfo, jvirt_sarray_ptr ptr,
       /* use long arithmetic here to avoid overflow & unsigned problems */
       long ltemp;
 
-      ltemp = (long) ((long) end_row - (long) ptr->rows_in_mem);
+      ltemp = (long)((long) end_row - (long) ptr->rows_in_mem);
 
       if(ltemp < 0)
       {

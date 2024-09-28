@@ -317,7 +317,7 @@ create_context_buffer(j_compress_ptr cinfo)
    */
   fake_buffer = (JSAMPARRAY)
                 (*cinfo->mem->alloc_small)((j_common_ptr) cinfo, JPOOL_IMAGE,
-                    (size_t) (cinfo->num_components * 5 * rgroup_height) *
+                    (size_t)(cinfo->num_components * 5 * rgroup_height) *
                     SIZEOF(JSAMPROW));
 
   for(ci = 0, compptr = cinfo->comp_info; ci < cinfo->num_components;
@@ -334,7 +334,7 @@ create_context_buffer(j_compress_ptr cinfo)
                    (JDIMENSION)(3 * rgroup_height));
     /* Copy true buffer row pointers into the middle of the fake row array */
     MEMCOPY(fake_buffer + rgroup_height, true_buffer,
-            (size_t) (3 * rgroup_height) * SIZEOF(JSAMPROW));
+            (size_t)(3 * rgroup_height) * SIZEOF(JSAMPROW));
 
     /* Fill in the above and below wraparound pointers */
     for(i = 0; i < rgroup_height; i++)

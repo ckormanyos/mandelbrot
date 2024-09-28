@@ -672,8 +672,8 @@ examine_app0(j_decompress_ptr cinfo, JOCTET* data,
     cinfo->JFIF_major_version = GETJOCTET(data[5]);
     cinfo->JFIF_minor_version = GETJOCTET(data[6]);
     cinfo->density_unit = GETJOCTET(data[7]);
-    cinfo->X_density = (UINT16) ((GETJOCTET(data[8]) << 8) + GETJOCTET(data[9]));
-    cinfo->Y_density = (UINT16) ((GETJOCTET(data[10]) << 8) + GETJOCTET(data[11]));
+    cinfo->X_density = (UINT16)((GETJOCTET(data[8]) << 8) + GETJOCTET(data[9]));
+    cinfo->Y_density = (UINT16)((GETJOCTET(data[10]) << 8) + GETJOCTET(data[11]));
 
     /* Check version.
      * Major version must be 1, anything else signals an incompatible change.
@@ -760,9 +760,9 @@ examine_app14(j_decompress_ptr cinfo, JOCTET* data,
       GETJOCTET(data[4]) == 0x65)
   {
     /* Found Adobe APP14 marker */
-    version = (unsigned int) ((GETJOCTET(data[5]) << 8) + GETJOCTET(data[6]));
-    flags0  = (unsigned int) ((GETJOCTET(data[7]) << 8) + GETJOCTET(data[8]));
-    flags1  = (unsigned int) ((GETJOCTET(data[9]) << 8) + GETJOCTET(data[10]));
+    version = (unsigned int)((GETJOCTET(data[5]) << 8) + GETJOCTET(data[6]));
+    flags0  = (unsigned int)((GETJOCTET(data[7]) << 8) + GETJOCTET(data[8]));
+    flags1  = (unsigned int)((GETJOCTET(data[9]) << 8) + GETJOCTET(data[10]));
     transform = GETJOCTET(data[11]);
     TRACEMS4(cinfo, 1, JTRC_ADOBE, version, flags0, flags1, transform);
     cinfo->saw_Adobe_marker = TRUE;
@@ -944,7 +944,7 @@ save_marker(j_decompress_ptr cinfo)
 
     /* Reset pointer & calc remaining data length */
     data = cur_marker->data;
-    length = (INT32_JPEG) (cur_marker->original_length - data_length);
+    length = (INT32_JPEG)(cur_marker->original_length - data_length);
   }
 
   /* Reset to initial state for next marker */

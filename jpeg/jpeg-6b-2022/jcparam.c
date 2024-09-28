@@ -211,7 +211,7 @@ add_huff_table(j_compress_ptr cinfo,
     ERREXIT(cinfo, JERR_BAD_HUFF_TABLE);
   }
 
-  MEMCOPY((*htblptr)->huffval, val, (size_t) ((size_t) nsymbols * SIZEOF(UINT8)));
+  MEMCOPY((*htblptr)->huffval, val, (size_t)((size_t) nsymbols * SIZEOF(UINT8)));
 
   /* Initialize sent_table FALSE so table will be written to JPEG file. */
   (*htblptr)->sent_table = FALSE;
@@ -657,7 +657,7 @@ jpeg_simple_progression(j_compress_ptr cinfo)
     cinfo->script_space_size = MAX(nscans, 10);
     cinfo->script_space = (jpeg_scan_info*)
                           (*cinfo->mem->alloc_small)((j_common_ptr) cinfo, JPOOL_PERMANENT,
-                          (size_t) ((size_t) cinfo->script_space_size * SIZEOF(jpeg_scan_info)));
+                              (size_t)((size_t) cinfo->script_space_size * SIZEOF(jpeg_scan_info)));
   }
 
   scanptr = cinfo->script_space;
