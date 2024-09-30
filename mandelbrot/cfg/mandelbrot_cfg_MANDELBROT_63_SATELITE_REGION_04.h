@@ -1,18 +1,18 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
-// Copyright Christopher Kormanyos 2022 - 2024.
+// Copyright Christopher Kormanyos 2024.
 // Distributed under the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef MANDELBROT_CFG_MANDELBROT_99_TRY_POINTS_2024_04_30_H
-  #define MANDELBROT_CFG_MANDELBROT_99_TRY_POINTS_2024_04_30_H
+#ifndef MANDELBROT_CFG_MANDELBROT_63_SATELITE_REGION_04_2024_09_30_H
+  #define MANDELBROT_CFG_MANDELBROT_63_SATELITE_REGION_04_2024_09_30_H
 
   // This is a specialized configuration file intended to be used for simply
   // trying out deep dives, such as those found by MandelbrotDiscovery
   // or found by other methods.
 
-  constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_99_TRY_POINTS";
+  constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_63_SATELITE_REGION_04";
 
   constexpr int  MANDELBROT_COORD_PNT_DIGITS10      =     214;
   constexpr int  MANDELBROT_ITERATION_DIGITS10      =      24;
@@ -29,4 +29,4 @@
 
   #include <mandelbrot/cfg/mandelbrot_cfg.h>
 
-#endif // MANDELBROT_CFG_MANDELBROT_99_TRY_POINTS_2024_04_30_H
+#endif // MANDELBROT_CFG_MANDELBROT_63_SATELITE_REGION_04_2024_09_30_H
