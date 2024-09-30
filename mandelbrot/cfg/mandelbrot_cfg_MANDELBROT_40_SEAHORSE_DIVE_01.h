@@ -10,8 +10,8 @@
 
   constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_40_SEAHORSE_DIVE_01";
 
-  constexpr int  MANDELBROT_COORD_PNT_DIGITS10      =     34;
-  constexpr int  MANDELBROT_ITERATION_DIGITS10      =     34;
+  constexpr int  MANDELBROT_COORD_PNT_DIGITS10      =     37;
+  constexpr int  MANDELBROT_ITERATION_DIGITS10      =     37;
   constexpr int  MANDELBROT_CALCULATION_PIXELS_X    =   2048;
   constexpr int  MANDELBROT_CALCULATION_PIXELS_Y    =   2048;
   constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =  10000;
