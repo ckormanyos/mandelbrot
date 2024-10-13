@@ -85,7 +85,7 @@ auto main() -> int // NOLINT(bugprone-exception-escape)
 
   mandelbrot_generator_type mandelbrot_generator(mandelbrot_config_object);
 
-  using stopwatch_type = ::stopwatch<std::chrono::high_resolution_clock>;
+  using stopwatch_type = concurrency::stopwatch;
 
   stopwatch_type my_stopwatch { };
 
