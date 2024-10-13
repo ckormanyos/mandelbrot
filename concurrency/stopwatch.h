@@ -8,6 +8,9 @@
 #ifndef STOPWATCH_2024_03_28_H // NOLINT(llvm-header-guard)
   #define STOPWATCH_2024_03_28_H
 
+  #include <cstdint>
+  #include <ctime>
+
   #if defined(_MSC_VER) && !defined(__GNUC__)
   #define STOPWATCH_NODISCARD
   #else
@@ -17,10 +20,6 @@
   #define STOPWATCH_NODISCARD
   #endif
   #endif
-
-  #include <time.h>
-
-  #include <cstdint>
 
   // See also: https://godbolt.org/z/37a4n9f4Y
 
