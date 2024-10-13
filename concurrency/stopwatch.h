@@ -8,6 +8,9 @@
 #ifndef STOPWATCH_2024_03_28_H // NOLINT(llvm-header-guard)
   #define STOPWATCH_2024_03_28_H
 
+  #include <cstdint>
+  #include <ctime>
+
   #if defined(_MSC_VER) && !defined(__GNUC__)
   #define STOPWATCH_NODISCARD
   #else
@@ -18,33 +21,79 @@
   #endif
   #endif
 
-  #include <chrono>
+  // See also: https://godbolt.org/z/37a4n9f4Y
 
-  template <class clock_type>
+  namespace concurrency {
+
   struct stopwatch
   {
   public:
-    using time_point_type = typename clock_type::time_point;
-    using duration_type   = typename clock_type::duration;
+    using time_point_type = std::uintmax_t;
+
+    stopwatch()
+    {
+      reset();
+    }
 
     auto reset() -> void
     {
-      m_start = clock_type::now();
+      timespec ts { };
+
+      timespec_get(&ts, TIME_UTC);
+
+      m_start =
+        static_cast<time_point_type>
+        (
+            static_cast<time_point_type>(static_cast<time_point_type>(ts.tv_sec) * UINTMAX_C(1000000000))
+          + static_cast<time_point_type>(ts.tv_nsec)
+        );
     }
 
-    template<typename RepresentationRequestedType>
-    static auto elapsed_time(const stopwatch& my_stopwatch) noexcept -> RepresentationRequestedType
+    template<typename RepresentationRequestedTimeType>
+    static auto elapsed_time(const stopwatch& my_stopwatch) noexcept -> RepresentationRequestedTimeType
     {
-      return std::chrono::duration_cast<std::chrono::duration<float>>(my_stopwatch.elapsed()).count();
+      using local_time_type = RepresentationRequestedTimeType;
+
+      return
+        local_time_type
+        {
+            static_cast<local_time_type>(my_stopwatch.elapsed())
+          / local_time_type { UINTMAX_C(1000000000) }
+        };
     }
 
   private:
-    time_point_type m_start { clock_type::now() }; // NOLINT(readability-identifier-naming)
+    time_point_type m_start { }; // NOLINT(readability-identifier-naming)
 
-    STOPWATCH_NODISCARD auto elapsed() const -> duration_type
+    STOPWATCH_NODISCARD auto elapsed() const -> time_point_type
     {
-      return (clock_type::now() - m_start);
+      timespec ts { };
+
+      timespec_get(&ts, TIME_UTC);
+
+      time_point_type
+        stop
+        {
+          static_cast<time_point_type>
+          (
+              static_cast<time_point_type>(static_cast<time_point_type>(ts.tv_sec) * UINTMAX_C(1000000000))
+            + static_cast<time_point_type>(ts.tv_nsec)
+          )
+        };
+
+      const std::uintmax_t
+        elapsed_ns
+        {
+          static_cast<time_point_type>
+          (
+            stop - m_start
+          )
+        };
+
+      return elapsed_ns;
     }
   };
+
+  } // namespace concurrency
 
 #endif // STOPWATCH_2024_03_28_H

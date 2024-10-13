@@ -40,13 +40,6 @@ MY_GCC=$my_cc
 
 MY_STD=$stdcc
 
-if [ "$MY_GCC" = "clang++" ]; then
-  export EXTRA_FLAGS="-stdlib=libc++"
-else
-  export EXTRA_FLAGS=""
-fi
-
-
 echo 'make the jpeg-6b library'
 cd jpeg
 make all
@@ -71,11 +64,11 @@ res_makelibs=$?
 echo
 
 echo 'compile test/test_mandelbrot.cpp to test_mandelbrot.o'
-$MY_GCC -x c++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wmissing-include-dirs -std=$MY_STD $EXTRA_FLAGS -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 $MY_BOOST_INC -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+$MY_GCC -x c++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wmissing-include-dirs -std=$MY_STD -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 $MY_BOOST_INC -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
 echo
 
 echo 'link test_mandelbrot.o with libraries to create test_mandelbrot.exe'
-$MY_GCC -x none -march=native -mtune=native $EXTRA_FLAGS test_mandelbrot.o ./png/libpng/libpng-1.6.44.git-2024/obj/libpng16.a ./png/zlib/zlib-1.3.1.1-2024/obj/libz.a ./jpeg/jpeg-6b-2022/obj/libjpeg-6b.a -lpthread -o test_mandelbrot.exe
+$MY_GCC -x none -march=native -mtune=native test_mandelbrot.o ./png/libpng/libpng-1.6.44.git-2024/obj/libpng16.a ./png/zlib/zlib-1.3.1.1-2024/obj/libz.a ./jpeg/jpeg-6b-2022/obj/libjpeg-6b.a -lpthread -o test_mandelbrot.exe
 echo
 
 echo 'verify existence of test_mandelbrot.exe'

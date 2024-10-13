@@ -96,7 +96,7 @@ jobs:
       - name: gcc-native
         run: |
           echo "query GCC version"
-          g++ -v
+          ${{ matrix.compiler }} -v
           echo "build the test program"
           ./build_all.sh --boost=../boost-root --my_cc=${{ matrix.compiler }} --stdcc=${{ matrix.standard }}
           ls -la ./test_mandelbrot.exe
@@ -165,7 +165,7 @@ jobs:
       - name: gcc-native-cpp_dec_float
         run: |
           echo "query GCC version"
-          g++ -v
+          ${{ matrix.compiler }} -v
           echo "build the test program"
           ./build_all.sh --boost=../boost-root --my_cc=${{ matrix.compiler }} --stdcc=${{ matrix.standard }}
           ls -la ./test_mandelbrot.exe
@@ -237,7 +237,7 @@ jobs:
       - name: gcc-native
         run: |
           echo "query GCC version"
-          g++ -v
+          ${{ matrix.compiler }} -v
           echo "build the test program"
           ./build_all_gmp.sh --boost=../boost-root --my_cc=${{ matrix.compiler }} --stdcc=${{ matrix.standard }}
           ls -la ./test_mandelbrot.exe
@@ -299,7 +299,7 @@ jobs:
       - name: gcc-native-cpp_dec_float-asan
         run: |
           echo "query GCC version"
-          g++ -v
+          ${{ matrix.compiler }} -v
           echo "build libjpeg-6b.a"
           cd jpeg
           make all
@@ -375,7 +375,7 @@ jobs:
       - name: gcc-native-cpp_dec_float-ubsan
         run: |
           echo "query GCC version"
-          g++ -v
+          ${{ matrix.compiler }} -v
           echo "build libjpeg-6b.a"
           cd jpeg
           make all
@@ -451,7 +451,7 @@ jobs:
       - name: gcc-native-cpp_dec_float-tsan
         run: |
           echo "query GCC version"
-          g++ -v
+          ${{ matrix.compiler }} -v
           echo "build libjpeg-6b.a"
           cd jpeg
           make all
@@ -529,7 +529,7 @@ jobs:
       - name: gcc-native-cpp_dec_float
         run: |
           echo "query GCC version"
-          g++ -v
+          ${{ matrix.compiler }} -v
           echo "build the test program"
           ./build_all.sh --boost=../boost-root --my_cc=${{ matrix.compiler }} --stdcc=${{ matrix.standard }}
           ls -la ./test_mandelbrot.exe
