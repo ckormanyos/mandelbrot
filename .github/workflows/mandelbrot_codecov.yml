@@ -89,7 +89,7 @@ jobs:
           ./test_mandelbrot.exe
           gcov --object-directory . --demangled-names ./test_mandelbrot.cpp
           lcov -c --directory . --output-file coverage_unfiltered.info
-          lcov --remove coverage_unfiltered.info '/usr/*' '*boost/*' '*concurrency/*' '*/cfg/*' '*test_mandelbrot.cpp' '*mandelbrot_color.h' --output-file coverage.info
+          lcov --ignore-errors unused --remove coverage_unfiltered.info '/usr/*' '*boost/*' '*concurrency/*' '*/cfg/*' '*test_mandelbrot.cpp' '*mandelbrot_color.h' --output-file coverage.info
           genhtml coverage.info --demangle-cpp --output-directory report
       - name: upload-codecov
         uses: codecov/codecov-action@v4

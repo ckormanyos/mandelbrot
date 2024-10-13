@@ -36,14 +36,13 @@ It is intended for _deep_ _dives_ in the Mandelbrot fractal world.
 Fractal iterations are carried out with high-precision
 floating-point types such as those found in
 [`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_86_0/libs/multiprecision/doc/html/index.html).
-Also fixed-point types having sufficient precision (although these have not yet been used or tested
-extensively in this project) should work well.
+Also fixed-point types having sufficient precision should work well
+(although these have not yet been extensively used or tested in this project).
 
 ## Design
 
 This project uses [`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_86_0/libs/multiprecision/doc/html/index.html)
-to implement
-a high-precision Mandelbrot iteration and visualization.
+to implement a high-precision Mandelbrot iteration and visualization.
 Graphic file creation uses
 [`Boost.Gil`](https://www.boost.org/doc/libs/1_86_0/libs/gil/doc/html/index.html).
 Color-stretching in combination with the histogram method
