@@ -94,7 +94,7 @@ jobs:
           ./bootstrap.sh
           ./b2 headers
       - name: update-tools
-        run: sudo apt install libc++1
+        run: sudo apt install libc++1 libstdc++6 llvm lld
       - name: gcc-native
         run: |
           echo "find chrono"
@@ -167,7 +167,7 @@ jobs:
           ./bootstrap.sh
           ./b2 headers
       - name: update-tools
-        run: sudo apt install libc++1
+        run: sudo apt install libc++1 libstdc++6 llvm lld
       - name: gcc-native-cpp_dec_float
         run: |
           echo "query GCC version"
@@ -239,7 +239,7 @@ jobs:
           ./bootstrap.sh
           ./b2 headers
       - name: update-tools
-        run: sudo apt install libgmp-dev libc++1
+        run: sudo apt install libgmp-dev libc++1 libstdc++6 llvm lld
       - name: gcc-native
         run: |
           echo "query GCC version"
@@ -303,7 +303,7 @@ jobs:
           ./bootstrap.sh
           ./b2 headers
       - name: update-tools
-        run: sudo apt install libc++1
+        run: sudo apt install libc++1 libstdc++6 llvm lld
       - name: gcc-native-cpp_dec_float-asan
         run: |
           echo "query GCC version"
@@ -381,7 +381,7 @@ jobs:
           ./bootstrap.sh
           ./b2 headers
       - name: update-tools
-        run: sudo apt install libc++1
+        run: sudo apt install libc++1 libstdc++6 llvm lld
       - name: gcc-native-cpp_dec_float-ubsan
         run: |
           echo "query GCC version"
@@ -459,7 +459,7 @@ jobs:
           ./bootstrap.sh
           ./b2 headers
       - name: update-tools
-        run: sudo apt install libc++1
+        run: sudo apt install libc++1 libstdc++6 llvm lld
       - name: gcc-native-cpp_dec_float-tsan
         run: |
           echo "query GCC version"
