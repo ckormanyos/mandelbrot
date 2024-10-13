@@ -96,7 +96,7 @@ jobs:
       - name: gcc-native
         run: |
           echo "query GCC version"
-          g++ -v
+          ${{ matrix.compiler }} -v
           echo "build the test program"
           ./build_all.sh --boost=../boost-root --my_cc=${{ matrix.compiler }} --stdcc=${{ matrix.standard }}
           ls -la ./test_mandelbrot.exe
@@ -165,7 +165,7 @@ jobs:
       - name: gcc-native-cpp_dec_float
         run: |
           echo "query GCC version"
-          g++ -v
+          ${{ matrix.compiler }} -v
           echo "build the test program"
           ./build_all.sh --boost=../boost-root --my_cc=${{ matrix.compiler }} --stdcc=${{ matrix.standard }}
           ls -la ./test_mandelbrot.exe
@@ -237,7 +237,7 @@ jobs:
       - name: gcc-native
         run: |
           echo "query GCC version"
-          g++ -v
+          ${{ matrix.compiler }} -v
           echo "build the test program"
           ./build_all_gmp.sh --boost=../boost-root --my_cc=${{ matrix.compiler }} --stdcc=${{ matrix.standard }}
           ls -la ./test_mandelbrot.exe
@@ -299,7 +299,7 @@ jobs:
       - name: gcc-native-cpp_dec_float-asan
         run: |
           echo "query GCC version"
-          g++ -v
+          ${{ matrix.compiler }} -v
           echo "build libjpeg-6b.a"
           cd jpeg
           make all
@@ -313,8 +313,8 @@ jobs:
           make all
           cd ../..
           mkdir -p images/tmp
-          echo '${{ matrix.compiler }} -x c++ -c -fsanitize=address -fsanitize=leak -finline-functions -march=native -mtune=native -ftest-coverage -O3 -Wall -Wextra -Wmissing-include-dirs -std=c++20 -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
-          ${{ matrix.compiler }} -x c++ -c -fsanitize=address -fsanitize=leak -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wmissing-include-dirs -std=c++20 -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          echo '${{ matrix.compiler }} -x c++ -c -fsanitize=address -fsanitize=leak -finline-functions -march=native -mtune=native -ftest-coverage -O3 -Wall -Wextra -Wmissing-include-dirs -std=c++20 -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 -I../boost-root -isystem /usr/include/c++/11 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
+          ${{ matrix.compiler }} -x c++ -c -fsanitize=address -fsanitize=leak -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wmissing-include-dirs -std=c++20 -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 -I../boost-root -isystem /usr/include/c++/11 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
           echo '${{ matrix.compiler }} -x none -fsanitize=address -fsanitize=leak -finline-functions -march=native -mtune=native -O3 test_mandelbrot.o ./png/libpng/libpng-1.6.44.git-2024/obj/libpng16.a ./png/zlib/zlib-1.3.1.1-2024/obj/libz.a ./jpeg/jpeg-6b-2022/obj/libjpeg-6b.a -lpthread -o test_mandelbrot.exe'
           ${{ matrix.compiler }} -x none -fsanitize=address -fsanitize=leak -finline-functions -march=native -mtune=native -O3 test_mandelbrot.o ./png/libpng/libpng-1.6.44.git-2024/obj/libpng16.a ./png/zlib/zlib-1.3.1.1-2024/obj/libz.a ./jpeg/jpeg-6b-2022/obj/libjpeg-6b.a -lpthread -o test_mandelbrot.exe
           ls -la ./test_mandelbrot.exe
@@ -375,7 +375,7 @@ jobs:
       - name: gcc-native-cpp_dec_float-ubsan
         run: |
           echo "query GCC version"
-          g++ -v
+          ${{ matrix.compiler }} -v
           echo "build libjpeg-6b.a"
           cd jpeg
           make all
@@ -389,8 +389,8 @@ jobs:
           make all
           cd ../..
           mkdir -p images/tmp
-          echo '${{ matrix.compiler }} -x c++ -c -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -finline-functions -march=native -mtune=native -ftest-coverage -O3 -Wall -Wextra -Wmissing-include-dirs -std=c++20 -DMANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
-          ${{ matrix.compiler }} -x c++ -c -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wmissing-include-dirs -std=c++20 -DMANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          echo '${{ matrix.compiler }} -x c++ -c -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -finline-functions -march=native -mtune=native -ftest-coverage -O3 -Wall -Wextra -Wmissing-include-dirs -std=c++20 -DMANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 -I../boost-root -isystem /usr/include/c++/11 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
+          ${{ matrix.compiler }} -x c++ -c -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wmissing-include-dirs -std=c++20 -DMANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 -I../boost-root -isystem /usr/include/c++/11 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
           echo '${{ matrix.compiler }} -x none -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -finline-functions -finline-functions -march=native -mtune=native -O3 test_mandelbrot.o ./png/libpng/libpng-1.6.44.git-2024/obj/libpng16.a ./png/zlib/zlib-1.3.1.1-2024/obj/libz.a ./jpeg/jpeg-6b-2022/obj/libjpeg-6b.a -lpthread -o test_mandelbrot.exe'
           ${{ matrix.compiler }} -x none -fsanitize=undefined -fsanitize=shift -fsanitize=shift-exponent -fsanitize=shift-base -fsanitize=integer-divide-by-zero -fsanitize=unreachable -fsanitize=vla-bound -fsanitize=null -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=bounds -fsanitize=alignment -fsanitize=object-size -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=nonnull-attribute -fsanitize=returns-nonnull-attribute -fsanitize=bool -fsanitize=enum -fsanitize=vptr -finline-functions -finline-functions -march=native -mtune=native -O3 test_mandelbrot.o ./png/libpng/libpng-1.6.44.git-2024/obj/libpng16.a ./png/zlib/zlib-1.3.1.1-2024/obj/libz.a ./jpeg/jpeg-6b-2022/obj/libjpeg-6b.a -lpthread -o test_mandelbrot.exe
           ls -la ./test_mandelbrot.exe
@@ -451,7 +451,7 @@ jobs:
       - name: gcc-native-cpp_dec_float-tsan
         run: |
           echo "query GCC version"
-          g++ -v
+          ${{ matrix.compiler }} -v
           echo "build libjpeg-6b.a"
           cd jpeg
           make all
@@ -465,8 +465,8 @@ jobs:
           make all
           cd ../..
           mkdir -p images/tmp
-          echo '${{ matrix.compiler }} -x c++ -c -fsanitize=thread -O3 -Wall -Wextra -Wmissing-include-dirs -std=c++20 -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
-          ${{ matrix.compiler }} -x c++ -c -fsanitize=thread -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wmissing-include-dirs -std=c++20 -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          echo '${{ matrix.compiler }} -x c++ -c -fsanitize=thread -O3 -Wall -Wextra -Wmissing-include-dirs -std=c++20 -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 -I../boost-root -isystem /usr/include/c++/11 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o'
+          ${{ matrix.compiler }} -x c++ -c -fsanitize=thread -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wmissing-include-dirs -std=c++20 -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 -I../boost-root -isystem /usr/include/c++/11 -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
           echo '${{ matrix.compiler }} -x none -fsanitize=thread -finline-functions -march=native -mtune=native -fprofile-arcs -ftest-coverage -O3 test_mandelbrot.o ./png/libpng/libpng-1.6.44.git-2024/obj/libpng16.a ./png/zlib/zlib-1.3.1.1-2024/obj/libz.a ./jpeg/jpeg-6b-2022/obj/libjpeg-6b.a -lpthread -o test_mandelbrot.exe'
           ${{ matrix.compiler }} -x none -fsanitize=thread -finline-functions -march=native -mtune=native -fprofile-arcs -ftest-coverage -O3 test_mandelbrot.o ./png/libpng/libpng-1.6.44.git-2024/obj/libpng16.a ./png/zlib/zlib-1.3.1.1-2024/obj/libz.a ./jpeg/jpeg-6b-2022/obj/libjpeg-6b.a -lpthread -o test_mandelbrot.exe
           ./test_mandelbrot.exe
@@ -529,7 +529,7 @@ jobs:
       - name: gcc-native-cpp_dec_float
         run: |
           echo "query GCC version"
-          g++ -v
+          ${{ matrix.compiler }} -v
           echo "build the test program"
           ./build_all.sh --boost=../boost-root --my_cc=${{ matrix.compiler }} --stdcc=${{ matrix.standard }}
           ls -la ./test_mandelbrot.exe
