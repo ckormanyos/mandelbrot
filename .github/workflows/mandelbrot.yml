@@ -95,6 +95,8 @@ jobs:
           ./b2 headers
       - name: gcc-native
         run: |
+          echo "find chrono"
+          find /usr -name "chrono"
           echo "query GCC version"
           ${{ matrix.compiler }} -v
           echo "build the test program"
