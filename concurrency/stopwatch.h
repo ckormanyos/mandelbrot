@@ -18,8 +18,11 @@
   #endif
   #endif
 
+  #include <time.h>
+
   #include <cstdint>
-  #include <ctime>
+
+  // See also: https://godbolt.org/z/37a4n9f4Y
 
   namespace concurrency {
 
@@ -35,9 +38,9 @@
 
     auto reset() -> void
     {
-      std::timespec ts { };
+      timespec ts { };
 
-      std::timespec_get(&ts, TIME_UTC);
+      timespec_get(&ts, TIME_UTC);
 
       m_start =
         static_cast<time_point_type>
@@ -65,9 +68,9 @@
 
     STOPWATCH_NODISCARD auto elapsed() const -> time_point_type
     {
-      std::timespec ts { };
+      timespec ts { };
 
-      std::timespec_get(&ts, TIME_UTC);
+      timespec_get(&ts, TIME_UTC);
 
       time_point_type
         stop
