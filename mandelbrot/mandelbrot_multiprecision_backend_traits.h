@@ -12,7 +12,6 @@
   #if defined(MANDELBROT_USE_GMP_FLOAT)
   #include <boost/multiprecision/gmp.hpp>
   #endif
-  #include <boost/multiprecision/number.hpp>
 
   #include <type_traits>
 
@@ -27,6 +26,18 @@
   // Template to check if the given boost::multiprecision::number uses cpp_dec_float as its backend
   template <typename T>
   struct is_cpp_dec_float_number : is_cpp_dec_float_backend<typename T::backend_type> { };
+
+  // Define a trial number type with cpp_dec_float backend having 100 digits.
+  // This type is sued for static-assertion only.
+  namespace static_assertion_only {
+
+  using cpp_dec_test_100_backend_type = boost::multiprecision::cpp_dec_float<unsigned { UINT8_C(100) }>;
+
+  using cpp_dec_test_100_type = ::boost::multiprecision::number<cpp_dec_test_100_backend_type, boost::multiprecision::et_off>;
+
+  static_assert(is_cpp_dec_float_number<cpp_dec_test_100_type>::value, "Error: Wrong instantiation of backend type");
+
+  } // namespace static_assertion_only
 
   #if defined(MANDELBROT_USE_GMP_FLOAT)
 
@@ -43,10 +54,5 @@
   struct is_gmp_float_number : is_gmp_float_backend<typename T::backend_type> { };
 
   #endif
-
-  // Define a number with cpp_dec_float backend (100 digits)
-  using cpp_dec_test_100_type = boost::multiprecision::number<boost::multiprecision::cpp_dec_float<unsigned { UINT8_C(100) }>, boost::multiprecision::et_off>;
-
-  static_assert(is_cpp_dec_float_number<cpp_dec_test_100_type>::value, "Error: Wrong instantiation of backend type");
 
 #endif // MANDELBROT_MULTIPRECISION_BACKEND_TRAITS_2024_09_07_H
