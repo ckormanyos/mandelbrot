@@ -14,7 +14,7 @@
 
   #include <atomic>
 
-  #if(__cplusplus >= 201703L)
+  #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
   namespace ckormanyos::mandelbrot {
   #else
   namespace ckormanyos { namespace mandelbrot { // NOLINT(modernize-concat-nested-namespaces)
@@ -161,7 +161,7 @@
     }
   };
 
-  #if(__cplusplus >= 201703L)
+  #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
   } // namespace ckormanyos::mandelbrot
   #else
   } // namespace mandelbrot

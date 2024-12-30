@@ -23,7 +23,7 @@
   #endif
   #endif
 
-  #if(__cplusplus >= 201703L)
+  #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
   namespace ckormanyos::mandelbrot::color {
   #else
   namespace ckormanyos { namespace mandelbrot { namespace color { // NOLINT(modernize-concat-nested-namespaces)
@@ -154,7 +154,7 @@
     }
   };
 
-  #if(__cplusplus >= 201703L)
+  #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
   } // namespace ckormanyos::mandelbrot::color
   #else
   } // namespace color
