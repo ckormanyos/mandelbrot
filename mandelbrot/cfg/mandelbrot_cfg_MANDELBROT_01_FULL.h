@@ -8,6 +8,8 @@
 #ifndef MANDELBROT_CFG_MANDELBROT_01_FULL_2022_02_24_H
   #define MANDELBROT_CFG_MANDELBROT_01_FULL_2022_02_24_H
 
+  //#define MANDELBROT_USE_DOUBLE_DOUBLE
+
   // This is the classic full immage.
 
   constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_01_FULL";

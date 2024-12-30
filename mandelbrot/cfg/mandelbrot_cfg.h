@@ -38,19 +38,27 @@
 
   #define MANDELBROT_ITERATION_NUMBER_TYPE(MB_DIGITS10) MANDELBROT_COORD_PNT_NUMBER_TYPE(MB_DIGITS10) // NOLINT(cppcoreguidelines-macro-usage)
 
+  #elif defined(MANDELBROT_USE_DOUBLE_DOUBLE)
+
+  #include <boost/multiprecision/cpp_double_fp.hpp>
+
+  #define MANDELBROT_COORD_PNT_NUMBER_TYPE(MB_DIGITS10) ::boost::multiprecision::cpp_double_double // NOLINT(cppcoreguidelines-macro-usage)
+
+  #define MANDELBROT_ITERATION_NUMBER_TYPE(MB_DIGITS10) MANDELBROT_COORD_PNT_NUMBER_TYPE(MB_DIGITS10) // NOLINT(cppcoreguidelines-macro-usage)
+
   #else
 
   #include <boost/multiprecision/cpp_dec_float.hpp>
 
   #define MANDELBROT_COORD_PNT_NUMBER_TYPE(MB_DIGITS10) /* NOLINT(cppcoreguidelines-macro-usage) */ \
-  boost::multiprecision::number<boost::multiprecision::cpp_dec_float<static_cast<unsigned>(MB_DIGITS10)>,\
-                                boost::multiprecision::et_off>
+  ::boost::multiprecision::number<::boost::multiprecision::cpp_dec_float<static_cast<unsigned>(MB_DIGITS10)>,\
+                                  ::boost::multiprecision::et_off>
 
   #define MANDELBROT_ITERATION_NUMBER_TYPE(MB_DIGITS10) MANDELBROT_COORD_PNT_NUMBER_TYPE(MB_DIGITS10) // NOLINT(cppcoreguidelines-macro-usage)
 
   #endif
 
-  #if(__cplusplus >= 201703L)
+  #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
   namespace ckormanyos::mandelbrot::cfg {
   #else
   namespace ckormanyos { namespace mandelbrot { namespace cfg { // NOLINT(modernize-concat-nested-namespaces)
@@ -73,10 +81,10 @@
   }
 
   using mandelbrot_config_type  =
-    ckormanyos::mandelbrot::mandelbrot_config<detail::coord_pnt_numeric_type,
-                                              detail::iteration_numeric_type,
-                                              static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_X),
-                                              static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_Y)>;
+    ::ckormanyos::mandelbrot::mandelbrot_config<detail::coord_pnt_numeric_type,
+                                                detail::iteration_numeric_type,
+                                                static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_X),
+                                                static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_PIXELS_Y)>;
 
   using coord_pnt_numeric_type = typename mandelbrot_config_type::my_coord_pnt_numeric_type;
   using iteration_numeric_type = typename mandelbrot_config_type::my_iteration_numeric_type;
@@ -87,7 +95,7 @@
   inline auto center_y() -> coord_pnt_numeric_type { return coord_pnt_numeric_type(MANDELBROT_POINT_CENTER_Y); }
   inline auto max_iter() -> std::uint_fast32_t     { return static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_ITERATIONS); }
 
-  #if(__cplusplus >= 201703L)
+  #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
   } // namespace ckormanyos::mandelbrot::cfg
   #else
   } // namespace cfg
