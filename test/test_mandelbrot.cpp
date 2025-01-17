@@ -16,10 +16,10 @@
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 #endif
 
-//#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_01_FULL.h>
+#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_01_FULL.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_03_TOP.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_04_SWIRL.h>
-#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_05_SEAHORSES.h>
+//#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_05_SEAHORSES.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_06_BRANCHES.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_07_SEAHORSE_VALLEY.h>
 //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_08_DEEP_DIVE_01.h>
