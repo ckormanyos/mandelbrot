@@ -6,7 +6,8 @@
 #  or copy at http://www.boost.org/LICENSE_1_0.txt)
 #
 
-# ./build_all.sh --boost=/mnt/c/boost/boost_1_85_0 --my_cc=g++ --stdcc=c++14
+# cd /mnt/c/Users/ckorm/Documents/Ks/PC_Software/NumericalPrograms/mandelbrot
+# ./build_all.sh --boost=/mnt/c/boost/boost_1_87_0 --my_cc=g++ --stdcc=c++14
 
 boost=
 gcc=g++
@@ -65,6 +66,7 @@ echo
 
 echo 'compile test/test_mandelbrot.cpp to test_mandelbrot.o'
 $MY_GCC -x c++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wmissing-include-dirs -std=$MY_STD -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 $MY_BOOST_INC -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+#$MY_GCC -x c++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wmissing-include-dirs -std=$MY_STD -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 -I/mnt/c/ChrisGitRepos/boost_gsoc2021/multiprecision/include $MY_BOOST_INC -DMANDELBROT_USE_DOUBLE_DOUBLE -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
 echo
 
 echo 'link test_mandelbrot.o with libraries to create test_mandelbrot.exe'
