@@ -64,6 +64,11 @@ ls -la ./png/libpng/libpng-1.6.44.git-2024/obj/libpng16.a ./png/zlib/zlib-1.3.1.
 res_makelibs=$?
 echo
 
+echo 'compiler version'
+echo
+$MY_GCC -v
+echo
+
 echo 'compile test/test_mandelbrot.cpp to test_mandelbrot.o'
 $MY_GCC -x c++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wmissing-include-dirs -std=$MY_STD -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 $MY_BOOST_INC -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
 #$MY_GCC -x c++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wmissing-include-dirs -std=$MY_STD -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 $MY_BOOST_INC -DMANDELBROT_USE_DOUBLE_DOUBLE -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
