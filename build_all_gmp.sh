@@ -1,15 +1,16 @@
 #!/bin/bash
 #
-#  Copyright Christopher Kormanyos 2024.
+#  Copyright Christopher Kormanyos 2024 - 2025.
 #  Distributed under the Boost Software License,
 #  Version 1.0. (See accompanying file LICENSE_1_0.txt
 #  or copy at http://www.boost.org/LICENSE_1_0.txt)
 #
 
-# ./build_all.sh --boost=/mnt/c/boost/boost_1_85_0 --my_cc=g++ --stdcc=c++14
+# cd /mnt/c/Users/ckorm/Documents/Ks/PC_Software/NumericalPrograms/mandelbrot
+# ./build_all.sh --boost='-I/mnt/c/ChrisGitRepos/boost_gsoc2021/multiprecision/include -I/mnt/c/boost/boost_1_87_0' --my_cc=g++ --stdcc=gnu++20
 
 boost=
-gcc=g++
+my_cc=g++
 
 for arg in "$@"; do
   case $arg in
@@ -34,7 +35,7 @@ echo "boost: $boost"
 echo "my_cc: $my_cc"
 echo "stdcc: $stdcc"
 
-MY_BOOST_INC=-I$boost
+MY_BOOST_INC=$boost
 
 MY_GCC=$my_cc
 

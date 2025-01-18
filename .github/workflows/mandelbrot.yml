@@ -98,7 +98,7 @@ jobs:
           echo "query GCC version"
           ${{ matrix.compiler }} -v
           echo "build the test program"
-          ./build_all.sh --boost=../boost-root --my_cc=${{ matrix.compiler }} --stdcc=${{ matrix.standard }}
+          ./build_all.sh --boost=-I../boost-root --my_cc=${{ matrix.compiler }} --stdcc=${{ matrix.standard }}
           ls -la ./test_mandelbrot.exe
           mkdir -p images/tmp
           ./test_mandelbrot.exe
@@ -167,7 +167,7 @@ jobs:
           echo "query GCC version"
           ${{ matrix.compiler }} -v
           echo "build the test program"
-          ./build_all.sh --boost=../boost-root --my_cc=${{ matrix.compiler }} --stdcc=${{ matrix.standard }}
+          ./build_all.sh --boost=-I../boost-root --my_cc=${{ matrix.compiler }} --stdcc=${{ matrix.standard }}
           ls -la ./test_mandelbrot.exe
           mkdir -p images/tmp
           ./test_mandelbrot.exe
@@ -239,7 +239,7 @@ jobs:
           echo "query GCC version"
           ${{ matrix.compiler }} -v
           echo "build the test program"
-          ./build_all_gmp.sh --boost=../boost-root --my_cc=${{ matrix.compiler }} --stdcc=${{ matrix.standard }}
+          ./build_all_gmp.sh --boost=-I../boost-root --my_cc=${{ matrix.compiler }} --stdcc=${{ matrix.standard }}
           ls -la ./test_mandelbrot.exe
           mkdir -p images/tmp
           ./test_mandelbrot.exe
@@ -531,7 +531,7 @@ jobs:
           echo "query GCC version"
           ${{ matrix.compiler }} -v
           echo "build the test program"
-          ./build_all.sh --boost=../boost-root --my_cc=${{ matrix.compiler }} --stdcc=${{ matrix.standard }}
+          ./build_all.sh --boost=-I../boost-root --my_cc=${{ matrix.compiler }} --stdcc=${{ matrix.standard }}
           ls -la ./test_mandelbrot.exe
           mkdir -p images/tmp
           ./test_mandelbrot.exe
