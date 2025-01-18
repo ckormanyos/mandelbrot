@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-//      Copyright Christopher Kormanyos 2022 - 2024.
+//      Copyright Christopher Kormanyos 2022 - 2025.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
@@ -26,8 +26,8 @@
 
   constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_05_SEAHORSES"; // NOLINT(cppcoreguidelines-avoid-c-arrays,hicpp-avoid-c-arrays,modernize-avoid-c-arrays)
 
-  constexpr int  MANDELBROT_COORD_PNT_DIGITS10      =      37;
-  constexpr int  MANDELBROT_ITERATION_DIGITS10      =      37;
+  constexpr int  MANDELBROT_COORD_PNT_DIGITS10      =      32;
+  constexpr int  MANDELBROT_ITERATION_DIGITS10      =      32;
   #if !defined(MANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH)
   constexpr int  MANDELBROT_CALCULATION_PIXELS_X    =    2048;
   constexpr int  MANDELBROT_CALCULATION_PIXELS_Y    =    2048;
