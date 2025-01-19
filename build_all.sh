@@ -6,10 +6,11 @@
 #  or copy at http://www.boost.org/LICENSE_1_0.txt)
 #
 
-# ./build_all.sh --boost=/mnt/c/boost/boost_1_85_0 --my_cc=g++ --stdcc=c++14
+# cd /mnt/c/Users/ckorm/Documents/Ks/PC_Software/NumericalPrograms/mandelbrot
+# ./build_all.sh --boost=/mnt/c/boost/boost_1_87_0 --my_cc=g++ --stdcc=c++20
 
 boost=
-gcc=g++
+my_cc=g++
 
 for arg in "$@"; do
   case $arg in
@@ -61,6 +62,11 @@ echo
 echo 'verify existence of libs'
 ls -la ./png/libpng/libpng-1.6.44.git-2024/obj/libpng16.a ./png/zlib/zlib-1.3.1.1-2024/obj/libz.a ./jpeg/jpeg-6b-2022/obj/libjpeg-6b.a
 res_makelibs=$?
+echo
+
+echo 'compiler version'
+echo
+$MY_GCC -v
 echo
 
 echo 'compile test/test_mandelbrot.cpp to test_mandelbrot.o'
