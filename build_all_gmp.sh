@@ -35,7 +35,7 @@ echo "boost: $boost"
 echo "my_cc: $my_cc"
 echo "stdcc: $stdcc"
 
-MY_BOOST_INC=$boost
+MY_BOOST_INC=-I$boost
 
 MY_GCC=$my_cc
 
