@@ -14,10 +14,6 @@
         <img src="https://codecov.io/gh/ckormanyos/mandelbrot/branch/main/graph/badge.svg?token=FVIE627J2D" alt="code coverage"></a>
     <a href="https://github.com/ckormanyos/mandelbrot/blob/master/LICENSE_1_0.txt">
         <img src="https://img.shields.io/badge/license-BSL%201.0-blue.svg" alt="Boost Software License 1.0"></a>
-    <a href="https://github.com/ckormanyos/mandelbrot" alt="Activity">
-        <img src="https://img.shields.io/github/commit-activity/y/ckormanyos/mandelbrot" /></a>
-    <a href="https://github.com/ckormanyos/mandelbrot" alt="GitHub code size in bytes">
-        <img src="https://img.shields.io/github/languages/code-size/ckormanyos/mandelbrot" /></a>
 </p>
 
 The Mandelbrot set consists of the set of points $c$
