@@ -8,69 +8,91 @@
 #ifndef MANDELBROT_CFG_2022_02_24_H // NOLINT(llvm-header-guard)
   #define MANDELBROT_CFG_2022_02_24_H
 
-  #if !defined(MANDELBROT_NODISCARD)
-  #if defined(_MSC_VER) && !defined(__GNUC__)
-  #define MANDELBROT_NODISCARD
-  #else
-  #if (defined(__cplusplus) && (__cplusplus >= 201703L))
-  #define MANDELBROT_NODISCARD  [[nodiscard]] // NOLINT(cppcoreguidelines-macro-usage)
-  #else
-  #define MANDELBROT_NODISCARD
-  #endif
-  #endif
-  #endif
+  #include <mandelbrot/cfg/mandelbrot_cfg_forward.h>
+
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_01_FULL.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_03_TOP.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_04_SWIRL.h>
+  #include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_05_SEAHORSES.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_06_BRANCHES.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_07_SEAHORSE_VALLEY.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_08_DEEP_DIVE_01.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_08_DEEP_DIVE_01_magnify51.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_09_DEEP_DIVE_02.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_10_ZOOM_WIKI_00.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_10_ZOOM_WIKI_00_rect.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_11_ZOOM_WIKI_01.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_12_ZOOM_WIKI_02.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_13_ZOOM_WIKI_03.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_14_ZOOM_WIKI_04.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00_magnify51.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_612.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_25_ZOOM_SEARCH_00.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_25_ZOOM_SEARCH_01.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_30_ZOOM_ANOTHER_00.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_30_ZOOM_ANOTHER_00_magnify51.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_31_ZOOM_ANOTHER_01.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_32_ZOOM_ANOTHER_02.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_33_ZOOM_EVEN_MORE_03.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_40_SEAHORSE_DIVE_01.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_45_SEAHORSE_OTHER_01_magnify51.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_50_TENDRIL_AREA_01.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_60_SATELITE_REGION_01.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_61_SATELITE_REGION_02.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_62_SATELITE_REGION_03.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_63_SATELITE_REGION_04.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_70_DOUADY_RABBIT_01.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_72_DOUADY_RABBIT_03.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_80_SEARCH_HALO_01.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_99_TRY_POINTS.h>
 
   #include <mandelbrot/mandelbrot_generator_perturbative.h>
   #include <mandelbrot/mandelbrot_generator_trivial.h>
 
+  #if defined(MANDELBROT_USE_GMP_FLOAT)
+  #include <boost/multiprecision/gmp.hpp>
+  #else
+  #include <boost/multiprecision/cpp_dec_float.hpp>
+  #endif
+
   #include <cstdint>
   #include <string>
 
-  // NOLINTBEGIN(*)
-
-  #if defined(MANDELBROT_USE_GMP_FLOAT)
-
-  #include <boost/multiprecision/gmp.hpp>
-
-  #define MANDELBROT_COORD_PNT_NUMBER_TYPE(MB_DIGITS10) /* NOLINT(cppcoreguidelines-macro-usage) */ \
-  boost::multiprecision::number<boost::multiprecision::gmp_float<static_cast<unsigned>(MB_DIGITS10)>,\
-                                boost::multiprecision::et_off>
-
-  #define MANDELBROT_ITERATION_NUMBER_TYPE(MB_DIGITS10) MANDELBROT_COORD_PNT_NUMBER_TYPE(MB_DIGITS10) // NOLINT(cppcoreguidelines-macro-usage)
-
-  #else
-
-  #include <boost/multiprecision/cpp_dec_float.hpp>
-
-  #define MANDELBROT_COORD_PNT_NUMBER_TYPE(MB_DIGITS10) /* NOLINT(cppcoreguidelines-macro-usage) */ \
-  ::boost::multiprecision::number<::boost::multiprecision::cpp_dec_float<static_cast<unsigned>(MB_DIGITS10)>,\
-                                  ::boost::multiprecision::et_off>
-
-  #define MANDELBROT_ITERATION_NUMBER_TYPE(MB_DIGITS10) MANDELBROT_COORD_PNT_NUMBER_TYPE(MB_DIGITS10) // NOLINT(cppcoreguidelines-macro-usage)
-
-  #endif
-
   #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
-  namespace ckormanyos::mandelbrot::cfg {
+  namespace ckormanyos::mandelbrot::config {
   #else
-  namespace ckormanyos { namespace mandelbrot { namespace cfg { // NOLINT(modernize-concat-nested-namespaces)
+  namespace ckormanyos { namespace mandelbrot { namespace config { // NOLINT(modernize-concat-nested-namespaces)
   #endif
 
   namespace detail {
 
-  using coord_pnt_numeric_type = MANDELBROT_COORD_PNT_NUMBER_TYPE( MANDELBROT_COORD_PNT_DIGITS10 ); // NOLINT(cppcoreguidelines-macro-usage)
-  using iteration_numeric_type = MANDELBROT_ITERATION_NUMBER_TYPE( MANDELBROT_ITERATION_DIGITS10 ); // NOLINT(cppcoreguidelines-macro-usage)
+  #if defined(MANDELBROT_USE_GMP_FLOAT)
+
+  template<const unsigned MyNumberTypeDigits10>
+  using mandelbrot_coord_pnt_number_type =
+  boost::multiprecision::number<boost::multiprecision::gmp_float<MyNumberTypeDigits10>,
+                                boost::multiprecision::et_off>;
+
+  template<const unsigned MyNumberTypeDigits10>
+  using mandelbrot_iteration_number_type = mandelbrot_coord_pnt_number_type<MyNumberTypeDigits10>;
+
+  #else
+
+  template<const unsigned MyNumberTypeDigits10>
+  using mandelbrot_coord_pnt_number_type =
+    ::boost::multiprecision::number<::boost::multiprecision::cpp_dec_float<MyNumberTypeDigits10>,
+                                    ::boost::multiprecision::et_off>;
+
+  template<const unsigned MyNumberTypeDigits10>
+  using mandelbrot_iteration_number_type = mandelbrot_coord_pnt_number_type<MyNumberTypeDigits10>;
+
+  #endif
+
+  using coord_pnt_numeric_type = mandelbrot_coord_pnt_number_type<MANDELBROT_COORD_PNT_DIGITS10>; // NOLINT(cppcoreguidelines-macro-usage)
+  using iteration_numeric_type = mandelbrot_iteration_number_type<MANDELBROT_ITERATION_DIGITS10>; // NOLINT(cppcoreguidelines-macro-usage)
 
   } // namespace detail
-
-  inline auto filename() -> std::string
-  {
-    return
-      {
-          std::string("images/tmp/mandelbrot_")
-        + MANDELBROT_FILENAME_STRING // NOLINT(cppcoreguidelines-pro-bounds-array-to-pointer-decay,hicpp-no-array-decay)
-      };
-  }
 
   using mandelbrot_config_type  =
     ::ckormanyos::mandelbrot::mandelbrot_config<detail::coord_pnt_numeric_type,
@@ -87,14 +109,21 @@
   inline auto center_y() -> coord_pnt_numeric_type { return coord_pnt_numeric_type(MANDELBROT_POINT_CENTER_Y); }
   inline auto max_iter() -> std::uint_fast32_t     { return static_cast<std::uint_fast32_t>(MANDELBROT_CALCULATION_ITERATIONS); }
 
+  inline auto filename() -> std::string
+  {
+    return
+      {
+          std::string("images/tmp/mandelbrot_")
+        + MANDELBROT_FILENAME_STRING // NOLINT(cppcoreguidelines-pro-bounds-array-to-pointer-decay,hicpp-no-array-decay)
+      };
+  }
+
   #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
   } // namespace ckormanyos::mandelbrot::cfg
   #else
-  } // namespace cfg
+  } // namespace config
   } // namespace mandelbrot
   } // namespace ckormanyos
   #endif
-
-  // NOLINTEND(*)
 
 #endif // MANDELBROT_CFG_2022_02_24_H

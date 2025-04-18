@@ -1,12 +1,18 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
-// Copyright Christopher Kormanyos 2022 - 2024.
-// Distributed under the Boost Software License,
-// Version 1.0. (See accompanying file LICENSE_1_0.txt
-// or copy at http://www.boost.org/LICENSE_1_0.txt)
+//      Copyright Christopher Kormanyos 2022 - 2025.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
 //
 
 #ifndef MANDELBROT_CFG_MANDELBROT_99_TRY_POINTS_2024_04_30_H
   #define MANDELBROT_CFG_MANDELBROT_99_TRY_POINTS_2024_04_30_H
+
+  #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
+  namespace ckormanyos::mandelbrot::config {
+  #else
+  namespace ckormanyos { namespace mandelbrot { namespace config { // NOLINT(modernize-concat-nested-namespaces)
+  #endif
 
   // This is a specialized configuration file intended to be used for simply
   // trying out deep dives, such as those found by MandelbrotDiscovery
@@ -25,8 +31,15 @@
   constexpr char MANDELBROT_POINT_CENTER_X[]        = "-1.8699746396068234286692870030368768342037915453642718845509028250103459986994857328215914371327608244573050112378162372813745137414275903616640983656639053254827407629999158221608411935399712125613169306975303341796875";
   constexpr char MANDELBROT_POINT_CENTER_Y[]        = "+0.0014397083058718932815517159691261764084009958345476625415401283362782412191970631987534414177842258005688394204420205338263522643408260217088410151729628883966663578850294616803557413620305357059671210545313455078125";
 
-  #define MANDELBROT_GENERATOR_TYPE mandelbrot_generator_perturbative // NOLINT(cppcoreguidelines-macro-usage)
+  template<typename CoordPntNumericType, typename IterateNumericType>
+  using my_mandelbrot_generator_type = ::ckormanyos::mandelbrot::mandelbrot_generator_perturbative<CoordPntNumericType, IterateNumericType>;
 
-  #include <mandelbrot/cfg/mandelbrot_cfg.h>
+  #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
+  } // namespace ckormanyos::mandelbrot::config
+  #else
+  } // namespace config
+  } // namespace mandelbrot
+  } // namespace ckormanyos
+  #endif
 
 #endif // MANDELBROT_CFG_MANDELBROT_99_TRY_POINTS_2024_04_30_H

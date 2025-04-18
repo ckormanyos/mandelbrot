@@ -8,6 +8,12 @@
 #ifndef MANDELBROT_CFG_MANDELBROT_01_FULL_2022_02_24_H
   #define MANDELBROT_CFG_MANDELBROT_01_FULL_2022_02_24_H
 
+  #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
+  namespace ckormanyos::mandelbrot::config {
+  #else
+  namespace ckormanyos { namespace mandelbrot { namespace config { // NOLINT(modernize-concat-nested-namespaces)
+  #endif
+
   // This is the classic full immage.
 
   constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_01_FULL";
@@ -23,8 +29,15 @@
   constexpr char MANDELBROT_POINT_CENTER_X[]        = "-0.75";
   constexpr char MANDELBROT_POINT_CENTER_Y[]        = "+0.00";
 
-  #define MANDELBROT_GENERATOR_TYPE mandelbrot_generator_trivial // NOLINT(cppcoreguidelines-macro-usage)
+  template<typename CoordPntNumericType, typename IterateNumericType>
+  using my_mandelbrot_generator_type = ::ckormanyos::mandelbrot::mandelbrot_generator_trivial<CoordPntNumericType, IterateNumericType>;
 
-  #include <mandelbrot/cfg/mandelbrot_cfg.h>
+  #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
+  } // namespace ckormanyos::mandelbrot::config
+  #else
+  } // namespace config
+  } // namespace mandelbrot
+  } // namespace ckormanyos
+  #endif
 
 #endif // MANDELBROT_CFG_MANDELBROT_01_FULL_2022_02_24_H

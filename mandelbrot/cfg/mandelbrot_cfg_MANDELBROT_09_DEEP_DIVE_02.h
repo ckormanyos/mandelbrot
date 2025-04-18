@@ -1,5 +1,5 @@
-///////////////////////////////////////////////////////////////////////////////
-//      Copyright Christopher Kormanyos 2022 - 2024.
+﻿///////////////////////////////////////////////////////////////////////////////
+//      Copyright Christopher Kormanyos 2022 - 2025.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
@@ -7,6 +7,12 @@
 
 #ifndef MANDELBROT_CFG_MANDELBROT_09_DEEP_DIVE_02_2022_03_14_H
   #define MANDELBROT_CFG_MANDELBROT_09_DEEP_DIVE_02_2022_03_14_H
+
+  #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
+  namespace ckormanyos::mandelbrot::config {
+  #else
+  namespace ckormanyos { namespace mandelbrot { namespace config { // NOLINT(modernize-concat-nested-namespaces)
+  #endif
 
   // This is a deep zoom image.
   // Note: Use 79 or more decimal digits for this iteration.
@@ -24,8 +30,15 @@
   constexpr char MANDELBROT_POINT_CENTER_X[]        = "-1.29518908214777745701706417718568192670656646088488846921745350";
   constexpr char MANDELBROT_POINT_CENTER_Y[]        = "+0.44093698267832013888090367835626261211321462743139620368266100";
 
-  #define MANDELBROT_GENERATOR_TYPE mandelbrot_generator_perturbative // NOLINT(cppcoreguidelines-macro-usage)
+  template<typename CoordPntNumericType, typename IterateNumericType>
+  using my_mandelbrot_generator_type = ::ckormanyos::mandelbrot::mandelbrot_generator_perturbative<CoordPntNumericType, IterateNumericType>;
 
-  #include <mandelbrot/cfg/mandelbrot_cfg.h>
+  #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
+  } // namespace ckormanyos::mandelbrot::config
+  #else
+  } // namespace config
+  } // namespace mandelbrot
+  } // namespace ckormanyos
+  #endif
 
 #endif // MANDELBROT_CFG_MANDELBROT_09_DEEP_DIVE_02_2022_03_14_H
