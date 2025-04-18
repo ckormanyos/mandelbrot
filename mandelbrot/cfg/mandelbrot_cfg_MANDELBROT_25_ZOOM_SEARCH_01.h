@@ -32,8 +32,6 @@
   constexpr char MANDELBROT_POINT_CENTER_X[]        = "-0.1528532287297766170184556480";
   constexpr char MANDELBROT_POINT_CENTER_Y[]        = "-1.0396895160836967088522828690";
 
-  #define MANDELBROT_GENERATOR_TYPE mandelbrot_generator_trivial // NOLINT(cppcoreguidelines-macro-usage)
-
-  #include <mandelbrot/cfg/mandelbrot_cfg.h>
+  #define my_mandelbrot_generator_type ::ckormanyos::mandelbrot::mandelbrot_generator_trivial // NOLINT(cppcoreguidelines-macro-usage)
 
 #endif // MANDELBROT_CFG_MANDELBROT_25_ZOOM_SEARCH_01_2024_04_07_H

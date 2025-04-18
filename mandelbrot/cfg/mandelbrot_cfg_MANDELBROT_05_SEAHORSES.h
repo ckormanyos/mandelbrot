@@ -22,6 +22,12 @@
     #endif
   #endif
 
+  #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
+  namespace ckormanyos::mandelbrot::config {
+  #else
+  namespace ckormanyos { namespace mandelbrot { namespace config { // NOLINT(modernize-concat-nested-namespaces)
+  #endif
+
   // This is a swirly seahorse image.
 
   constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_05_SEAHORSES"; // NOLINT(cppcoreguidelines-avoid-c-arrays,hicpp-avoid-c-arrays,modernize-avoid-c-arrays)
@@ -42,8 +48,15 @@
   constexpr char MANDELBROT_POINT_CENTER_X[]        = "-0.7453983606667815";  // NOLINT(cppcoreguidelines-avoid-c-arrays,hicpp-avoid-c-arrays,modernize-avoid-c-arrays)
   constexpr char MANDELBROT_POINT_CENTER_Y[]        = "+0.1125046349959942";  // NOLINT(cppcoreguidelines-avoid-c-arrays,hicpp-avoid-c-arrays,modernize-avoid-c-arrays)
 
-  #define MANDELBROT_GENERATOR_TYPE mandelbrot_generator_trivial // NOLINT(cppcoreguidelines-macro-usage)
+  template<typename CoordPntNumericType, typename IterateNumericType>
+  using my_mandelbrot_generator_type = ::ckormanyos::mandelbrot::mandelbrot_generator_trivial<CoordPntNumericType, IterateNumericType>;
 
-  #include <mandelbrot/cfg/mandelbrot_cfg.h>
+  #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
+  } // namespace ckormanyos::mandelbrot::config
+  #else
+  } // namespace config
+  } // namespace mandelbrot
+  } // namespace ckormanyos
+  #endif
 
 #endif // MANDELBROT_CFG_MANDELBROT_05_SEAHORSES_2022_02_24_H
