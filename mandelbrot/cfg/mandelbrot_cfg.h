@@ -119,7 +119,7 @@
   }
 
   #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
-  } // namespace ckormanyos::mandelbrot::cfg
+  } // namespace ckormanyos::mandelbrot::config
   #else
   } // namespace config
   } // namespace mandelbrot
