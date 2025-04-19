@@ -42,6 +42,7 @@
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_61_SATELITE_REGION_02.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_62_SATELITE_REGION_03.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_63_SATELITE_REGION_04.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_64_SATELITE_REGION_05.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_70_DOUADY_RABBIT_01.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_72_DOUADY_RABBIT_03.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_80_SEARCH_HALO_01.h>
@@ -52,12 +53,18 @@
 
   #if defined(MANDELBROT_USE_GMP_FLOAT)
   #include <boost/multiprecision/gmp.hpp>
+  #elif defined(MANDELBROT_USE_CPP_DOUBLE_DOUBLE)
+  #include <boost/multiprecision/cpp_dec_float.hpp>
+  #include <boost/multiprecision/cpp_double_fp.hpp>
   #else
   #include <boost/multiprecision/cpp_dec_float.hpp>
   #endif
 
   #include <cstdint>
   #include <string>
+  #if defined(MANDELBROT_USE_CPP_DOUBLE_DOUBLE)
+  #include <type_traits>
+  #endif
 
   #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
   namespace ckormanyos::mandelbrot::config {
@@ -77,6 +84,17 @@
   template<const unsigned MyNumberTypeDigits10>
   using mandelbrot_iteration_number_type = mandelbrot_coord_pnt_number_type<MyNumberTypeDigits10>;
 
+  #elif defined(MANDELBROT_USE_CPP_DOUBLE_DOUBLE)
+
+  template<const unsigned MyNumberTypeDigits10>
+  using mandelbrot_coord_pnt_number_type =
+    std::conditional<MyNumberTypeDigits10 > 32,
+                     ::boost::multiprecision::number<::boost::multiprecision::cpp_dec_float<MyNumberTypeDigits10>, ::boost::multiprecision::et_off>,
+                     ::boost::multiprecision::cpp_double_double>::type;
+
+  template<const unsigned MyUnusedDigits10>
+  using mandelbrot_iteration_number_type = ::boost::multiprecision::cpp_double_double;
+
   #else
 
   template<const unsigned MyNumberTypeDigits10>
@@ -90,7 +108,11 @@
   #endif
 
   using coord_pnt_numeric_type = mandelbrot_coord_pnt_number_type<MANDELBROT_COORD_PNT_DIGITS10>; // NOLINT(cppcoreguidelines-macro-usage)
+  #if defined(MANDELBROT_USE_CPP_DOUBLE_DOUBLE)
   using iteration_numeric_type = mandelbrot_iteration_number_type<MANDELBROT_ITERATION_DIGITS10>; // NOLINT(cppcoreguidelines-macro-usage)
+  #else
+  using iteration_numeric_type = mandelbrot_iteration_number_type<MANDELBROT_ITERATION_DIGITS10>; // NOLINT(cppcoreguidelines-macro-usage)
+  #endif
 
   } // namespace detail
 
