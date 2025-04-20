@@ -8,7 +8,7 @@
 #ifndef UTILITY_2024_04_14_H
   #define UTILITY_2024_04_14_H
 
-  #include <mandelbrot/text_output.h>
+  #include <mandelbrot/mandelbrot_text_output.h>
 
   #include <cstddef>
   #include <functional>
@@ -45,7 +45,7 @@
 
   namespace util::text
   {
-    class text_output_alloc_console : public ckormanyos::mandelbrot::text_output_base // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
+    class text_output_alloc_console : public ckormanyos::mandelbrot::mandelbrot_text_output_base // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
     {
     public:
       explicit text_output_alloc_console(callback_function_type cbk) : my_callback { cbk } { }

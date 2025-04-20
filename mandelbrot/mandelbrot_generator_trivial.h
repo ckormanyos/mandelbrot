@@ -8,7 +8,7 @@
 #ifndef MANDELBROT_GENERATOR_TRIVIAL_2024_04_28_H // NOLINT(llvm-header-guard)
   #define MANDELBROT_GENERATOR_TRIVIAL_2024_04_28_H
 
-  #include <mandelbrot/mandelbrot.h>
+  #include <mandelbrot/mandelbrot_generator.h>
 
   #include <concurrency/parallel_for.h>
 
@@ -55,7 +55,7 @@
 
     auto generate_mandelbrot_image_engine(std::vector<my_iteration_numeric_type>& x_coord,
                                           std::vector<my_iteration_numeric_type>& y_coord,
-                                          text_output_base& text_output) -> void override
+                                          mandelbrot_text_output_base& my_text_output) -> void override
     {
       // Initialize the x-y coordinates.
       {
@@ -77,7 +77,7 @@
       (
         static_cast<std::size_t>(UINT8_C(0)),
         y_coord.size(),
-        [&mandelbrot_iteration_lock, &unordered_parallel_row_count, &text_output, &x_coord, &y_coord, this](std::size_t j_row)
+        [&mandelbrot_iteration_lock, &unordered_parallel_row_count, &my_text_output, &x_coord, &y_coord, this](std::size_t j_row)
         {
           while(mandelbrot_iteration_lock.test_and_set()) { ; }
 
@@ -103,7 +103,7 @@
                  << percent
                  << "%. Have patience.\r";
 
-            text_output.write(strm.str());
+            my_text_output.write(strm.str());
           }
 
           mandelbrot_iteration_lock.clear();

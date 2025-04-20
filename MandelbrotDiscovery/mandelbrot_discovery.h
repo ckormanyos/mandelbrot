@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-// Copyright Christopher Kormanyos 2024.
+// Copyright Christopher Kormanyos 2024 - 2025.
 // Distributed under the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -18,8 +18,7 @@
   #include <utility.h>
 
   #include <concurrency/stopwatch.h>
-  #include <mandelbrot/mandelbrot_generator_perturbative.h>
-  #include <mandelbrot/mandelbrot_generator_trivial.h>
+  #include <mandelbrot/mandelbrot.h>
 
   #include <wincodec.h>
   #include <windows.h>
@@ -386,7 +385,7 @@
       using local_value_type = std::tuple_element_t<TupleIndex, value_tuple_type>;
 
       using mandelbrot_generator_type =
-        std::conditional_t<TupleIndex < 3,
+        std::conditional_t<bool { TupleIndex < int { INT8_C(3) } },
                            ckormanyos::mandelbrot::mandelbrot_generator_trivial     <local_value_type>,
                            ckormanyos::mandelbrot::mandelbrot_generator_perturbative<local_value_type>>;
 
