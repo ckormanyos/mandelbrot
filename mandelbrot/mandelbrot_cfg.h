@@ -1,14 +1,12 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
-//      Copyright Christopher Kormanyos 2025.
+//      Copyright Christopher Kormanyos 2022 - 2025.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef MANDELBROT_CFG_ALL_2025_04_20_H // NOLINT(llvm-header-guard)
-  #define MANDELBROT_CFG_ALL_2025_04_20_H
-
-  #include <mandelbrot/cfg/mandelbrot_cfg_forward.h>
+#ifndef MANDELBROT_CFG_2022_02_24_H // NOLINT(llvm-header-guard)
+  #define MANDELBROT_CFG_2022_02_24_H
 
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_01_FULL.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_03_TOP.h>
@@ -48,4 +46,4 @@
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_80_SEARCH_HALO_01.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_99_TRY_POINTS.h>
 
-#endif // MANDELBROT_CFG_ALL_2025_04_20_H
+#endif // MANDELBROT_CFG_CONFIG_2022_02_24_H

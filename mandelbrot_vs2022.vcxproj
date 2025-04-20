@@ -101,8 +101,6 @@
   <ItemGroup>
     <ClInclude Include="concurrency\parallel_for.h" />
     <ClInclude Include="concurrency\stopwatch.h" />
-    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg.h" />
-    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_all.h" />
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_forward.h" />
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_01_FULL.h" />
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_03_TOP.h" />
@@ -141,11 +139,14 @@
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_80_SEARCH_HALO_01.h" />
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_99_TRY_POINTS.h" />
     <ClInclude Include="mandelbrot\mandelbrot.h" />
+    <ClInclude Include="mandelbrot\mandelbrot_cfg.h" />
     <ClInclude Include="mandelbrot\mandelbrot_color.h" />
+    <ClInclude Include="mandelbrot\mandelbrot_config.h" />
+    <ClInclude Include="mandelbrot\mandelbrot_config_base.h" />
+    <ClInclude Include="mandelbrot\mandelbrot_generator.h" />
     <ClInclude Include="mandelbrot\mandelbrot_generator_perturbative.h" />
     <ClInclude Include="mandelbrot\mandelbrot_generator_trivial.h" />
-    <ClInclude Include="mandelbrot\mandelbrot_multiprecision_backend_traits.h" />
-    <ClInclude Include="mandelbrot\text_output.h" />
+    <ClInclude Include="mandelbrot\mandelbrot_text_output.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-tidy" />

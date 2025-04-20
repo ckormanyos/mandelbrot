@@ -12,7 +12,7 @@
 
 #include <concurrency/stopwatch.h>
 
-#include <mandelbrot/cfg/mandelbrot_cfg.h>
+#include <mandelbrot/mandelbrot.h>
 
 #include <iomanip>
 #include <iostream>

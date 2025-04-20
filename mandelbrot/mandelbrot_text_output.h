@@ -5,8 +5,8 @@
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef TEXT_OUTPUT_2024_04_14_H // NOLINT(llvm-header-guard)
-  #define TEXT_OUTPUT_2024_04_14_H
+#ifndef MANDELBROT_TEXT_OUTPUT_2024_04_14_H // NOLINT(llvm-header-guard)
+  #define MANDELBROT_TEXT_OUTPUT_2024_04_14_H
 
   #include <cstddef>
   #include <iostream>
@@ -18,23 +18,23 @@
   namespace ckormanyos { namespace mandelbrot {
   #endif
 
-  class text_output_base // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
+  class mandelbrot_text_output_base // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
   {
   public:
-    virtual ~text_output_base() = default;
+    virtual ~mandelbrot_text_output_base() = default;
 
     virtual auto write(const std::string&) -> bool = 0;
 
   protected:
     using callback_function_type = auto(*)(const std::string&) -> bool;
 
-    text_output_base() = default;
+    mandelbrot_text_output_base() = default;
   };
 
-  class text_output_cout : public text_output_base // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
+  class mandelbrot_text_output_cout : public mandelbrot_text_output_base // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
   {
   public:
-    ~text_output_cout() override = default;
+    ~mandelbrot_text_output_cout() override = default;
 
     auto write(const std::string& str_to_write) -> bool override
     {
@@ -51,4 +51,4 @@
   } // namespace ckormanyos
   #endif
 
-#endif // TEXT_OUTPUT_2024_04_14_H
+#endif // MANDELBROT_TEXT_OUTPUT_2024_04_14_H

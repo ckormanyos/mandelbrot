@@ -9,9 +9,18 @@
 #ifndef MANDELBROT_GENERATOR_PERTURBATIVE_2024_04_28_H // NOLINT(llvm-header-guard)
   #define MANDELBROT_GENERATOR_PERTURBATIVE_2024_04_28_H
 
-  #include <mandelbrot/mandelbrot.h>
+  #include <mandelbrot/mandelbrot_generator.h>
 
   #include <concurrency/parallel_for.h>
+
+  #if defined(MANDELBROT_USE_GMP_FLOAT)
+  #include <boost/multiprecision/gmp.hpp>
+  #elif defined(MANDELBROT_USE_CPP_DOUBLE_DOUBLE)
+  #include <boost/multiprecision/cpp_dec_float.hpp>
+  #include <boost/multiprecision/cpp_double_fp.hpp>
+  #else
+  #include <boost/multiprecision/cpp_dec_float.hpp>
+  #endif
 
   #include <atomic>
 
@@ -21,22 +30,23 @@
   namespace ckormanyos { namespace mandelbrot { // NOLINT(modernize-concat-nested-namespaces)
   #endif
 
+  namespace detail {
+
+  #if defined(MANDELBROT_USE_GMP_FLOAT)
+  using iterate_numeric_default_type = ::boost::multiprecision::number<boost::multiprecision::gmp_float<unsigned { UINT8_C(24) }>, boost::multiprecision::et_off>;
+  #elif defined(MANDELBROT_USE_CPP_DOUBLE_DOUBLE)
+  using iterate_numeric_default_type = ::boost::multiprecision::cpp_double_double>;
+  #else
+  using iterate_numeric_default_type = ::boost::multiprecision::number<::boost::multiprecision::cpp_dec_float<unsigned { UINT8_C(24) }>, ::boost::multiprecision::et_off>;
+  #endif
+
+  } // namespace detail
+
   // This class generates the rows of the mandelbrot iteration.
   // The coordinates are set up according to the Mandelbrot configuration.
   template<typename CoordPntNumericType,
-           typename IterateNumericType =
-           #if !defined(MANDELBROT_USE_GMP_FLOAT)
-           boost::multiprecision::number<boost::multiprecision::cpp_dec_float<unsigned { UINT8_C(24) }>, boost::multiprecision::et_off>
-           #else
-           typename std::conditional
-           <
-             is_gmp_float_backend<CoordPntNumericType>::value,
-             boost::multiprecision::number<boost::multiprecision::gmp_float    <unsigned { UINT8_C(24) }>, boost::multiprecision::et_off>,
-             boost::multiprecision::number<boost::multiprecision::cpp_dec_float<unsigned { UINT8_C(24) }>, boost::multiprecision::et_off>
-           >::type
-           #endif
-           > class mandelbrot_generator_perturbative final // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
-    : public mandelbrot_generator<CoordPntNumericType, IterateNumericType>
+           typename IterateNumericType = detail::iterate_numeric_default_type>
+  class mandelbrot_generator_perturbative final : public mandelbrot_generator<CoordPntNumericType, IterateNumericType> // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
   {
   private:
     using base_class_type = mandelbrot_generator<CoordPntNumericType, IterateNumericType>;
@@ -66,7 +76,7 @@
 
     auto generate_mandelbrot_image_engine(std::vector<my_iteration_numeric_type>& x_coord, // NOLINT(misc-unused-parameters)
                                           std::vector<my_iteration_numeric_type>& y_coord, // NOLINT(misc-unused-parameters)
-                                          text_output_base& text_output) -> void override
+                                          mandelbrot_text_output_base& my_text_output) -> void override
     {
       std::vector<my_iteration_numeric_type> zkr(base_class_type::get_iterations() + static_cast<std::uint_fast32_t>(UINT8_C(1))); // NOLINT(cppcoreguidelines-init-variables)
       std::vector<my_iteration_numeric_type> zki(base_class_type::get_iterations() + static_cast<std::uint_fast32_t>(UINT8_C(1))); // NOLINT(cppcoreguidelines-init-variables)
@@ -144,7 +154,7 @@
       (
         static_cast<std::size_t>(UINT8_C(0)),
         y_coord.size(),
-        [&mandelbrot_iteration_lock, &unordered_parallel_row_count, &text_output, &x_coord, &y_coord, &zkr, &zki, this](std::size_t j_row)
+        [&mandelbrot_iteration_lock, &unordered_parallel_row_count, &my_text_output, &x_coord, &y_coord, &zkr, &zki, this](std::size_t j_row)
         {
           while(mandelbrot_iteration_lock.test_and_set()) { ; }
 
@@ -170,7 +180,7 @@
                  << percent
                  << "%. Have patience.\r";
 
-            text_output.write(strm.str());
+            my_text_output.write(strm.str());
           }
 
           mandelbrot_iteration_lock.clear();

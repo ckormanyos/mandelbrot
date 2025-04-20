@@ -10,10 +10,7 @@
 
   #include <geometry.h>
 
-  #include <mandelbrot/mandelbrot_generator_perturbative.h>
-  #include <mandelbrot/mandelbrot_generator_trivial.h>
-
-  #include <boost/multiprecision/cpp_dec_float.hpp>
+  #include <mandelbrot/mandelbrot.h>
 
   #include <type_traits>
 

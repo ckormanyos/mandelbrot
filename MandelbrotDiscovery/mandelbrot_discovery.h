@@ -386,7 +386,7 @@
       using local_value_type = std::tuple_element_t<TupleIndex, value_tuple_type>;
 
       using mandelbrot_generator_type =
-        std::conditional_t<TupleIndex < 3,
+        std::conditional_t<bool { TupleIndex < int { INT8_C(3) } },
                            ckormanyos::mandelbrot::mandelbrot_generator_trivial     <local_value_type>,
                            ckormanyos::mandelbrot::mandelbrot_generator_perturbative<local_value_type>>;
 

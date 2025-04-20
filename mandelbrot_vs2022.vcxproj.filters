@@ -24,9 +24,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="mandelbrot\mandelbrot.h">
-      <Filter>Source Files\mandelbrot</Filter>
-    </ClInclude>
     <ClInclude Include="mandelbrot\mandelbrot_color.h">
       <Filter>Source Files\mandelbrot</Filter>
     </ClInclude>
@@ -37,9 +34,6 @@
       <Filter>Source Files\mandelbrot\cfg</Filter>
     </ClInclude>
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_05_SEAHORSES.h">
-      <Filter>Source Files\mandelbrot\cfg</Filter>
-    </ClInclude>
-    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg.h">
       <Filter>Source Files\mandelbrot\cfg</Filter>
     </ClInclude>
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h">
@@ -141,7 +135,7 @@
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_99_TRY_POINTS.h">
       <Filter>Source Files\mandelbrot\cfg</Filter>
     </ClInclude>
-    <ClInclude Include="mandelbrot\text_output.h">
+    <ClInclude Include="mandelbrot\mandelbrot_text_output.h">
       <Filter>Source Files\mandelbrot</Filter>
     </ClInclude>
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_61_SATELITE_REGION_02.h">
@@ -150,20 +144,29 @@
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_62_SATELITE_REGION_03.h">
       <Filter>Source Files\mandelbrot\cfg</Filter>
     </ClInclude>
-    <ClInclude Include="mandelbrot\mandelbrot_multiprecision_backend_traits.h">
-      <Filter>Source Files\mandelbrot</Filter>
-    </ClInclude>
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_63_SATELITE_REGION_04.h">
-      <Filter>Source Files\mandelbrot\cfg</Filter>
-    </ClInclude>
-    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_forward.h">
       <Filter>Source Files\mandelbrot\cfg</Filter>
     </ClInclude>
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_64_SATELITE_REGION_05.h">
       <Filter>Source Files\mandelbrot\cfg</Filter>
     </ClInclude>
-    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_all.h">
+    <ClInclude Include="mandelbrot\mandelbrot_cfg.h">
+      <Filter>Source Files\mandelbrot</Filter>
+    </ClInclude>
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_forward.h">
       <Filter>Source Files\mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="mandelbrot\mandelbrot_config.h">
+      <Filter>Source Files\mandelbrot</Filter>
+    </ClInclude>
+    <ClInclude Include="mandelbrot\mandelbrot_config_base.h">
+      <Filter>Source Files\mandelbrot</Filter>
+    </ClInclude>
+    <ClInclude Include="mandelbrot\mandelbrot_generator.h">
+      <Filter>Source Files\mandelbrot</Filter>
+    </ClInclude>
+    <ClInclude Include="mandelbrot\mandelbrot.h">
+      <Filter>Source Files\mandelbrot</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
