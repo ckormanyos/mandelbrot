@@ -73,7 +73,7 @@ The following design goals have been incorporated.
 
 The commands are as shown below, where you need to specialize `--boost`, `--my_cc` and `--stdcc` accordingly (if needed):
 
-```sh
+```bash
 cd mandlebrot
 ./build_all.sh --boost=../boost-root --my_cc=g++ --stdcc=c++20
 mkdir -p images/tmp
@@ -101,7 +101,7 @@ instead of `cpp_dec_float`, where both backends are from
 [`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_86_0/libs/multiprecision/doc/html/index.html),
 simply use [`build_all_gmp.sh`](./build_all_gmp.sh)
 
-```sh
+```bash
 cd mandlebrot
 ./build_all_gmp.sh --boost=../boost-root --my_cc=g++ --stdcc=c++20
 mkdir -p images/tmp
@@ -229,18 +229,19 @@ Consider as a sample, for instance, the relevant content of the configuration fi
 
   constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_01_FULL";
 
-  constexpr int  MANDELBROT_COORD_PNT_DIGITS10      =      37;
-  constexpr int  MANDELBROT_ITERATION_DIGITS10      =      37;
+  constexpr int  MANDELBROT_COORD_PNT_DIGITS10      =      32;
+  constexpr int  MANDELBROT_ITERATION_DIGITS10      =      32;
   constexpr int  MANDELBROT_CALCULATION_PIXELS_X    =    2048;
   constexpr int  MANDELBROT_CALCULATION_PIXELS_Y    =    2048;
   constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =    2000;
 
-  constexpr char MANDELBROT_POINT_DX_HALF[]         = "1.35";
-  constexpr char MANDELBROT_POINT_DY_HALF[]         = "1.35";
+  constexpr char MANDELBROT_POINT_DX_HALF[]         = "+1.35";
+  constexpr char MANDELBROT_POINT_DY_HALF[]         = "+1.35";
   constexpr char MANDELBROT_POINT_CENTER_X[]        = "-0.75";
   constexpr char MANDELBROT_POINT_CENTER_Y[]        = "+0.00";
 
-  #define MANDELBROT_GENERATOR_TYPE mandelbrot_generator_trivial // NOLINT(cppcoreguidelines-macro-usage)
+  template<typename CoordPntNumericType, typename IterateNumericType>
+  using my_mandelbrot_generator_type = ::ckormanyos::mandelbrot::mandelbrot_generator_trivial<CoordPntNumericType, IterateNumericType>;
 
   #include <mandelbrot/cfg/mandelbrot_cfg.h>
 ```
