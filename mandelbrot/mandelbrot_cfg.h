@@ -8,6 +8,7 @@
 #ifndef MANDELBROT_CFG_2022_02_24_H // NOLINT(llvm-header-guard)
   #define MANDELBROT_CFG_2022_02_24_H
 
+  // --------------------------------------------------------------------------
   // You can optionally define MANDELBROT_USE_CPP_DOUBLE_DOUBLE here or
   // on the command line in order to use the cpp_double_double class
   // when available.
@@ -16,6 +17,8 @@
   //#define MANDELBROT_USE_CPP_DOUBLE_DOUBLE
   //#endif
 
+  // --------------------------------------------------------------------------
+
   // You can optionally define MANDELBROT_USE_GMP_FLOAT here or
   // on the command line in order to use the gmp_float class
   // when available.
@@ -23,6 +26,8 @@
   //#if !defined(MANDELBROT_USE_GMP_FLOAT)
   //#define MANDELBROT_USE_GMP_FLOAT
   //#endif
+
+  // --------------------------------------------------------------------------
 
   #if (!defined(MANDELBROT_USE_CPP_DEC_FLOAT) && !defined(MANDELBROT_USE_GMP_FLOAT))
   #define MANDELBROT_USE_CPP_DEC_FLOAT
@@ -88,6 +93,7 @@
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_40_SEAHORSE_DIVE_01.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_45_SEAHORSE_OTHER_01_magnify51.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_50_TENDRIL_AREA_01.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_51_TENDRIL_AREA_02.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_60_SATELITE_REGION_01.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_61_SATELITE_REGION_02.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_62_SATELITE_REGION_03.h>
