@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-// Copyright Christopher Kormanyos 2024.
+// Copyright Christopher Kormanyos 2024 - 2025.
 // Distributed under the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -18,8 +18,7 @@
   #include <utility.h>
 
   #include <concurrency/stopwatch.h>
-  #include <mandelbrot/mandelbrot_generator_perturbative.h>
-  #include <mandelbrot/mandelbrot_generator_trivial.h>
+  #include <mandelbrot/mandelbrot.h>
 
   #include <wincodec.h>
   #include <windows.h>

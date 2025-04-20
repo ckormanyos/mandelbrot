@@ -8,31 +8,9 @@
 #ifndef MANDELBROT_2022_02_24_H // NOLINT(llvm-header-guard)
   #define MANDELBROT_2022_02_24_H
 
-  #if !defined(MANDELBROT_NODISCARD)
-  #if defined(_MSC_VER) && !defined(__GNUC__)
-  #define MANDELBROT_NODISCARD
-  #else
-  #if (defined(__cplusplus) && (__cplusplus >= 201703L))
-  #define MANDELBROT_NODISCARD  [[nodiscard]] // NOLINT(cppcoreguidelines-macro-usage)
-  #else
-  #define MANDELBROT_NODISCARD
-  #endif
-  #endif
-  #endif
-
-  #include <mandelbrot/cfg/mandelbrot_cfg_forward.h>
   #include <mandelbrot/mandelbrot_cfg.h>
   #include <mandelbrot/mandelbrot_generator_perturbative.h>
   #include <mandelbrot/mandelbrot_generator_trivial.h>
-
-  #if defined(MANDELBROT_USE_GMP_FLOAT)
-  #include <boost/multiprecision/gmp.hpp>
-  #elif defined(MANDELBROT_USE_CPP_DOUBLE_DOUBLE)
-  #include <boost/multiprecision/cpp_dec_float.hpp>
-  #include <boost/multiprecision/cpp_double_fp.hpp>
-  #else
-  #include <boost/multiprecision/cpp_dec_float.hpp>
-  #endif
 
   #if defined(MANDELBROT_USE_CPP_DOUBLE_DOUBLE)
   #include <type_traits>
@@ -46,17 +24,17 @@
 
   namespace detail {
 
-  #if defined(MANDELBROT_USE_GMP_FLOAT)
+  #if defined(MANDELBROT_USE_CPP_DEC_FLOAT)
+
+  #if !defined(MANDELBROT_USE_CPP_DOUBLE_DOUBLE)
 
   template<const unsigned MyNumberTypeDigits10>
-  using mandelbrot_coord_pnt_number_type =
-  boost::multiprecision::number<boost::multiprecision::gmp_float<MyNumberTypeDigits10>,
-                                boost::multiprecision::et_off>;
+  using mandelbrot_coord_pnt_number_type = ::boost::multiprecision::number<::boost::multiprecision::cpp_dec_float<MyNumberTypeDigits10>, ::boost::multiprecision::et_off>;
 
   template<const unsigned MyNumberTypeDigits10>
   using mandelbrot_iteration_number_type = mandelbrot_coord_pnt_number_type<MyNumberTypeDigits10>;
 
-  #elif defined(MANDELBROT_USE_CPP_DOUBLE_DOUBLE)
+  #else
 
   template<const unsigned MyNumberTypeDigits10>
   using mandelbrot_coord_pnt_number_type =
@@ -64,18 +42,39 @@
                               ::boost::multiprecision::number<::boost::multiprecision::cpp_dec_float<MyNumberTypeDigits10>, ::boost::multiprecision::et_off>,
                               ::boost::multiprecision::cpp_double_double>::type;
 
-  template<const unsigned MyUnusedDigits10>
-  using mandelbrot_iteration_number_type = ::boost::multiprecision::cpp_double_double;
+  template<const unsigned MyNumberTypeDigits10>
+  using mandelbrot_iteration_number_type =
+    typename std::conditional<bool { MyNumberTypeDigits10 > unsigned { UINT8_C(32) } },
+                              ::boost::multiprecision::number<::boost::multiprecision::cpp_dec_float<MyNumberTypeDigits10>, ::boost::multiprecision::et_off>,
+                              ::boost::multiprecision::cpp_double_double>::type;
+
+  #endif
+
+  #elif defined(MANDELBROT_USE_GMP_FLOAT)
+
+  #if !defined(MANDELBROT_USE_CPP_DOUBLE_DOUBLE)
+
+  template<const unsigned MyNumberTypeDigits10>
+  using mandelbrot_coord_pnt_number_type = ::boost::multiprecision::number<boost::multiprecision::gmp_float<MyNumberTypeDigits10>, boost::multiprecision::et_off>;
+
+  template<const unsigned MyNumberTypeDigits10>
+  using mandelbrot_iteration_number_type = mandelbrot_coord_pnt_number_type<MyNumberTypeDigits10>;
 
   #else
 
   template<const unsigned MyNumberTypeDigits10>
   using mandelbrot_coord_pnt_number_type =
-    ::boost::multiprecision::number<::boost::multiprecision::cpp_dec_float<MyNumberTypeDigits10>,
-                                    ::boost::multiprecision::et_off>;
+    typename std::conditional<bool { MyNumberTypeDigits10 > unsigned { UINT8_C(32) } },
+                              ::boost::multiprecision::number<boost::multiprecision::gmp_float<MyNumberTypeDigits10>, boost::multiprecision::et_off,
+                              ::boost::multiprecision::cpp_double_double>::type;
 
   template<const unsigned MyNumberTypeDigits10>
-  using mandelbrot_iteration_number_type = mandelbrot_coord_pnt_number_type<MyNumberTypeDigits10>;
+  using mandelbrot_iteration_number_type =
+    typename std::conditional<bool { MyNumberTypeDigits10 > unsigned { UINT8_C(32) } },
+                              ::boost::boost::multiprecision::number<boost::multiprecision::gmp_float<MyNumberTypeDigits10>, boost::multiprecision::et_off>,
+                              ::boost::multiprecision::cpp_double_double>::type;
+
+  #endif
 
   #endif
 

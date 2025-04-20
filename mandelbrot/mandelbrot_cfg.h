@@ -8,6 +8,58 @@
 #ifndef MANDELBROT_CFG_2022_02_24_H // NOLINT(llvm-header-guard)
   #define MANDELBROT_CFG_2022_02_24_H
 
+  // You can optionally define MANDELBROT_USE_CPP_DOUBLE_DOUBLE here or
+  // on the command line in order to use the cpp_double_double class
+  // when available.
+
+  //#if !defined(MANDELBROT_USE_CPP_DOUBLE_DOUBLE)
+  //#define MANDELBROT_USE_CPP_DOUBLE_DOUBLE
+  //#endif
+
+  // You can optionally define MANDELBROT_USE_GMP_FLOAT here or
+  // on the command line in order to use the gmp_float class
+  // when available.
+
+  //#if !defined(MANDELBROT_USE_GMP_FLOAT)
+  //#define MANDELBROT_USE_GMP_FLOAT
+  //#endif
+
+  #if (!defined(MANDELBROT_USE_CPP_DEC_FLOAT) && !defined(MANDELBROT_USE_GMP_FLOAT))
+  #define MANDELBROT_USE_CPP_DEC_FLOAT
+  #endif
+
+  #if (!defined(MANDELBROT_USE_CPP_DEC_FLOAT) && !defined(MANDELBROT_USE_GMP_FLOAT))
+  #error "Error: Define one of MANDELBROT_USE_CPP_DEC_FLOAT or MANDELBROT_USE_GMP_FLOAT"
+  #endif
+
+  #if (defined(MANDELBROT_USE_CPP_DEC_FLOAT) && defined(MANDELBROT_USE_GMP_FLOAT))
+  #error "Error: You can not define both MANDELBROT_USE_CPP_DEC_FLOAT or MANDELBROT_USE_GMP_FLOAT"
+  #endif
+
+  #if !defined(MANDELBROT_NODISCARD)
+  #if defined(_MSC_VER) && !defined(__GNUC__)
+  #define MANDELBROT_NODISCARD
+  #else
+  #if (defined(__cplusplus) && (__cplusplus >= 201703L))
+  #define MANDELBROT_NODISCARD  [[nodiscard]] // NOLINT(cppcoreguidelines-macro-usage)
+  #else
+  #define MANDELBROT_NODISCARD
+  #endif
+  #endif
+  #endif
+
+  #include <mandelbrot/cfg/mandelbrot_cfg_forward.h>
+
+  #if defined(MANDELBROT_USE_CPP_DEC_FLOAT)
+  #include <boost/multiprecision/cpp_dec_float.hpp>
+  #elif defined(MANDELBROT_USE_GMP_FLOAT)
+  #include <boost/multiprecision/gmp.hpp>
+  #endif
+
+  #if defined(MANDELBROT_USE_CPP_DOUBLE_DOUBLE)
+  #include <boost/multiprecision/cpp_double_fp.hpp>
+  #endif
+
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_01_FULL.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_03_TOP.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_04_SWIRL.h>

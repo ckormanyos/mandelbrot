@@ -13,15 +13,6 @@
 
   #include <concurrency/parallel_for.h>
 
-  #if defined(MANDELBROT_USE_GMP_FLOAT)
-  #include <boost/multiprecision/gmp.hpp>
-  #elif defined(MANDELBROT_USE_CPP_DOUBLE_DOUBLE)
-  #include <boost/multiprecision/cpp_dec_float.hpp>
-  #include <boost/multiprecision/cpp_double_fp.hpp>
-  #else
-  #include <boost/multiprecision/cpp_dec_float.hpp>
-  #endif
-
   #include <atomic>
 
   #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
@@ -32,12 +23,14 @@
 
   namespace detail {
 
-  #if defined(MANDELBROT_USE_GMP_FLOAT)
-  using iterate_numeric_default_type = ::boost::multiprecision::number<boost::multiprecision::gmp_float<unsigned { UINT8_C(24) }>, boost::multiprecision::et_off>;
-  #elif defined(MANDELBROT_USE_CPP_DOUBLE_DOUBLE)
-  using iterate_numeric_default_type = ::boost::multiprecision::cpp_double_double>;
+  #if defined(MANDELBROT_USE_CPP_DOUBLE_DOUBLE)
+  using iterate_numeric_default_type = ::boost::multiprecision::cpp_double_double;
   #else
+  #if defined(MANDELBROT_USE_CPP_DEC_FLOAT)
   using iterate_numeric_default_type = ::boost::multiprecision::number<::boost::multiprecision::cpp_dec_float<unsigned { UINT8_C(24) }>, ::boost::multiprecision::et_off>;
+  #elif defined(MANDELBROT_USE_GMP_FLOAT)
+  using iterate_numeric_default_type = ::boost::multiprecision::number<boost::multiprecision::gmp_float<unsigned { UINT8_C(24) }>, boost::multiprecision::et_off>;
+  #endif
   #endif
 
   } // namespace detail
@@ -111,7 +104,7 @@
 
         my_coord_pnt_numeric_type zr  { static_cast<unsigned>(UINT8_C(0)) };
         my_coord_pnt_numeric_type zi  { static_cast<unsigned>(UINT8_C(0)) };
-        my_coord_pnt_numeric_type zr2 { static_cast<unsigned>(UINT8_C(0)) };
+        my_coord_pnt_numeric_type zr2 { static_cast<unsigned>(UINT8_C(0)) }; // NOLINT(altera-id-dependent-backward-branch)
         my_coord_pnt_numeric_type zi2 { static_cast<unsigned>(UINT8_C(0)) };
 
         auto iteration_result = static_cast<std::uint_fast32_t>(UINT8_C(0));
