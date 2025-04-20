@@ -102,6 +102,7 @@
     <ClInclude Include="concurrency\parallel_for.h" />
     <ClInclude Include="concurrency\stopwatch.h" />
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg.h" />
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_all.h" />
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_forward.h" />
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_01_FULL.h" />
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_03_TOP.h" />
