@@ -242,8 +242,6 @@ Consider as a sample, for instance, the relevant content of the configuration fi
 
   template<typename CoordPntNumericType, typename IterateNumericType>
   using my_mandelbrot_generator_type = ::ckormanyos::mandelbrot::mandelbrot_generator_trivial<CoordPntNumericType, IterateNumericType>;
-
-  #include <mandelbrot/cfg/mandelbrot_cfg.h>
 ```
 
 Clearly named definitions are used to specify:
