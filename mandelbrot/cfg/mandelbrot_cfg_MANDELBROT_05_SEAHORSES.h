@@ -46,8 +46,8 @@
   constexpr int  MANDELBROT_CALCULATION_PIXELS_X    =    2048;
   constexpr int  MANDELBROT_CALCULATION_PIXELS_Y    =    2048;
   #else
-  constexpr int  MANDELBROT_CALCULATION_PIXELS_X    =     256;
-  constexpr int  MANDELBROT_CALCULATION_PIXELS_Y    =     256;
+  constexpr int  MANDELBROT_CALCULATION_PIXELS_X    =     192;
+  constexpr int  MANDELBROT_CALCULATION_PIXELS_Y    =     192;
   #endif
   constexpr int  MANDELBROT_CALCULATION_ITERATIONS  =    2000;
 
