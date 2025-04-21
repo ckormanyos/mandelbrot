@@ -11,7 +11,10 @@
   // --------------------------------------------------------------------------
   // You can optionally define MANDELBROT_USE_CPP_DOUBLE_DOUBLE here or
   // on the command line in order to use the cpp_double_double class
-  // when available.
+  // when available. Do note, however, that the cpp_double_double number
+  // type will only be used for decimal digit counts of 32 or lower.
+  // This is automatically ensured by conditional logic checks in the code
+  // (when this option is activated).
 
   //#if !defined(MANDELBROT_USE_CPP_DOUBLE_DOUBLE)
   //#define MANDELBROT_USE_CPP_DOUBLE_DOUBLE
