@@ -92,6 +92,8 @@ jobs:
           ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png
           echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.jpg'
           sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
+          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep 304b35a57a474657773b935ab85efe4fc0afdfbe'
+          sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep 304b35a57a474657773b935ab85efe4fc0afdfbe
           echo
           echo "delete local artifacts"
           rm -f ./test_mandelbrot.exe
@@ -107,6 +109,8 @@ jobs:
           ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png
           echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.jpg'
           sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
+          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep 304b35a57a474657773b935ab85efe4fc0afdfbe'
+          sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep 304b35a57a474657773b935ab85efe4fc0afdfbe
           echo
           gcov --object-directory . --demangled-names ./test_mandelbrot.cpp
           lcov -c --directory . --output-file coverage_unfiltered.info
