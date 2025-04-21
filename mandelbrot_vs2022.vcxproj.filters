@@ -174,6 +174,9 @@
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_XX_TRY_POINTS.h">
       <Filter>Source Files\mandelbrot\cfg</Filter>
     </ClInclude>
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_67_NEGATIVE_AXIS_01.h">
+      <Filter>Source Files\mandelbrot\cfg</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-tidy" />
