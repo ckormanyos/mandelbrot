@@ -14,6 +14,9 @@
     <Filter Include="concurrency">
       <UniqueIdentifier>{dda69a90-a29e-43eb-96e8-d844de4988d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="mandelbrot\cfg">
+      <UniqueIdentifier>{d0109abf-e75e-40f6-a672-43fe9d420834}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mandelbrot_discovery.cpp">
@@ -48,9 +51,6 @@
     <ClInclude Include="..\mandelbrot\mandelbrot_generator_trivial.h">
       <Filter>mandelbrot</Filter>
     </ClInclude>
-    <ClInclude Include="..\mandelbrot\text_output.h">
-      <Filter>mandelbrot</Filter>
-    </ClInclude>
     <ClInclude Include="..\concurrency\stopwatch.h">
       <Filter>concurrency</Filter>
     </ClInclude>
@@ -63,8 +63,137 @@
     <ClInclude Include="mandelbrot_discovery_type.h">
       <Filter>MandelbrotDiscovery</Filter>
     </ClInclude>
-    <ClInclude Include="..\mandelbrot\mandelbrot_multiprecision_backend_traits.h">
+    <ClInclude Include="..\mandelbrot\mandelbrot_cfg.h">
       <Filter>mandelbrot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\mandelbrot_config.h">
+      <Filter>mandelbrot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\mandelbrot_config_base.h">
+      <Filter>mandelbrot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\mandelbrot_generator.h">
+      <Filter>mandelbrot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\mandelbrot_text_output.h">
+      <Filter>mandelbrot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_forward.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_01_FULL.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_03_TOP.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_04_SWIRL.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_05_SEAHORSES.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_06_BRANCHES.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_07_SEAHORSE_VALLEY.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_08_DEEP_DIVE_01.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_08_DEEP_DIVE_01_magnify51.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_09_DEEP_DIVE_02.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_10_ZOOM_WIKI_00.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_10_ZOOM_WIKI_00_rect.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_11_ZOOM_WIKI_01.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_12_ZOOM_WIKI_02.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_13_ZOOM_WIKI_03.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_14_ZOOM_WIKI_04.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_00_magnify51.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_20_ZOOM_VERY_DEEP_612.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_25_ZOOM_SEARCH_00.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_25_ZOOM_SEARCH_01.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_30_ZOOM_ANOTHER_00.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_30_ZOOM_ANOTHER_00_magnify51.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_31_ZOOM_ANOTHER_01.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_32_ZOOM_ANOTHER_02.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_40_SEAHORSE_DIVE_01.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_45_SEAHORSE_OTHER_01_magnify51.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_50_TENDRIL_AREA_01.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_51_TENDRIL_AREA_02.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_60_SATELITE_REGION_01.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_61_SATELITE_REGION_02.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_62_SATELITE_REGION_03.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_63_SATELITE_REGION_04.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_64_SATELITE_REGION_05.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_70_DOUADY_RABBIT_01.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_72_DOUADY_RABBIT_03.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_80_SEARCH_HALO_01.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_90_ELEPHANT_VALLEY_01.h">
+      <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_XX_TRY_POINTS.h">
+      <Filter>mandelbrot\cfg</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
