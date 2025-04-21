@@ -105,6 +105,7 @@
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_70_DOUADY_RABBIT_01.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_72_DOUADY_RABBIT_03.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_80_SEARCH_HALO_01.h>
-  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_99_TRY_POINTS.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_90_ELEPHANT_VALLEY_01.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_XX_TRY_POINTS.h>
 
 #endif // MANDELBROT_CFG_CONFIG_2022_02_24_H
