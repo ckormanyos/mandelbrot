@@ -1,5 +1,5 @@
 ﻿# ------------------------------------------------------------------------------
-#  Copyright Christopher Kormanyos 2022 - 2024.
+#  Copyright Christopher Kormanyos 2022 - 2025.
 #  Distributed under the Boost Software License,
 #  Version 1.0. (See accompanying file LICENSE_1_0.txt
 #  or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -87,6 +87,31 @@ jobs:
           ${{ matrix.compiler }} -x c++ -c -finline-functions -march=native -mtune=native -fprofile-arcs -ftest-coverage -O1 -Wall -Wextra -Wmissing-include-dirs -std=c++20 -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -DMANDELBROT_HAS_COVERAGE -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
           ${{ matrix.compiler }} -x none -finline-functions -march=native -mtune=native -fprofile-arcs -ftest-coverage -O1 test_mandelbrot.o ./png/libpng/libpng-1.6.44.git-2024/obj/libpng16.a ./png/zlib/zlib-1.3.1.1-2024/obj/libz.a ./jpeg/jpeg-6b-2022/obj/libjpeg-6b.a -lpthread -o test_mandelbrot.exe
           ./test_mandelbrot.exe
+          echo
+          ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
+          ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png
+          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.jpg'
+          sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
+          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep 304b35a57a474657773b935ab85efe4fc0afdfbe'
+          sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep 304b35a57a474657773b935ab85efe4fc0afdfbe
+          echo
+          echo "delete local artifacts"
+          rm -f ./test_mandelbrot.exe
+          rm -f ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
+          rm -f ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png
+          echo
+          echo "build and run with MANDELBROT_USE_PERTURBATIVE"
+          ${{ matrix.compiler }} -x c++ -c -finline-functions -march=native -mtune=native -fprofile-arcs -ftest-coverage -O1 -Wall -Wextra -Wmissing-include-dirs -std=c++20 -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -DMANDELBROT_HAS_COVERAGE -DMANDELBROT_USE_PERTURBATIVE -Ijpeg/jpeg-6b-2022 -I../boost-root -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+          ${{ matrix.compiler }} -x none -finline-functions -march=native -mtune=native -fprofile-arcs -ftest-coverage -O1 test_mandelbrot.o ./png/libpng/libpng-1.6.44.git-2024/obj/libpng16.a ./png/zlib/zlib-1.3.1.1-2024/obj/libz.a ./jpeg/jpeg-6b-2022/obj/libjpeg-6b.a -lpthread -o test_mandelbrot.exe
+          ./test_mandelbrot.exe
+          echo
+          ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
+          ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png
+          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.jpg'
+          sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
+          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep 304b35a57a474657773b935ab85efe4fc0afdfbe'
+          sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep 304b35a57a474657773b935ab85efe4fc0afdfbe
+          echo
           gcov --object-directory . --demangled-names ./test_mandelbrot.cpp
           lcov -c --directory . --output-file coverage_unfiltered.info
           lcov --ignore-errors unused --remove coverage_unfiltered.info '/usr/*' '*boost/*' '*concurrency/*' '*/cfg/*' '*test_mandelbrot.cpp' '*mandelbrot_color.h' --output-file coverage.info
