@@ -316,7 +316,12 @@
       return my_thread_wait_for_new_set_click.load();
     }
 
-    static auto zoom_factor_p10() -> int { using std::ilogb; return ilogb(std::get<0x03>(my_mandelbrot_zoom_factor_tuple)); };
+    static auto zoom_factor_p10() -> int
+    {
+      using std::ilogb;
+
+      return ilogb(std::get<0x03>(my_mandelbrot_zoom_factor_tuple));
+    };
 
     static auto rectangle_tuple_index() -> int
     {
@@ -324,9 +329,9 @@
 
       return
       {
-        (zoom <= 20) ? 0 :
-        (zoom <= 40) ? 1 :
-        (zoom <= 80) ? 2 :
+        (zoom <= 16) ? 0 :
+        (zoom <= 32) ? 1 :
+        (zoom <= 96) ? 2 :
                        3
       };
     };
@@ -385,7 +390,7 @@
       using local_value_type = std::tuple_element_t<TupleIndex, value_tuple_type>;
 
       using mandelbrot_generator_type =
-        std::conditional_t<bool { TupleIndex < int { INT8_C(3) } },
+        std::conditional_t<bool { TupleIndex < int { INT8_C(2) } },
                            ckormanyos::mandelbrot::mandelbrot_generator_trivial     <local_value_type>,
                            ckormanyos::mandelbrot::mandelbrot_generator_perturbative<local_value_type>>;
 
