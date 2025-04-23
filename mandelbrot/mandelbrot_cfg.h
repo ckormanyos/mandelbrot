@@ -95,6 +95,7 @@
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_33_ZOOM_EVEN_MORE_03.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_40_SEAHORSE_DIVE_01.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_45_SEAHORSE_OTHER_01_magnify51.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_46_SEAHORSE_AREA_02.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_50_TENDRIL_AREA_01.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_51_TENDRIL_AREA_02.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_60_SATELITE_REGION_01.h>
@@ -107,6 +108,7 @@
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_72_DOUADY_RABBIT_03.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_80_SEARCH_HALO_01.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_90_ELEPHANT_VALLEY_01.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_91_ELEPHANT_VALLEY_02.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_XX_TRY_POINTS.h>
 
 #endif // MANDELBROT_CFG_CONFIG_2022_02_24_H

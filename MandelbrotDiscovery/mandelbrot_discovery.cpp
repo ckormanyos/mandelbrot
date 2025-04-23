@@ -37,10 +37,10 @@ template<const unsigned Digits10> auto center_y() -> typename local::cfg_type<Di
 template<const unsigned Digits10>
 using rectangle_from_digits_type = geometry::rectangle_type<typename geometry::point_type<typename local::cfg_type<Digits10>::mandelbrot_coord_pnt_type>>;
 
-constexpr inline auto default_00_digits10() noexcept -> unsigned { return unsigned { UINT32_C(  44) }; } // For magnification <=   20
-constexpr inline auto default_01_digits10() noexcept -> unsigned { return unsigned { UINT32_C(  64) }; } // For magnification <=   40
-constexpr inline auto default_02_digits10() noexcept -> unsigned { return unsigned { UINT32_C( 104) }; } // For magnification <=   80
-constexpr inline auto default_03_digits10() noexcept -> unsigned { return unsigned { UINT32_C(1560) }; } // For magnification <= 1536 (which we consider unlimited)
+constexpr inline auto default_00_digits10() noexcept -> unsigned { return unsigned { UINT32_C(  32) }; } // For magnification <=   16
+constexpr inline auto default_01_digits10() noexcept -> unsigned { return unsigned { UINT32_C(  52) }; } // For magnification <=   32
+constexpr inline auto default_02_digits10() noexcept -> unsigned { return unsigned { UINT32_C( 120) }; } // For magnification <=   96
+constexpr inline auto default_03_digits10() noexcept -> unsigned { return unsigned { UINT32_C(1048) }; } // For magnification <= 1024 (which we consider unlimited)
 
 using rectangle_00_type      = rectangle_from_digits_type<default_00_digits10()>;
 using rectangle_01_type      = rectangle_from_digits_type<default_01_digits10()>;
