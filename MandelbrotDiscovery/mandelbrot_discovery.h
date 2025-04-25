@@ -40,6 +40,8 @@
   extern auto mandelbrot_discovery_cmd_res(const std::string& str_cmd, int& frac, std::string& str_cmd_result) -> bool;
   extern auto mandelbrot_discovery_cmd_itr(const std::string& str_cmd, unsigned& iter, std::string& str_cmd_result) -> bool;
 
+  extern auto rectangle_index(const int index_factor_p10) -> int;
+
   namespace mandelbrot_discovery_detail
   {
     constexpr char WindowTitleDefault[] = "Mandelbrot Discovery";
@@ -325,15 +327,11 @@
 
     static auto rectangle_tuple_index() -> int
     {
-      const int zoom { zoom_factor_p10() };
+      // See also mandelbrot_discovery.cpp around lines 40-43
+      // and also the global subroutine rectangle_index(int)
+      // in the same source file.
 
-      return
-      {
-        (zoom <= 16) ? 0 :
-        (zoom <= 32) ? 1 :
-        (zoom <= 96) ? 2 :
-                       3
-      };
+      return ::rectangle_index(zoom_factor_p10());
     };
 
     template<typename MandelbrotGeneratorType>
