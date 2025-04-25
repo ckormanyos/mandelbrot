@@ -5,8 +5,8 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef MANDELBROT_CFG_MANDELBROT_53_TENDRIL_AREA_04_2025_04_20_H
-  #define MANDELBROT_CFG_MANDELBROT_53_TENDRIL_AREA_04_2025_04_20_H
+#ifndef MANDELBROT_CFG_MANDELBROT_53_TENDRIL_AREA_04_2025_04_25_H
+  #define MANDELBROT_CFG_MANDELBROT_53_TENDRIL_AREA_04_2025_04_25_H
 
   #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
   namespace ckormanyos::mandelbrot::config {
@@ -48,4 +48,4 @@
   } // namespace ckormanyos
   #endif
 
-#endif // MANDELBROT_CFG_MANDELBROT_53_TENDRIL_AREA_04_2025_04_20_H
+#endif // MANDELBROT_CFG_MANDELBROT_53_TENDRIL_AREA_04_2025_04_25_H
