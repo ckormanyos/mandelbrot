@@ -35,6 +35,11 @@ floating-point types such as those found in
 Also fixed-point types having sufficient precision should work well
 (although these have not yet been extensively used or tested in this project).
 
+The interactive companion-program
+[`MandelbrotDiscovery`](https://github.com/ckormanyos/mandelbrot/tree/main/MandelbrotDiscovery)
+(also in this repo, see below) assists in finding and visualizing interesting points
+for deep dives.
+
 ## Design
 
 This project uses [`Boost.Multiprecision`](https://www.boost.org/doc/libs/1_86_0/libs/multiprecision/doc/html/index.html)
@@ -414,9 +419,11 @@ The following adaptions have been performed.
 
 ## Mandelbrot Discovery
 
-The _Mandelbrot_ _Discovery_ program aims to provide semi-automatic assistance
+The
+[`MandelbrotDiscovery`](https://github.com/ckormanyos/mandelbrot/tree/main/MandelbrotDiscovery)
+program aims to provide semi-automatic assistance
 to find interesting points for fractal deep dives.
 
-This project is work in progress which is being undertaken in the
-[`MandelbrotDiscovery`](https://github.com/ckormanyos/mandelbrot/tree/main/MandelbrotDiscovery)
-directory.
+This project is work in progress and further enhancements are planned.
+__Mandelbrot_ _Discovery_ can, however, be used today for successfully
+navigating and finding interesting points for deep dives.
