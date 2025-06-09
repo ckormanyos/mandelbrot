@@ -192,6 +192,9 @@
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_53_TENDRIL_AREA_04_prior.h">
       <Filter>Source Files\mandelbrot\cfg</Filter>
     </ClInclude>
+    <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_65_SATELITE_REGION_06.h">
+      <Filter>Source Files\mandelbrot\cfg</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-tidy" />
