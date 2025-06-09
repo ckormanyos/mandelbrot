@@ -1,12 +1,12 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
-//      Copyright Christopher Kormanyos 2022 - 2025.
+//      Copyright Christopher Kormanyos 2025.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef MANDELBROT_CFG_MANDELBROT_XX_TRY_POINTS_2024_04_30_H
-  #define MANDELBROT_CFG_MANDELBROT_XX_TRY_POINTS_2024_04_30_H
+#ifndef MANDELBROT_CFG_MANDELBROT_65_SATELITE_REGION_06_2025_06_09_H
+  #define MANDELBROT_CFG_MANDELBROT_65_SATELITE_REGION_06_2025_06_09_H
 
   #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
   namespace ckormanyos::mandelbrot::config {
@@ -14,11 +14,7 @@
   namespace ckormanyos { namespace mandelbrot { namespace config { // NOLINT(modernize-concat-nested-namespaces)
   #endif
 
-  // This is a specialized configuration file intended to be used
-  // for simply trying out deep dives, such as those found by the
-  // MandelbrotDiscovery program or found by other methods.
-
-  constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_XX_TRY_POINTS";
+  constexpr char MANDELBROT_FILENAME_STRING[]       = "MANDELBROT_65_SATELITE_REGION_06";
 
   constexpr int  MANDELBROT_COORD_PNT_DIGITS10      =     114;
   constexpr int  MANDELBROT_ITERATION_DIGITS10      =      28;
@@ -42,4 +38,4 @@
   } // namespace ckormanyos
   #endif
 
-#endif // MANDELBROT_CFG_MANDELBROT_XX_TRY_POINTS_2024_04_30_H
+#endif // MANDELBROT_CFG_MANDELBROT_65_SATELITE_REGION_06_2025_06_09_H

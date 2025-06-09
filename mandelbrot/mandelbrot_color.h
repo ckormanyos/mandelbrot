@@ -54,7 +54,7 @@
         const auto my_color =
           static_cast<float>
           (
-            static_cast<float>(sin(color_phase) / 2.0F) + 0.5F
+            (std::max)(static_cast<float>(static_cast<float>(sin(color_phase) / 2.0F) + 0.5F), 0.0F)
           );
 
         return static_cast<std::uint_fast32_t>(my_color * 255.0F); // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)

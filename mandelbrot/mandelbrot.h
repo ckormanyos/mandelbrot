@@ -12,10 +12,6 @@
   #include <mandelbrot/mandelbrot_generator_perturbative.h>
   #include <mandelbrot/mandelbrot_generator_trivial.h>
 
-  #if defined(MANDELBROT_USE_CPP_DOUBLE_DOUBLE)
-  #include <type_traits>
-  #endif
-
   #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
   namespace ckormanyos::mandelbrot::config {
   #else
