@@ -8,6 +8,7 @@
 #ifndef MANDELBROT_COLOR_2015_06_15_H // NOLINT(llvm-header-guard)
   #define MANDELBROT_COLOR_2015_06_15_H
 
+  #include <algorithm>
   #include <cmath>
   #include <cstdint>
 

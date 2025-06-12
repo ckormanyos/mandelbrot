@@ -13,6 +13,13 @@
   #include <concurrency/parallel_for.h>
 
   #include <atomic>
+  #include <cstddef>
+  #include <cstdint>
+  #include <iomanip>
+  #include <limits>
+  #include <sstream>
+  #include <type_traits>
+  #include <vector>
 
   #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
   namespace ckormanyos::mandelbrot {
@@ -59,14 +66,14 @@
     {
       // Initialize the x-y coordinates.
       {
-        my_iteration_numeric_type x_val(base_class_type::mandelbrot_config_object.x_lo());
-        my_iteration_numeric_type y_val(base_class_type::mandelbrot_config_object.y_hi());
+        my_iteration_numeric_type x_val { base_class_type::mandelbrot_config_object.x_lo() };
+        my_iteration_numeric_type y_val { base_class_type::mandelbrot_config_object.y_hi() };
 
         const my_iteration_numeric_type dx { static_cast<my_iteration_numeric_type>(base_class_type::mandelbrot_config_object.step_x()) };
         const my_iteration_numeric_type dy { static_cast<my_iteration_numeric_type>(base_class_type::mandelbrot_config_object.step_y()) };
 
-        for(auto& x : x_coord) { x = x_val; x_val += dx; }
-        for(auto& y : y_coord) { y = y_val; y_val -= dy; }
+        for(auto& x_pnt : x_coord) { x_pnt = x_val; x_val += dx; }
+        for(auto& y_pnt : y_coord) { y_pnt = y_val; y_val -= dy; }
       }
 
       std::atomic_flag mandelbrot_iteration_lock { };

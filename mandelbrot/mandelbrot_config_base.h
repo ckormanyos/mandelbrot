@@ -11,6 +11,7 @@
 
   #include <cstddef>
   #include <cstdint>
+  #include <utility>
 
   #if(__cplusplus >= 201703L)
   namespace ckormanyos::mandelbrot {
@@ -33,15 +34,15 @@
 
     mandelbrot_config_base(mandelbrot_config_base&& other) noexcept = default;
 
-    mandelbrot_config_base(const my_coord_pnt_numeric_type& xl,
-                           const my_coord_pnt_numeric_type& xh, // NOLINT(bugprone-easily-swappable-parameters)
-                           const my_coord_pnt_numeric_type& yl,
-                           const my_coord_pnt_numeric_type& yh,
-                           const std::uint_fast32_t         iter)
-      : my_x_lo      (std::move(xl)),
-        my_x_hi      (std::move(xh)),
-        my_y_lo      (std::move(yl)),
-        my_y_hi      (std::move(yh)),
+    mandelbrot_config_base(my_coord_pnt_numeric_type x_lo_in, // NOLINT(bugprone-easily-swappable-parameters)
+                           my_coord_pnt_numeric_type x_hi_in, // NOLINT(bugprone-easily-swappable-parameters)
+                           my_coord_pnt_numeric_type y_lo_in, // NOLINT(bugprone-easily-swappable-parameters)
+                           my_coord_pnt_numeric_type y_hi_in, // NOLINT(bugprone-easily-swappable-parameters)
+                           const std::uint_fast32_t  iter)
+      : my_x_lo      (std::move(x_lo_in)),
+        my_x_hi      (std::move(x_hi_in)),
+        my_y_lo      (std::move(y_lo_in)),
+        my_y_hi      (std::move(y_hi_in)),
         my_width     (std::move(my_x_hi - my_x_lo)),
         my_height    (std::move(my_y_hi - my_y_lo)),
         my_iterations(iter) { }
@@ -65,40 +66,12 @@
 
     MANDELBROT_NODISCARD auto integral_width() const -> std::uint_fast32_t
     {
-      const auto non_rounded_width2 =
-        static_cast<std::uint_fast32_t>
-        (
-          my_coord_pnt_numeric_type(my_width * static_cast<std::uint_fast32_t>(UINT8_C(2))) / this->step_x()
-        );
-
-      return
-        static_cast<std::uint_fast32_t>
-        (
-          static_cast<std::uint_fast32_t>
-          (
-            non_rounded_width2 + static_cast<std::uint_fast32_t>(UINT8_C(1))
-          )
-          / static_cast<std::uint_fast32_t>(UINT8_C(2))
-        );
+      return integral_convert(my_width, this->step_x());
     }
 
     MANDELBROT_NODISCARD auto integral_height() const -> std::uint_fast32_t
     {
-      const auto non_rounded_height2 =
-        static_cast<std::uint_fast32_t>
-        (
-          my_coord_pnt_numeric_type(my_height * static_cast<std::uint_fast32_t>(UINT8_C(2))) / this->step_y()
-        );
-
-      return
-        static_cast<std::uint_fast32_t>
-        (
-            static_cast<std::uint_fast32_t>
-            (
-              non_rounded_height2 + static_cast<std::uint_fast32_t>(UINT8_C(1))
-            )
-          / static_cast<std::uint_fast32_t>(UINT8_C(2))
-        );
+      return integral_convert(my_height, this->step_y());
     }
 
     auto set_iterations(const std::uint_fast32_t iter) const noexcept -> void { my_iterations = iter; }
@@ -106,13 +79,32 @@
     MANDELBROT_NODISCARD auto get_iterations() const noexcept -> std::uint_fast32_t { return my_iterations; }
 
   private:
-    const my_coord_pnt_numeric_type my_x_lo;
-    const my_coord_pnt_numeric_type my_x_hi;
-    const my_coord_pnt_numeric_type my_y_lo;
-    const my_coord_pnt_numeric_type my_y_hi;
-    const my_coord_pnt_numeric_type my_width;
-    const my_coord_pnt_numeric_type my_height;
-    mutable std::uint_fast32_t      my_iterations; // NOLINT(readability-identifier-naming)
+    const my_coord_pnt_numeric_type my_x_lo   { };
+    const my_coord_pnt_numeric_type my_x_hi   { };
+    const my_coord_pnt_numeric_type my_y_lo   { };
+    const my_coord_pnt_numeric_type my_y_hi   { };
+    const my_coord_pnt_numeric_type my_width  { };
+    const my_coord_pnt_numeric_type my_height { };
+    mutable std::uint_fast32_t      my_iterations { }; // NOLINT(readability-identifier-naming)
+
+    MANDELBROT_NODISCARD static auto integral_convert(const my_coord_pnt_numeric_type& my_val, const my_coord_pnt_numeric_type& my_step) -> std::uint_fast32_t
+    {
+      const auto non_rounded_val2 =
+        static_cast<std::uint_fast32_t>
+        (
+          my_coord_pnt_numeric_type(my_val * static_cast<std::uint_fast32_t>(UINT8_C(2))) / my_step
+        );
+
+      return
+        static_cast<std::uint_fast32_t>
+        (
+            static_cast<std::uint_fast32_t>
+            (
+              non_rounded_val2 + static_cast<std::uint_fast32_t>(UINT8_C(1))
+            )
+          / static_cast<std::uint_fast32_t>(UINT8_C(2))
+        );
+    }
   };
 
   #if(__cplusplus >= 201703L)

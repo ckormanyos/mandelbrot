@@ -34,7 +34,7 @@
 
   template<typename CoordPntNumericType,
            typename IterateNumericType>
-  class mandelbrot_generator // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
+  class mandelbrot_generator
   {
   public:
     using mandelbrot_config_type = mandelbrot_config_base<CoordPntNumericType, IterateNumericType>;
@@ -57,15 +57,19 @@
                                     std::vector<std::uint_fast32_t>(config.integral_height())),
         mandelbrot_color_histogram (static_cast<std::size_t>(config.get_iterations() + 1U), static_cast<std::uint_fast32_t>(UINT32_C(0))) { }
 
+    // LCOV_EXCL_START
+
     mandelbrot_generator() = delete;
 
     mandelbrot_generator(const mandelbrot_generator&) = delete;
     mandelbrot_generator(mandelbrot_generator&&) noexcept = delete;
 
-    virtual ~mandelbrot_generator() = default; // LCOV_EXCL_LINE
+    virtual ~mandelbrot_generator() = default;
 
     MANDELBROT_NODISCARD auto operator=(const mandelbrot_generator&) -> mandelbrot_generator& = delete;
     MANDELBROT_NODISCARD auto operator=(mandelbrot_generator&&) noexcept -> mandelbrot_generator& = delete;
+
+    // LCOV_EXCL_STOP
 
     static auto four_coord_pnt() -> const my_coord_pnt_numeric_type&
     {
