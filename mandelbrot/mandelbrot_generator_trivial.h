@@ -17,8 +17,8 @@
   #include <cstdint>
   #include <iomanip>
   #include <limits>
-  #include <type_traits>
   #include <sstream>
+  #include <type_traits>
   #include <vector>
 
   #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
