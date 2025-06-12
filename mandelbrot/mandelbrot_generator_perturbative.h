@@ -14,6 +14,13 @@
   #include <concurrency/parallel_for.h>
 
   #include <atomic>
+  #include <cstddef>
+  #include <cstdint>
+  #include <iomanip>
+  #include <limits>
+  #include <sstream>
+  #include <type_traits>
+  #include <vector>
 
   #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
   namespace ckormanyos::mandelbrot {
@@ -71,10 +78,8 @@
                                           std::vector<my_iteration_numeric_type>& y_coord, // NOLINT(misc-unused-parameters)
                                           mandelbrot_text_output_base& my_text_output) -> void override
     {
-      std::vector<my_iteration_numeric_type> zkr(base_class_type::get_iterations() + static_cast<std::uint_fast32_t>(UINT8_C(1))); // NOLINT(cppcoreguidelines-init-variables)
-      std::vector<my_iteration_numeric_type> zki(base_class_type::get_iterations() + static_cast<std::uint_fast32_t>(UINT8_C(1))); // NOLINT(cppcoreguidelines-init-variables)
-
-      using std::floor;
+      std::vector<my_iteration_numeric_type> zkr(std::size_t { base_class_type::get_iterations() + std::uint_fast32_t { UINT8_C(1) } });
+      std::vector<my_iteration_numeric_type> zki(zkr.size());
 
       my_coord_pnt_numeric_type
         x_center
@@ -132,11 +137,11 @@
 
       // Initialize the x-y coordinates.
       {
-        auto x_val(static_cast<my_iteration_numeric_type>(base_class_type::mandelbrot_config_object.x_lo() - x_center));
-        auto y_val(static_cast<my_iteration_numeric_type>(base_class_type::mandelbrot_config_object.y_hi() - y_center));
+        my_iteration_numeric_type x_val { base_class_type::mandelbrot_config_object.x_lo() - x_center };
+        my_iteration_numeric_type y_val { base_class_type::mandelbrot_config_object.y_hi() - y_center };
 
-        for (auto& x : x_coord) { x = x_val; x_val += static_cast<my_iteration_numeric_type>(base_class_type::mandelbrot_config_object.step_x()); }
-        for (auto& y : y_coord) { y = y_val; y_val -= static_cast<my_iteration_numeric_type>(base_class_type::mandelbrot_config_object.step_y()); }
+        for (auto& x_pnt : x_coord) { x_pnt = x_val; x_val += static_cast<my_iteration_numeric_type>(base_class_type::mandelbrot_config_object.step_x()); }
+        for (auto& y_pnt : y_coord) { y_pnt = y_val; y_val -= static_cast<my_iteration_numeric_type>(base_class_type::mandelbrot_config_object.step_y()); }
       }
 
       std::atomic_flag mandelbrot_iteration_lock { };

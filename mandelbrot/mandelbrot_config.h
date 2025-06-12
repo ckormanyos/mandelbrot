@@ -21,6 +21,12 @@
   namespace ckormanyos { namespace mandelbrot { // NOLINT(modernize-concat-nested-namespaces)
   #endif
 
+  template<typename CoordPntNumericType,
+           typename IterateNumericType,
+           const std::uint_fast32_t PixelCountX,
+           const std::uint_fast32_t PixelCountY = PixelCountX>
+  class mandelbrot_config;
+
   // Make a template class that represents the Mandelbrot configuration.
   // This class automatically creates sensible parameters based on
   // the resolution of the fixed-point type supplied in the template
@@ -30,10 +36,13 @@
            typename IterateNumericType,
            const std::uint_fast32_t PixelCountX,
            const std::uint_fast32_t PixelCountY>
-  class mandelbrot_config final : public mandelbrot_config_base<CoordPntNumericType, IterateNumericType> // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
+  class mandelbrot_config final : public mandelbrot_config_base<CoordPntNumericType, IterateNumericType>
   {
   private:
     using base_class_type = mandelbrot_config_base<CoordPntNumericType, IterateNumericType>;
+
+    MANDELBROT_NODISCARD static constexpr auto pixel_count_x() noexcept -> std::uint_fast32_t { return PixelCountX; }
+    MANDELBROT_NODISCARD static constexpr auto pixel_count_y() noexcept -> std::uint_fast32_t { return PixelCountY; }
 
   public:
     using my_coord_pnt_numeric_type = typename base_class_type::my_coord_pnt_numeric_type;
@@ -44,9 +53,7 @@
                       const my_coord_pnt_numeric_type& yl,
                       const my_coord_pnt_numeric_type& yh,
                       const std::uint_fast32_t         iter)
-      : base_class_type(xl, xh, yl, yh, iter),
-        my_step_x(base_class_type::get_width()  / PixelCountX),
-        my_step_y(base_class_type::get_height() / PixelCountY) { } // NOLINT
+      : base_class_type(xl, xh, yl, yh, iter) { }
 
     mandelbrot_config(const std::string& str_xl,
                       const std::string& str_xh,
@@ -55,29 +62,37 @@
       : base_class_type(boost::lexical_cast<my_coord_pnt_numeric_type>(str_xl),
                         boost::lexical_cast<my_coord_pnt_numeric_type>(str_xh),
                         boost::lexical_cast<my_coord_pnt_numeric_type>(str_yl),
-                        boost::lexical_cast<my_coord_pnt_numeric_type>(str_yh)),
-        my_step_x(base_class_type::get_width()  / PixelCountX),
-        my_step_y(base_class_type::get_height() / PixelCountY) { }
+                        boost::lexical_cast<my_coord_pnt_numeric_type>(str_yh)) { }
 
     mandelbrot_config(const char* pc_xl,
                       const char* pc_xh,
                       const char* pc_yl,
                       const char* pc_yh)
-      : base_class_type(boost::lexical_cast<my_coord_pnt_numeric_type>(std::string(pc_xl)),
-                        boost::lexical_cast<my_coord_pnt_numeric_type>(std::string(pc_xh)),
-                        boost::lexical_cast<my_coord_pnt_numeric_type>(std::string(pc_yl)),
-                        boost::lexical_cast<my_coord_pnt_numeric_type>(std::string(pc_yh))),
-        my_step_x(base_class_type::get_width()  / PixelCountX),
-        my_step_y(base_class_type::get_height() / PixelCountY) { }
+      : base_class_type(boost::lexical_cast<my_coord_pnt_numeric_type>(std::string { pc_xl }),
+                        boost::lexical_cast<my_coord_pnt_numeric_type>(std::string { pc_xh }),
+                        boost::lexical_cast<my_coord_pnt_numeric_type>(std::string { pc_yl }),
+                        boost::lexical_cast<my_coord_pnt_numeric_type>(std::string { pc_yh })) { }
 
-    ~mandelbrot_config() override = default; // LCOV_EXCL_LINE
+    mandelbrot_config() = delete;
+
+    // LCOV_EXCL_START
+
+    ~mandelbrot_config() override = default;
+
+    mandelbrot_config(const mandelbrot_config&) = default;
+    mandelbrot_config(mandelbrot_config&&) noexcept = default;
+
+    auto operator=(const mandelbrot_config&) -> mandelbrot_config& = default;
+    auto operator=(mandelbrot_config&&) noexcept -> mandelbrot_config& = default;
+
+    // LCOV_EXCL_STOP
 
   private:
-    my_coord_pnt_numeric_type my_step_x;      // NOLINT(readability-identifier-naming)
-    my_coord_pnt_numeric_type my_step_y;      // NOLINT(readability-identifier-naming)
+    my_coord_pnt_numeric_type my_step_x { base_class_type::get_width()  / pixel_count_x() }; // NOLINT(readability-identifier-naming)
+    my_coord_pnt_numeric_type my_step_y { base_class_type::get_height() / pixel_count_y() }; // NOLINT(readability-identifier-naming)
 
-    MANDELBROT_NODISCARD auto step_x() const -> const my_coord_pnt_numeric_type & override { return my_step_x; }
-    MANDELBROT_NODISCARD auto step_y() const -> const my_coord_pnt_numeric_type & override { return my_step_y; }
+    MANDELBROT_NODISCARD auto step_x() const -> const my_coord_pnt_numeric_type& override { return my_step_x; }
+    MANDELBROT_NODISCARD auto step_y() const -> const my_coord_pnt_numeric_type& override { return my_step_y; }
   };
 
   #if(__cplusplus >= 201703L)
