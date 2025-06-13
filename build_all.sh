@@ -7,15 +7,30 @@
 #
 
 # cd /mnt/c/Users/ckorm/Documents/Ks/PC_Software/NumericalPrograms/mandelbrot
+
 # ./build_all.sh --boost=/mnt/c/boost/boost_1_88_0 --my_cc=g++ --stdcc=c++20
 
+# Now with experimental support for the (not yet released) boost::multiprecision::cpp_double_double:
+# ./build_all.sh --boost=/mnt/c/boost/boost_1_88_0 --dxtra=MANDELBROT_USE_CPP_DOUBLE_DOUBLE --ixtra=/mnt/c/ChrisGitRepos/modular_boost/multiprecision/include --my_cc=g++ --stdcc=c++20
+
 boost=
+dxtra=
+ixtra=
 my_cc=g++
+stdcc=c++14
 
 for arg in "$@"; do
   case $arg in
     --boost=*)
       boost="${arg#*=}"
+      shift
+      ;;
+    --dxtra=*)
+      dxtra="${arg#*=}"
+      shift
+      ;;
+    --ixtra=*)
+      ixtra="${arg#*=}"
       shift
       ;;
     --my_cc=*)
@@ -32,10 +47,21 @@ for arg in "$@"; do
 done
 
 echo "boost: $boost"
+echo "dxtra: $dxtra"
+echo "ixtra: $ixtra"
 echo "my_cc: $my_cc"
 echo "stdcc: $stdcc"
 
-MY_BOOST_INC=-I$boost
+MY_DEF=
+MY_INC=-I$boost
+
+if [[ "$dxtra" != "" ]]; then
+    MY_DEF="-D$dxtra"
+fi
+
+if [[ "$ixtra" != "" ]]; then
+    MY_INC="$MY_INC -I$ixtra"
+fi
 
 MY_GCC=$my_cc
 
@@ -70,7 +96,7 @@ $MY_GCC -v
 echo
 
 echo 'compile test/test_mandelbrot.cpp to test_mandelbrot.o'
-$MY_GCC -x c++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wmissing-include-dirs -std=$MY_STD -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 $MY_BOOST_INC -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+$MY_GCC -x c++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wmissing-include-dirs -std=$MY_STD $MY_DEF -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 $MY_INC -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
 echo
 
 echo 'link test_mandelbrot.o with libraries to create test_mandelbrot.exe'
