@@ -16,8 +16,10 @@
   // This is automatically ensured by conditional logic checks in the code
   // (when this option is activated).
 
+  //#if defined(_MSC_VER)
   //#if !defined(MANDELBROT_USE_CPP_DOUBLE_DOUBLE)
   //#define MANDELBROT_USE_CPP_DOUBLE_DOUBLE
+  //#endif
   //#endif
 
   // --------------------------------------------------------------------------
