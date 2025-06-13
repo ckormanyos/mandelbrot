@@ -34,13 +34,13 @@
 
   template<const unsigned MyNumberTypeDigits10>
   using mandelbrot_coord_pnt_number_type =
-    typename std::conditional<bool { MyNumberTypeDigits10 > unsigned { UINT8_C(32) } },
+    typename std::conditional<static_cast<bool>(MyNumberTypeDigits10 > unsigned { UINT8_C(32) }),
                               ::boost::multiprecision::number<::boost::multiprecision::cpp_dec_float<MyNumberTypeDigits10>, ::boost::multiprecision::et_off>,
                               ::boost::multiprecision::cpp_double_double>::type;
 
   template<const unsigned MyNumberTypeDigits10>
   using mandelbrot_iteration_number_type =
-    typename std::conditional<bool { MyNumberTypeDigits10 > unsigned { UINT8_C(32) } },
+    typename std::conditional<static_cast<bool>(MyNumberTypeDigits10 > unsigned { UINT8_C(32) }),
                               ::boost::multiprecision::number<::boost::multiprecision::cpp_dec_float<MyNumberTypeDigits10>, ::boost::multiprecision::et_off>,
                               ::boost::multiprecision::cpp_double_double>::type;
 
@@ -60,14 +60,14 @@
 
   template<const unsigned MyNumberTypeDigits10>
   using mandelbrot_coord_pnt_number_type =
-    typename std::conditional<bool { MyNumberTypeDigits10 > unsigned { UINT8_C(32) } },
-                              ::boost::multiprecision::number<boost::multiprecision::gmp_float<MyNumberTypeDigits10>, boost::multiprecision::et_off,
+    typename std::conditional<static_cast<bool>(MyNumberTypeDigits10 > unsigned { UINT8_C(32) }),
+                              ::boost::multiprecision::number<boost::multiprecision::gmp_float<MyNumberTypeDigits10>, boost::multiprecision::et_off>,
                               ::boost::multiprecision::cpp_double_double>::type;
 
   template<const unsigned MyNumberTypeDigits10>
   using mandelbrot_iteration_number_type =
-    typename std::conditional<bool { MyNumberTypeDigits10 > unsigned { UINT8_C(32) } },
-                              ::boost::boost::multiprecision::number<boost::multiprecision::gmp_float<MyNumberTypeDigits10>, boost::multiprecision::et_off>,
+    typename std::conditional<static_cast<bool>(MyNumberTypeDigits10 > unsigned { UINT8_C(32) }),
+                              ::boost::multiprecision::number<boost::multiprecision::gmp_float<MyNumberTypeDigits10>, boost::multiprecision::et_off>,
                               ::boost::multiprecision::cpp_double_double>::type;
 
   #endif

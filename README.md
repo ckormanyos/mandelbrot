@@ -76,7 +76,8 @@ The following design goals have been incorporated.
 
 ### Build and run in the `*nix` shell
 
-The commands are as shown below, where you need to specialize `--boost`, `--my_cc` and `--stdcc` accordingly (if needed):
+The commands are as shown below, where you need to specialize `--boost`, `--my_cc` and `--stdcc` accordingly
+(an optional parameter `--ixtra` can be used to set an additional, extra include path, if needed):
 
 ```bash
 cd mandlebrot
