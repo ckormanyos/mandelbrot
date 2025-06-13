@@ -103,13 +103,13 @@ jobs:
           mkdir -p images/tmp
           ./test_mandelbrot.exe
           ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
-          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.jpg'
+          echo 'sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg'
           sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
-          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep f3abc4437d97bba945d589aac3d96d8bbb67a035'
+          echo 'sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep f3abc4437d97bba945d589aac3d96d8bbb67a035'
           sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep f3abc4437d97bba945d589aac3d96d8bbb67a035
-          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.png'
+          echo 'sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png'
           sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png
-          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.png | grep 1991efd74deaab5a8f59a68967fa6f098d713e79'
+          echo 'sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png | grep 1991efd74deaab5a8f59a68967fa6f098d713e79'
           sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png | grep 1991efd74deaab5a8f59a68967fa6f098d713e79
   gcc-native-cpp_dec_float:
     runs-on: ubuntu-latest
@@ -173,13 +173,13 @@ jobs:
           ./test_mandelbrot.exe
           ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
           ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png
-          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.jpg'
+          echo 'sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg'
           sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
-          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep f3abc4437d97bba945d589aac3d96d8bbb67a035'
+          echo 'sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep f3abc4437d97bba945d589aac3d96d8bbb67a035'
           sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep f3abc4437d97bba945d589aac3d96d8bbb67a035
-          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.png'
+          echo 'sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png'
           sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png
-          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.png | grep 1991efd74deaab5a8f59a68967fa6f098d713e79'
+          echo 'sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png | grep 1991efd74deaab5a8f59a68967fa6f098d713e79'
           sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png | grep 1991efd74deaab5a8f59a68967fa6f098d713e79
   gcc-native-gmp_float:
     runs-on: ubuntu-latest
@@ -311,6 +311,14 @@ jobs:
           ./test_mandelbrot.exe
           ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
           ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png
+          echo 'sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg'
+          sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
+          echo 'sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep 36ec598c3762cca0fa10bb87186c15671fd99916'
+          sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep 36ec598c3762cca0fa10bb87186c15671fd99916
+          echo 'sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png'
+          sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png
+          echo 'sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png | grep 024c67b256f4e9045b614607e41f38672ec212d2'
+          sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png | grep 024c67b256f4e9045b614607e41f38672ec212d2
   gcc-native-cpp_dec_float-asan:
     runs-on: ubuntu-latest
     defaults:
@@ -603,13 +611,13 @@ jobs:
           ./test_mandelbrot.exe
           ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
           ls -la ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png
-          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.jpg'
+          echo 'sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg'
           sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg
-          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep f3abc4437d97bba945d589aac3d96d8bbb67a035'
+          echo 'sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep f3abc4437d97bba945d589aac3d96d8bbb67a035'
           sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep f3abc4437d97bba945d589aac3d96d8bbb67a035
-          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.png'
+          echo 'sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png'
           sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png
-          echo 'sha1sum ./images/tmp mandelbrot_MANDELBROT_05_SEAHORSES.png | grep 1991efd74deaab5a8f59a68967fa6f098d713e79'
+          echo 'sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png | grep 1991efd74deaab5a8f59a68967fa6f098d713e79'
           sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.png | grep 1991efd74deaab5a8f59a68967fa6f098d713e79
   msvc-release-x64-vs2022:
     runs-on: windows-latest
