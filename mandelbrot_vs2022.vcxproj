@@ -149,7 +149,8 @@
     <ClInclude Include="mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_XX_TRY_POINTS.h" />
     <ClInclude Include="mandelbrot\mandelbrot.h" />
     <ClInclude Include="mandelbrot\mandelbrot_cfg.h" />
-    <ClInclude Include="mandelbrot\mandelbrot_color.h" />
+    <ClInclude Include="mandelbrot\mandelbrot_color_functions.h" />
+    <ClInclude Include="mandelbrot\mandelbrot_color_stretch.h" />
     <ClInclude Include="mandelbrot\mandelbrot_config.h" />
     <ClInclude Include="mandelbrot\mandelbrot_config_base.h" />
     <ClInclude Include="mandelbrot\mandelbrot_generator.h" />

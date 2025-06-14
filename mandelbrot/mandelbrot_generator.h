@@ -10,7 +10,8 @@
   #define MANDELBROT_GENERATOR_2015_06_15_H
 
   #include <concurrency/parallel_for.h>
-  #include <mandelbrot/mandelbrot_color.h>
+  #include <mandelbrot/mandelbrot_color_functions.h>
+  #include <mandelbrot/mandelbrot_color_stretch.h>
   #include <mandelbrot/mandelbrot_config.h>
   #include <mandelbrot/mandelbrot_text_output.h>
 
@@ -139,9 +140,9 @@
     {
       color_stretches.init(static_cast<std::uint_fast32_t>(x_values.size() * y_values.size()));
 
-      for(auto& histogram_entry : mandelbrot_color_histogram)
+      for(std::uint_fast32_t& histogram_entry : mandelbrot_color_histogram)
       {
-        color_stretches.color_stretch(histogram_entry);
+        histogram_entry = color_stretches.color_stretch(histogram_entry);
       }
     }
 
