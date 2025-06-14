@@ -61,7 +61,7 @@
     static_assert(std::numeric_limits<my_iteration_numeric_type>::digits10 <= std::numeric_limits<my_coord_pnt_numeric_type>::digits10,
                   "Error: The iteration digits10 must be less than or equal to the coordinate digits10. Check config.");
 
-    explicit mandelbrot_generator_perturbative(const mandelbrot_config_type& config)
+    explicit mandelbrot_generator_perturbative(mandelbrot_config_type& config)
       : base_class_type(config) { }
 
     mandelbrot_generator_perturbative() = delete;
@@ -74,10 +74,13 @@
     auto operator=(const mandelbrot_generator_perturbative&) -> mandelbrot_generator_perturbative& = delete;
     auto operator=(mandelbrot_generator_perturbative&&) noexcept -> mandelbrot_generator_perturbative& = delete;
 
-    auto generate_mandelbrot_image_engine(std::vector<my_iteration_numeric_type>& x_coord, // NOLINT(misc-unused-parameters)
-                                          std::vector<my_iteration_numeric_type>& y_coord, // NOLINT(misc-unused-parameters)
-                                          mandelbrot_text_output_base& my_text_output) -> void override
+    auto generate_mandelbrot_image_engine(std::vector<my_iteration_numeric_type>& x_coord,
+                                          std::vector<my_iteration_numeric_type>& y_coord,
+                                          const mandelbrot_text_output_base& my_text_output) -> void override
     {
+      static_cast<void>(x_coord.empty()); // LCOV_EXCL_LINE
+      static_cast<void>(y_coord.empty()); // LCOV_EXCL_LINE
+
       std::vector<my_iteration_numeric_type> zkr(std::size_t { base_class_type::get_iterations() + std::uint_fast32_t { UINT8_C(1) } });
       std::vector<my_iteration_numeric_type> zki(zkr.size());
 

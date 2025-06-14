@@ -31,7 +31,7 @@ auto main() -> int // NOLINT(bugprone-exception-escape)
 {
   using namespace ::ckormanyos::mandelbrot; // NOLINT(google-build-using-namespace)
 
-  const config::mandelbrot_config_type
+  config::mandelbrot_config_type
     mandelbrot_config_object
     (
       config::center_x() - config::dx_half(),
@@ -45,7 +45,8 @@ auto main() -> int // NOLINT(bugprone-exception-escape)
     config::my_mandelbrot_generator_type<config::coord_pnt_numeric_type, config::iteration_numeric_type>;
 
   color::color_stretch_histogram_method local_color_stretches;
-  color::color_functions_bw             local_color_functions;
+
+  const color::color_functions_bw local_color_functions;
 
   mandelbrot_generator_type mandelbrot_generator(mandelbrot_config_object);
 

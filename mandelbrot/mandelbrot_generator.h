@@ -92,12 +92,12 @@
 
     virtual auto generate_mandelbrot_image_engine(std::vector<my_iteration_numeric_type>&,
                                                   std::vector<my_iteration_numeric_type>&,
-                                                  mandelbrot_text_output_base&) -> void = 0;
+                                                  const mandelbrot_text_output_base&) -> void = 0;
 
     auto generate_mandelbrot_image(const std::string&           str_filename,
-                                   color::color_functions_base& color_functions,
+                                   const color::color_functions_base& color_functions,
                                    color::color_stretch_base&   color_stretches,
-                                   mandelbrot_text_output_base& my_text_output  = my_standard_output) -> void
+                                   const mandelbrot_text_output_base& my_text_output  = my_standard_output) -> void
     {
       // Setup the x-axis and y-axis coordinates.
 
@@ -146,9 +146,9 @@
       }
     }
 
-    auto apply_color_functions(const std::vector<my_iteration_numeric_type>&   x_values,
-                               const std::vector<my_iteration_numeric_type>&   y_values,
-                               color::color_functions_base& color_functions) -> void
+    auto apply_color_functions(const std::vector<my_iteration_numeric_type>& x_values,
+                               const std::vector<my_iteration_numeric_type>& y_values,
+                               const color::color_functions_base& color_functions) -> void
     {
       for(auto   j_row = static_cast<std::uint_fast32_t>(UINT8_C(0));
                  j_row < static_cast<std::uint_fast32_t>(y_values.size());

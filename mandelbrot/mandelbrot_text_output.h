@@ -29,7 +29,7 @@
 
     virtual ~mandelbrot_text_output_base() = default;
 
-    virtual auto write(const std::string&) -> bool = 0;
+    virtual auto write(const std::string&) const -> bool = 0;
 
   protected:
     using callback_function_type = auto(*)(const std::string&) -> bool;
@@ -50,7 +50,7 @@
 
     ~mandelbrot_text_output_cout() override = default;
 
-    auto write(const std::string& str_to_write) -> bool override
+    auto write(const std::string& str_to_write) const -> bool override
     {
       std::cout << str_to_write;
 
