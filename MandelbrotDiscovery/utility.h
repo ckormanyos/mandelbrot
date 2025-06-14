@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-// Copyright Christopher Kormanyos 2024.
+// Copyright Christopher Kormanyos 2024 - 2025.
 // Distributed under the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -45,16 +45,22 @@
 
   namespace util::text
   {
-    class text_output_alloc_console : public ckormanyos::mandelbrot::mandelbrot_text_output_base // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
+    class text_output_alloc_console final : public ckormanyos::mandelbrot::mandelbrot_text_output_base
     {
     public:
       explicit text_output_alloc_console(callback_function_type cbk) : my_callback { cbk } { }
 
       text_output_alloc_console() = delete;
 
+      text_output_alloc_console(const text_output_alloc_console&) = delete;
+      text_output_alloc_console(text_output_alloc_console&&) noexcept = delete;
+
+      auto operator=(const text_output_alloc_console&) -> text_output_alloc_console& = delete;
+      auto operator=(text_output_alloc_console&&) noexcept -> text_output_alloc_console& = delete;
+
       ~text_output_alloc_console() override = default;
 
-      auto write(const std::string& str_to_write) -> bool override
+      auto write(const std::string& str_to_write) const -> bool override
       {
         my_callback(str_to_write);
 
@@ -62,7 +68,7 @@
       }
 
     private:
-      callback_function_type my_callback { nullptr };
+      const callback_function_type my_callback { nullptr };
     };
   } // namespace util::text
 
