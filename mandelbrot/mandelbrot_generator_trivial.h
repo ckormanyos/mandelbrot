@@ -47,7 +47,7 @@
   public:
     using my_iteration_numeric_type = typename base_class_type::my_iteration_numeric_type;
 
-    explicit mandelbrot_generator_trivial(const mandelbrot_config_type& config)
+    explicit mandelbrot_generator_trivial(mandelbrot_config_type& config)
       : base_class_type(config) { }
 
     mandelbrot_generator_trivial() = delete;
@@ -62,7 +62,7 @@
 
     auto generate_mandelbrot_image_engine(std::vector<my_iteration_numeric_type>& x_coord,
                                           std::vector<my_iteration_numeric_type>& y_coord,
-                                          mandelbrot_text_output_base& my_text_output) -> void override
+                                          const mandelbrot_text_output_base& my_text_output) -> void override
     {
       // Initialize the x-y coordinates.
       {
@@ -110,7 +110,7 @@
                  << percent
                  << "%. Have patience.\r";
 
-            my_text_output.write(strm.str());
+            static_cast<void>(my_text_output.write(strm.str()));
           }
 
           mandelbrot_iteration_lock.clear();

@@ -10,7 +10,8 @@
   #define MANDELBROT_GENERATOR_2015_06_15_H
 
   #include <concurrency/parallel_for.h>
-  #include <mandelbrot/mandelbrot_color.h>
+  #include <mandelbrot/mandelbrot_color_functions.h>
+  #include <mandelbrot/mandelbrot_color_stretch.h>
   #include <mandelbrot/mandelbrot_config.h>
   #include <mandelbrot/mandelbrot_text_output.h>
 
@@ -91,12 +92,12 @@
 
     virtual auto generate_mandelbrot_image_engine(std::vector<my_iteration_numeric_type>&,
                                                   std::vector<my_iteration_numeric_type>&,
-                                                  mandelbrot_text_output_base&) -> void = 0;
+                                                  const mandelbrot_text_output_base&) -> void = 0;
 
-    auto generate_mandelbrot_image(const std::string&                 str_filename,
-                                   const color::color_functions_base& color_functions = color::color_functions_bw(),
-                                   const color::color_stretch_base&   color_stretches = color::color_stretch_histogram_method(),
-                                         mandelbrot_text_output_base& my_text_output  = my_standard_output) -> void
+    auto generate_mandelbrot_image(const std::string&           str_filename,
+                                   const color::color_functions_base& color_functions,
+                                   color::color_stretch_base&   color_stretches,
+                                   const mandelbrot_text_output_base& my_text_output  = my_standard_output) -> void
     {
       // Setup the x-axis and y-axis coordinates.
 
@@ -105,15 +106,15 @@
 
       this->generate_mandelbrot_image_engine(x_coord, y_coord, my_text_output);
 
-      my_text_output.write("\n");
+      static_cast<void>(my_text_output.write("\n"));
 
-      my_text_output.write("Perform color stretching.\n");
+      static_cast<void>(my_text_output.write("Perform color stretching.\n"));
       apply_color_stretches(x_coord, y_coord, color_stretches);
 
-      my_text_output.write("Apply color functions.\n");
+      static_cast<void>(my_text_output.write("Apply color functions.\n"));
       apply_color_functions(x_coord, y_coord, color_functions);
 
-      my_text_output.write("Write output JPEG file " + str_filename + ".\n");
+      static_cast<void>(my_text_output.write("Write output JPEG file " + str_filename + ".\n"));
 
       boost::gil::jpeg_write_view(str_filename + std::string(".jpg"), mandelbrot_view);
       boost::gil::png_write_view (str_filename + std::string(".png"), mandelbrot_view);
@@ -135,18 +136,18 @@
   private:
     auto apply_color_stretches(const std::vector<my_iteration_numeric_type>& x_values,
                                const std::vector<my_iteration_numeric_type>& y_values,
-                               const color::color_stretch_base& color_stretches) -> void
+                               color::color_stretch_base& color_stretches) -> void
     {
       color_stretches.init(static_cast<std::uint_fast32_t>(x_values.size() * y_values.size()));
 
-      for(auto& histogram_entry : mandelbrot_color_histogram)
+      for(std::uint_fast32_t& histogram_entry : mandelbrot_color_histogram)
       {
-        color_stretches.color_stretch(histogram_entry);
+        histogram_entry = color_stretches.color_stretch(histogram_entry);
       }
     }
 
-    auto apply_color_functions(const std::vector<my_iteration_numeric_type>&   x_values,
-                               const std::vector<my_iteration_numeric_type>&   y_values,
+    auto apply_color_functions(const std::vector<my_iteration_numeric_type>& x_values,
+                               const std::vector<my_iteration_numeric_type>& y_values,
                                const color::color_functions_base& color_functions) -> void
     {
       for(auto   j_row = static_cast<std::uint_fast32_t>(UINT8_C(0));

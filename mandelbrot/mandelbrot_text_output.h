@@ -8,6 +8,8 @@
 #ifndef MANDELBROT_TEXT_OUTPUT_2024_04_14_H // NOLINT(llvm-header-guard)
   #define MANDELBROT_TEXT_OUTPUT_2024_04_14_H
 
+  #include <mandelbrot/cfg/mandelbrot_cfg_forward.h>
+
   #include <cstddef>
   #include <iostream>
   #include <string>
@@ -18,12 +20,18 @@
   namespace ckormanyos { namespace mandelbrot {
   #endif
 
-  class mandelbrot_text_output_base // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
+  class mandelbrot_text_output_base
   {
   public:
+    mandelbrot_text_output_base(const mandelbrot_text_output_base&) = delete;
+    mandelbrot_text_output_base(mandelbrot_text_output_base&&) noexcept = delete;
+
+    auto operator=(const mandelbrot_text_output_base&) -> mandelbrot_text_output_base& = delete;
+    auto operator=(mandelbrot_text_output_base&&) noexcept -> mandelbrot_text_output_base& = delete;
+
     virtual ~mandelbrot_text_output_base() = default;
 
-    virtual auto write(const std::string&) -> bool = 0;
+    MANDELBROT_NODISCARD virtual auto write(const std::string&) const -> bool = 0;
 
   protected:
     using callback_function_type = auto(*)(const std::string&) -> bool;
@@ -31,12 +39,20 @@
     mandelbrot_text_output_base() = default;
   };
 
-  class mandelbrot_text_output_cout : public mandelbrot_text_output_base // NOLINT(cppcoreguidelines-special-member-functions,hicpp-special-member-functions)
+  class mandelbrot_text_output_cout final : public mandelbrot_text_output_base
   {
   public:
+    mandelbrot_text_output_cout() = default;
+
+    mandelbrot_text_output_cout(const mandelbrot_text_output_cout&) = delete;
+    mandelbrot_text_output_cout(mandelbrot_text_output_cout&&) noexcept = delete;
+
+    auto operator=(const mandelbrot_text_output_cout&) -> mandelbrot_text_output_cout& = delete;
+    auto operator=(mandelbrot_text_output_cout&&) noexcept -> mandelbrot_text_output_cout& = delete;
+
     ~mandelbrot_text_output_cout() override = default;
 
-    auto write(const std::string& str_to_write) -> bool override
+    MANDELBROT_NODISCARD auto write(const std::string& str_to_write) const -> bool override
     {
       std::cout << str_to_write;
 
