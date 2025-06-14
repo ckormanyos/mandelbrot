@@ -43,25 +43,32 @@
 
     virtual ~color_stretch_base() = default;
 
-    auto init(const std::uint_fast32_t total_pixels) const -> void
+    auto init(const std::uint_fast32_t total_pixels) -> void
     {
-      my_total_pixels = total_pixels;
-      my_sum          = static_cast<std::uint_fast32_t>(UINT8_C(0));
+      set_total_pixels(total_pixels);
+      set_sum(static_cast<std::uint_fast32_t>(UINT8_C(0)));
     }
 
-    virtual auto color_stretch(const std::uint_fast32_t) const -> std::uint_fast32_t = 0;
+    virtual auto color_stretch(std::uint_fast32_t) -> std::uint_fast32_t = 0;
 
   protected:
-    mutable std::uint_fast32_t my_total_pixels { }; // NOLINT(cppcoreguidelines-non-private-member-variables-in-classes,misc-non-private-member-variables-in-classes,readability-identifier-naming)
-    mutable std::uint_fast32_t my_sum          { }; // NOLINT(cppcoreguidelines-non-private-member-variables-in-classes,misc-non-private-member-variables-in-classes,readability-identifier-naming)
+    auto set_total_pixels(std::uint_fast32_t val) noexcept -> void { my_total_pixels = val; }
+    auto set_sum         (std::uint_fast32_t val) noexcept -> void { my_sum = val; }
 
-    color_stretch_base() = default;
+    auto get_total_pixels() const noexcept -> std::uint_fast32_t { return my_total_pixels; }
+    auto get_sum         () const noexcept -> std::uint_fast32_t { return my_sum; }
+
+    color_stretch_base() noexcept = default;
+
+  private:
+    std::uint_fast32_t my_total_pixels { }; // NOLINT(readability-identifier-naming)
+    std::uint_fast32_t my_sum          { }; // NOLINT(readability-identifier-naming)
   };
 
   class color_stretch_histogram_method final : public color_stretch_base
   {
   public:
-    color_stretch_histogram_method() = default;
+    color_stretch_histogram_method() noexcept = default;
 
     // LCOV_EXCL_START
     color_stretch_histogram_method(const color_stretch_histogram_method&) = default;
@@ -73,7 +80,7 @@
 
     ~color_stretch_histogram_method() override = default;
 
-    auto color_stretch(const std::uint_fast32_t hist_entry_val) const -> std::uint_fast32_t override
+    auto color_stretch(std::uint_fast32_t hist_entry_val) -> std::uint_fast32_t override
     {
       // Perform color stretching using the histogram approach.
       // Convert the histogram entries such that a given entry contains
@@ -81,11 +88,14 @@
       // a set of scale factors for the color. The histogram approach
       // automatically scales to the distribution of pixels in the image.
 
-      my_sum += hist_entry_val;
+      std::uint_fast32_t sum { color_stretch_base::get_sum() };
+      sum += hist_entry_val;
+
+      color_stretch_base::set_sum(sum);
 
       const float sum_div_total_pixels
       {
-        static_cast<float>(my_sum) / static_cast<float>(my_total_pixels)
+        static_cast<float>(sum) / static_cast<float>(color_stretch_base::get_total_pixels())
       };
 
       using std::pow;

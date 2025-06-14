@@ -44,8 +44,8 @@ auto main() -> int // NOLINT(bugprone-exception-escape)
   using mandelbrot_generator_type =
     config::my_mandelbrot_generator_type<config::coord_pnt_numeric_type, config::iteration_numeric_type>;
 
-        color::color_stretch_histogram_method local_color_stretches;
-  const color::color_functions_bw             local_color_functions;
+  color::color_stretch_histogram_method local_color_stretches;
+  color::color_functions_bw             local_color_functions;
 
   mandelbrot_generator_type mandelbrot_generator(mandelbrot_config_object);
 
@@ -53,9 +53,12 @@ auto main() -> int // NOLINT(bugprone-exception-escape)
 
   stopwatch_type my_stopwatch { };
 
-  mandelbrot_generator.generate_mandelbrot_image(config::filename(),
-                                                 local_color_functions,
-                                                 local_color_stretches);
+  mandelbrot_generator.generate_mandelbrot_image
+  (
+    config::filename(),
+    local_color_functions,
+    local_color_stretches
+  );
 
   const auto execution_time = stopwatch_type::elapsed_time<float>(my_stopwatch);
 

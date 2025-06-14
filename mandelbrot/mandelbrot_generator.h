@@ -94,10 +94,10 @@
                                                   std::vector<my_iteration_numeric_type>&,
                                                   mandelbrot_text_output_base&) -> void = 0;
 
-    auto generate_mandelbrot_image(const std::string&                 str_filename,
-                                   const color::color_functions_base& color_functions = color::color_functions_bw(),
-                                   const color::color_stretch_base&   color_stretches = color::color_stretch_histogram_method(),
-                                         mandelbrot_text_output_base& my_text_output  = my_standard_output) -> void
+    auto generate_mandelbrot_image(const std::string&           str_filename,
+                                   color::color_functions_base& color_functions,
+                                   color::color_stretch_base&   color_stretches,
+                                   mandelbrot_text_output_base& my_text_output  = my_standard_output) -> void
     {
       // Setup the x-axis and y-axis coordinates.
 
@@ -136,7 +136,7 @@
   private:
     auto apply_color_stretches(const std::vector<my_iteration_numeric_type>& x_values,
                                const std::vector<my_iteration_numeric_type>& y_values,
-                               const color::color_stretch_base& color_stretches) -> void
+                               color::color_stretch_base& color_stretches) -> void
     {
       color_stretches.init(static_cast<std::uint_fast32_t>(x_values.size() * y_values.size()));
 
@@ -148,7 +148,7 @@
 
     auto apply_color_functions(const std::vector<my_iteration_numeric_type>&   x_values,
                                const std::vector<my_iteration_numeric_type>&   y_values,
-                               const color::color_functions_base& color_functions) -> void
+                               color::color_functions_base& color_functions) -> void
     {
       for(auto   j_row = static_cast<std::uint_fast32_t>(UINT8_C(0));
                  j_row < static_cast<std::uint_fast32_t>(y_values.size());
