@@ -11,6 +11,9 @@
   #include <algorithm>
   #include <cmath>
   #include <cstdint>
+  #if (defined(__cpp_lib_math_constants) && (__cpp_lib_math_constants >= 201907L))
+  #include <numbers>
+  #endif
 
   #if !defined(MANDELBROT_NODISCARD)
   #if defined(_MSC_VER) && !defined(__GNUC__)
@@ -52,13 +55,19 @@
 
     static auto color_phaser_01(std::uint_fast32_t c) -> std::uint_fast32_t
     {
+      #if (defined(__cpp_lib_math_constants) && (__cpp_lib_math_constants >= 201907L))
+      constexpr float val_pi { std::numbers::pi_v<float> };
+      #else
+      constexpr float val_pi { 3.1415926535897932385F };
+      #endif
+
       const float
         color_phase
         {
           static_cast<float>
           (
               static_cast<float>(static_cast<float>(c) / 255.0F)
-            * static_cast<float>(3.1415926535897932385F * 8.0F)
+            * static_cast<float>(val_pi * 8.0F)
           )
         };
 
