@@ -44,18 +44,6 @@
   #error "Error: You can not define both MANDELBROT_USE_CPP_DEC_FLOAT or MANDELBROT_USE_GMP_FLOAT"
   #endif
 
-  #if !defined(MANDELBROT_NODISCARD)
-  #if defined(_MSC_VER) && !defined(__GNUC__)
-  #define MANDELBROT_NODISCARD
-  #else
-  #if (defined(__cplusplus) && (__cplusplus >= 201703L))
-  #define MANDELBROT_NODISCARD  [[nodiscard]] // NOLINT(cppcoreguidelines-macro-usage)
-  #else
-  #define MANDELBROT_NODISCARD
-  #endif
-  #endif
-  #endif
-
   #include <mandelbrot/cfg/mandelbrot_cfg_forward.h>
 
   #if defined(MANDELBROT_USE_CPP_DEC_FLOAT)

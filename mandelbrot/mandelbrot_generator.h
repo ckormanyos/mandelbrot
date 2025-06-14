@@ -106,15 +106,15 @@
 
       this->generate_mandelbrot_image_engine(x_coord, y_coord, my_text_output);
 
-      my_text_output.write("\n");
+      static_cast<void>(my_text_output.write("\n"));
 
-      my_text_output.write("Perform color stretching.\n");
+      static_cast<void>(my_text_output.write("Perform color stretching.\n"));
       apply_color_stretches(x_coord, y_coord, color_stretches);
 
-      my_text_output.write("Apply color functions.\n");
+      static_cast<void>(my_text_output.write("Apply color functions.\n"));
       apply_color_functions(x_coord, y_coord, color_functions);
 
-      my_text_output.write("Write output JPEG file " + str_filename + ".\n");
+      static_cast<void>(my_text_output.write("Write output JPEG file " + str_filename + ".\n"));
 
       boost::gil::jpeg_write_view(str_filename + std::string(".jpg"), mandelbrot_view);
       boost::gil::png_write_view (str_filename + std::string(".png"), mandelbrot_view);

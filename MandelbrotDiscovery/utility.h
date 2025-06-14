@@ -60,7 +60,7 @@
 
       ~text_output_alloc_console() override = default;
 
-      auto write(const std::string& str_to_write) const -> bool override
+      MANDELBROT_NODISCARD auto write(const std::string& str_to_write) const -> bool override
       {
         my_callback(str_to_write);
 

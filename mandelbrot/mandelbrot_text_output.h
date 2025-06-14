@@ -8,6 +8,8 @@
 #ifndef MANDELBROT_TEXT_OUTPUT_2024_04_14_H // NOLINT(llvm-header-guard)
   #define MANDELBROT_TEXT_OUTPUT_2024_04_14_H
 
+  #include <mandelbrot/cfg/mandelbrot_cfg_forward.h>
+
   #include <cstddef>
   #include <iostream>
   #include <string>
@@ -29,7 +31,7 @@
 
     virtual ~mandelbrot_text_output_base() = default;
 
-    virtual auto write(const std::string&) const -> bool = 0;
+    MANDELBROT_NODISCARD virtual auto write(const std::string&) const -> bool = 0;
 
   protected:
     using callback_function_type = auto(*)(const std::string&) -> bool;
@@ -50,7 +52,7 @@
 
     ~mandelbrot_text_output_cout() override = default;
 
-    auto write(const std::string& str_to_write) const -> bool override
+    MANDELBROT_NODISCARD auto write(const std::string& str_to_write) const -> bool override
     {
       std::cout << str_to_write;
 

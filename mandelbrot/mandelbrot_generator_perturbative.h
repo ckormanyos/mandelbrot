@@ -181,7 +181,7 @@
                  << percent
                  << "%. Have patience.\r";
 
-            my_text_output.write(strm.str());
+            static_cast<void>(my_text_output.write(strm.str()));
           }
 
           mandelbrot_iteration_lock.clear();
