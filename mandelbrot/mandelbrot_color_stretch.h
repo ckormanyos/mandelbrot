@@ -52,11 +52,11 @@
     virtual auto color_stretch(std::uint_fast32_t) -> std::uint_fast32_t = 0;
 
   protected:
-    auto set_total_pixels(std::uint_fast32_t val) noexcept -> void { my_total_pixels = val; }
-    auto set_sum         (std::uint_fast32_t val) noexcept -> void { my_sum = val; }
+    MANDELBROT_NODISCARD auto set_total_pixels(std::uint_fast32_t val) noexcept -> void { my_total_pixels = val; }
+    MANDELBROT_NODISCARD auto set_sum         (std::uint_fast32_t val) noexcept -> void { my_sum = val; }
 
-    auto get_total_pixels() const noexcept -> std::uint_fast32_t { return my_total_pixels; }
-    auto get_sum         () const noexcept -> std::uint_fast32_t { return my_sum; }
+    MANDELBROT_NODISCARD auto get_total_pixels() const noexcept -> std::uint_fast32_t { return my_total_pixels; }
+    MANDELBROT_NODISCARD auto get_sum         () const noexcept -> std::uint_fast32_t { return my_sum; }
 
     color_stretch_base() noexcept = default;
 
