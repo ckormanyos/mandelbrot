@@ -1,5 +1,5 @@
 ﻿# ------------------------------------------------------------------------------
-#  Copyright Christopher Kormanyos 2022.
+#  Copyright Christopher Kormanyos 2022 - 2025.
 #  Distributed under the Boost Software License,
 #  Version 1.0. (See accompanying file LICENSE_1_0.txt
 #  or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -7,7 +7,7 @@
 
 BOOST_ROOT_FOR_TIDY  =
 CC                   = clang++
-STD                  = c++11
+STD                  = c++14
 
 ifneq ($(MY_BOOST_ROOT),)
 BOOST_ROOT_FOR_TIDY := $(MY_BOOST_ROOT)
@@ -24,11 +24,12 @@ endif
 CXX_FLAGS    = $(CC)                                                              \
                -march=native                                                      \
                -mtune=native                                                      \
-               -O3                                                                \
+               -O2                                                                \
                -Wall                                                              \
                -Wextra                                                            \
                -Wconversion                                                       \
                -Wsign-conversion                                                  \
+               -Wshadow                                                           \
                -std=$(STD)
 
 C_DEFINES    =
@@ -52,6 +53,7 @@ TIDY_CHECKS  = "*,                                                              
                 -altera-struct-pack-align,                                        \
                 -altera-unroll-loops,                                             \
                 -fuchsia-*,                                                       \
+                -llvm-header-guard,                                               \
                 -llvmlibc-*"
 
 TIDY_FLAGS   = -warnings-as-errors=*                                              \

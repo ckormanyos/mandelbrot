@@ -5,8 +5,8 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef MANDELBROT_2022_02_24_H // NOLINT(llvm-header-guard)
-  #define MANDELBROT_2022_02_24_H
+#ifndef MANDELBROT_MANDELBROT_H
+  #define MANDELBROT_MANDELBROT_H
 
   #include <mandelbrot/mandelbrot_cfg.h>
   #include <mandelbrot/mandelbrot_generator_perturbative.h>
@@ -111,4 +111,4 @@
   } // namespace ckormanyos
   #endif
 
-#endif // MANDELBROT_2022_02_24_H
+#endif // MANDELBROT_MANDELBROT_H

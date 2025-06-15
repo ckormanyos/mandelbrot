@@ -6,8 +6,8 @@
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef MANDELBROT_CONFIG_2015_06_15_H // NOLINT(llvm-header-guard)
-  #define MANDELBROT_CONFIG_2015_06_15_H
+#ifndef MANDELBROT_MANDELBROT_CONFIG_H
+  #define MANDELBROT_MANDELBROT_CONFIG_H
 
   #include <mandelbrot/mandelbrot_config_base.h>
 
@@ -102,4 +102,4 @@
   } // namespace ckormanyos
   #endif
 
-#endif // MANDELBROT_CONFIG_2015_06_15_H
+#endif // MANDELBROT_MANDELBROT_CONFIG_H

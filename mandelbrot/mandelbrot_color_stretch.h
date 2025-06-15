@@ -5,8 +5,8 @@
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef MANDELBROT_COLOR_2015_06_15_H // NOLINT(llvm-header-guard)
-  #define MANDELBROT_COLOR_2015_06_15_H
+#ifndef MANDELBROT_MANDELBROT_COLOR_STRETCH_H
+  #define MANDELBROT_MANDELBROT_COLOR_STRETCH_H
 
   #include <algorithm>
   #include <cmath>
@@ -45,24 +45,24 @@
 
     auto init(const std::uint_fast32_t total_pixels) -> void
     {
-      set_total_pixels(total_pixels);
+      set_pix(total_pixels);
       set_sum(static_cast<std::uint_fast32_t>(UINT8_C(0)));
     }
 
     virtual auto color_stretch(std::uint_fast32_t) -> std::uint_fast32_t = 0;
 
   protected:
-    auto set_total_pixels(std::uint_fast32_t val) noexcept -> void { my_total_pixels = val; }
-    auto set_sum         (std::uint_fast32_t val) noexcept -> void { my_sum = val; }
+    auto set_pix(std::uint_fast32_t val_pix) noexcept -> void { my_pix = val_pix; }
+    auto set_sum(std::uint_fast32_t val_sum) noexcept -> void { my_sum = val_sum; }
 
-    MANDELBROT_NODISCARD auto get_total_pixels() const noexcept -> std::uint_fast32_t { return my_total_pixels; }
-    MANDELBROT_NODISCARD auto get_sum         () const noexcept -> std::uint_fast32_t { return my_sum; }
+    MANDELBROT_NODISCARD auto get_pix() const noexcept -> std::uint_fast32_t { return my_pix; }
+    MANDELBROT_NODISCARD auto get_sum() const noexcept -> std::uint_fast32_t { return my_sum; }
 
     color_stretch_base() noexcept = default;
 
   private:
-    std::uint_fast32_t my_total_pixels { }; // NOLINT(readability-identifier-naming)
-    std::uint_fast32_t my_sum          { }; // NOLINT(readability-identifier-naming)
+    std::uint_fast32_t my_pix { }; // NOLINT(readability-identifier-naming)
+    std::uint_fast32_t my_sum { }; // NOLINT(readability-identifier-naming)
   };
 
   class color_stretch_histogram_method final : public color_stretch_base
@@ -88,17 +88,25 @@
       // a set of scale factors for the color. The histogram approach
       // automatically scales to the distribution of pixels in the image.
 
-      std::uint_fast32_t sum { color_stretch_base::get_sum() };
-      sum += hist_entry_val;
+      const std::uint_fast32_t new_sum { color_stretch_base::get_sum() + hist_entry_val };
 
-      color_stretch_base::set_sum(sum);
+      color_stretch_base::set_sum(new_sum);
 
-      const float sum_div_total_pixels
-      {
-        static_cast<float>(sum) / static_cast<float>(color_stretch_base::get_total_pixels())
-      };
+      const float
+        weighted_sum
+        {
+          static_cast<float>(new_sum) / static_cast<float>(color_stretch_base::get_pix())
+        };
 
       using std::pow;
+
+      const float weight { pow(weighted_sum, 1.2F) }; // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+
+      const float
+        clamped_weight
+        {
+          (std::max)((std::min)(weight, 1.0F), 0.0F) // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+        };
 
       return
         static_cast<std::uint_fast32_t>
@@ -106,7 +114,7 @@
             static_cast<std::uint_fast32_t>(UINT8_C(255))
           - static_cast<std::uint_fast32_t>
             (
-              static_cast<float>(pow(sum_div_total_pixels, 1.2F) * 255.0F) // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+              static_cast<float>(clamped_weight * 255.0F) // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
             )
         );
     }
@@ -120,4 +128,4 @@
   } // namespace ckormanyos
   #endif
 
-#endif // MANDELBROT_COLOR_2015_06_15_H
+#endif // MANDELBROT_MANDELBROT_COLOR_STRETCH_H

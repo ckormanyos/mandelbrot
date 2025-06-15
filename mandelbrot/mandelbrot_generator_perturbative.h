@@ -6,8 +6,8 @@
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef MANDELBROT_GENERATOR_PERTURBATIVE_2024_04_28_H // NOLINT(llvm-header-guard)
-  #define MANDELBROT_GENERATOR_PERTURBATIVE_2024_04_28_H
+#ifndef MANDELBROT_MANDELBROT_GENERATOR_PERTURBATIVE_H
+  #define MANDELBROT_MANDELBROT_GENERATOR_PERTURBATIVE_H
 
   #include <mandelbrot/mandelbrot_generator.h>
 
@@ -121,7 +121,7 @@
         // Use a perturbative iteration scheme.
         // Here is the main work of the program.
 
-        while ((iteration_result < base_class_type::get_iterations()) && ((zr2 + zi2) < base_class_type::four_coord_pnt())) // NOLINT(altera-id-dependent-backward-branch)
+        while((iteration_result < base_class_type::get_iterations()) && ((zr2 + zi2) < base_class_type::four_coord_pnt())) // NOLINT(altera-id-dependent-backward-branch)
         {
           zi *= zr;
 
@@ -203,7 +203,7 @@
             // three real-valued multiplications and several real-valued
             // addition/subtraction operations.
 
-            auto iteration_result = static_cast<std::uint_fast32_t>(UINT8_C(1));
+            std::uint_fast32_t iteration_result { static_cast<std::uint_fast32_t>(UINT8_C(1)) };
 
             // Perform the iteration sequence for generating the Mandelbrot set.
             // Here is the main work of the program.
@@ -277,4 +277,4 @@
   } // namespace ckormanyos
   #endif
 
-#endif // MANDELBROT_GENERATOR_PERTURBATIVE_2024_04_28_H
+#endif // MANDELBROT_MANDELBROT_GENERATOR_PERTURBATIVE_H

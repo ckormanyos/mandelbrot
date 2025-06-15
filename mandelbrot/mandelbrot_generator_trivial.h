@@ -5,8 +5,8 @@
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef MANDELBROT_GENERATOR_TRIVIAL_2024_04_28_H // NOLINT(llvm-header-guard)
-  #define MANDELBROT_GENERATOR_TRIVIAL_2024_04_28_H
+#ifndef MANDELBROT_MANDELBROT_GENERATOR_TRIVIAL_H
+  #define MANDELBROT_MANDELBROT_GENERATOR_TRIVIAL_H
 
   #include <mandelbrot/mandelbrot_generator.h>
 
@@ -175,4 +175,4 @@
   } // namespace ckormanyos
   #endif
 
-#endif // MANDELBROT_GENERATOR_TRIVIAL_2024_04_28_H
+#endif // MANDELBROT_MANDELBROT_GENERATOR_TRIVIAL_H

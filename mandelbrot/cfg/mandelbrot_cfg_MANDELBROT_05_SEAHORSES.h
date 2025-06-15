@@ -5,8 +5,8 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef MANDELBROT_CFG_MANDELBROT_05_SEAHORSES_2022_02_24_H // NOLINT(llvm-header-guard)
-  #define MANDELBROT_CFG_MANDELBROT_05_SEAHORSES_2022_02_24_H
+#ifndef MANDELBROT_CFG_MANDELBROT_CFG_05_SEAHORSES_H
+  #define MANDELBROT_CFG_MANDELBROT_CFG_05_SEAHORSES_H
 
   #if defined(__clang__)
     #if defined __has_feature && (__has_feature(thread_sanitizer) || __has_feature(address_sanitizer))
@@ -72,4 +72,4 @@
   } // namespace ckormanyos
   #endif
 
-#endif // MANDELBROT_CFG_MANDELBROT_05_SEAHORSES_2022_02_24_H
+#endif // MANDELBROT_CFG_MANDELBROT_CFG_05_SEAHORSES_H
