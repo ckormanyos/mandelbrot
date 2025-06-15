@@ -89,6 +89,7 @@
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_52_TENDRIL_AREA_03.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_53_TENDRIL_AREA_04.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_53_TENDRIL_AREA_04_prior.h>
+  //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_54_TENDRIL_AREA_05.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_60_SATELITE_REGION_01.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_61_SATELITE_REGION_02.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_62_SATELITE_REGION_03.h>
