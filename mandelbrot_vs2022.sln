@@ -43,6 +43,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libpng_vs2022", "png\libpng
 		{465B1E91-F370-4D6D-BB38-F6F8E9F39563} = {465B1E91-F370-4D6D-BB38-F6F8E9F39563}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".gcov", ".gcov", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "make", "make", "{4547F97A-0261-4068-8D1B-DEB75852297C}"
+	ProjectSection(SolutionItems) = preProject
+		.gcov\make\build_libs.sh = .gcov\make\build_libs.sh
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -72,6 +79,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{054377E5-7DA0-4101-8BA3-1BE0C0DE51B0} = {CABF0657-7175-47D3-B614-47D9BED63273}
 		{D47BAF5F-ABFE-4A40-871C-6C6BB472B62D} = {D6D14B8C-1202-4F80-A348-979DADDD6A7A}
+		{4547F97A-0261-4068-8D1B-DEB75852297C} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {47676891-0CD9-4A1F-9BB8-6055B8AACABD}
