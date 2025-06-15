@@ -11,7 +11,7 @@
     <a href="https://sonarcloud.io/summary/new_code?id=ckormanyos_mandelbrot">
         <img src="https://sonarcloud.io/api/project_badges/measure?project=ckormanyos_mandelbrot&metric=alert_status" alt="Quality Gate Status"></a>
     <a href="https://codecov.io/gh/ckormanyos/mandelbrot">
-        <img src="https://codecov.io/gh/ckormanyos/mandelbrot/branch/main/graph/badge.svg?token=FVIE627J2D" alt="code coverage"></a>
+        <img src="https://codecov.io/gh/ckormanyos/mandelbrot/graph/badge.svg?token=FVIE627J2D" alt="code coverage"></a>
     <a href="https://github.com/ckormanyos/mandelbrot/blob/master/LICENSE_1_0.txt">
         <img src="https://img.shields.io/badge/license-BSL%201.0-blue.svg" alt="Boost Software License 1.0"></a>
 </p>
@@ -260,37 +260,7 @@ Clearly named definitions are used to specify:
   - where the dimensions `MANDELBROT_POINT_DX_HALF`, `MANDELBROT_POINT_DY_HALF`, `MANDELBROT_POINT_CENTER_X`, and `MANDELBROT_POINT_CENTER_Y` are provided as character strings, which remain exact even if the magnification scale requires multiple precision,
   - and `MANDELBROT_CALCULATION_ITERATIONS` sets the default maximum number of iterations which can be modified at run time (i.e., for the _Mandelbrot_ _Discovery_ program).
 
-## The $10^{\mbox{\small{51}}}$ Magnification Club
-
-Let's find some proven deep dives!
-
-Discovering the Mandelbrot set leads to fascinating research that is
-mathematically complicated. Investigations in this domain offer enriching
-findings. Yet it can sometimes be challenging obtain results.
-In particular, it can be difficult to find deep dive points within
-the infinitely-complex (and complex-valued) Mandelbrot area.
-Miniscule coordinates that offer interesting deep dives are
-not intuitively easy to guess or find (even with dedicated searches).
-
-In this section, we specifically list several points having proven
-deep dives to $10^{51}$ magnification. Once a point is found,
-a picture has been created with full $51$-decimal digit precision.
-Images are presented in the corresponding links for the points.
-
-Details:
-  - The listed points have approximately $54$ decimal digits of precision.
-  - Calculations use a half-width of $1.4{\times}10^{-51}$.
-  - Iterations are carried out with a big-float representation having $76$ decimal digits of precision.
-  - See the table below for these points and links to the corresponding images.
-
-| Name                      | Point $(x + iy)$ | Image |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ---------------- |
-| `08_DEEP_DIVE_01`         | $-1.295189082147777457017064177185681926706566460884888469217{+ i~0.440936982678320138880903678356262612113214627431396203682}$ | [image](https://github.com/ckormanyos/mandelbrot/tree/main/images/gallery/mandelbrot_MANDELBROT_08_DEEP_DIVE_01_magnify51.jpg)          |
-| `20_ZOOM_VERY_DEEP_00`    | $+0.360240443437614363236125244449545308482607807958585750488{- i~0.641313061064803174860375015179302066579494952282305259556}$ | [image](https://github.com/ckormanyos/mandelbrot/tree/main/images/gallery/mandelbrot_MANDELBROT_20_ZOOM_VERY_DEEP_00_magnify51.jpg)     |
-| `30_ZOOM_ANOTHER_00`      | $-1.740062382579339905220844167065825638296641720436171866880{+ i~0.028175339779211048992411521144319509687539076742990608570}$ | [image](https://github.com/ckormanyos/mandelbrot/tree/main/images/gallery/mandelbrot_MANDELBROT_30_ZOOM_ANOTHER_00_magnify51.jpg)       |
-| `45_SEAHORSE_OTHER_01`    | $-0.745605122368264995520769522753086369510716449777505626833{+ i~0.112859495427252849953537572395520089297826357072986239717}$ | [image](https://github.com/ckormanyos/mandelbrot/tree/main/images/gallery/mandelbrot_MANDELBROT_45_SEAHORSE_OTHER_01_magnify51.jpg)     |
-
-## Deep Dives and Acceleration via Perturbation
+## Acceleration via Perturbation
 
 Deep dives are mathematically challenging and computationally difficult.
 Even when an interesting point can be found, iterative calculations
