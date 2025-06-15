@@ -28,6 +28,9 @@
     <ClCompile Include="mandelbrot_discovery_cmd.cpp">
       <Filter>MandelbrotDiscovery</Filter>
     </ClCompile>
+    <ClCompile Include="mandelbrot_discovery_io.cpp">
+      <Filter>MandelbrotDiscovery</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mandelbrot_discovery.h">
@@ -194,6 +197,9 @@
     </ClInclude>
     <ClInclude Include="..\mandelbrot\cfg\mandelbrot_cfg_MANDELBROT_XX_TRY_POINTS.h">
       <Filter>mandelbrot\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="mandelbrot_discovery_io.h">
+      <Filter>MandelbrotDiscovery</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

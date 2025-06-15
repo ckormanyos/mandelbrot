@@ -142,6 +142,7 @@
     <ClInclude Include="..\mandelbrot\mandelbrot_text_output.h" />
     <ClInclude Include="geometry.h" />
     <ClInclude Include="mandelbrot_discovery.h" />
+    <ClInclude Include="mandelbrot_discovery_io.h" />
     <ClInclude Include="mandelbrot_discovery_type.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="utility.h" />
@@ -149,6 +150,7 @@
   <ItemGroup>
     <ClCompile Include="mandelbrot_discovery.cpp" />
     <ClCompile Include="mandelbrot_discovery_cmd.cpp" />
+    <ClCompile Include="mandelbrot_discovery_io.cpp" />
     <ClCompile Include="mandelbrot_discovery_rescale.cpp" />
   </ItemGroup>
   <ItemGroup>
