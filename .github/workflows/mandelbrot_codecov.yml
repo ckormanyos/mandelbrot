@@ -113,14 +113,14 @@ jobs:
           sha1sum ./images/tmp/mandelbrot_MANDELBROT_05_SEAHORSES.jpg | grep 304b35a57a474657773b935ab85efe4fc0afdfbe
           echo
           gcov --object-directory . --demangled-names ./test_mandelbrot.cpp
-          lcov -c --directory . --output-file coverage_unfiltered.info
-          lcov --ignore-errors unused --remove coverage_unfiltered.info '/usr/*' '*boost/*' '*concurrency/*' '*/cfg/*' '*test_mandelbrot.cpp' '*mandelbrot_color.h' --output-file coverage.info
-          genhtml coverage.info --demangle-cpp --output-directory report
+          lcov -c --directory . --output-file ${{ runner.workspace }}/mandelbrot/coverage_unfiltered.info
+          lcov --ignore-errors unused --remove ${{ runner.workspace }}/mandelbrot/coverage_unfiltered.info '/usr/*' '*boost/*' '*concurrency/*' '*/cfg/*' --output-file ${{ runner.workspace }}/mandelbrot/coverage.info
+          ls -la ${{ runner.workspace }}/mandelbrot/coverage.info
       - name: upload-codecov
         uses: codecov/codecov-action@v5
         with:
-          plugin: gcov
-          file: ${{ runner.workspace }}/mandelbrot/.gcov/make/coverage.info
           token: ${{ secrets.CODECOV_TOKEN }}
+          plugin: gcov
+          file: ${{ runner.workspace }}/mandelbrot/coverage.info
           fail_ci_if_error: true
           verbose: false
