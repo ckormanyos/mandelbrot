@@ -6,8 +6,8 @@
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef MANDELBROT_GENERATOR_2015_06_15_H // NOLINT(llvm-header-guard)
-  #define MANDELBROT_GENERATOR_2015_06_15_H
+#ifndef MANDELBROT_MANDELBROT_GENERATOR_2015_06_15_H
+  #define MANDELBROT_MANDELBROT_GENERATOR_2015_06_15_H
 
   #include <concurrency/parallel_for.h>
   #include <mandelbrot/mandelbrot_color_functions.h>
@@ -207,4 +207,4 @@
   } // namespace ckormanyos
   #endif
 
-#endif // MANDELBROT_2015_06_15_H
+#endif // MANDELBROT_MANDELBROT_2015_06_15_H

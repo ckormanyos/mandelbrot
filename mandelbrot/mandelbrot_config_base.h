@@ -6,8 +6,8 @@
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef MANDELBROT_CONFIG_BASE_2015_06_15_H // NOLINT(llvm-header-guard)
-  #define MANDELBROT_CONFIG_BASE_2015_06_15_H
+#ifndef MANDELBROT_MANDELBROT_CONFIG_BASE_2015_06_15_H
+  #define MANDELBROT_MANDELBROT_CONFIG_BASE_2015_06_15_H
 
   #include <cstddef>
   #include <cstdint>
@@ -61,8 +61,8 @@
     MANDELBROT_NODISCARD auto get_width () const -> const my_coord_pnt_numeric_type& { return my_width; }
     MANDELBROT_NODISCARD auto get_height() const -> const my_coord_pnt_numeric_type& { return my_height; }
 
-    MANDELBROT_NODISCARD virtual auto step_x() const -> const my_coord_pnt_numeric_type & = 0;
-    MANDELBROT_NODISCARD virtual auto step_y() const -> const my_coord_pnt_numeric_type & = 0;
+    MANDELBROT_NODISCARD virtual auto step_x() const -> const my_coord_pnt_numeric_type& = 0;
+    MANDELBROT_NODISCARD virtual auto step_y() const -> const my_coord_pnt_numeric_type& = 0;
 
     MANDELBROT_NODISCARD auto integral_width() const -> std::uint_fast32_t
     {
@@ -112,4 +112,4 @@
   } // namespace ckormanyos
   #endif
 
-#endif // MANDELBROT_CONFIG_BASE_2015_06_15_H
+#endif // MANDELBROT_MANDELBROT_CONFIG_BASE_2015_06_15_H
