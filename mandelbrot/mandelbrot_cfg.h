@@ -5,8 +5,8 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef MANDELBROT_MANDELBROT_CFG_2022_02_24_H
-  #define MANDELBROT_MANDELBROT_CFG_2022_02_24_H
+#ifndef MANDELBROT_MANDELBROT_CFG_H
+  #define MANDELBROT_MANDELBROT_CFG_H
 
   // --------------------------------------------------------------------------
   // You can optionally define MANDELBROT_USE_CPP_DOUBLE_DOUBLE here or
@@ -103,4 +103,4 @@
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_91_ELEPHANT_VALLEY_02.h>
   //#include <mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_XX_TRY_POINTS.h>
 
-#endif // MANDELBROT_MANDELBROT_CFG_2022_02_24_H
+#endif // MANDELBROT_MANDELBROT_CFG_H

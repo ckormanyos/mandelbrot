@@ -5,8 +5,8 @@
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef MANDELBROT_MANDELBROT_COLOR_STRETCH_2015_06_15_H
-  #define MANDELBROT_MANDELBROT_COLOR_STRETCH_2015_06_15_H
+#ifndef MANDELBROT_MANDELBROT_COLOR_STRETCH_H
+  #define MANDELBROT_MANDELBROT_COLOR_STRETCH_H
 
   #include <algorithm>
   #include <cmath>
@@ -128,4 +128,4 @@
   } // namespace ckormanyos
   #endif
 
-#endif // MANDELBROT_MANDELBROT_COLOR_STRETCH_2015_06_15_H
+#endif // MANDELBROT_MANDELBROT_COLOR_STRETCH_H

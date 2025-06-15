@@ -6,8 +6,8 @@
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef MANDELBROT_MANDELBROT_CONFIG_BASE_2015_06_15_H
-  #define MANDELBROT_MANDELBROT_CONFIG_BASE_2015_06_15_H
+#ifndef MANDELBROT_MANDELBROT_CONFIG_BASE_H
+  #define MANDELBROT_MANDELBROT_CONFIG_BASE_H
 
   #include <cstddef>
   #include <cstdint>
@@ -112,4 +112,4 @@
   } // namespace ckormanyos
   #endif
 
-#endif // MANDELBROT_MANDELBROT_CONFIG_BASE_2015_06_15_H
+#endif // MANDELBROT_MANDELBROT_CONFIG_BASE_H

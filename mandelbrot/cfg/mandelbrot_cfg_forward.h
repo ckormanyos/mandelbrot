@@ -5,8 +5,8 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef MANDELBROT_CFG_MANDELBROT_CFG_FORWARD_2025_04_18_H
-  #define MANDELBROT_CFG_MANDELBROT_CFG_FORWARD_2025_04_18_H
+#ifndef MANDELBROT_CFG_MANDELBROT_CFG_FORWARD_H
+  #define MANDELBROT_CFG_MANDELBROT_CFG_FORWARD_H
 
   #if !defined(MANDELBROT_NODISCARD)
   #if defined(_MSC_VER) && !defined(__GNUC__)
@@ -39,4 +39,4 @@
   } // namespace ckormanyos
   #endif
 
-#endif // MANDELBROT_CFG_MANDELBROT_CFG_FORWARD_2025_04_18_H
+#endif // MANDELBROT_CFG_MANDELBROT_CFG_FORWARD_H
