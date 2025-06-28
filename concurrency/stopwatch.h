@@ -1,12 +1,12 @@
 ///////////////////////////////////////////////////////////////////////////////
-//  Copyright Christopher Kormanyos 2013 - 2024.
+//  Copyright Christopher Kormanyos 2013 - 2025.
 //  Distributed under the Boost Software License,
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt
 //  or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef STOPWATCH_2024_03_28_H // NOLINT(llvm-header-guard)
-  #define STOPWATCH_2024_03_28_H
+#ifndef CONCURRENCY_STOPWATCH_H
+  #define CONCURRENCY_STOPWATCH_H
 
   #include <cstdint>
   #include <ctime>
@@ -96,4 +96,4 @@
 
   } // namespace concurrency
 
-#endif // STOPWATCH_2024_03_28_H
+#endif // CONCURRENCY_STOPWATCH_H

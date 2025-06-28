@@ -10,7 +10,7 @@
 
 # ./build_all.sh --boost=/mnt/c/boost/boost_1_88_0 --my_cc=g++ --stdcc=c++20
 
-# Now with experimental support for the (not yet released) boost::multiprecision::cpp_double_double:
+# Now with experimental support for boost::multiprecision::cpp_double_double:
 # ./build_all.sh --boost=/mnt/c/boost/boost_1_88_0 --dxtra=MANDELBROT_USE_CPP_DOUBLE_DOUBLE --ixtra=/mnt/c/ChrisGitRepos/modular_boost/multiprecision/include --my_cc=g++ --stdcc=c++20
 
 boost=
