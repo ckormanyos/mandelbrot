@@ -16,6 +16,8 @@
   // This is automatically ensured by conditional logic checks in the code
   // (when this option is activated).
 
+  // For the MSVC environment, it is defined in the compiler preprocessor settings.
+
   //#if !defined(MANDELBROT_USE_CPP_DOUBLE_DOUBLE)
   //#define MANDELBROT_USE_CPP_DOUBLE_DOUBLE
   //#endif
