@@ -1,12 +1,12 @@
 ///////////////////////////////////////////////////////////////////////////////
-//  Copyright Christopher Kormanyos 2017 - 2024.
+//  Copyright Christopher Kormanyos 2017 - 2025.
 //  Distributed under the Boost Software License,
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt
 //  or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef PARALLEL_FOR_2017_12_18_H // NOLINT(llvm-header-guard)
-  #define PARALLEL_FOR_2017_12_18_H
+#ifndef CONCURRENCY_PARALLEL_FOR_H
+  #define CONCURRENCY_PARALLEL_FOR_H
 
   #include <algorithm>
   #include <cmath>
@@ -116,4 +116,4 @@
     }
   } // namespace my_concurrency
 
-#endif // PARALLEL_FOR_2017_12_18_H
+#endif // CONCURRENCY_PARALLEL_FOR_H

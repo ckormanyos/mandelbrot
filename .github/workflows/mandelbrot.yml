@@ -284,10 +284,6 @@ jobs:
           git submodule update --init libs/mp11
           git submodule update --init libs/mpl
           git submodule update --init libs/multiprecision
-          cd libs/multiprecision
-          git checkout cpp_double_fp_backend_integration
-          git branch
-          cd ../..
           git submodule update --init libs/numeric/conversion
           git submodule update --init libs/preprocessor
           git submodule update --init libs/range
@@ -674,6 +670,13 @@ jobs:
           .\mandelbrot_vs2022.exe
           dir .\images\tmp\mandelbrot_MANDELBROT_05_SEAHORSES.jpg
           dir .\images\tmp\mandelbrot_MANDELBROT_05_SEAHORSES.png
-          certutil -hashfile ".\images\tmp\mandelbrot_MANDELBROT_05_SEAHORSES.jpg" SHA1 | findstr "f3abc4437d97bba945d589aac3d96d8bbb67a035"
-          dir .\images\tmp\mandelbrot_MANDELBROT_05_SEAHORSES.png
-          certutil -hashfile ".\images\tmp\mandelbrot_MANDELBROT_05_SEAHORSES.png" SHA1 | findstr "1991efd74deaab5a8f59a68967fa6f098d713e79"
+          echo "Check SHA1 of JPEG"
+          echo.
+          certutil -hashfile ".\images\tmp\mandelbrot_MANDELBROT_05_SEAHORSES.jpg" SHA1
+          certutil -hashfile ".\images\tmp\mandelbrot_MANDELBROT_05_SEAHORSES.jpg" SHA1 | findstr "be1e95d107957d4a3b2d22cccaed3dd2a613c668"
+          echo.
+          echo "Check SHA1 of PNG"
+          echo.
+          certutil -hashfile ".\images\tmp\mandelbrot_MANDELBROT_05_SEAHORSES.png"
+          certutil -hashfile ".\images\tmp\mandelbrot_MANDELBROT_05_SEAHORSES.png" SHA1 | findstr "b9c17742f357694d39d325eb9a28d04e0a604027"
+          echo.
