@@ -88,3 +88,4 @@ jobs:
           -Dsonar.organization=ckormanyos
           -Dsonar.projectName=mandelbrot
           -Dsonar.projectKey=ckormanyos_mandelbrot
+          -Dsonar.sources=test/
