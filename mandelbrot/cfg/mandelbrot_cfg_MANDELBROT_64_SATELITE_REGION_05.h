@@ -30,9 +30,6 @@
   template<typename CoordPntNumericType, typename IterateNumericType>
   using my_mandelbrot_generator_type = ::ckormanyos::mandelbrot::mandelbrot_generator_perturbative<CoordPntNumericType, IterateNumericType>;
 
-  template<typename CoordPntNumericType, typename IterateNumericType>
-  using my_mandelbrot_generator_type = ::ckormanyos::mandelbrot::mandelbrot_generator_perturbative<CoordPntNumericType, IterateNumericType>;
-
   #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
   } // namespace ckormanyos::mandelbrot::config
   #else

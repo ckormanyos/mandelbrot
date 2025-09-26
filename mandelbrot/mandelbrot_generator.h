@@ -120,20 +120,21 @@
       boost::gil::png_write_view (str_filename + std::string(".png"), mandelbrot_view);
     }
 
+    auto get_mandelbrot_iteration_matrix() noexcept -> std::vector<std::vector<std::uint_fast32_t>>& { return mandelbrot_iteration_matrix; }
+    auto get_mandelbrot_color_histogram() noexcept -> std::vector<std::uint_fast32_t>& { return mandelbrot_color_histogram; }
+
   protected:
     const mandelbrot_config_type&  mandelbrot_config_object;    // NOLINT(readability-identifier-naming,cppcoreguidelines-non-private-member-variables-in-classes,misc-non-private-member-variables-in-classes)
 
   private:
-    static mandelbrot_text_output_cout my_standard_output; // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
-
     boost::gil::rgb8_image_t mandelbrot_image { }; // NOLINT(readability-identifier-naming)
     boost::gil::rgb8_view_t  mandelbrot_view { };  // NOLINT(readability-identifier-naming)
 
-  protected:
     std::vector<std::vector<std::uint_fast32_t>> mandelbrot_iteration_matrix { }; // NOLINT(readability-identifier-naming,cppcoreguidelines-non-private-member-variables-in-classes,misc-non-private-member-variables-in-classes)
     std::vector<std::uint_fast32_t>              mandelbrot_color_histogram { };  // NOLINT(readability-identifier-naming,cppcoreguidelines-non-private-member-variables-in-classes,misc-non-private-member-variables-in-classes)
 
-  private:
+    static mandelbrot_text_output_cout my_standard_output; // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
+
     auto apply_color_stretches(const std::vector<my_iteration_numeric_type>& x_values,
                                const std::vector<my_iteration_numeric_type>& y_values,
                                color::color_stretch_base& color_stretches) -> void
@@ -161,23 +162,20 @@
           const auto hist_color = mandelbrot_color_histogram[mandelbrot_iteration_matrix[i_col][j_row]];
 
           // Get the three hue values.
-          const auto color_r = static_cast<std::uint_fast32_t>((hist_color <= static_cast<std::uint_fast32_t>(UINT8_C(4))) ? hist_color : color_functions.color_function_r(hist_color));
-          const auto color_g = static_cast<std::uint_fast32_t>((hist_color <= static_cast<std::uint_fast32_t>(UINT8_C(4))) ? hist_color : color_functions.color_function_g(hist_color));
-          const auto color_b = static_cast<std::uint_fast32_t>((hist_color <= static_cast<std::uint_fast32_t>(UINT8_C(4))) ? hist_color : color_functions.color_function_b(hist_color));
+          const std::uint_fast32_t color_r { ((hist_color <= std::uint_fast32_t { UINT8_C(4) }) ? hist_color : color_functions.color_function_r(hist_color)) };
+          const std::uint_fast32_t color_g { ((hist_color <= std::uint_fast32_t { UINT8_C(4) }) ? hist_color : color_functions.color_function_g(hist_color)) };
+          const std::uint_fast32_t color_b { ((hist_color <= std::uint_fast32_t { UINT8_C(4) }) ? hist_color : color_functions.color_function_b(hist_color)) };
 
           // Mix the color from the hue values.
 
           auto color_scaler =
-            [](const std::uint_fast32_t color) -> std::uint8_t
+            [](const std::uint_fast32_t color)
             {
               return
                 static_cast<std::uint8_t>
                 (
-                  static_cast<std::uint_fast32_t>
-                  (
-                    static_cast<std::uint_fast32_t>(UINT8_C(255)) * color
-                  )
-                  / static_cast<std::uint_fast32_t>(UINT8_C(255))
+                    (std::uint_fast32_t { UINT8_C(255) } * color)
+                  /  std::uint_fast32_t { UINT8_C(255) }
                 );
             };
 
