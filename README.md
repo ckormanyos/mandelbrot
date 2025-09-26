@@ -59,10 +59,10 @@ The following design goals have been incorporated.
   - Support rectangular (including square) images having essentially any size and magnification, provided that the precision of the iteration type is set accordingly.
   - The inner loop that performs the work of fractal iteration uses multiple, parallel CPU cores.
   - C++ template design allows for flexible interchange of any appropriate kind of big-number type in the classes that implement fractal iteration.
-  - The iterative scheme is implemented as a flexible run-time polymorphic function. This allows for the implementation and interchange of multiple kinds of iterative methods. These can be specifically optimized for the particular iterative case at hand.
+  - The iterative scheme is implemented as a flexible run-time polymorphic function. This allows for the implementation and interchange of multiple kinds of iterative methods, each one realized within its own individual generator class. These can be specifically optimized for the particular iterative case at hand.
   - Visualization of the result uses color-stretching techniques combined with the histogram method.
   - Graphical representation uses [`Boost.Gil`](https://www.boost.org/doc/libs/1_86_0/libs/gil/doc/html/index.html) in combination with the JPEG-6b library (see [below](#Adaptions-of-and-Notes-on-jpeg-6b)).
-  - Imaging also uses specialized versions of the [libpng](http://www.libpng.org/pub/png) and the [zlib](https://www.zlib.net) libraries, in particular [libpng-1.6.44](https://github.com/pnggroup/libpng) and [zlib-1.3.1.1](https://github.com/madler/zlib), with further notes on adaptions still pending.
+  - Imaging also uses specialized versions of the [libpng](http://www.libpng.org/pub/png) library and the [zlib](https://www.zlib.net) library, in particular [libpng-1.6.44](https://github.com/pnggroup/libpng) and [zlib-1.3.1.1](https://github.com/madler/zlib), with further notes on adaptions still pending.
   - Color schemes can be easily adapted via straightforward creation (or modification) of a skinny derived class.
 
 ## Building the Project

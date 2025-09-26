@@ -131,6 +131,10 @@
 
             auto iteration_result = static_cast<std::uint_fast32_t>(UINT8_C(0));
 
+            auto& iteration_matrix = base_class_type::get_mandelbrot_iteration_matrix();
+
+            auto& color_histogram = base_class_type::get_mandelbrot_color_histogram();
+
             // Perform the iteration sequence for generating the Mandelbrot set.
             // Here is the main work of the program.
 
@@ -150,14 +154,14 @@
               ++iteration_result;
             }
 
-            base_class_type::mandelbrot_iteration_matrix[i_col][j_row] = iteration_result;
+            iteration_matrix[i_col][j_row] = iteration_result;
 
             std::atomic<std::uint_fast32_t>*
               ptr_hist
               {
                 reinterpret_cast<std::atomic<std::uint_fast32_t>*> // NOLINT(cppcoreguidelines-pro-type-reinterpret-cast)
                 (
-                  &base_class_type::mandelbrot_color_histogram[static_cast<std::size_t>(iteration_result)]
+                  &color_histogram[static_cast<std::size_t>(iteration_result)]
                 )
               };
 
