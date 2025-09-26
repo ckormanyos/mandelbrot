@@ -22,10 +22,10 @@
 // cd /mnt/c/Users/ckorm/Documents/Ks/PC_Software/NumericalPrograms/mandelbrot
 
 // Compile with cpp_dec_float
-// ./build_all.sh --boost=/mnt/c/boost/boost_1_88_0 --ixtra=/mnt/c/ChrisGitRepos/modular_boost/multiprecision/include --my_cc=g++ --stdcc=c++20
+// ./build_all.sh --boost=/mnt/c/boost/boost_1_89_0 --my_cc=g++ --stdcc=c++20
 
 // Compile with gmp_float
-// ./build_all_gmp.sh --boost=/mnt/c/boost/boost_1_88_0 --ixtra=/mnt/c/ChrisGitRepos/modular_boost/multiprecision/include --my_cc=g++ --stdcc=c++20
+// ./build_all_gmp.sh --boost=/mnt/c/boost/boost_1_89_0 --ixtra=/mnt/c/ChrisGitRepos/modular_boost/multiprecision/include --my_cc=g++ --stdcc=c++20
 
 auto main() -> int // NOLINT(bugprone-exception-escape)
 {
