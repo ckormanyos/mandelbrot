@@ -17,7 +17,7 @@
 
   namespace util::utility
   {
-    constexpr std::size_t strlen(const char* start)
+    constexpr auto strlen(const char* start) -> std::size_t
     {
       const char* end = start;
 
@@ -78,7 +78,7 @@
     // See also: https://godbolt.org/z/bxYdsc7W6
 
     template <std::size_t tuple_elem_index = 0, typename Func, typename... Ts>
-    void for_each_in_tuple(std::tuple<Ts...>& tuple_pack, Func&& func)
+    auto for_each_in_tuple(std::tuple<Ts...>& tuple_pack, Func&& func) -> void
     {
       if constexpr (tuple_elem_index < sizeof...(Ts))
       {
