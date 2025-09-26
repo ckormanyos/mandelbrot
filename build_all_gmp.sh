@@ -7,7 +7,7 @@
 #
 
 # cd /mnt/c/Users/ckorm/Documents/Ks/PC_Software/NumericalPrograms/mandelbrot
-# ./build_all.sh --boost=/mnt/c/boost/boost_1_88_0 --my_cc=g++ --stdcc=c++20
+# ./build_all.sh --boost=/mnt/c/boost/boost_1_89_0 --my_cc=g++ --stdcc=c++20
 
 boost=
 ixtra=
