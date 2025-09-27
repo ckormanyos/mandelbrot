@@ -64,11 +64,8 @@
       const float
         color_phase
         {
-          static_cast<float>
-          (
-              static_cast<float>(static_cast<float>(c) / 255.0F)
-            * static_cast<float>(val_pi * 8.0F)
-          )
+            (static_cast<float>(c) / 255.0F)
+          *  static_cast<float>(val_pi * 8.0F)
         };
 
       using std::sin;
@@ -76,13 +73,10 @@
       const float
         my_color
         {
-          static_cast<float>
+          (std::max)
           (
-            (std::max)
-            (
-              static_cast<float>(static_cast<float>(sin(color_phase) / 2.0F) + 0.5F),
-              0.0F
-            )
+            static_cast<float>((sin(color_phase) / 2.0F) + 0.5F),
+            0.0F
           )
         };
 
@@ -141,11 +135,8 @@
       return
         static_cast<std::uint_fast32_t>
         (
-          static_cast<float>
-          (
-              static_cast<float>(static_cast<float>(c)  / 255.0F) // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
-            * static_cast<float>(static_cast<float>(c)  /   1.0F)
-          )
+            (static_cast<float>(c) / 255.0F) // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
+          * (static_cast<float>(c) /   1.0F)
         );
     }
   };

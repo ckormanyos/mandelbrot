@@ -34,15 +34,15 @@
 
     mandelbrot_config_base(mandelbrot_config_base&& other) noexcept = default;
 
-    mandelbrot_config_base(my_coord_pnt_numeric_type x_lo_in, // NOLINT(bugprone-easily-swappable-parameters)
-                           my_coord_pnt_numeric_type x_hi_in, // NOLINT(bugprone-easily-swappable-parameters)
-                           my_coord_pnt_numeric_type y_lo_in, // NOLINT(bugprone-easily-swappable-parameters)
-                           my_coord_pnt_numeric_type y_hi_in, // NOLINT(bugprone-easily-swappable-parameters)
-                           const std::uint_fast32_t  iter)
-      : my_x_lo  { std::move(x_lo_in) },
-        my_x_hi  { std::move(x_hi_in) },
-        my_y_lo  { std::move(y_lo_in) },
-        my_y_hi  { std::move(y_hi_in) },
+    explicit mandelbrot_config_base(const my_coord_pnt_numeric_type& x_lo_in, // NOLINT(bugprone-easily-swappable-parameters)
+                                    const my_coord_pnt_numeric_type& x_hi_in, // NOLINT(bugprone-easily-swappable-parameters)
+                                    const my_coord_pnt_numeric_type& y_lo_in, // NOLINT(bugprone-easily-swappable-parameters)
+                                    const my_coord_pnt_numeric_type& y_hi_in, // NOLINT(bugprone-easily-swappable-parameters)
+                                    const std::uint_fast32_t  iter)
+      : my_x_lo  { x_lo_in },
+        my_x_hi  { x_hi_in },
+        my_y_lo  { y_lo_in },
+        my_y_hi  { y_hi_in },
         my_width { std::move(my_x_hi - my_x_lo) },
         my_height{ std::move(my_y_hi - my_y_lo) },
         my_iter  { iter } { }
@@ -90,18 +90,10 @@
       const auto non_rounded_val2 =
         static_cast<std::uint_fast32_t>
         (
-          my_coord_pnt_numeric_type(my_val * static_cast<std::uint_fast32_t>(UINT8_C(2))) / my_step
+          my_coord_pnt_numeric_type(my_val * std::uint_fast32_t { UINT8_C(2) }) / my_step
         );
 
-      return
-        static_cast<std::uint_fast32_t>
-        (
-            static_cast<std::uint_fast32_t>
-            (
-              non_rounded_val2 + static_cast<std::uint_fast32_t>(UINT8_C(1))
-            )
-          / static_cast<std::uint_fast32_t>(UINT8_C(2))
-        );
+      return (non_rounded_val2 + std::uint_fast32_t { UINT8_C(1) }) / std::uint_fast32_t { UINT8_C(2) };
     }
   };
 
