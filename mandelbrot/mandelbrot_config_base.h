@@ -34,10 +34,10 @@
 
     mandelbrot_config_base(mandelbrot_config_base&& other) noexcept = default;
 
-    explicit mandelbrot_config_base(const my_coord_pnt_numeric_type& x_lo_in, // NOLINT(bugprone-easily-swappable-parameters)
-                                    const my_coord_pnt_numeric_type& x_hi_in, // NOLINT(bugprone-easily-swappable-parameters)
-                                    const my_coord_pnt_numeric_type& y_lo_in, // NOLINT(bugprone-easily-swappable-parameters)
-                                    const my_coord_pnt_numeric_type& y_hi_in, // NOLINT(bugprone-easily-swappable-parameters)
+    explicit mandelbrot_config_base(const my_coord_pnt_numeric_type& x_lo_in, // NOLINT(bugprone-easily-swappable-parameters,modernize-pass-by-value)
+                                    const my_coord_pnt_numeric_type& x_hi_in, // NOLINT(bugprone-easily-swappable-parameters,modernize-pass-by-value)
+                                    const my_coord_pnt_numeric_type& y_lo_in, // NOLINT(bugprone-easily-swappable-parameters,modernize-pass-by-value)
+                                    const my_coord_pnt_numeric_type& y_hi_in, // NOLINT(bugprone-easily-swappable-parameters,modernize-pass-by-value)
                                     const std::uint_fast32_t  iter)
       : my_x_lo  { x_lo_in },
         my_x_hi  { x_hi_in },
