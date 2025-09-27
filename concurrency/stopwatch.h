@@ -39,7 +39,7 @@
     {
       timespec ts { };
 
-      #if (defined(_MSC_VER) || (__cplusplus >= 201703L))
+      #if ((defined(_MSVC_LANG) && (_MSVC_LANG >= 201703L)) || (__cplusplus >= 201703L))
       static_cast<void>(std::timespec_get(&ts, TIME_UTC));
       #else
       static_cast<void>(timespec_get(&ts, TIME_UTC));
@@ -73,7 +73,7 @@
     {
       timespec ts { };
 
-      #if (defined(_MSC_VER) || (__cplusplus >= 201703L))
+      #if ((defined(_MSVC_LANG) && (_MSVC_LANG >= 201703L)) || (__cplusplus >= 201703L))
       static_cast<void>(std::timespec_get(&ts, TIME_UTC));
       #else
       static_cast<void>(timespec_get(&ts, TIME_UTC));
