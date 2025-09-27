@@ -18,19 +18,11 @@
 
   // For the MSVC environment, it is defined in the compiler preprocessor settings.
 
-  //#if !defined(MANDELBROT_USE_CPP_DOUBLE_DOUBLE)
-  //#define MANDELBROT_USE_CPP_DOUBLE_DOUBLE
-  //#endif
-
   // --------------------------------------------------------------------------
 
   // You can optionally define MANDELBROT_USE_GMP_FLOAT here or
   // on the command line in order to use the gmp_float class
   // when available.
-
-  //#if !defined(MANDELBROT_USE_GMP_FLOAT)
-  //#define MANDELBROT_USE_GMP_FLOAT
-  //#endif
 
   // --------------------------------------------------------------------------
 

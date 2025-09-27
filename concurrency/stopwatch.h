@@ -39,7 +39,11 @@
     {
       timespec ts { };
 
-      timespec_get(&ts, TIME_UTC);
+      #if ((defined(_MSVC_LANG) && (_MSVC_LANG >= 201703L)) || (__cplusplus >= 201703L))
+      static_cast<void>(std::timespec_get(&ts, TIME_UTC));
+      #else
+      static_cast<void>(timespec_get(&ts, TIME_UTC));
+      #endif
 
       m_start =
         static_cast<time_point_type>
@@ -69,7 +73,12 @@
     {
       timespec ts { };
 
-      timespec_get(&ts, TIME_UTC);
+      #if ((defined(_MSVC_LANG) && (_MSVC_LANG >= 201703L)) || (__cplusplus >= 201703L))
+      static_cast<void>(std::timespec_get(&ts, TIME_UTC));
+      #else
+      static_cast<void>(timespec_get(&ts, TIME_UTC));
+      #endif
+
 
       time_point_type
         stop
