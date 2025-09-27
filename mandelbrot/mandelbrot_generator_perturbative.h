@@ -266,9 +266,9 @@
             std::atomic<std::uint_fast32_t>*
               ptr_hist
               {
-                reinterpret_cast<std::atomic<std::uint_fast32_t>*> // NOLINT(cppcoreguidelines-pro-type-reinterpret-cast)
+                static_cast<std::atomic<std::uint_fast32_t>*>
                 (
-                  &color_histogram[static_cast<std::size_t>(iteration_result)]
+                  static_cast<void*>(&color_histogram[static_cast<std::size_t>(iteration_result)])
                 )
               };
 

@@ -48,30 +48,30 @@
     using my_coord_pnt_numeric_type = typename base_class_type::my_coord_pnt_numeric_type;
     using my_iteration_numeric_type = typename base_class_type::my_iteration_numeric_type;
 
-    mandelbrot_config(const my_coord_pnt_numeric_type& xl,
-                      const my_coord_pnt_numeric_type& xh,
-                      const my_coord_pnt_numeric_type& yl,
-                      const my_coord_pnt_numeric_type& yh,
-                      const std::uint_fast32_t         iter)
+    explicit mandelbrot_config(const my_coord_pnt_numeric_type& xl,
+                               const my_coord_pnt_numeric_type& xh,
+                               const my_coord_pnt_numeric_type& yl,
+                               const my_coord_pnt_numeric_type& yh,
+                               const std::uint_fast32_t         iter)
       : base_class_type(xl, xh, yl, yh, iter) { }
 
-    mandelbrot_config(const std::string& str_xl,
-                      const std::string& str_xh,
-                      const std::string& str_yl,
-                      const std::string& str_yh)
-      : base_class_type(boost::lexical_cast<my_coord_pnt_numeric_type>(str_xl),
-                        boost::lexical_cast<my_coord_pnt_numeric_type>(str_xh),
-                        boost::lexical_cast<my_coord_pnt_numeric_type>(str_yl),
-                        boost::lexical_cast<my_coord_pnt_numeric_type>(str_yh)) { }
+    explicit mandelbrot_config(const std::string& str_xl,
+                               const std::string& str_xh,
+                               const std::string& str_yl,
+                               const std::string& str_yh)
+      : base_class_type(std::move(my_coord_pnt_numeric_type(str_xl)),
+                        std::move(my_coord_pnt_numeric_type(str_xh)),
+                        std::move(my_coord_pnt_numeric_type(str_yl)),
+                        std::move(my_coord_pnt_numeric_type(str_yh))) { }
 
-    mandelbrot_config(const char* pc_xl,
-                      const char* pc_xh,
-                      const char* pc_yl,
-                      const char* pc_yh)
-      : base_class_type(boost::lexical_cast<my_coord_pnt_numeric_type>(std::string { pc_xl }),
-                        boost::lexical_cast<my_coord_pnt_numeric_type>(std::string { pc_xh }),
-                        boost::lexical_cast<my_coord_pnt_numeric_type>(std::string { pc_yl }),
-                        boost::lexical_cast<my_coord_pnt_numeric_type>(std::string { pc_yh })) { }
+    explicit mandelbrot_config(const char* pc_xl,
+                               const char* pc_xh,
+                               const char* pc_yl,
+                               const char* pc_yh)
+      : base_class_type(std::move(my_coord_pnt_numeric_type(std::string { pc_xl })),
+                        std::move(my_coord_pnt_numeric_type(std::string { pc_xh })),
+                        std::move(my_coord_pnt_numeric_type(std::string { pc_yl })),
+                        std::move(my_coord_pnt_numeric_type(std::string { pc_yh }))) { }
 
     mandelbrot_config() = delete;
 

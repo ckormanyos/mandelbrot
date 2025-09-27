@@ -45,16 +45,12 @@
       static_cast<void>(timespec_get(&ts, TIME_UTC));
       #endif
 
-      m_start =
-        static_cast<time_point_type>
-        (
-            static_cast<time_point_type>(static_cast<time_point_type>(ts.tv_sec) * UINTMAX_C(1000000000))
-          + static_cast<time_point_type>(ts.tv_nsec)
-        );
+      m_start =   (static_cast<time_point_type>(ts.tv_sec) * UINTMAX_C(1000000000))
+                +  static_cast<time_point_type>(ts.tv_nsec);
     }
 
     template<typename RepresentationRequestedTimeType>
-    static auto elapsed_time(const stopwatch& my_stopwatch) noexcept -> RepresentationRequestedTimeType
+    STOPWATCH_NODISCARD static auto elapsed_time(const stopwatch& my_stopwatch) noexcept -> RepresentationRequestedTimeType
     {
       using local_time_type = RepresentationRequestedTimeType;
 
@@ -80,24 +76,14 @@
       #endif
 
 
-      time_point_type
+      const time_point_type
         stop
         {
-          static_cast<time_point_type>
-          (
-              static_cast<time_point_type>(static_cast<time_point_type>(ts.tv_sec) * UINTMAX_C(1000000000))
-            + static_cast<time_point_type>(ts.tv_nsec)
-          )
+            (static_cast<time_point_type>(ts.tv_sec) * UINTMAX_C(1000000000))
+          +  static_cast<time_point_type>(ts.tv_nsec)
         };
 
-      const std::uintmax_t
-        elapsed_ns
-        {
-          static_cast<time_point_type>
-          (
-            stop - m_start
-          )
-        };
+      const std::uintmax_t elapsed_ns { stop - m_start };
 
       return elapsed_ns;
     }
