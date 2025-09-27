@@ -8,9 +8,10 @@
 
 # cd /mnt/c/Users/ckorm/Documents/Ks/PC_Software/NumericalPrograms/mandelbrot
 
+# Build with boost::multiprecision::cpp_dec_float:
 # ./build_all.sh --boost=/mnt/c/boost/boost_1_89_0 --my_cc=g++ --stdcc=c++20
 
-# Now with boost::multiprecision::cpp_double_double:
+# Build with boost::multiprecision::cpp_double_double:
 # ./build_all.sh --boost=/mnt/c/boost/boost_1_89_0 --dxtra=MANDELBROT_USE_CPP_DOUBLE_DOUBLE --my_cc=g++ --stdcc=c++20
 
 boost=

@@ -39,7 +39,7 @@
     {
       timespec ts { };
 
-      timespec_get(&ts, TIME_UTC);
+      static_cast<void>(std::timespec_get(&ts, TIME_UTC));
 
       m_start =
         static_cast<time_point_type>
@@ -69,7 +69,7 @@
     {
       timespec ts { };
 
-      timespec_get(&ts, TIME_UTC);
+      static_cast<void>(std::timespec_get(&ts, TIME_UTC));
 
       time_point_type
         stop
