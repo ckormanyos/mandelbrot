@@ -61,7 +61,7 @@
     static_assert(std::numeric_limits<my_iteration_numeric_type>::digits10 <= std::numeric_limits<my_coord_pnt_numeric_type>::digits10,
                   "Error: The iteration digits10 must be less than or equal to the coordinate digits10. Check config.");
 
-    explicit mandelbrot_generator_perturbative(mandelbrot_config_type& config)
+    explicit mandelbrot_generator_perturbative(const mandelbrot_config_type& config)
       : base_class_type(config) { }
 
     mandelbrot_generator_perturbative() = delete;
@@ -84,22 +84,24 @@
       std::vector<my_iteration_numeric_type> zkr(std::size_t { base_class_type::get_iterations() + std::uint_fast32_t { UINT8_C(1) } });
       std::vector<my_iteration_numeric_type> zki(zkr.size());
 
-      my_coord_pnt_numeric_type
+      const auto& config_object { base_class_type::get_mandelbrot_config_object() };
+
+      const my_coord_pnt_numeric_type
         x_center
         {
           static_cast<my_coord_pnt_numeric_type>
           (
-              (base_class_type::mandelbrot_config_object.x_lo() + base_class_type::mandelbrot_config_object.x_hi())
+              (config_object.x_lo() + config_object.x_hi())
             / static_cast<my_coord_pnt_numeric_type>(UINT8_C(2))
           )
         };
 
-      my_coord_pnt_numeric_type
+      const my_coord_pnt_numeric_type
         y_center
         {
           static_cast<my_coord_pnt_numeric_type>
           (
-              (base_class_type::mandelbrot_config_object.y_lo() + base_class_type::mandelbrot_config_object.y_hi())
+              (config_object.y_lo() + config_object.y_hi())
             / static_cast<my_coord_pnt_numeric_type>(UINT8_C(2))
           )
         };
@@ -140,11 +142,14 @@
 
       // Initialize the x-y coordinates.
       {
-        my_iteration_numeric_type x_val { base_class_type::mandelbrot_config_object.x_lo() - x_center };
-        my_iteration_numeric_type y_val { base_class_type::mandelbrot_config_object.y_hi() - y_center };
+        my_iteration_numeric_type x_val { config_object.x_lo() - x_center };
+        my_iteration_numeric_type y_val { config_object.y_hi() - y_center };
 
-        for (auto& x_pnt : x_coord) { x_pnt = x_val; x_val += static_cast<my_iteration_numeric_type>(base_class_type::mandelbrot_config_object.step_x()); }
-        for (auto& y_pnt : y_coord) { y_pnt = y_val; y_val -= static_cast<my_iteration_numeric_type>(base_class_type::mandelbrot_config_object.step_y()); }
+        const my_iteration_numeric_type dx { static_cast<my_iteration_numeric_type>(config_object.step_x()) };
+        const my_iteration_numeric_type dy { static_cast<my_iteration_numeric_type>(config_object.step_y()) };
+
+        for(auto& x_pnt : x_coord) { x_pnt = x_val; x_val += dx; }
+        for(auto& y_pnt : y_coord) { y_pnt = y_val; y_val -= dy; }
       }
 
       std::atomic_flag mandelbrot_iteration_lock { };
@@ -261,9 +266,9 @@
             std::atomic<std::uint_fast32_t>*
               ptr_hist
               {
-                reinterpret_cast<std::atomic<std::uint_fast32_t>*> // NOLINT(cppcoreguidelines-pro-type-reinterpret-cast)
+                static_cast<std::atomic<std::uint_fast32_t>*>
                 (
-                  &color_histogram[static_cast<std::size_t>(iteration_result)]
+                  static_cast<void*>(&color_histogram[static_cast<std::size_t>(iteration_result)])
                 )
               };
 

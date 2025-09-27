@@ -33,7 +33,7 @@
         (
           (std::max)
           (
-            static_cast<signed>(number_of_threads_hint - static_cast<signed>(UINT8_C(1))),
+            static_cast<signed>(number_of_threads_hint - signed { INT8_C(1) }),
             static_cast<signed>(INT8_C(1))
           )
         );

@@ -18,20 +18,11 @@
 #include <iostream>
 #include <sstream>
 
-// Provide instructions for simple build on WSL.
-// cd /mnt/c/Users/ckorm/Documents/Ks/PC_Software/NumericalPrograms/mandelbrot
-
-// Compile with cpp_dec_float
-// ./build_all.sh --boost=/mnt/c/boost/boost_1_89_0 --my_cc=g++ --stdcc=c++20
-
-// Compile with gmp_float
-// ./build_all_gmp.sh --boost=/mnt/c/boost/boost_1_89_0 --ixtra=/mnt/c/ChrisGitRepos/modular_boost/multiprecision/include --my_cc=g++ --stdcc=c++20
-
 auto main() -> int // NOLINT(bugprone-exception-escape)
 {
   using namespace ::ckormanyos::mandelbrot; // NOLINT(google-build-using-namespace)
 
-  config::mandelbrot_config_type
+  const config::mandelbrot_config_type
     mandelbrot_config_object
     (
       config::center_x() - config::dx_half(),
