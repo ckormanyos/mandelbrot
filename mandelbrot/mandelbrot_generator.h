@@ -44,6 +44,8 @@
     using my_coord_pnt_numeric_type = typename mandelbrot_config_type::my_coord_pnt_numeric_type;
     using my_iteration_numeric_type = typename mandelbrot_config_type::my_iteration_numeric_type;
 
+    using my_iteration_matrix_value_type = typename std::vector<std::uint_fast32_t>::value_type;
+
   private:
     using boost_gil_x_coord_type = boost::gil::rgb8_image_t::x_coord_t;
     using boost_gil_y_coord_type = boost::gil::rgb8_image_t::y_coord_t;
