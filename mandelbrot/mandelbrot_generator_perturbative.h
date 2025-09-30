@@ -167,12 +167,8 @@
           {
             ++unordered_parallel_row_count;
 
-            const float
-              percent
-              {
-                  (100.0F * static_cast<float>(unordered_parallel_row_count))
-                / static_cast<float>(y_coord.size())
-              };
+            const float percent = (100.0F * static_cast<float>(unordered_parallel_row_count))
+                                  / static_cast<float>(y_coord.size();
 
             std::stringstream strm { };
 
@@ -208,26 +204,17 @@
             // three real-valued multiplications and several real-valued
             // addition/subtraction operations.
 
-            std::size_t iteration_result { UINT8_C(1) };
+            std::uint_fast32_t iteration_result { static_cast<std::uint_fast32_t>(UINT8_C(1)) };
 
             auto& iteration_matrix = base_class_type::get_mandelbrot_iteration_matrix();
 
             auto& color_histogram = base_class_type::get_mandelbrot_color_histogram();
 
-            const std::size_t
-              iteration_count
-              {
-                static_cast<std::size_t>
-                (
-                  base_class_type::get_iterations() + std::uint_fast32_t { UINT8_C(1) }
-                )
-              };
-
             // Perform the iteration sequence for generating the Mandelbrot set.
             // Here is the main work of the program.
 
-            while(   (iteration_result < iteration_count)                 // NOLINT(altera-id-dependent-backward-branch)
-                  && (quad_length < base_class_type::four_iteration()))   // NOLINT(altera-id-dependent-backward-branch)
+            while(   (iteration_result < (base_class_type::get_iterations() + static_cast<std::uint_fast32_t>(UINT8_C(1)))) // NOLINT(altera-id-dependent-backward-branch)
+                  && (quad_length < base_class_type::four_iteration()))                                                     // NOLINT(altera-id-dependent-backward-branch)
             {
               // The core functionality of the original formula is:
               //   z_{k+1} = z_{k}^2 + C
@@ -249,8 +236,8 @@
               ei += ei + y_coord[j_row];
               er  = zer - zei + x_coord[i_col];
 
-              zkr_temp = zkr[iteration_result];
-              zki_temp = zki[iteration_result];
+              zkr_temp = zkr[static_cast<std::size_t>(iteration_result)];
+              zki_temp = zki[static_cast<std::size_t>(iteration_result)];
 
               zer  = er;
               zer *= (zkr_temp * static_cast<unsigned>(UINT8_C(2))) + er;
@@ -270,14 +257,14 @@
 
             --iteration_result;
 
-            iteration_matrix[i_col][j_row] = static_cast<base_class_type::my_iteration_matrix_value_type>(iteration_result);
+            iteration_matrix[i_col][j_row] = iteration_result;
 
             std::atomic<std::uint_fast32_t>*
               ptr_hist
               {
                 static_cast<std::atomic<std::uint_fast32_t>*>
                 (
-                  static_cast<void*>(&color_histogram[iteration_result])
+                  static_cast<void*>(&color_histogram[static_cast<std::size_t>(iteration_result)])
                 )
               };
 
