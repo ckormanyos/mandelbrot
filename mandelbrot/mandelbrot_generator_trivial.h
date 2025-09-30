@@ -117,7 +117,7 @@
 
           mandelbrot_iteration_lock.clear();
 
-          const std::size_t x_coord_size { x_coord.size() };
+          const std::size_t x_coord_size { x_coord.size() }; // NOLINT(altera-id-dependent-backward-branch)
 
           for(auto   i_col = static_cast<std::size_t>(UINT8_C(0));
                      i_col < x_coord_size; // NOLINT(altera-id-dependent-backward-branch)
