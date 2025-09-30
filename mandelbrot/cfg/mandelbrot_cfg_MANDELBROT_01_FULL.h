@@ -8,7 +8,7 @@
 #ifndef MANDELBROT_CFG_MANDELBROT_01_FULL_2022_02_24_H
   #define MANDELBROT_CFG_MANDELBROT_01_FULL_2022_02_24_H
 
-  #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
+  #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 201703L))
   namespace ckormanyos::mandelbrot::config {
   #else
   namespace ckormanyos { namespace mandelbrot { namespace config { // NOLINT(modernize-concat-nested-namespaces)
@@ -32,7 +32,7 @@
   template<typename CoordPntNumericType, typename IterateNumericType>
   using my_mandelbrot_generator_type = ::ckormanyos::mandelbrot::mandelbrot_generator_trivial<CoordPntNumericType, IterateNumericType>;
 
-  #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
+  #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 201703L))
   } // namespace ckormanyos::mandelbrot::config
   #else
   } // namespace config
