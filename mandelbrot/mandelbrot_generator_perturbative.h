@@ -168,7 +168,7 @@
             ++unordered_parallel_row_count;
 
             const float percent = (100.0F * static_cast<float>(unordered_parallel_row_count))
-                                  / static_cast<float>(y_coord.size();
+                                  / static_cast<float>(y_coord.size());
 
             std::stringstream strm { };
 
