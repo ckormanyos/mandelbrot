@@ -117,7 +117,7 @@
         my_coord_pnt_numeric_type zr2 { static_cast<unsigned>(UINT8_C(0)) }; // NOLINT(altera-id-dependent-backward-branch)
         my_coord_pnt_numeric_type zi2 { static_cast<unsigned>(UINT8_C(0)) };
 
-        auto iteration_result = static_cast<std::uint_fast32_t>(UINT8_C(0));
+        auto iteration_result = static_cast<std::size_t>(UINT8_C(0));
 
         // Perform the iteration sequence for generating the Mandelbrot set.
         // Use a perturbative iteration scheme.
@@ -135,8 +135,8 @@
 
           ++iteration_result;
 
-          zkr[static_cast<std::size_t>(iteration_result)] = static_cast<my_iteration_numeric_type>(zr);
-          zki[static_cast<std::size_t>(iteration_result)] = static_cast<my_iteration_numeric_type>(zi);
+          zkr[iteration_result] = static_cast<my_iteration_numeric_type>(zr);
+          zki[iteration_result] = static_cast<my_iteration_numeric_type>(zi);
         }
       }
 
@@ -236,8 +236,8 @@
               ei += ei + y_coord[j_row];
               er  = zer - zei + x_coord[i_col];
 
-              zkr_temp = zkr[static_cast<std::size_t>(iteration_result)];
-              zki_temp = zki[static_cast<std::size_t>(iteration_result)];
+              zkr_temp = zkr[iteration_result];
+              zki_temp = zki[iteration_result];
 
               zer  = er;
               zer *= (zkr_temp * static_cast<unsigned>(UINT8_C(2))) + er;
@@ -266,7 +266,7 @@
               {
                 static_cast<std::atomic<std::uint_fast32_t>*>
                 (
-                  static_cast<void*>(&color_histogram[static_cast<std::size_t>(iteration_result)])
+                  static_cast<void*>(&color_histogram[iteration_result])
                 )
               };
 
