@@ -156,7 +156,9 @@
               ++iteration_result;
             }
 
-            iteration_matrix[i_col][j_row] = static_cast<base_class_type::my_iteration_matrix_value_type>(iteration_result);
+            using local_matrix_value_type = typename base_class_type::my_iteration_matrix_value_type;
+
+            iteration_matrix[i_col][j_row] = static_cast<local_matrix_value_type>(iteration_result);
 
             std::atomic<std::uint_fast32_t>*
               ptr_hist
