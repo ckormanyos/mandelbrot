@@ -15,7 +15,7 @@
   #if (defined(_MSC_VER) && defined(_MSVC_LANG))
   #define MANDELBROT_CXX_VERSION _MSVC_LANG
   #elif defined(__cplusplus)
-  #define MANDELBROT_CXX_VERSION __cplusplus
+  #define MANDELBROT_CXX_VERSION __cplusplus // NOLINT(cppcoreguidelines-macro-usage)
   #endif
 
   #if !defined(MANDELBROT_CXX_VERSION)

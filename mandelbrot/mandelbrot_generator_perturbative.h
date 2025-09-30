@@ -16,7 +16,7 @@
   #include <atomic>
   #include <cstddef>
   #include <cstdint>
-  #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 202002L))
+  #if (defined(__cpp_lib_format) && (__cpp_lib_format >= 201907L))
   #include <format>
   #else
   #include <iomanip>
@@ -174,7 +174,7 @@
             const float percent = (100.0F * static_cast<float>(unordered_parallel_row_count))
                                   / static_cast<float>(y_coord.size());
 
-            #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 202002L))
+            #if (defined(__cpp_lib_format) && (__cpp_lib_format >= 201907L))
             const std::string str_calc =
               std::format
               (

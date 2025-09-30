@@ -14,7 +14,7 @@
   #if (defined(_MSC_VER) && defined(_MSVC_LANG))
   #define STOPWATCH_CXX_VERSION _MSVC_LANG
   #elif defined(__cplusplus)
-  #define STOPWATCH_CXX_VERSION __cplusplus
+  #define STOPWATCH_CXX_VERSION __cplusplus // NOLINT(cppcoreguidelines-macro-usage)
   #endif
 
   #if !defined(STOPWATCH_CXX_VERSION)

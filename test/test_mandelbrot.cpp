@@ -14,7 +14,7 @@
 
 #include <mandelbrot/mandelbrot.h>
 
-#if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 202002L))
+#if (defined(__cpp_lib_format) && (__cpp_lib_format >= 201907L))
 #include <format>
 #else
 #include <iomanip>
@@ -59,7 +59,7 @@ auto main() -> int // NOLINT(bugprone-exception-escape)
   const auto execution_time = stopwatch_type::elapsed_time<float>(my_stopwatch);
 
   {
-    #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 202002L))
+    #if (defined(__cpp_lib_format) && (__cpp_lib_format >= 201907L))
     const std::string str_time =
       std::format
       (
