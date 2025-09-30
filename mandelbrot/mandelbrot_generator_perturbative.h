@@ -185,6 +185,8 @@
                 percent
               );
             #else
+            std::stringstream strm { };
+
             strm << "Calculating Mandelbrot image at row "
                  << unordered_parallel_row_count
                  << " of "
@@ -195,7 +197,7 @@
                  << percent
                  << "%. Have patience.\r";
 
-            const std::string str_calc = strm.str();
+            const std::string str_calc { strm.str() };
             #endif
 
             static_cast<void>(my_text_output.write(str_calc));
