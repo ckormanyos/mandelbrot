@@ -76,14 +76,14 @@
 
     // LCOV_EXCL_STOP
 
-    static auto four_coord_pnt() -> const my_coord_pnt_numeric_type&
+    MANDELBROT_NODISCARD static auto four_coord_pnt() -> const my_coord_pnt_numeric_type&
     {
       static const my_coord_pnt_numeric_type my_four { static_cast<unsigned>(UINT8_C(4)) };
 
       return my_four;
     }
 
-    static auto four_iteration() -> const my_iteration_numeric_type&
+    MANDELBROT_NODISCARD static auto four_iteration() -> const my_iteration_numeric_type&
     {
       static const my_iteration_numeric_type my_four { static_cast<unsigned>(UINT8_C(4)) };
 
@@ -198,7 +198,7 @@
 
   template<typename CoordPntNumericType,
            typename IterateNumericType>
-  mandelbrot_text_output_cout mandelbrot_generator<CoordPntNumericType, IterateNumericType>::my_standard_output; // NOLINT(cppcoreguidelines-avoid-non-const-global-variables,hicpp-uppercase-literal-suffix,readability-uppercase-literal-suffix)
+  mandelbrot_text_output_cout mandelbrot_generator<CoordPntNumericType, IterateNumericType>::my_standard_output { }; // NOLINT(cppcoreguidelines-avoid-non-const-global-variables,hicpp-uppercase-literal-suffix,readability-uppercase-literal-suffix)
 
   #if(__cplusplus >= 201703L)
   } // namespace ckormanyos::mandelbrot
