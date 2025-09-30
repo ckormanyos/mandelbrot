@@ -339,7 +339,7 @@
     {
       util::text::text_output_alloc_console text_out(mandelbrot_discovery::write_string);
 
-      using stopwatch_type = concurrency::stopwatch;
+      using stopwatch_type = concurrency::stopwatch<std::chrono::high_resolution_clock>;
 
       stopwatch_type my_stopwatch { };
 
