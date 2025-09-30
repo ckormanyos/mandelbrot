@@ -108,15 +108,8 @@
           (std::max)((std::min)(weight, 1.0F), 0.0F) // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
         };
 
-      return
-        static_cast<std::uint_fast32_t>
-        (
-            static_cast<std::uint_fast32_t>(UINT8_C(255))
-          - static_cast<std::uint_fast32_t>
-            (
-              static_cast<float>(clamped_weight * 255.0F) // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
-            )
-        );
+      return   std::uint_fast32_t { UINT8_C(255) }
+             - static_cast<std::uint_fast32_t>(clamped_weight * 255.0F); // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
     }
   };
 

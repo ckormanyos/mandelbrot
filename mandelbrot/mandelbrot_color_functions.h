@@ -64,8 +64,7 @@
       const float
         color_phase
         {
-            (static_cast<float>(c) / 255.0F)
-          *  static_cast<float>(val_pi * 8.0F)
+          (static_cast<float>(c) / 255.0F) * (val_pi * 8.0F)
         };
 
       using std::sin;
