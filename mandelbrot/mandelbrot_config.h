@@ -15,7 +15,7 @@
 
   #include <string>
 
-  #if(__cplusplus >= 201703L)
+  #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 201703L))
   namespace ckormanyos::mandelbrot {
   #else
   namespace ckormanyos { namespace mandelbrot { // NOLINT(modernize-concat-nested-namespaces)
@@ -95,7 +95,7 @@
     MANDELBROT_NODISCARD auto step_y() const -> const my_coord_pnt_numeric_type& override { return my_step_y; }
   };
 
-  #if(__cplusplus >= 201703L)
+  #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 201703L))
   } // namespace ckormanyos::mandelbrot
   #else
   } // namespace mandelbrot

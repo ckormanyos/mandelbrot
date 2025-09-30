@@ -16,13 +16,17 @@
   #include <atomic>
   #include <cstddef>
   #include <cstdint>
+  #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 202002L))
+  #include <format>
+  #else
   #include <iomanip>
+  #endif
   #include <limits>
   #include <sstream>
   #include <type_traits>
   #include <vector>
 
-  #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
+  #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 201703L))
   namespace ckormanyos::mandelbrot {
   #else
   namespace ckormanyos { namespace mandelbrot { // NOLINT(modernize-concat-nested-namespaces)
@@ -162,7 +166,7 @@
         y_coord.size(),
         [&mandelbrot_iteration_lock, &unordered_parallel_row_count, &my_text_output, &x_coord, &y_coord, &zkr, &zki, this](std::size_t j_row)
         {
-          while(mandelbrot_iteration_lock.test_and_set()) { ; }
+          while(mandelbrot_iteration_lock.test_and_set()) { }
 
           {
             ++unordered_parallel_row_count;
@@ -170,8 +174,17 @@
             const float percent = (100.0F * static_cast<float>(unordered_parallel_row_count))
                                   / static_cast<float>(y_coord.size());
 
-            std::stringstream strm { };
-
+            #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 202002L))
+            const std::string str_calc =
+              std::format
+              (
+                "Calculating Mandelbrot image at row {} of {}. "
+                "Total processed so far: {:.1f}%. Have patience.\r",
+                unordered_parallel_row_count,
+                y_coord.size(),
+                percent
+              );
+            #else
             strm << "Calculating Mandelbrot image at row "
                  << unordered_parallel_row_count
                  << " of "
@@ -182,7 +195,10 @@
                  << percent
                  << "%. Have patience.\r";
 
-            static_cast<void>(my_text_output.write(strm.str()));
+            const std::string str_calc = strm.str();
+            #endif
+
+            static_cast<void>(my_text_output.write(str_calc));
           }
 
           mandelbrot_iteration_lock.clear();
@@ -277,7 +293,7 @@
     }
   };
 
-  #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
+  #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 201703L))
   } // namespace ckormanyos::mandelbrot
   #else
   } // namespace mandelbrot

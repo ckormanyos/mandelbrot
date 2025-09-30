@@ -13,7 +13,7 @@
   #include <cstdint>
   #include <utility>
 
-  #if(__cplusplus >= 201703L)
+  #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 201703L))
   namespace ckormanyos::mandelbrot {
   #else
   namespace ckormanyos { namespace mandelbrot { // NOLINT(modernize-concat-nested-namespaces)
@@ -97,7 +97,7 @@
     }
   };
 
-  #if(__cplusplus >= 201703L)
+  #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 201703L))
   } // namespace ckormanyos::mandelbrot
   #else
   } // namespace mandelbrot

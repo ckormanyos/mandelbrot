@@ -11,10 +11,20 @@
   #include <chrono>
   #include <cstdint>
 
+  #if (defined(_MSC_VER) && defined(_MSVC_LANG))
+  #define STOPWATCH_CXX_VERSION _MSVC_LANG
+  #elif defined(__cplusplus)
+  #define STOPWATCH_CXX_VERSION __cplusplus
+  #endif
+
+  #if !defined(STOPWATCH_CXX_VERSION)
+  #error Error: can't determine C++ version STOPWATCH_CXX_VERSION
+  #endif
+
   #if defined(_MSC_VER) && !defined(__GNUC__)
   #define STOPWATCH_NODISCARD
   #else
-  #if (defined(__cplusplus) && (__cplusplus >= 201703L))
+  #if (defined(STOPWATCH_CXX_VERSION) && (STOPWATCH_CXX_VERSION >= 201703L))
   #define STOPWATCH_NODISCARD  [[nodiscard]] // NOLINT(cppcoreguidelines-macro-usage)
   #else
   #define STOPWATCH_NODISCARD

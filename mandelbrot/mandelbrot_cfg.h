@@ -9,6 +9,20 @@
   #define MANDELBROT_MANDELBROT_CFG_H
 
   // --------------------------------------------------------------------------
+  // Obtain the C++ language standard.
+  // --------------------------------------------------------------------------
+
+  #if (defined(_MSC_VER) && defined(_MSVC_LANG))
+  #define MANDELBROT_CXX_VERSION _MSVC_LANG
+  #elif defined(__cplusplus)
+  #define MANDELBROT_CXX_VERSION __cplusplus
+  #endif
+
+  #if !defined(MANDELBROT_CXX_VERSION)
+  #error Error: can't determine C++ version MANDELBROT_CXX_VERSION
+  #endif
+
+  // --------------------------------------------------------------------------
   // You can optionally define MANDELBROT_USE_CPP_DOUBLE_DOUBLE here or
   // on the command line in order to use the cpp_double_double class
   // when available. Do note, however, that the cpp_double_double number
