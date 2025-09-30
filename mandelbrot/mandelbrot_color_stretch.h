@@ -16,7 +16,7 @@
   #if defined(_MSC_VER) && !defined(__GNUC__)
   #define MANDELBROT_NODISCARD
   #else
-  #if (defined(__cplusplus) && (__cplusplus >= 201703L))
+  #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 201703L))
   #define MANDELBROT_NODISCARD  [[nodiscard]] // NOLINT(cppcoreguidelines-macro-usage)
   #else
   #define MANDELBROT_NODISCARD
@@ -24,7 +24,7 @@
   #endif
   #endif
 
-  #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
+  #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 201703L))
   namespace ckormanyos::mandelbrot::color {
   #else
   namespace ckormanyos { namespace mandelbrot { namespace color { // NOLINT(modernize-concat-nested-namespaces)
@@ -108,19 +108,12 @@
           (std::max)((std::min)(weight, 1.0F), 0.0F) // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
         };
 
-      return
-        static_cast<std::uint_fast32_t>
-        (
-            static_cast<std::uint_fast32_t>(UINT8_C(255))
-          - static_cast<std::uint_fast32_t>
-            (
-              static_cast<float>(clamped_weight * 255.0F) // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
-            )
-        );
+      return   std::uint_fast32_t { UINT8_C(255) }
+             - static_cast<std::uint_fast32_t>(clamped_weight * 255.0F); // NOLINT(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
     }
   };
 
-  #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
+  #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 201703L))
   } // namespace ckormanyos::mandelbrot::color
   #else
   } // namespace color

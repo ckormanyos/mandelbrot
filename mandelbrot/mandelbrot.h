@@ -12,7 +12,7 @@
   #include <mandelbrot/mandelbrot_generator_perturbative.h>
   #include <mandelbrot/mandelbrot_generator_trivial.h>
 
-  #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
+  #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 201703L))
   namespace ckormanyos::mandelbrot::config {
   #else
   namespace ckormanyos { namespace mandelbrot { namespace config { // NOLINT(modernize-concat-nested-namespaces)
@@ -103,7 +103,7 @@
       };
   }
 
-  #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
+  #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 201703L))
   } // namespace ckormanyos::mandelbrot::config
   #else
   } // namespace config

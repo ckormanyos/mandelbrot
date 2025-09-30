@@ -13,7 +13,7 @@
   #include <cstdint>
   #include <utility>
 
-  #if(__cplusplus >= 201703L)
+  #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 201703L))
   namespace ckormanyos::mandelbrot {
   #else
   namespace ckormanyos { namespace mandelbrot { // NOLINT(modernize-concat-nested-namespaces)
@@ -74,7 +74,7 @@
       return integral_convert(my_height, this->step_y());
     }
 
-    MANDELBROT_NODISCARD auto get_iterations() const noexcept -> std::uint_fast32_t { return my_iter; }
+    MANDELBROT_NODISCARD auto get_iterations() const noexcept -> std::size_t { return static_cast<std::size_t>(my_iter); }
 
   private:
     const my_coord_pnt_numeric_type my_x_lo   { };
@@ -97,7 +97,7 @@
     }
   };
 
-  #if(__cplusplus >= 201703L)
+  #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 201703L))
   } // namespace ckormanyos::mandelbrot
   #else
   } // namespace mandelbrot

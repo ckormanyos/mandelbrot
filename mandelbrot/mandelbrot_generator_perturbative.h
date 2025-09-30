@@ -16,13 +16,17 @@
   #include <atomic>
   #include <cstddef>
   #include <cstdint>
+  #if (defined(__cpp_lib_format) && (__cpp_lib_format >= 201907L))
+  #include <format>
+  #else
   #include <iomanip>
+  #endif
   #include <limits>
   #include <sstream>
   #include <type_traits>
   #include <vector>
 
-  #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
+  #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 201703L))
   namespace ckormanyos::mandelbrot {
   #else
   namespace ckormanyos { namespace mandelbrot { // NOLINT(modernize-concat-nested-namespaces)
@@ -117,7 +121,7 @@
         my_coord_pnt_numeric_type zr2 { static_cast<unsigned>(UINT8_C(0)) }; // NOLINT(altera-id-dependent-backward-branch)
         my_coord_pnt_numeric_type zi2 { static_cast<unsigned>(UINT8_C(0)) };
 
-        auto iteration_result = static_cast<std::uint_fast32_t>(UINT8_C(0));
+        auto iteration_result = static_cast<std::size_t>(UINT8_C(0));
 
         // Perform the iteration sequence for generating the Mandelbrot set.
         // Use a perturbative iteration scheme.
@@ -135,8 +139,8 @@
 
           ++iteration_result;
 
-          zkr[static_cast<std::size_t>(iteration_result)] = static_cast<my_iteration_numeric_type>(zr);
-          zki[static_cast<std::size_t>(iteration_result)] = static_cast<my_iteration_numeric_type>(zi);
+          zkr[iteration_result] = static_cast<my_iteration_numeric_type>(zr);
+          zki[iteration_result] = static_cast<my_iteration_numeric_type>(zi);
         }
       }
 
@@ -162,18 +166,25 @@
         y_coord.size(),
         [&mandelbrot_iteration_lock, &unordered_parallel_row_count, &my_text_output, &x_coord, &y_coord, &zkr, &zki, this](std::size_t j_row)
         {
-          while(mandelbrot_iteration_lock.test_and_set()) { ; }
+          while(mandelbrot_iteration_lock.test_and_set()) { }
 
           {
             ++unordered_parallel_row_count;
 
-            const auto percent =
-              static_cast<float>
-              (
-                  static_cast<float>(100.0F * static_cast<float>(unordered_parallel_row_count))
-                / static_cast<float>(y_coord.size())
-              );
+            const float percent = (100.0F * static_cast<float>(unordered_parallel_row_count))
+                                  / static_cast<float>(y_coord.size());
 
+            #if (defined(__cpp_lib_format) && (__cpp_lib_format >= 201907L))
+            const std::string str_calc =
+              std::format
+              (
+                "Calculating Mandelbrot image at row {} of {}. "
+                "Total processed so far: {:.1f}%. Have patience.\r",
+                unordered_parallel_row_count,
+                y_coord.size(),
+                percent
+              );
+            #else
             std::stringstream strm { };
 
             strm << "Calculating Mandelbrot image at row "
@@ -186,7 +197,10 @@
                  << percent
                  << "%. Have patience.\r";
 
-            static_cast<void>(my_text_output.write(strm.str()));
+            const std::string str_calc { strm.str() };
+            #endif
+
+            static_cast<void>(my_text_output.write(str_calc));
           }
 
           mandelbrot_iteration_lock.clear();
@@ -208,7 +222,7 @@
             // three real-valued multiplications and several real-valued
             // addition/subtraction operations.
 
-            std::uint_fast32_t iteration_result { static_cast<std::uint_fast32_t>(UINT8_C(1)) };
+            auto iteration_result = static_cast<std::size_t>(UINT8_C(1));
 
             auto& iteration_matrix = base_class_type::get_mandelbrot_iteration_matrix();
 
@@ -240,8 +254,8 @@
               ei += ei + y_coord[j_row];
               er  = zer - zei + x_coord[i_col];
 
-              zkr_temp = zkr[static_cast<std::size_t>(iteration_result)];
-              zki_temp = zki[static_cast<std::size_t>(iteration_result)];
+              zkr_temp = zkr[iteration_result];
+              zki_temp = zki[iteration_result];
 
               zer  = er;
               zer *= (zkr_temp * static_cast<unsigned>(UINT8_C(2))) + er;
@@ -261,14 +275,16 @@
 
             --iteration_result;
 
-            iteration_matrix[i_col][j_row] = iteration_result;
+            using local_matrix_value_type = typename base_class_type::my_iteration_matrix_value_type;
+
+            iteration_matrix[i_col][j_row] = static_cast<local_matrix_value_type>(iteration_result);
 
             std::atomic<std::uint_fast32_t>*
               ptr_hist
               {
                 static_cast<std::atomic<std::uint_fast32_t>*>
                 (
-                  static_cast<void*>(&color_histogram[static_cast<std::size_t>(iteration_result)])
+                  static_cast<void*>(&color_histogram[iteration_result])
                 )
               };
 
@@ -279,7 +295,7 @@
     }
   };
 
-  #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
+  #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 201703L))
   } // namespace ckormanyos::mandelbrot
   #else
   } // namespace mandelbrot

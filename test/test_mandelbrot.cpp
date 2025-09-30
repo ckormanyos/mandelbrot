@@ -14,7 +14,11 @@
 
 #include <mandelbrot/mandelbrot.h>
 
+#if (defined(__cpp_lib_format) && (__cpp_lib_format >= 201907L))
+#include <format>
+#else
 #include <iomanip>
+#endif
 #include <iostream>
 #include <sstream>
 
@@ -41,7 +45,7 @@ auto main() -> int // NOLINT(bugprone-exception-escape)
 
   mandelbrot_generator_type mandelbrot_generator(mandelbrot_config_object);
 
-  using stopwatch_type = concurrency::stopwatch;
+  using stopwatch_type = concurrency::stopwatch<std::chrono::high_resolution_clock>;
 
   stopwatch_type my_stopwatch { };
 
@@ -55,6 +59,14 @@ auto main() -> int // NOLINT(bugprone-exception-escape)
   const auto execution_time = stopwatch_type::elapsed_time<float>(my_stopwatch);
 
   {
+    #if (defined(__cpp_lib_format) && (__cpp_lib_format >= 201907L))
+    const std::string str_time =
+      std::format
+      (
+        "Time for calculation: execution_time: {:.1f}s",
+        execution_time
+      );
+    #else
     std::stringstream strm;
 
     strm << "Time for calculation: "
@@ -64,7 +76,10 @@ auto main() -> int // NOLINT(bugprone-exception-escape)
          << execution_time
          << "s";
 
-    std::cout << strm.str() << std::endl;
+    const std::string str_time = strm.str();
+    #endif
+
+    std::cout << str_time << std::endl;
   }
 }
 

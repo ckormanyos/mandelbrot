@@ -24,7 +24,7 @@
   #include <ostream>
   #include <string>
 
-  #if(__cplusplus >= 201703L)
+  #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 201703L))
   namespace ckormanyos::mandelbrot {
   #else
   namespace ckormanyos { namespace mandelbrot { // NOLINT(modernize-concat-nested-namespaces)
@@ -43,6 +43,10 @@
   protected:
     using my_coord_pnt_numeric_type = typename mandelbrot_config_type::my_coord_pnt_numeric_type;
     using my_iteration_numeric_type = typename mandelbrot_config_type::my_iteration_numeric_type;
+
+    using my_iteration_matrix_vector_type = std::vector<std::uint_fast32_t>;
+    using my_iteration_matrix_type        = std::vector<my_iteration_matrix_vector_type>;
+    using my_iteration_matrix_value_type  = typename my_iteration_matrix_vector_type::value_type;
 
   private:
     using boost_gil_x_coord_type = boost::gil::rgb8_image_t::x_coord_t;
@@ -72,14 +76,14 @@
 
     // LCOV_EXCL_STOP
 
-    static auto four_coord_pnt() -> const my_coord_pnt_numeric_type&
+    MANDELBROT_NODISCARD static auto four_coord_pnt() -> const my_coord_pnt_numeric_type&
     {
       static const my_coord_pnt_numeric_type my_four { static_cast<unsigned>(UINT8_C(4)) };
 
       return my_four;
     }
 
-    static auto four_iteration() -> const my_iteration_numeric_type&
+    MANDELBROT_NODISCARD static auto four_iteration() -> const my_iteration_numeric_type&
     {
       static const my_iteration_numeric_type my_four { static_cast<unsigned>(UINT8_C(4)) };
 
@@ -88,7 +92,7 @@
 
     auto set_iterations(const std::uint_fast32_t iter) const noexcept -> void { mandelbrot_config_object.set_iterations(iter); }
 
-    MANDELBROT_NODISCARD auto get_iterations() const noexcept -> std::uint_fast32_t { return mandelbrot_config_object.get_iterations(); }
+    MANDELBROT_NODISCARD auto get_iterations() const noexcept -> std::size_t { return mandelbrot_config_object.get_iterations(); }
 
     virtual auto generate_mandelbrot_image_engine(std::vector<my_iteration_numeric_type>&,
                                                   std::vector<my_iteration_numeric_type>&,
@@ -120,16 +124,16 @@
       boost::gil::png_write_view (str_filename + std::string(".png"), mandelbrot_view);
     }
 
-    auto get_mandelbrot_iteration_matrix() noexcept -> std::vector<std::vector<std::uint_fast32_t>>& { return mandelbrot_iteration_matrix; }
+    auto get_mandelbrot_iteration_matrix() noexcept -> my_iteration_matrix_type& { return mandelbrot_iteration_matrix; }
     auto get_mandelbrot_color_histogram() noexcept -> std::vector<std::uint_fast32_t>& { return mandelbrot_color_histogram; }
     auto get_mandelbrot_config_object() noexcept -> const mandelbrot_config_type& { return mandelbrot_config_object; }
 
   private:
-    const mandelbrot_config_type& mandelbrot_config_object;                        // NOLINT(readability-identifier-naming)
-    boost::gil::rgb8_image_t mandelbrot_image { };                                 // NOLINT(readability-identifier-naming)
-    boost::gil::rgb8_view_t  mandelbrot_view { };                                  // NOLINT(readability-identifier-naming)
-    std::vector<std::vector<std::uint_fast32_t>> mandelbrot_iteration_matrix { };  // NOLINT(readability-identifier-naming)
-    std::vector<std::uint_fast32_t> mandelbrot_color_histogram { };                // NOLINT(readability-identifier-naming)
+    const mandelbrot_config_type&   mandelbrot_config_object;         // NOLINT(readability-identifier-naming)
+    boost::gil::rgb8_image_t        mandelbrot_image { };             // NOLINT(readability-identifier-naming)
+    boost::gil::rgb8_view_t         mandelbrot_view { };              // NOLINT(readability-identifier-naming)
+    my_iteration_matrix_type        mandelbrot_iteration_matrix { };  // NOLINT(readability-identifier-naming)
+    std::vector<std::uint_fast32_t> mandelbrot_color_histogram { };   // NOLINT(readability-identifier-naming)
 
     static mandelbrot_text_output_cout my_standard_output; // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
 
@@ -194,9 +198,9 @@
 
   template<typename CoordPntNumericType,
            typename IterateNumericType>
-  mandelbrot_text_output_cout mandelbrot_generator<CoordPntNumericType, IterateNumericType>::my_standard_output; // NOLINT(cppcoreguidelines-avoid-non-const-global-variables,hicpp-uppercase-literal-suffix,readability-uppercase-literal-suffix)
+  mandelbrot_text_output_cout mandelbrot_generator<CoordPntNumericType, IterateNumericType>::my_standard_output { }; // NOLINT(cppcoreguidelines-avoid-non-const-global-variables,hicpp-uppercase-literal-suffix,readability-uppercase-literal-suffix)
 
-  #if(__cplusplus >= 201703L)
+  #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 201703L))
   } // namespace ckormanyos::mandelbrot
   #else
   } // namespace mandelbrot

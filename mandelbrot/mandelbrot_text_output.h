@@ -14,7 +14,7 @@
   #include <iostream>
   #include <string>
 
-  #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
+  #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 201703L))
   namespace ckormanyos::mandelbrot {
   #else
   namespace ckormanyos { namespace mandelbrot {
@@ -60,7 +60,7 @@
     }
   };
 
-  #if (!defined(_MSC_VER) && defined(__cplusplus) && (__cplusplus >= 201703L))
+  #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 201703L))
   } // namespace ckormanyos::mandelbrot
   #else
   } // namespace mandelbrot
