@@ -117,8 +117,10 @@
 
           mandelbrot_iteration_lock.clear();
 
+          const std::size_t iteration_count { x_coord.size() };
+
           for(auto   i_col = static_cast<std::size_t>(UINT8_C(0));
-                     i_col < x_coord.size(); // NOLINT(altera-id-dependent-backward-branch)
+                     i_col < iteration_count;
                    ++i_col)
           {
             my_iteration_numeric_type zr  { static_cast<unsigned>(UINT8_C(0)) };
@@ -131,16 +133,19 @@
             // three real-valued multiplications and several real-valued
             // addition/subtraction operations.
 
-            auto iteration_result = static_cast<std::uint_fast32_t>(UINT8_C(0));
+            std::size_t iteration_result { UINT8_C(0) };
 
             auto& iteration_matrix = base_class_type::get_mandelbrot_iteration_matrix();
 
             auto& color_histogram = base_class_type::get_mandelbrot_color_histogram();
 
+            const std::size_t iteration_count { static_cast<std::size_t>(base_class_type::get_iterations()) };
+
             // Perform the iteration sequence for generating the Mandelbrot set.
             // Here is the main work of the program.
 
-            while((iteration_result < base_class_type::get_iterations()) && ((zr2 + zi2) < base_class_type::four_iteration())) // NOLINT(altera-id-dependent-backward-branch)
+            while(   (iteration_result < iteration_count)                // NOLINT(altera-id-dependent-backward-branch)
+                  && ((zr2 + zi2) < base_class_type::four_iteration()))  // NOLINT(altera-id-dependent-backward-branch)
             {
               // The inner loop performs optimized complex multiply and add.
               // This is the main work of the fractal iteration scheme.
@@ -156,14 +161,14 @@
               ++iteration_result;
             }
 
-            iteration_matrix[i_col][j_row] = iteration_result;
+            iteration_matrix[i_col][j_row] = static_cast<std::uint_fast32_t>(iteration_result);
 
             std::atomic<std::uint_fast32_t>*
               ptr_hist
               {
                 static_cast<std::atomic<std::uint_fast32_t>*>
                 (
-                  static_cast<void*>(&color_histogram[static_cast<std::size_t>(iteration_result)])
+                  static_cast<void*>(&color_histogram[iteration_result])
                 )
               };
 
