@@ -117,10 +117,10 @@
 
           mandelbrot_iteration_lock.clear();
 
-          const std::size_t iteration_count { x_coord.size() };
+          const std::size_t x_coord_size { x_coord.size() };
 
           for(auto   i_col = static_cast<std::size_t>(UINT8_C(0));
-                     i_col < iteration_count; // NOLINT(altera-id-dependent-backward-branch)
+                     i_col < x_coord_size; // NOLINT(altera-id-dependent-backward-branch)
                    ++i_col)
           {
             my_iteration_numeric_type zr  { static_cast<unsigned>(UINT8_C(0)) };
