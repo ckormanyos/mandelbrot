@@ -74,7 +74,7 @@
       return integral_convert(my_height, this->step_y());
     }
 
-    MANDELBROT_NODISCARD auto get_iterations() const noexcept -> std::uint_fast32_t { return my_iter; }
+    MANDELBROT_NODISCARD auto get_iterations() const noexcept -> std::size_t { return static_cast<std::size_t>(my_iter); }
 
   private:
     const my_coord_pnt_numeric_type my_x_lo   { };

@@ -131,7 +131,7 @@
             // three real-valued multiplications and several real-valued
             // addition/subtraction operations.
 
-            auto iteration_result = static_cast<std::uint_fast32_t>(UINT8_C(0));
+            auto iteration_result = static_cast<std::size_t>(UINT8_C(0));
 
             auto& iteration_matrix = base_class_type::get_mandelbrot_iteration_matrix();
 
@@ -156,14 +156,16 @@
               ++iteration_result;
             }
 
-            iteration_matrix[i_col][j_row] = iteration_result;
+            using local_matrix_value_type = typename base_class_type::my_iteration_matrix_value_type;
+
+            iteration_matrix[i_col][j_row] = static_cast<local_matrix_value_type>(iteration_result);
 
             std::atomic<std::uint_fast32_t>*
               ptr_hist
               {
                 static_cast<std::atomic<std::uint_fast32_t>*>
                 (
-                  static_cast<void*>(&color_histogram[static_cast<std::size_t>(iteration_result)])
+                  static_cast<void*>(&color_histogram[iteration_result])
                 )
               };
 
