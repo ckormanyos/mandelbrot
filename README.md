@@ -294,7 +294,7 @@ for a slightly more complicated iteration scheme and a bit more pre-iterative
 preparational effort. The advantages for deep dives can, however, be stark.
 The work for deeper and deeper dives scales more or less linearly
 instead of quadratically and increases only with iteration count.
-This is a very equitable trade.
+This can be a very equitable trade.
 
 ### Perturbative Algorithm
 
@@ -337,21 +337,15 @@ $$
 where the $z_{k}$ are the pre-calculated values.
 
 The transformed coordinates can be iterated with drastically decreased precision
-such as $24$ decimal digits. This can result in saved calculation time.
+such as $24$ decimal digits. This can result in reduced calculation time.
 
 Further details of the perturbative calculation are briefly described in the following.
   - We also evaluate $z_{k+1}+e_{k+1}$ for the escape check. Alternatively it could be sufficient to check only $e_{k}$. If a given $e_{k}$ escapes at some iteration, then the $z_{k}$ are also expected to escape, albeit at a different iteration step.
   - For clarity, we emphasize that the $z_{k}$ are initially calculated with full precision. But they are iterated with low precision such as $24$ decimal digits.
   - $z_{k}$ is calculated for one reference point (i.e., the center of the picture) with high precision and used for the transformation.
-  - Constrains on that central point: The number of iterations prior to its escape needs to be higher than those for the orbital points. Interestingly enough, however, the point does necessarily need to be bound.
+  - There are constraints on the central point. The number of iterations prior to its escape needs to be higher than those for the orbital points. Interestingly enough, however, the point does not necessarily need to be bound.
 
 ## Testing and Continuous Integration
-
-A small test program exercises a variety fractal iterations
-that can be selected individually at compile-time.
-The default configuration uses the
-relatively quick-to-calculate _seahorse_ image configured in
-[mandelbrot_cfg_MANDELBROT_05_SEAHORSES.h](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_05_SEAHORSES.h).
 
 Continuous integration runs on Ubuntu and MacOS with both GCC/clang
 and also runs on Windows with MSVC. GCC's run-time
@@ -359,21 +353,29 @@ and also runs on Windows with MSVC. GCC's run-time
 are also used in CI in order to help assure dynamic quality.
 CI uses the develop branch of modular-boost for multiprecision types.
 
+A small test program exercises a variety fractal iterations
+that can be selected individually at compile-time.
+The default configuration uses the
+relatively quick-to-calculate _seahorse_ image configured in
+[mandelbrot_cfg_MANDELBROT_05_SEAHORSES.h](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/cfg/mandelbrot_cfg_MANDELBROT_05_SEAHORSES.h).
+Note that this particular configuration also has some extra options
+used by the full set of CI tests (i.e., for coverage, sanitizers, etc.).
+
 ## TODOs
 
 Improvements on the TODO list include (among others) the following.
-  - Experiment with (and implement) massive inner loop parallelization via GPU programming.
-  - Find/use an acceleration technique (intended to reduce required precision of deep dives) such as orbit perturbation, series expansion, etc.
+  - Experiment with and implement massive inner loop parallelization via GPU programming. For this point, it might be easier to use numerical types in iteration that are on the GPU.
+  - Find and use more acceleration techniques such as orbit perturbation, series expansion, etc. These are intended to reduce required precision of deep dives.
   - Discover more interesting coordinates for iteration (help wanted).
 
 ## Notes on jpeg-6b and its adaptions
 
 We use a modified version of jpeg-6b.
-It is located [here](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/jpeg/jpeg-6b-2022).
+It is located [here](https://github.com/ckormanyos/mandelbrot/tree/main/jpeg/jpeg-6b-2022).
 According to license agreement, this work is referred to as
 _the_ _Independent_ _JPEG_ _Group's_ _software_.
 Please see their
-[original _README_](https://github.com/ckormanyos/mandelbrot/tree/main/mandelbrot/jpeg/jpeg-6b-2022/README)
+[original _README_](https://github.com/ckormanyos/mandelbrot/blob/main/jpeg/jpeg-6b-2022/README)
 in its entirety for more information about and licensing terms
 of _the_ _Independent_ _JPEG_ _Group's_ _software_.
 
