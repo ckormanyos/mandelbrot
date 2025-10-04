@@ -19,7 +19,7 @@
   #endif
 
   #if !defined(MANDELBROT_CXX_VERSION)
-  #error Error: can't determine C++ version MANDELBROT_CXX_VERSION
+  #error Error: can not determine C++ version MANDELBROT_CXX_VERSION
   #endif
 
   // --------------------------------------------------------------------------

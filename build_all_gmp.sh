@@ -16,7 +16,7 @@ ixtra=
 my_cc=g++
 
 for arg in "$@"; do
-  case $arg in
+  case ${arg} in
     --boost=*)
       boost="${arg#*=}"
       shift
@@ -38,21 +38,21 @@ for arg in "$@"; do
   esac
 done
 
-echo "boost: $boost"
-echo "ixtra: $ixtra"
-echo "my_cc: $my_cc"
-echo "stdcc: $stdcc"
+echo "boost: ${boost}"
+echo "ixtra: ${ixtra}"
+echo "my_cc: ${my_cc}"
+echo "stdcc: ${stdcc}"
 
-MY_INC=-I$boost
+MY_INC=-I${boost}
 
 if [[ "$ixtra" != "" ]]; then
-    MY_INC="$MY_INC -I$ixtra"
+    MY_INC="$MY_INC -I${ixtra}"
 fi
 
 
-MY_GCC=$my_cc
+MY_GCC=${my_cc}
 
-MY_STD=$stdcc
+MY_STD=${stdcc}
 
 echo 'make the jpeg-6b library'
 cd jpeg
@@ -79,15 +79,15 @@ echo
 
 echo 'compiler version'
 echo
-$MY_GCC -v
+${MY_GCC} -v
 echo
 
 echo 'compile test/test_mandelbrot.cpp to test_mandelbrot.o'
-$MY_GCC -x c++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wmissing-include-dirs -std=$MY_STD -DMANDELBROT_USE_GMP_FLOAT -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 $MY_INC -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
+${MY_GCC} -x c++ -c -finline-functions -march=native -mtune=native -O3 -Wall -Wextra -Wmissing-include-dirs -std=${MY_STD} -DMANDELBROT_USE_GMP_FLOAT -I. -Ipng/zlib/zlib-1.3.1.1-2024 -Ipng/libpng/libpng-1.6.44.git-2024 -Ijpeg/jpeg-6b-2022 ${MY_INC} -pthread test/test_mandelbrot.cpp -o test_mandelbrot.o
 echo
 
 echo 'link test_mandelbrot.o with libraries to create test_mandelbrot.exe'
-$MY_GCC -x none -march=native -mtune=native test_mandelbrot.o ./png/libpng/libpng-1.6.44.git-2024/obj/libpng16.a ./png/zlib/zlib-1.3.1.1-2024/obj/libz.a ./jpeg/jpeg-6b-2022/obj/libjpeg-6b.a -lpthread -lgmp -o test_mandelbrot.exe
+${MY_GCC} -x none -march=native -mtune=native test_mandelbrot.o ./png/libpng/libpng-1.6.44.git-2024/obj/libpng16.a ./png/zlib/zlib-1.3.1.1-2024/obj/libz.a ./jpeg/jpeg-6b-2022/obj/libjpeg-6b.a -lpthread -lgmp -o test_mandelbrot.exe
 echo
 
 echo 'verify existence of test_mandelbrot.exe'
@@ -98,9 +98,9 @@ echo
 result_total=$((res_makelibs+res_maketest))
 
 
-echo "res_makelibs : "  "$res_makelibs"
-echo "res_maketest : "  "$res_maketest"
-echo "result_total : "  "$result_total"
+echo "res_makelibs : "  "${res_makelibs}"
+echo "res_maketest : "  "${res_maketest}"
+echo "result_total : "  "${result_total}"
 echo
 
-exit $result_total
+exit ${result_total}

@@ -18,7 +18,7 @@
   #endif
 
   #if !defined(STOPWATCH_CXX_VERSION)
-  #error Error: can't determine C++ version STOPWATCH_CXX_VERSION
+  #error Error: can not determine C++ version STOPWATCH_CXX_VERSION
   #endif
 
   #if defined(_MSC_VER) && !defined(__GNUC__)
