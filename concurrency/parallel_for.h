@@ -17,23 +17,19 @@
   {
     template<typename index_type,
              typename callable_function_type>
-    auto parallel_for(index_type             first,
-                      index_type             last,
+    auto parallel_for(index_type first,
+                      index_type last,
                       callable_function_type parallel_function) -> void
     {
       // Estimate the number of threads available.
-      const auto number_of_threads_hint =
-        static_cast<signed>
-        (
-          std::thread::hardware_concurrency()
-        );
+      const auto number_of_threads_hint = static_cast<signed>(std::thread::hardware_concurrency());
 
       const auto number_of_threads = // NOLINT(altera-id-dependent-backward-branch)
         static_cast<unsigned>
         (
           (std::max)
           (
-            static_cast<signed>(number_of_threads_hint - signed { INT8_C(1) }),
+            static_cast<signed>(number_of_threads_hint - INT8_C(1)),
             static_cast<signed>(INT8_C(1))
           )
         );
@@ -58,26 +54,25 @@
 
         {
           // Set the size (distance) for the range functions.
-          const auto n_distance =
-            static_cast<index_type>
-            (
-              static_cast<index_type>(last - first)
-            );
+          const auto n_distance { index_type { last - first } };
 
           using std::floor;
 
-          const auto slice =
-            (std::max)
-            (
-              static_cast<index_type>(floor(static_cast<float>(n_distance) / static_cast<float>(number_of_threads))),
-              static_cast<index_type>(1)
-            );
+          const auto
+            slice
+            {
+              (std::max)
+              (
+                static_cast<index_type>(floor(static_cast<float>(n_distance) / static_cast<float>(number_of_threads))),
+                static_cast<index_type>(1)
+              )
+            };
 
           for(auto   idx = static_cast<index_type>(0);
                      idx < static_cast<index_type>(number_of_threads); // NOLINT(altera-id-dependent-backward-branch)
                    ++idx)
           {
-            index_type total_lines = slice;
+            index_type total_lines { slice };
 
             if(idx < static_cast<index_type>(last % static_cast<index_type>(number_of_threads)))
             {
@@ -100,20 +95,21 @@
       }
     }
 
+    // LCOV_EXCL_START
     // Provide a serial version for easy comparison.
     template<typename index_type,
              typename callable_function_type>
-    auto sequential_for(index_type             first,
-                        index_type             last,
+    auto sequential_for(index_type first,
+                        index_type last,
                         callable_function_type sequential_function) -> void
     {
-      // LCOV_EXCL_START
       for(auto idx = first; idx < last; ++idx)
       {
         sequential_function(idx);
       }
-      // LCOV_EXCL_STOP
     }
+    // LCOV_EXCL_STOP
+
   } // namespace my_concurrency
 
 #endif // CONCURRENCY_PARALLEL_FOR_H
