@@ -166,7 +166,7 @@
         y_coord.size(),
         [&mandelbrot_iteration_lock, &unordered_parallel_row_count, &my_text_output, &x_coord, &y_coord, &zkr, &zki, this](std::size_t j_row)
         {
-          while(mandelbrot_iteration_lock.test_and_set())
+          while(mandelbrot_iteration_lock.test_and_set(std::memory_order_acquire))
           {
             // Wait to acquire the lock.
           }
@@ -206,7 +206,7 @@
             static_cast<void>(my_text_output.write(str_calc));
           }
 
-          mandelbrot_iteration_lock.clear();
+          mandelbrot_iteration_lock.clear(std::memory_order_release);
 
           for(auto   i_col = static_cast<std::size_t>(UINT8_C(0));
                      i_col < x_coord.size(); // NOLINT(altera-id-dependent-backward-branch)
