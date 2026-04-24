@@ -1,5 +1,5 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
-//      Copyright Christopher Kormanyos 2022 - 2025.
+//      Copyright Christopher Kormanyos 2022 - 2026.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
@@ -7,20 +7,6 @@
 
 #ifndef MANDELBROT_MANDELBROT_CFG_H
   #define MANDELBROT_MANDELBROT_CFG_H
-
-  // --------------------------------------------------------------------------
-  // Obtain the C++ language standard.
-  // --------------------------------------------------------------------------
-
-  #if (defined(_MSC_VER) && defined(_MSVC_LANG))
-  #define MANDELBROT_CXX_VERSION _MSVC_LANG
-  #elif defined(__cplusplus)
-  #define MANDELBROT_CXX_VERSION __cplusplus // NOLINT(cppcoreguidelines-macro-usage)
-  #endif
-
-  #if !defined(MANDELBROT_CXX_VERSION)
-  #error Error: can not determine C++ version MANDELBROT_CXX_VERSION
-  #endif
 
   // --------------------------------------------------------------------------
   // You can optionally define MANDELBROT_USE_CPP_DOUBLE_DOUBLE here or
@@ -49,10 +35,14 @@
   #endif
 
   #if (defined(MANDELBROT_USE_CPP_DEC_FLOAT) && defined(MANDELBROT_USE_GMP_FLOAT))
-  #error "Error: You can not define both MANDELBROT_USE_CPP_DEC_FLOAT or MANDELBROT_USE_GMP_FLOAT"
+  #error "Error: You can't define both MANDELBROT_USE_CPP_DEC_FLOAT and MANDELBROT_USE_GMP_FLOAT" at the same time
   #endif
 
   #include <mandelbrot/cfg/mandelbrot_cfg_forward.h>
+
+  #if !defined(MANDELBROT_CXX_VERSION)
+  #error Error: can not determine C++ version MANDELBROT_CXX_VERSION
+  #endif
 
   #if defined(MANDELBROT_USE_CPP_DEC_FLOAT)
   #include <boost/multiprecision/cpp_dec_float.hpp>

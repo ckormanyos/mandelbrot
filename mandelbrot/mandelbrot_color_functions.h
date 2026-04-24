@@ -1,5 +1,5 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
-// Copyright Christopher Kormanyos 2015 - 2025.
+// Copyright Christopher Kormanyos 2015 - 2026.
 // Distributed under the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -13,18 +13,6 @@
   #include <cstdint>
   #if (defined(__cpp_lib_math_constants) && (__cpp_lib_math_constants >= 201907L))
   #include <numbers>
-  #endif
-
-  #if !defined(MANDELBROT_NODISCARD)
-  #if defined(_MSC_VER) && !defined(__GNUC__)
-  #define MANDELBROT_NODISCARD
-  #else
-  #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 201703L))
-  #define MANDELBROT_NODISCARD  [[nodiscard]] // NOLINT(cppcoreguidelines-macro-usage)
-  #else
-  #define MANDELBROT_NODISCARD
-  #endif
-  #endif
   #endif
 
   #if (defined(MANDELBROT_CXX_VERSION) && (MANDELBROT_CXX_VERSION >= 201703L))
