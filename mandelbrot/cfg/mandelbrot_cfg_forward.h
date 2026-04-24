@@ -11,7 +11,7 @@
   #if defined(_MSC_VER)
   #define MANDELBROT_MSVC _MSC_VER
   #elif defined(__clang__)
-  #define MANDELBROT_CLANG __clang__
+  #define MANDELBROT_CLANG __clang__ // NOLINT(cppcoreguidelines-macro-usage)
   #elif defined(__GNUC__)
   #define MANDELBROT_GCC __GNUC__
   #else

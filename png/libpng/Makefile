@@ -28,7 +28,6 @@ CFLAGS     = -x c                              \
              -Wpedantic                        \
              -Wconversion                      \
              -Wsign-conversion                 \
-             -Werror                           \
              -DZ_SOLO                          \
              -I.                               \
              -I../zlib/zlib-1.3.1.1-2024

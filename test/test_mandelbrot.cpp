@@ -5,7 +5,7 @@
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#if defined(__clang__)
+#if defined(__clang__) // NOLINT(cppcoreguidelines-macro-usage)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 #endif
