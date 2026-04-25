@@ -1,5 +1,5 @@
 ###############################################################################
-#  Copyright Christopher Kormanyos 2022 - 2024.
+#  Copyright Christopher Kormanyos 2022 - 2026.
 #  Distributed under the Boost Software License,
 #  Version 1.0. (See accompanying file LICENSE_1_0.txt
 #  or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -13,10 +13,14 @@
 # The result should be jpeg/jpeg-6b-2022/obj/libjpeg-6b.a
 # Link this library to your project needing JPEG.
 
+ifeq ($(MY_GCC),)
+MY_GCC    := g++
+endif
+
 SRC_DIR    = $(CURDIR)/jpeg-6b-2022
 OBJ_DIR    = $(SRC_DIR)/obj
 
-CC         = g++
+CC         = $(MY_GCC)
 
 CFLAGS     = -x c                              \
              -O2                               \
@@ -27,7 +31,6 @@ CFLAGS     = -x c                              \
              -Wpedantic                        \
              -Wconversion                      \
              -Wsign-conversion                 \
-             -Werror                           \
              -I.
 
 all : clean $(OBJ_DIR)/libjpeg-6b.a

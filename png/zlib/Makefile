@@ -1,5 +1,6 @@
 ###############################################################################
 #  Copyright Sebastian Streubel 2024.
+#  Copyright Christopher Kormanyos 2024 - 2026.
 #  Distributed under the Boost Software License,
 #  Version 1.0. (See accompanying file LICENSE_1_0.txt
 #  or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -13,10 +14,14 @@
 # The result should be png/zlib/zlib-1.3.1.1-2024/obj/libz.a
 # Link this library to your project needing PNGcompression
 
+ifeq ($(MY_GCC),)
+MY_GCC    := g++
+endif
+
 SRC_DIR    = $(CURDIR)/zlib-1.3.1.1-2024
 OBJ_DIR    = $(SRC_DIR)/obj
 
-CC         = g++
+CC         = $(MY_GCC)
 
 CFLAGS     = -x c                              \
              -O2                               \

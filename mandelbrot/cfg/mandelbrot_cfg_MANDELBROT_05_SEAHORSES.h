@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-//      Copyright Christopher Kormanyos 2022 - 2025.
+//      Copyright Christopher Kormanyos 2022 - 2026.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
@@ -8,13 +8,13 @@
 #ifndef MANDELBROT_CFG_MANDELBROT_CFG_05_SEAHORSES_H
   #define MANDELBROT_CFG_MANDELBROT_CFG_05_SEAHORSES_H
 
-  #if defined(__clang__)
+  #if defined(MANDELBROT_CLANG)
     #if defined __has_feature && (__has_feature(thread_sanitizer) || __has_feature(address_sanitizer))
     #if !defined(MANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH)
     #define MANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH
     #endif
     #endif
-  #elif defined(__GNUC__)
+  #elif defined(MANDELBROT_GCC)
     #if (defined(__SANITIZE_THREAD__) || defined(__SANITIZE_ADDRESS__) || defined(MANDELBROT_HAS_COVERAGE))
     #if !defined(MANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH)
     #define MANDELBROT_TEST_OPTION_REDUCE_TEST_DEPTH

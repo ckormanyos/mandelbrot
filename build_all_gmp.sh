@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#  Copyright Christopher Kormanyos 2024 - 2025.
+#  Copyright Christopher Kormanyos 2024 - 2026.
 #  Distributed under the Boost Software License,
 #  Version 1.0. (See accompanying file LICENSE_1_0.txt
 #  or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -9,7 +9,7 @@
 # cd /mnt/c/Users/ckorm/Documents/Ks/PC_Software/NumericalPrograms/mandelbrot
 
 # Build with boost::multiprecision::gmp_float:
-# ./build_all.sh --boost=/mnt/c/boost/boost_1_89_0 --my_cc=g++ --stdcc=c++20
+# ./build_all.sh --boost=/mnt/c/boost/boost_1_90_0 --my_cc=g++ --stdcc=c++23
 
 boost=
 ixtra=
@@ -56,19 +56,19 @@ MY_STD=${stdcc}
 
 echo 'make the jpeg-6b library'
 cd jpeg
-make all
+make all MY_GCC=${my_cc}
 cd ..
 echo
 
 echo 'make the libpng-1.6.44.git-2024 library'
 cd png/libpng
-make all
+make all MY_GCC=${my_cc}
 cd ../..
 echo
 
 echo 'make the libzlib-1.3.1.1-2024 library'
 cd png/zlib
-make all
+make all MY_GCC=${my_cc}
 cd ../..
 echo
 
