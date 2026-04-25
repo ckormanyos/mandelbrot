@@ -83,6 +83,6 @@ auto main() -> int // NOLINT(bugprone-exception-escape)
   }
 }
 
-#if defined(__clang__)
+#if defined(__clang__) // NOLINT(cppcoreguidelines-macro-usage)
 #pragma GCC diagnostic pop
 #endif

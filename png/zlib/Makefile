@@ -14,6 +14,10 @@
 # The result should be png/zlib/zlib-1.3.1.1-2024/obj/libz.a
 # Link this library to your project needing PNGcompression
 
+ifeq ($(MY_GCC),)
+MY_GCC    := g++
+endif
+
 SRC_DIR    = $(CURDIR)/zlib-1.3.1.1-2024
 OBJ_DIR    = $(SRC_DIR)/obj
 

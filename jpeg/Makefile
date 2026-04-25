@@ -13,6 +13,10 @@
 # The result should be jpeg/jpeg-6b-2022/obj/libjpeg-6b.a
 # Link this library to your project needing JPEG.
 
+ifeq ($(MY_GCC),)
+MY_GCC    := g++
+endif
+
 SRC_DIR    = $(CURDIR)/jpeg-6b-2022
 OBJ_DIR    = $(SRC_DIR)/obj
 

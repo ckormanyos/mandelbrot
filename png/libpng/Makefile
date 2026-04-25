@@ -14,6 +14,10 @@
 # The result should be png/libpng/obj/libpng16.a
 # Link this library to your project needing PNG.
 
+ifeq ($(MY_GCC),)
+MY_GCC    := g++
+endif
+
 SRC_DIR    = $(CURDIR)/libpng-1.6.44.git-2024
 OBJ_DIR    = $(SRC_DIR)/obj
 
